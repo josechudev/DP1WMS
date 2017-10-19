@@ -1,5 +1,6 @@
 package com.dp1wms.model;
 
+
 public class Producto {
 
     private int idProducto;
@@ -8,6 +9,23 @@ public class Producto {
 
     private int idCategoria;
 
+    private float peso;
+
+    private String fechaVencimiento;
+
+    private String descripcion;
+
+    private int stock;
+
+    public Producto(int idProducto, String nombreProducto, int idCategoria, float peso, String fechaVencimiento, String descripcion, int stock) {
+        this.idProducto = idProducto;
+        this.nombreProducto = nombreProducto;
+        this.idCategoria = idCategoria;
+        this.peso = peso;
+        this.fechaVencimiento = fechaVencimiento;
+        this.descripcion = descripcion;
+        this.stock = stock;
+    }
 
     public int getIdProducto() {
         return idProducto;
@@ -31,5 +49,37 @@ public class Producto {
 
     public void setIdCategoria(int idCategoria) {
         this.idCategoria = idCategoria;
+    }
+
+    public float getPeso() {
+        return peso;
+    }
+
+    public void setPeso(float peso) {
+        this.peso = peso;
+    }
+
+    public String getFechaVencimiento() {
+        return fechaVencimiento;
+    }
+
+    public void setFechaVencimiento(String fechaVencimiento) {
+        this.fechaVencimiento = fechaVencimiento;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 }
