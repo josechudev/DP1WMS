@@ -16,8 +16,9 @@ public class Producto {
     private String descripcion;
 
     private int stock;
+    private float precio;
 
-    public Producto(int idProducto, String nombreProducto, int idCategoria, float peso, String fechaVencimiento, String descripcion, int stock) {
+    public Producto(int idProducto, String nombreProducto, int idCategoria, float peso, String fechaVencimiento, String descripcion, int stock, float precio) {
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;
         this.idCategoria = idCategoria;
@@ -25,6 +26,17 @@ public class Producto {
         this.fechaVencimiento = fechaVencimiento;
         this.descripcion = descripcion;
         this.stock = stock;
+        this.precio = precio;
+    }
+
+    public Producto(){};
+
+    public float getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
     }
 
     public int getIdProducto() {
