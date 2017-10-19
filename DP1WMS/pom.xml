@@ -11,7 +11,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>sample.MainApp</mainClass>
+        <mainClass>com.dp1wms.main.MainApp</mainClass>
     </properties>
 
     <organization>
