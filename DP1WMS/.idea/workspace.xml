@@ -12,16 +12,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/dp1wms/main/Controller.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="MainApp.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/dp1wms/main/MainApp.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -48,7 +38,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Producto.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Producto.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/dp1wms/model/Producto.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="672">
@@ -72,6 +62,58 @@
                 <element signature="e#1800#1801#0" expanded="true" />
                 <element signature="e#1834#1835#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DBUtil.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/dp1wms/com/dp1wms/util/DBUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="352">
+              <caret line="71" column="12" lean-forward="true" selection-start-line="71" selection-start-column="12" selection-end-line="71" selection-end-column="12" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="modules.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="misc.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="compiler.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/compiler.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="encodings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/encodings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -139,6 +181,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/dp1wms/model/Categoria.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/dp1wms/model/CategoriaProducto.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/dp1wms/model/Producto.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/dp1wms/com/dp1wms/util/DBUtil.java" />
       </list>
     </option>
   </component>
@@ -174,6 +217,11 @@
             <path>
               <item name="DP1WMS" type="b2602c69:ProjectViewProjectNode" />
               <item name="DP1WMS" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DP1WMS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DP1WMS" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -196,6 +244,15 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="dp1wms" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DP1WMS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DP1WMS" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="dp1wms" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DP1WMS" type="b2602c69:ProjectViewProjectNode" />
@@ -648,7 +705,7 @@
         <state relative-caret-position="407">
           <caret line="42" column="30" lean-forward="true" selection-start-line="30" selection-start-column="8" selection-end-line="42" selection-end-column="30" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -658,10 +715,10 @@
         <state relative-caret-position="371">
           <caret line="57" column="24" lean-forward="false" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#892#902#0" expanded="true" />
-            <element signature="e#2239#2249#0" expanded="true" />
-            <element signature="e#2556#2566#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#892#902#0" expanded="false" />
+            <element signature="e#2239#2249#0" expanded="false" />
+            <element signature="e#2556#2566#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -841,7 +898,7 @@
         <state relative-caret-position="407">
           <caret line="42" column="30" lean-forward="true" selection-start-line="30" selection-start-column="8" selection-end-line="42" selection-end-column="30" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -851,10 +908,10 @@
         <state relative-caret-position="371">
           <caret line="57" column="24" lean-forward="false" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#892#902#0" expanded="true" />
-            <element signature="e#2239#2249#0" expanded="true" />
-            <element signature="e#2556#2566#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#892#902#0" expanded="false" />
+            <element signature="e#2239#2249#0" expanded="false" />
+            <element signature="e#2556#2566#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -907,6 +964,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/compiler.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/encodings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/dp1wms/model/Producto.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="672">
@@ -929,6 +1018,16 @@
             <element signature="e#1761#1762#0" expanded="true" />
             <element signature="e#1800#1801#0" expanded="true" />
             <element signature="e#1834#1835#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/dp1wms/com/dp1wms/util/DBUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="71" column="12" lean-forward="true" selection-start-line="71" selection-start-column="12" selection-end-line="71" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
