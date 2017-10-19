@@ -2,6 +2,7 @@ language: java
 jdk: oraclejdk8
 
 install: 
+- cd DP1WMS
 - mvn -N io.takari:maven:wrapper
 - ./mvnw clean install
 cache:
