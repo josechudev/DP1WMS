@@ -25,6 +25,9 @@ import java.util.ResourceBundle;
 public class BusquedaProducto implements Initializable {
 
     @FXML
+    private AnchorPane buscarProductoAnchorPane;
+
+    @FXML
     private TextField txb_nombre;
 
     @FXML
@@ -40,6 +43,12 @@ public class BusquedaProducto implements Initializable {
 
     private List<Producto> listaProductos;
 
+    private IngresoProducto ingresoProductoController;
+
+    private CrearLote crearLoteController;
+
+    private String controllerActual = null;
+
     public void buscarProducto(ActionEvent event){
         System.out.println("Buscar Producto");
 
@@ -52,10 +61,29 @@ public class BusquedaProducto implements Initializable {
         }
     }
 
-    public Producto escogerProducto(ActionEvent event){
+    public void setMovimientoProductoController(IngresoProducto controller){
+        this.ingresoProductoController = controller;
+        this.controllerActual = "IngresoProducto";
+    }
+
+    public void setCrearLoteController(CrearLote controller){
+        this.crearLoteController = controller;
+        this.controllerActual = "CrearLote";
+    }
+
+    public void escogerProducto(ActionEvent event){
         Producto producto = tableViewProductos.getSelectionModel().getSelectedItem();
         System.out.println(producto.getNombreProducto());
-        return producto;
+        // Integer idProducto = obtenerIdProducto();
+
+        ingresoProductoController.actualizarDataProducto(producto.getNombreProducto(),1);
+
+
+        buscarProductoAnchorPane.getScene().getWindow().hide();
+    }
+
+    public void cancelarBusqueda(ActionEvent event){
+        buscarProductoAnchorPane.getScene().getWindow().hide();
     }
 
     private void limpiarTabla(){
@@ -67,6 +95,9 @@ public class BusquedaProducto implements Initializable {
 
     private  List<Producto >buscarProducto(String nombreProducto){
         List<Producto> lista  = new ArrayList<Producto>();
+        if(nombreProducto.equalsIgnoreCase(""))
+            return this.listaProductos;
+
         for(Producto producto : listaProductos){
             if(producto.getNombreProducto().equalsIgnoreCase(nombreProducto))
                 lista.add(producto);

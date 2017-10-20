@@ -8,6 +8,7 @@ public class Producto {
 
     private int idCategoria;
 
+    private String categoria;
 
     public int getIdProducto() {
         return idProducto;
@@ -31,5 +32,13 @@ public class Producto {
 
     public void setIdCategoria(int idCategoria) {
         this.idCategoria = idCategoria;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 }
