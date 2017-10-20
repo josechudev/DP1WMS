@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.dp1wms.controller.UsuarioController.v_visualizarUsuario">
+  <children>
+    <ScrollPane layoutX="0.0" layoutY="0.0" prefHeight="400.0" prefWidth="600.0">
+      <content>
+        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+          <children>
+            <TableView layoutX="74.0" layoutY="186.0" prefHeight="201.0" prefWidth="429.0" fx:id="e_table">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Id" fx:id="e_id" />
+                <TableColumn prefWidth="75.0" text="Nombre" fx:id="e_nombre" />
+                <TableColumn prefWidth="75.0" text="Password" fx:id="e_password" />
+              </columns>
+            </TableView>
+            <Button layoutX="402.0" layoutY="100.0" mnemonicParsing="false" text="Regresar" onAction="#_regrearMantenimiento" />
+          </children>
+        </AnchorPane>
+      </content>
+    </ScrollPane>
+  </children>
+</AnchorPane>
