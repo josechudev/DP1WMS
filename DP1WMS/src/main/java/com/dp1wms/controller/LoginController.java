@@ -43,16 +43,16 @@ public class LoginController implements FxmlController{
 
         String username = getUsername();
         String password = getPassword();
-        if(repositoryMantMov != null){
+        /*if(repositoryMantMov != null){
             System.out.println("not null repository");
             repositoryMantMov.obtenerProductos();
         }else{
          System.out.println("null repository");
-         }
+         }*/
 
 
         if (UsuarioCtrl.verificarCredenciales(username, password)){
-            this.stageManager.cambiarScene(FxmlView.MAIN);
+            this.stageManager.cambiarScene(FxmlView.MANTENIMIENTO_MOVIMIENTO);
         } else {
             this.borrarCredenciales();
             statusLabel.setText("Nombre de usuario o contraseña inválidos");

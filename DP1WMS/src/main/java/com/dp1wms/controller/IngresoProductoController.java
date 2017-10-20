@@ -1,6 +1,7 @@
 package com.dp1wms.controller;
 
-import com.dp1wms.model.Producto;
+import com.dp1wms.view.FxmlView;
+import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,17 +10,18 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 @Component
-public class IngresoProducto implements Initializable {
+public class IngresoProductoController implements FxmlController {
 
     @FXML
     private TextField txb_nombreProd;
@@ -35,7 +37,19 @@ public class IngresoProducto implements Initializable {
     private Button btn_registrar;
 
     private Integer idProducto=null;
+    private final StageManager stageManager;
 
+    @Autowired    @Lazy
+    public IngresoProductoController(StageManager stageManager){
+                this.stageManager = stageManager;
+    }
+
+     public void buscarProducto(ActionEvent event){
+            System.out.println("Buscar Producto");
+            this.stageManager.mostarModal(FxmlView.BUSQUEDA_PRODUCTO);
+    }
+
+/*
     public void buscarProducto(ActionEvent event){
         System.out.println("Buscar Producto");
 
@@ -44,12 +58,12 @@ public class IngresoProducto implements Initializable {
         FXMLLoader loader;
         try {
 
-           // root =(Parent) FXMLLoader.load(getClass().getResource("/fxml/BusquedaProducto.fxml"));
+           // root =(Parent) FXMLLoader.load(getClass().getResource("/fxml/BusquedaProductoController.fxml"));
             loader =new FXMLLoader(getClass().getResource("/fxml/BusquedaProducto.fxml"));
             root = (Parent) loader.load();
             //root = (Parent) loader.load();
 
-            BusquedaProducto busquedaControlador=loader.getController();
+            BusquedaProductoController busquedaControlador=loader.getController();
             busquedaControlador.setMovimientoProductoController(this);
         } catch (IOException e) {
             e.printStackTrace();
@@ -72,7 +86,7 @@ public class IngresoProducto implements Initializable {
 
 
     }
-
+*/
     public void actualizarDataProducto(String nombreProducto,int idProducto){
         this.txb_nombreProd.setText(nombreProducto);
 
@@ -88,8 +102,13 @@ public class IngresoProducto implements Initializable {
             }
         }
     }
-    @Override
+    /*@Override
     public void initialize(URL url, ResourceBundle rb) {
+        this.txb_nombreProd.setDisable(true);
+    }
+*/
+    @Override
+    public void initialize() {
         this.txb_nombreProd.setDisable(true);
     }
 }

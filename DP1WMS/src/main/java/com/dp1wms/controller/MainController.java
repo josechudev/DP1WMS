@@ -38,11 +38,11 @@ public class MainController implements FxmlController {
     @FXML
     private void cargarMantenimientoMovimientos(ActionEvent event) {
         System.out.println("cargarMantenimientoMovimientos");
-        Parent root = null;
+        /*Parent root = null;
         FXMLLoader loader;
         try {
 
-            // root =(Parent) FXMLLoader.load(getClass().getResource("/fxml/BusquedaProducto.fxml"));
+            // root =(Parent) FXMLLoader.load(getClass().getResource("/fxml/BusquedaProductoController.fxml"));
             loader =new FXMLLoader(getClass().getResource("/fxml/MantenimientoMov.fxml"));
             root = (Parent) loader.load();
             //root = (Parent) loader.load();
@@ -63,6 +63,7 @@ public class MainController implements FxmlController {
         //stage.initOwner(existingWindow); // linea importante fake 2
 
         stage.setScene(scene);
-        stage.show();
+        stage.show();*/
+        this.stageManager.mostarModal(FxmlView.MANTENIMIENTO_MOVIMIENTO);
     }
 }

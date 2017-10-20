@@ -1,11 +1,10 @@
 package com.dp1wms.controller;
 
 import com.dp1wms.dao.RepositoryMantMov;
-import com.dp1wms.dao.impl.RepositoryMantMovImpl;
 import com.dp1wms.model.Producto;
+import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -13,16 +12,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 @Component
-public class BusquedaProducto implements Initializable {
+public class BusquedaProductoController implements FxmlController {
 
     @FXML
     private AnchorPane buscarProductoAnchorPane;
@@ -43,14 +40,23 @@ public class BusquedaProducto implements Initializable {
 
     private List<Producto> listaProductos;
 
-    private IngresoProducto ingresoProductoController;
-
-    private CrearLote crearLoteController;
-
-    private String controllerActual = null;
+    private IngresoProductoController ingresoProductoController;
 
     @Autowired
     private RepositoryMantMov repositoryMantMov;
+
+    private final StageManager stageManager;
+
+    @Autowired @Lazy
+     public BusquedaProductoController(StageManager stageManager, IngresoProductoController ingresoProductoController){
+                this.stageManager = stageManager;
+                this.ingresoProductoController = ingresoProductoController;
+        }
+
+    /*@Autowired @Lazy
+    public BusquedaProductoController(StageManager stageManager){
+        this.stageManager = stageManager;
+    }*/
 
     public void buscarProducto(ActionEvent event){
         System.out.println("Buscar Producto");
@@ -63,16 +69,11 @@ public class BusquedaProducto implements Initializable {
             tableViewProductos.getItems().add(producto);
         }
     }
-
-    public void setMovimientoProductoController(IngresoProducto controller){
+/*
+    public void setMovimientoProductoController(IngresoProductoController controller){
         this.ingresoProductoController = controller;
-        this.controllerActual = "IngresoProducto";
-    }
+    }*/
 
-    public void setCrearLoteController(CrearLote controller){
-        this.crearLoteController = controller;
-        this.controllerActual = "CrearLote";
-    }
 
     public void escogerProducto(ActionEvent event){
         Producto producto = tableViewProductos.getSelectionModel().getSelectedItem();
@@ -124,12 +125,24 @@ public class BusquedaProducto implements Initializable {
             System.out.println("repository not null");
         }
         return listaProductos;
-        //return repositoryMantMov2.obtenerProductos();
+        //return repositoryMantMov.obtenerProductos();
     }
 
-
+/*
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        this.listaProductos = obtenerProductos();
+        c_nombre.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombreProducto"));
+        c_categoria.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("idCategoria"));
+        tableViewProductos.setEditable(true);
+
+        for(Producto producto:listaProductos){
+            tableViewProductos.getItems().add(producto);
+        }
+    }*/
+
+    @Override
+    public void initialize() {
         this.listaProductos = obtenerProductos();
         c_nombre.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombreProducto"));
         c_categoria.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("idCategoria"));

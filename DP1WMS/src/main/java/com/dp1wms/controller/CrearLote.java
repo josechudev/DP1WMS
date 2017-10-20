@@ -36,7 +36,7 @@ public class CrearLote implements Initializable{
         FXMLLoader loader;
         try {
 
-            // root =(Parent) FXMLLoader.load(getClass().getResource("/fxml/BusquedaProducto.fxml"));
+            // root =(Parent) FXMLLoader.load(getClass().getResource("/fxml/BusquedaProductoController.fxml"));
             loader =new FXMLLoader(getClass().getResource("/fxml/BusquedaProductoLote.fxml"));
             root = (Parent) loader.load();
             //root = (Parent) loader.load();
