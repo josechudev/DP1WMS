@@ -8,10 +8,12 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-public class MantenimientoMov {
+@Component
+public class MantenimientoMovController implements FxmlController{
 
     public void ingresoLote(ActionEvent event){
         System.out.println("Ingreso de Lote");
@@ -83,5 +85,10 @@ public class MantenimientoMov {
         crearLoteStage.hide();
         crearLoteStage.setScene(crearLoteScene);
         crearLoteStage.show();*/
+    }
+
+    @Override
+    public void initialize() {
+
     }
 }

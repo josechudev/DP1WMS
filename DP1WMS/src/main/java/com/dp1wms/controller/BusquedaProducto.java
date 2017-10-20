@@ -1,5 +1,7 @@
 package com.dp1wms.controller;
 
+import com.dp1wms.dao.RepositoryMantMov;
+import com.dp1wms.dao.impl.RepositoryMantMovImpl;
 import com.dp1wms.model.Producto;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,12 +11,17 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+@Component
 public class BusquedaProducto implements Initializable {
 
     @FXML
@@ -41,6 +48,9 @@ public class BusquedaProducto implements Initializable {
     private CrearLote crearLoteController;
 
     private String controllerActual = null;
+
+    @Autowired
+    private RepositoryMantMov repositoryMantMov;
 
     public void buscarProducto(ActionEvent event){
         System.out.println("Buscar Producto");
@@ -108,7 +118,13 @@ public class BusquedaProducto implements Initializable {
         producto2.setNombreProducto("Cemento");
         producto2.setIdCategoria(2);
         listaProductos.add(producto2);
+        if(repositoryMantMov == null){
+            System.out.println("Repository null");
+        }else{
+            System.out.println("repository not null");
+        }
         return listaProductos;
+        //return repositoryMantMov2.obtenerProductos();
     }
 
 

@@ -71,7 +71,7 @@ public class Producto {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
-
+    }
     public float getPeso() {
         return peso;
     }

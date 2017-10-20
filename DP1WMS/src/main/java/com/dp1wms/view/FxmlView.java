@@ -19,7 +19,22 @@ public enum FxmlView {
         boolean isResizable(){
             return true;
         }
-    }, LOGIN {
+    },MANTMOV {
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("mantmov.title");
+        }
+
+        @Override
+        String getFxmlFile() {
+            return "/fxml/MantenimientoMov.fxml";
+        }
+
+        @Override
+        boolean isResizable(){
+            return false;
+        }
+    },LOGIN {
         @Override
         String getTitle() {
             return getStringFromResourceBundle("login.title");

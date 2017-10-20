@@ -1,5 +1,6 @@
 package com.dp1wms.controller;
 
+import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.view.FxmlView;
 import com.dp1wms.view.StageManager;
 import javafx.fxml.FXML;
@@ -20,6 +21,8 @@ public class LoginController implements FxmlController{
     @FXML
     private Label statusLabel;
 
+    @Autowired
+    private RepositoryMantMov repositoryMantMov;
 
     private final StageManager stageManager;
 
@@ -40,6 +43,14 @@ public class LoginController implements FxmlController{
 
         String username = getUsername();
         String password = getPassword();
+        if(repositoryMantMov != null){
+            System.out.println("not null repository");
+            repositoryMantMov.obtenerProductos();
+        }else{
+         System.out.println("null repository");
+         }
+
+
         if (UsuarioCtrl.verificarCredenciales(username, password)){
             this.stageManager.cambiarScene(FxmlView.MAIN);
         } else {
