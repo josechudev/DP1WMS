@@ -12,8 +12,10 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/MantenimientoMov.fxml"));
-        
+        //Parent root = FXMLLoader.load(getClass().getResource("/fxml/MantenimientoMov.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("/fxml/GeneralFxml/v_mantenimientos.fxml"));
+
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/GeneralFxml/v_mantenimientos.fxml"));
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
         
