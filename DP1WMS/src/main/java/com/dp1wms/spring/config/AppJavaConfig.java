@@ -22,12 +22,6 @@ public class AppJavaConfig {
     }
 
     @Bean
-    public RepositoryMantMov repositoryMantMov() {
-        System.out.println("repo from bean");
-        return new RepositoryMantMovImpl();
-    }
-
-    @Bean
     @Lazy(value = true) //Stage only created after Spring context bootstap
     public StageManager stageCtrl(Stage stage) throws IOException {
         return new StageManager(springFXMLLoader, stage);

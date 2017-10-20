@@ -19,15 +19,45 @@ public enum FxmlView {
         boolean isResizable(){
             return true;
         }
-    },MANTMOV {
+    },MANTENIMIENTO_MOVVIMIENTO {
         @Override
         String getTitle() {
-            return getStringFromResourceBundle("mantmov.title");
+            return getStringFromResourceBundle("mantenimiento.movimiento.title");
         }
 
         @Override
         String getFxmlFile() {
             return "/fxml/MantenimientoMov.fxml";
+        }
+
+        @Override
+        boolean isResizable(){
+            return false;
+        }
+    }, INGRESO_PRODUCTO{
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("ingreso.producto.title");
+        }
+
+        @Override
+        String getFxmlFile() {
+            return "/fxml/IngresoProducto.fxml";
+        }
+
+        @Override
+        boolean isResizable(){
+            return false;
+        }
+    }, BUSQUEDA_PRODUCTO{
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("busquedaproducto.title");
+        }
+
+        @Override
+        String getFxmlFile() {
+            return "/fxml/BusquedaProducto.fxml";
         }
 
         @Override

@@ -1,8 +1,8 @@
 package com.dp1wms.controller;
 
 import com.dp1wms.dao.RepositoryMantMov;
-import com.dp1wms.dao.impl.RepositoryMantMovImpl;
 import com.dp1wms.model.Producto;
+import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 @Component
-public class BusquedaProducto implements Initializable {
+public class BusquedaProductoController implements Initializable {
 
     @FXML
     private AnchorPane buscarProductoAnchorPane;
@@ -43,7 +43,7 @@ public class BusquedaProducto implements Initializable {
 
     private List<Producto> listaProductos;
 
-    private IngresoProducto ingresoProductoController;
+    private IngresoProductoController ingresoProductoControllerController;
 
     private CrearLote crearLoteController;
 
@@ -51,6 +51,15 @@ public class BusquedaProducto implements Initializable {
 
     @Autowired
     private RepositoryMantMov repositoryMantMov;
+
+    private final StageManager stageManager;
+
+    @Autowired @Lazy
+    public BusquedaProductoController(StageManager stageManager, IngresoProductoController ingresoProductoController){
+        this.stageManager = stageManager;
+        this.ingresoProductoControllerController = ingresoProductoController;
+    }
+
 
     public void buscarProducto(ActionEvent event){
         System.out.println("Buscar Producto");
@@ -64,9 +73,9 @@ public class BusquedaProducto implements Initializable {
         }
     }
 
-    public void setMovimientoProductoController(IngresoProducto controller){
-        this.ingresoProductoController = controller;
-        this.controllerActual = "IngresoProducto";
+    public void setMovimientoProductoController(IngresoProductoController controller){
+        this.ingresoProductoControllerController = controller;
+        this.controllerActual = "IngresoProductoController";
     }
 
     public void setCrearLoteController(CrearLote controller){
@@ -79,9 +88,7 @@ public class BusquedaProducto implements Initializable {
         System.out.println(producto.getNombreProducto());
         // Integer idProducto = obtenerIdProducto();
 
-        ingresoProductoController.actualizarDataProducto(producto.getNombreProducto(),1);
-
-
+        ingresoProductoControllerController.actualizarDataProducto(producto.getNombreProducto(),1);
         buscarProductoAnchorPane.getScene().getWindow().hide();
     }
 
@@ -124,7 +131,7 @@ public class BusquedaProducto implements Initializable {
             System.out.println("repository not null");
         }
         return listaProductos;
-        //return repositoryMantMov2.obtenerProductos();
+        //return repositoryMantMov.obtenerProductos();
     }
 
 

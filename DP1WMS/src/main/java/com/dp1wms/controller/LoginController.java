@@ -43,12 +43,6 @@ public class LoginController implements FxmlController{
 
         String username = getUsername();
         String password = getPassword();
-        if(repositoryMantMov != null){
-            System.out.println("not null repository");
-            repositoryMantMov.obtenerProductos();
-        }else{
-         System.out.println("null repository");
-         }
 
 
         if (UsuarioCtrl.verificarCredenciales(username, password)){
