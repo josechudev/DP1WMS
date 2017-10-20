@@ -1,5 +1,6 @@
 package com.dp1wms.controller;
 
+import com.dp1wms.model.Usuario;
 import com.dp1wms.view.FxmlView;
 import com.dp1wms.view.StageManager;
 import javafx.fxml.FXML;
@@ -23,6 +24,11 @@ public class LoginController implements FxmlController{
 
     private final StageManager stageManager;
 
+    /**
+     * Necesitan ser inicializadas
+     */
+    private UsuarioCtrl usuarioCtrl;
+
     @Autowired @Lazy
     public LoginController(StageManager stageManager){
         this.stageManager = stageManager;
@@ -30,6 +36,7 @@ public class LoginController implements FxmlController{
 
     @Override
     public void initialize(){
+        this.usuarioCtrl = new UsuarioCtrl();
     }
     /**
      *  Revisar las credenciales de acceso (nombre de usuario y contraseña)
@@ -40,7 +47,7 @@ public class LoginController implements FxmlController{
 
         String username = getUsername();
         String password = getPassword();
-        if (UsuarioCtrl.verificarCredenciales(username, password)){
+        if (usuarioCtrl.verificarCredenciales(username, password)){
             this.stageManager.cambiarScene(FxmlView.MAIN);
         } else {
             this.borrarCredenciales();
