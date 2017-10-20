@@ -8,8 +8,11 @@ public class Lote {
 
     private int fechaLote;
 
-    private int fechaEntrada;
+    private String fechaEntrada;
 
+    private String nombreProducto;
+
+    private int stockParcial;
 
     public int getIdLote() {
         return idLote;
@@ -35,11 +38,29 @@ public class Lote {
         this.fechaLote = fechaLote;
     }
 
-    public int getFechaEntrada() {
+    public String getFechaEntrada() {
         return fechaEntrada;
     }
 
-    public void setFechaEntrada(int fechaEntrada) {
+    public void setFechaEntrada(String fechaEntrada) {
         this.fechaEntrada = fechaEntrada;
+    }
+
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+
+    public int getStockParcial() {
+        return stockParcial;
+    }
+
+    public void setStockParcial(int stockParcial) {
+        this.stockParcial = stockParcial;
     }
 }
