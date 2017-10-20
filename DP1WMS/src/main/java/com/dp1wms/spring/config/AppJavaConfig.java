@@ -1,5 +1,7 @@
 package com.dp1wms.spring.config;
 
+import com.dp1wms.dao.RepositoryMantMov;
+import com.dp1wms.dao.impl.RepositoryMantMovImpl;
 import com.dp1wms.view.StageManager;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
