@@ -31,9 +31,10 @@ public class Producto {
         this.stock = stock;
     }
 
+    /*
     public Producto() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }*/
 
     public int getIdProducto() {
         return idProducto;
