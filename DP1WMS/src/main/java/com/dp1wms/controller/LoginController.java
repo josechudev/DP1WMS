@@ -1,6 +1,7 @@
 package com.dp1wms.controller;
 
 import com.dp1wms.dao.RepositoryMantMov;
+import com.dp1wms.dao.RepositorySeguridad;
 import com.dp1wms.model.Usuario;
 import com.dp1wms.view.FxmlView;
 import com.dp1wms.view.StageManager;
@@ -23,14 +24,10 @@ public class LoginController implements FxmlController{
     private Label statusLabel;
 
     @Autowired
-    private RepositoryMantMov repositoryMantMov;
+    private RepositorySeguridad repositorySeguridad;
 
     private final StageManager stageManager;
 
-    /**
-     * Necesitan ser inicializadas
-     */
-    private UsuarioCtrl usuarioCtrl;
 
     @Autowired @Lazy
     public LoginController(StageManager stageManager){
@@ -39,7 +36,6 @@ public class LoginController implements FxmlController{
 
     @Override
     public void initialize(){
-        this.usuarioCtrl = new UsuarioCtrl();
     }
     /**
      *  Revisar las credenciales de acceso (nombre de usuario y contraseña)
@@ -50,7 +46,10 @@ public class LoginController implements FxmlController{
 
         String username = getUsername();
         String password = getPassword();
-        if (usuarioCtrl.verificarCredenciales(username, password)){
+        Usuario usuario = new Usuario();
+        usuario.setNombreusuario(username);
+        usuario.setPassword(password);
+        if ((usuario = repositorySeguridad.validarCredenciales(usuario)) != null){
             this.stageManager.cambiarScene(FxmlView.MAIN);
         } else {
             this.borrarCredenciales();

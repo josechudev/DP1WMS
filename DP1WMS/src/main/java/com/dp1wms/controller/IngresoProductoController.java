@@ -47,7 +47,7 @@ public class IngresoProductoController implements Initializable {
 
     public void buscarProducto(ActionEvent event){
         System.out.println("Buscar Producto");
-        this.stageManager.mostarModal(FxmlView.BUSQUEDA_PRODUCTO);
+        this.stageManager.mostrarModal(FxmlView.BUSQUEDA_PRODUCTO);
     }
 
     public void actualizarDataProducto(String nombreProducto,int idProducto){
