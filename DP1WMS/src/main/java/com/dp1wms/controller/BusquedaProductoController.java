@@ -1,6 +1,8 @@
 package com.dp1wms.controller;
 
+import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.model.Producto;
+import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,13 +11,21 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class BusquedaProducto implements Initializable {
+@Component
+public class BusquedaProductoController implements Initializable {
+
+    @FXML
+    private AnchorPane buscarProductoAnchorPane;
 
     @FXML
     private TextField txb_nombre;
@@ -33,6 +43,24 @@ public class BusquedaProducto implements Initializable {
 
     private List<Producto> listaProductos;
 
+    private IngresoProductoController ingresoProductoControllerController;
+
+    private CrearLote crearLoteController;
+
+    private String controllerActual = null;
+
+    @Autowired
+    private RepositoryMantMov repositoryMantMov;
+
+    private final StageManager stageManager;
+
+    @Autowired @Lazy
+    public BusquedaProductoController(StageManager stageManager, IngresoProductoController ingresoProductoController){
+        this.stageManager = stageManager;
+        this.ingresoProductoControllerController = ingresoProductoController;
+    }
+
+
     public void buscarProducto(ActionEvent event){
         System.out.println("Buscar Producto");
 
@@ -45,10 +73,27 @@ public class BusquedaProducto implements Initializable {
         }
     }
 
-    public Producto escogerProducto(ActionEvent event){
+    public void setMovimientoProductoController(IngresoProductoController controller){
+        this.ingresoProductoControllerController = controller;
+        this.controllerActual = "IngresoProductoController";
+    }
+
+    public void setCrearLoteController(CrearLote controller){
+        this.crearLoteController = controller;
+        this.controllerActual = "CrearLote";
+    }
+
+    public void escogerProducto(ActionEvent event){
         Producto producto = tableViewProductos.getSelectionModel().getSelectedItem();
         System.out.println(producto.getNombreProducto());
-        return producto;
+        // Integer idProducto = obtenerIdProducto();
+
+        ingresoProductoControllerController.actualizarDataProducto(producto.getNombreProducto(),1);
+        buscarProductoAnchorPane.getScene().getWindow().hide();
+    }
+
+    public void cancelarBusqueda(ActionEvent event){
+        buscarProductoAnchorPane.getScene().getWindow().hide();
     }
 
     private void limpiarTabla(){
@@ -60,6 +105,9 @@ public class BusquedaProducto implements Initializable {
 
     private  List<Producto >buscarProducto(String nombreProducto){
         List<Producto> lista  = new ArrayList<Producto>();
+        if(nombreProducto.equalsIgnoreCase(""))
+            return this.listaProductos;
+
         for(Producto producto : listaProductos){
             if(producto.getNombreProducto().equalsIgnoreCase(nombreProducto))
                 lista.add(producto);
@@ -77,7 +125,13 @@ public class BusquedaProducto implements Initializable {
         producto2.setNombreProducto("Cemento");
         producto2.setIdCategoria(2);
         listaProductos.add(producto2);
+        if(repositoryMantMov == null){
+            System.out.println("Repository null");
+        }else{
+            System.out.println("repository not null");
+        }
         return listaProductos;
+        //return repositoryMantMov.obtenerProductos();
     }
 
 

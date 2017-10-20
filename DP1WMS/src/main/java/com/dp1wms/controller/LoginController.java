@@ -1,5 +1,6 @@
 package com.dp1wms.controller;
 
+import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.model.Usuario;
 import com.dp1wms.view.FxmlView;
 import com.dp1wms.view.StageManager;
@@ -21,6 +22,8 @@ public class LoginController implements FxmlController{
     @FXML
     private Label statusLabel;
 
+    @Autowired
+    private RepositoryMantMov repositoryMantMov;
 
     private final StageManager stageManager;
 

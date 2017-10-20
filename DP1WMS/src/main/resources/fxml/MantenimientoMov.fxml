@@ -5,17 +5,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantenimientoMov">
+<AnchorPane prefHeight="273.0" prefWidth="382.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantenimientoMovController">
    <children>
-      <Button fx:id="btn_CrearLote" layoutX="57.0" layoutY="93.0" mnemonicParsing="false" onAction="#ingresoLote" text="Nuevo Lote" />
-      <Button fx:id="btn_ingresoProducto" layoutX="192.0" layoutY="93.0" mnemonicParsing="false" onAction="#ingresarProducto" text="Ingreso Producto" />
-      <Button layoutX="57.0" layoutY="200.0" mnemonicParsing="false" text="Salida Producto" />
-      <Label layoutX="43.0" layoutY="48.0" prefHeight="27.0" prefWidth="117.0" text="Ingresos">
+      <Button fx:id="btn_CrearLote" layoutX="43.0" layoutY="119.0" mnemonicParsing="false" onAction="#ingresoLote" prefHeight="33.0" prefWidth="164.0" text="Nuevo Lote" />
+      <Button fx:id="btn_ingresoProducto" layoutX="43.0" layoutY="179.0" mnemonicParsing="false" onAction="#movimientoProducto" prefHeight="42.0" prefWidth="164.0" text="Ingreso/Salida Producto" />
+      <Label layoutX="43.0" layoutY="75.0" prefHeight="27.0" prefWidth="117.0" text="Acciones">
          <font>
-            <Font size="18.0" />
+            <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="43.0" layoutY="149.0" text="Salidas">
+      <Label layoutX="43.0" layoutY="24.0" text="Mantenimiento Inventario/Movimientos">
          <font>
             <Font size="18.0" />
          </font>
