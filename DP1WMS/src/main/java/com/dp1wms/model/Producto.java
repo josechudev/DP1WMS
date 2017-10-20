@@ -17,8 +17,9 @@ public class Producto {
 
     private int stock;
 
-    //ELIMINARLUEGO
-    public Producto(){}
+    public Producto(){
+
+    }
 
     public Producto(int idProducto, String nombreProducto, int idCategoria, float peso, String fechaVencimiento, String descripcion, int stock) {
         this.idProducto = idProducto;
@@ -29,6 +30,11 @@ public class Producto {
         this.descripcion = descripcion;
         this.stock = stock;
     }
+
+    /*
+    public Producto() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }*/
 
     public int getIdProducto() {
         return idProducto;
