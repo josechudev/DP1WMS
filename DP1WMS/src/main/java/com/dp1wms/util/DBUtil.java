@@ -1,15 +1,16 @@
-package com.dp1wms.com.dp1wms.util;
+package com.dp1wms.util;
 
 import com.sun.rowset.CachedRowSetImpl;
 
 import java.sql.*;
+
 public class DBUtil {
 
     private static final String JDBC_DRIVER= "org.postgresql.Driver";
 
     private static Connection conn = null;
 
-    private static final String connStr="";
+    private static final String connStr="jdbc:postgresql://200.16.7.71:1047";
 
     public static void dbConnect() throws ClassNotFoundException, SQLException {
         try {
