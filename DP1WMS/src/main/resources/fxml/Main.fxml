@@ -24,8 +24,8 @@
                 </Menu>
                   <Menu mnemonicParsing="false" text="Menu 2">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoMovimientos" text="Subitem 2.1" />
-                        <MenuItem mnemonicParsing="false" text="Subitem 2.2" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoMovimientos" text="Mantenimiento Movimiento" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoUsuario" text="Mantenimiento Usuario" />
                      </items>
                   </Menu>
               </menus>

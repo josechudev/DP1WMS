@@ -63,6 +63,12 @@ public class MainController implements FxmlController {
     }
 
     @FXML
+    private void cargarMantenimientoUsuario(ActionEvent event) {
+        System.out.println("cargarMantenimientoUsuario");
+        this.stageManager.mostrarModal(FxmlView.MANTENIMIENTO_USUARIO);
+    }
+
+    @FXML
     private void cerrarSesion(){
         this.usuario = null;
         this.stageManager.cambiarScene(FxmlView.LOGIN);
