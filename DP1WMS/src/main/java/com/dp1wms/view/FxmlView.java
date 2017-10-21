@@ -19,6 +19,21 @@ public enum FxmlView {
         boolean isResizable(){
             return true;
         }
+    }, MANTENIMIENTO_USUARIO {
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("mantenimiento.usuario.title");
+        }
+
+        @Override
+        String getFxmlFile() {
+            return "/fxml/UsuarioFxml/MantenimientoUsuario.fxml";
+        }
+
+        @Override
+        boolean isResizable(){
+            return false;
+        }
     },MANTENIMIENTO_MOVVIMIENTO {
         @Override
         String getTitle() {
