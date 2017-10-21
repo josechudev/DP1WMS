@@ -1,9 +1,7 @@
 package com.dp1wms.controller;
 
-import com.dp1wms.controller.UsuarioDatosController;
-import com.dp1wms.model.UsuarioModel.ListaUsuario;
+import com.dp1wms.dao.RepositoryMantUsuario;
 import com.dp1wms.model.UsuarioModel.Usuario;
-import com.dp1wms.view.FxmlView;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,14 +9,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +20,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class UsuarioCtrl implements FxmlController{
@@ -37,7 +32,10 @@ public class UsuarioCtrl implements FxmlController{
     @FXML private TableColumn<Usuario, String> e_nombre;
     @FXML private TableColumn<Usuario, String> e_password;
 
-    private ListaUsuario v_listaUsuario;
+    //private ListaUsuario v_listaUsuario;
+
+    @Autowired
+    private RepositoryMantUsuario repositoryMantUsuario;
 
     @Autowired @Lazy
     public  UsuarioCtrl(StageManager stageManager){
@@ -51,16 +49,20 @@ public class UsuarioCtrl implements FxmlController{
 
         Parent root = null;
         FXMLLoader loader;
+        //
         Usuario auxUsuario = new Usuario();
-        auxUsuario.setV_id(v_listaUsuario._getNewId());
+        //auxUsuario.setV_id(v_listaUsuario._getNewId());
+        auxUsuario.setV_id(repositoryMantUsuario.newIdUsuario());
         auxUsuario.setV_nombre(null);
         auxUsuario.setV_password(null);
+        //
         try {
             loader =new FXMLLoader(getClass().getResource("/fxml/UsuarioFxml/DatosUsuario.fxml"));
             root = (Parent) loader.load();
             UsuarioDatosController controller = loader.getController();
             //0 es crear
             controller._setData(auxUsuario,0);
+            controller.setV_parentController(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -108,7 +110,8 @@ public class UsuarioCtrl implements FxmlController{
             return;
 
         Usuario auxUsuario = e_table.getSelectionModel().getSelectedItem();
-        v_listaUsuario._eliminarUsuario(auxUsuario.getV_id());
+        repositoryMantUsuario.deleteUsuario(auxUsuario);
+        //v_listaUsuario._eliminarUsuario(auxUsuario.getV_id());
 
         this._llenarGrilla();
     }
@@ -119,7 +122,8 @@ public class UsuarioCtrl implements FxmlController{
         e_nombre.setCellValueFactory(new PropertyValueFactory<Usuario, String>("v_nombre"));
         e_password.setCellValueFactory(new PropertyValueFactory<Usuario, String>("v_password"));
 
-        v_listaUsuario = new ListaUsuario();
+        //No se usa
+        //v_listaUsuario = new ListaUsuario();
         this._llenarGrilla();
     }
 
@@ -127,9 +131,18 @@ public class UsuarioCtrl implements FxmlController{
 
         e_table.getItems().clear();
 
-        for(int i = 0; i < v_listaUsuario.getV_cantUsuario(); i++){
-            e_table.getItems().add(new Usuario( v_listaUsuario._getUsuario(i).getV_id(), v_listaUsuario._getUsuario(i).getV_nombre(), v_listaUsuario._getUsuario(i).getV_password() ) );
+        List<Usuario> auxListaUsuarios = repositoryMantUsuario.selectAllUsuario();
+        for(int i = 0; i < auxListaUsuarios.size(); i++){
+            e_table.getItems().add(new Usuario( auxListaUsuarios.get(i).getV_id(), auxListaUsuarios.get(i).getV_nombre(), auxListaUsuarios.get(i).getV_password() ) );
         }
+    }
+
+    public void crearUsuarioDB(Usuario auxUsuario){
+        repositoryMantUsuario.createUsuario(auxUsuario);
+    }
+
+    public void modificarUsuarioDB(Usuario auxUsuario){
+        repositoryMantUsuario.updateUsuario(auxUsuario);
     }
 
 }
