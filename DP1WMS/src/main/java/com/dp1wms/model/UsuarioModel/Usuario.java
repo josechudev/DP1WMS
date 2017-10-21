@@ -26,7 +26,10 @@ public class Usuario {
     }
 
     public void setV_nombre(String v_nombre) {
-        this.v_nombre = v_nombre;
+        if(v_nombre != null)
+            this.v_nombre = v_nombre;
+        else
+            this.v_nombre = "";
     }
 
     public String getV_password() {
@@ -34,6 +37,9 @@ public class Usuario {
     }
 
     public void setV_password(String v_password) {
-        this.v_password = v_password;
+        if(v_password != null)
+            this.v_password = v_password;
+        else
+            this.v_password = "";
     }
 }
