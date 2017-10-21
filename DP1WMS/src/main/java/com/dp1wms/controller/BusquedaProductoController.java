@@ -1,6 +1,7 @@
 package com.dp1wms.controller;
 
 import com.dp1wms.dao.RepositoryMantMov;
+import com.dp1wms.model.CategoriaProducto;
 import com.dp1wms.model.Producto;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
@@ -36,11 +37,17 @@ public class BusquedaProductoController implements FxmlController {
     @FXML
     private TableColumn<Producto,String> c_nombre;
     @FXML
-    private TableColumn<Producto,Integer> c_categoria;
+    private TableColumn<Producto,String> c_categoria;
+    @FXML
+    private TableColumn<Producto,Integer> c_indice;
+    @FXML
+    private TableColumn<Producto,Integer> c_stock;
 
     private List<Producto> listaProductos;
 
-    private IngresoProductoController ingresoProductoController;
+    private List<CategoriaProducto> listaCategorias;
+
+    private CrearLoteController crearLoteController;
 
     @Autowired
     private RepositoryMantMov repositoryMantMov;
@@ -48,40 +55,30 @@ public class BusquedaProductoController implements FxmlController {
     private final StageManager stageManager;
 
     @Autowired @Lazy
-     public BusquedaProductoController(StageManager stageManager, IngresoProductoController ingresoProductoController){
+     public BusquedaProductoController(StageManager stageManager, CrearLoteController crearLoteController){
                 this.stageManager = stageManager;
-                this.ingresoProductoController = ingresoProductoController;
+                this.crearLoteController = crearLoteController;
         }
-
-    /*@Autowired @Lazy
-    public BusquedaProductoController(StageManager stageManager){
-        this.stageManager = stageManager;
-    }*/
 
     public void buscarProducto(ActionEvent event){
         System.out.println("Buscar Producto");
 
-        String nombreProducto = txb_nombre.getText();
         //String idCategoria = cb_categoria.getValue().toString();
-        List<Producto> listaProductos = buscarProducto(nombreProducto);
+        List<Producto> listaProductos = buscarProductoTabla();
         limpiarTabla();
+        Integer indice = 1;
         for(Producto producto:listaProductos){
+            producto.setIndiceTableView(indice);
+            indice++;
             tableViewProductos.getItems().add(producto);
         }
     }
-/*
-    public void setMovimientoProductoController(IngresoProductoController controller){
-        this.ingresoProductoController = controller;
-    }*/
-
 
     public void escogerProducto(ActionEvent event){
         Producto producto = tableViewProductos.getSelectionModel().getSelectedItem();
-        System.out.println(producto.getNombreProducto());
-        // Integer idProducto = obtenerIdProducto();
+        System.out.println("Nombre Producto: " + producto.getNombreProducto()+" IdProducto: "+producto.getIdProducto());
 
-        ingresoProductoController.actualizarDataProducto(producto.getNombreProducto(),1);
-
+        crearLoteController.actualizarDataProducto(producto);
 
         buscarProductoAnchorPane.getScene().getWindow().hide();
     }
@@ -93,74 +90,74 @@ public class BusquedaProductoController implements FxmlController {
     private void limpiarTabla(){
         tableViewProductos.getItems().clear();
         c_nombre.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombreProducto"));
-        c_categoria.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("idCategoria"));
+        c_categoria.setCellValueFactory(new PropertyValueFactory<Producto, String>("categoria"));
+        c_indice.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("indiceTableView"));
+        c_stock.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("stock"));
         tableViewProductos.setEditable(true);
     }
 
-    private  List<Producto >buscarProducto(String nombreProducto){
+    private  List<Producto >buscarProductoTabla(){
         List<Producto> lista  = new ArrayList<Producto>();
-        if(nombreProducto.equalsIgnoreCase(""))
-            return this.listaProductos;
+        String categoriaBusqueda;
 
-        for(Producto producto : listaProductos){
-            if(producto.getNombreProducto().equalsIgnoreCase(nombreProducto))
-                lista.add(producto);
+        if(cb_categoria.getValue() != null){
+            categoriaBusqueda = cb_categoria.getValue().toString();
+        }else{
+            categoriaBusqueda = "";
+        }
+
+        String nombreBusqueda = txb_nombre.getText().toLowerCase();
+
+        if(!categoriaBusqueda.equalsIgnoreCase("")){
+            if(!nombreBusqueda.equalsIgnoreCase("")){
+                for(Producto producto : listaProductos){
+                    if(producto.getNombreProducto().toLowerCase().contains(nombreBusqueda) && producto.getCategoria().equalsIgnoreCase(categoriaBusqueda))
+                        lista.add(producto);
+                }
+            }else{
+                for(Producto producto : listaProductos){
+                    if(producto.getCategoria().equalsIgnoreCase(categoriaBusqueda))
+                        lista.add(producto);
+                }
+            }
+        }else if(!nombreBusqueda.equalsIgnoreCase("")){
+            for(Producto producto : listaProductos){
+                if(producto.getNombreProducto().toLowerCase().contains(nombreBusqueda))
+                    lista.add(producto);
+            }
+        }else{
+            return this.listaProductos;
         }
         return lista;
     }
 
     private List<Producto> obtenerProductos(){
-        List<Producto> listaProductos = new ArrayList<Producto>();
-        Producto producto = new Producto();
-        producto.setNombreProducto("Martillo");
-        producto.setIdCategoria(1);
-        listaProductos.add(producto);
-        Producto producto2 = new Producto();
-        producto2.setNombreProducto("Cemento");
-        producto2.setIdCategoria(2);
-        listaProductos.add(producto2);
-        if(repositoryMantMov == null){
-            System.out.println("Repository null");
-        }else{
-            System.out.println("repository not null");
-        }
-        return listaProductos;
-        //return repositoryMantMov.obtenerProductos();
+        return repositoryMantMov.obtenerProductos();
     }
 
-/*
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        this.listaProductos = obtenerProductos();
-        c_nombre.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombreProducto"));
-        c_categoria.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("idCategoria"));
-        tableViewProductos.setEditable(true);
-
+    private void llenarTabla(List<Producto> listaProd){
+        Integer indice = 1;
         for(Producto producto:listaProductos){
+            producto.setIndiceTableView(indice);
+            indice++;
             tableViewProductos.getItems().add(producto);
         }
-    }*/
+    }
 
     @Override
     public void initialize() {
         this.listaProductos = obtenerProductos();
         c_nombre.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombreProducto"));
-        c_categoria.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("idCategoria"));
+        c_categoria.setCellValueFactory(new PropertyValueFactory<Producto, String>("categoria"));
+        c_indice.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("indiceTableView"));
+        c_stock.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("stock"));
         tableViewProductos.setEditable(true);
 
-        for(Producto producto:listaProductos){
-            tableViewProductos.getItems().add(producto);
+        this.llenarTabla(this.listaProductos);
+        this.listaCategorias = repositoryMantMov.obtenerCategoriasProducto();
+        cb_categoria.getItems().add("");
+        for(CategoriaProducto categoria:this.listaCategorias) {
+            cb_categoria.getItems().add(categoria.getDescripcion());
         }
     }
-/*
-
-    public ObservableList<Person>  getPeople()
-    {
-        ObservableList<Person> people = FXCollections.observableArrayList();
-        people.add(new Person("Frank","Sinatra",LocalDate.of(1915, Month.DECEMBER, 12), new Image("FrankSinatra.jpg")));
-        people.add(new Person("Rebecca","Fergusson",LocalDate.of(1986, Month.JULY, 21)));
-        people.add(new Person("Mr.","T",LocalDate.of(1952, Month.MAY, 21)));
-
-        return people;
-    }*/
 }

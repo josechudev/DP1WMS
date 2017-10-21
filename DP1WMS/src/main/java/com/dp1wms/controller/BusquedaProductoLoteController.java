@@ -1,23 +1,24 @@
 package com.dp1wms.controller;
 
+import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.model.Lote;
-import com.dp1wms.model.Producto;
+import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class BusquedaProductoLote  implements Initializable {
+@Component
+public class BusquedaProductoLoteController implements FxmlController {
     @FXML
     private AnchorPane buscarProductoLoteAnchorPane;
 
@@ -33,10 +34,23 @@ public class BusquedaProductoLote  implements Initializable {
     private TableColumn<Lote,String> c_fechaEntrada;
     @FXML
     private TableColumn<Lote,Integer> c_cantidadDisponible;
+    @FXML
+    private TableColumn<Lote,Integer> c_indice;
 
     private List<Lote> listaLotes;
 
-    private CrearLote crearLoteController;
+    private IngresoProductoController ingresoProductoController;
+
+    @Autowired
+    private RepositoryMantMov repositoryMantMov;
+
+    private final StageManager stageManager;
+
+    @Autowired @Lazy
+    public BusquedaProductoLoteController(StageManager stageManager, IngresoProductoController ingresoProductoController){
+        this.stageManager = stageManager;
+        this.ingresoProductoController = ingresoProductoController;
+    }
 
     public void buscarProducto(ActionEvent event){
         System.out.println("Buscar Producto");
@@ -45,20 +59,23 @@ public class BusquedaProductoLote  implements Initializable {
         //String idCategoria = cb_categoria.getValue().toString();
         List<Lote> listaLotes = buscarProducto(nombreProducto);
         limpiarTabla();
-        for(Lote lote : listaLotes){
+        llenarTabla(listaLotes);
+    }
+
+    private void llenarTabla(List<Lote> listaLoteBusqueda){
+        Integer indice = 1;
+        for(Lote lote : listaLoteBusqueda){
+            lote.setIndiceTableView(indice);
+            indice++;
             tableViewProductos.getItems().add(lote);
         }
-    }
-    public void setCrearLoteController(CrearLote controller){
-        this.crearLoteController = controller;
     }
 
     public void escogerProducto(ActionEvent event){
         Lote lote = tableViewProductos.getSelectionModel().getSelectedItem();
-        System.out.println(lote.getNombreProducto());
-        // Integer idProducto = obtenerIdProducto();
+        System.out.println("Nombre Producto: " + lote.getNombreProducto()+" IdLote: "+lote.getIdLote()+" IdProducto: "+lote.getIdProducto());
 
-        crearLoteController.actualizarDataProducto(lote.getNombreProducto(),1,2);
+        ingresoProductoController.actualizarDataLote(lote);
 
         buscarProductoLoteAnchorPane.getScene().getWindow().hide();
     }
@@ -72,56 +89,38 @@ public class BusquedaProductoLote  implements Initializable {
         c_nombre.setCellValueFactory(new PropertyValueFactory<Lote, String>("nombreProducto"));
         c_cantidadDisponible.setCellValueFactory(new PropertyValueFactory<Lote, Integer>("stockParcial"));
         c_fechaEntrada.setCellValueFactory(new PropertyValueFactory<Lote, String>("fechaEntrada"));
+        c_indice.setCellValueFactory(new PropertyValueFactory<Lote, Integer>("indiceTableView"));
         tableViewProductos.setEditable(true);
     }
 
     private  List<Lote >buscarProducto(String nombreProducto){
         List<Lote> lista  = new ArrayList<Lote>();
-
+        nombreProducto =   nombreProducto.toLowerCase();
         if(nombreProducto.equalsIgnoreCase(""))
             return this.listaLotes;
 
         for(Lote lote : listaLotes){
-            if(lote.getNombreProducto().equalsIgnoreCase(nombreProducto))
+            String nombreProductoLote = lote.getNombreProducto().toLowerCase();
+            if(nombreProductoLote.contains(nombreProducto))
                 lista.add(lote);
         }
         return lista;
     }
 
     private List<Lote> obtenerProductos(){
-        List<Lote> listaLotes = new ArrayList<Lote>();
-
-        Lote lote = new Lote();
-        lote.setNombreProducto("Martillo");
-        lote.setFechaEntrada("22/11/1963");
-        lote.setStockParcial(50);
-        listaLotes.add(lote);
-
-        Lote lote2 = new Lote();
-        lote2.setNombreProducto("Cemento");
-        lote2.setFechaEntrada("24/11/1964");
-        lote2.setStockParcial(24);
-        listaLotes.add(lote2);
-
-        Lote lote3 = new Lote();
-        lote3.setNombreProducto("Martillo");
-        lote3.setFechaEntrada("22/11/2017");
-        lote3.setStockParcial(37);
-        listaLotes.add(lote3);
-        return listaLotes;
+        return repositoryMantMov.obtenerLotes();
     }
 
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize() {
         this.listaLotes = obtenerProductos();
         c_nombre.setCellValueFactory(new PropertyValueFactory<Lote, String>("nombreProducto"));
         c_cantidadDisponible.setCellValueFactory(new PropertyValueFactory<Lote, Integer>("stockParcial"));
         c_fechaEntrada.setCellValueFactory(new PropertyValueFactory<Lote, String>("fechaEntrada"));
+        c_indice.setCellValueFactory(new PropertyValueFactory<Lote, Integer>("indiceTableView"));
         tableViewProductos.setEditable(true);
 
-        for(Lote lote : listaLotes){
-            tableViewProductos.getItems().add(lote);
-        }
+        llenarTabla(this.listaLotes);
     }
 }

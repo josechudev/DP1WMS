@@ -20,6 +20,8 @@ public class Producto {
 
     private int stock;
 
+    private int indiceTableView;
+
     public Producto(){
 
     }
@@ -103,5 +105,14 @@ public class Producto {
     public void setStock(int stock) {
         this.stock = stock;
 
+    }
+
+
+    public int getIndiceTableView() {
+        return indiceTableView;
+    }
+
+    public void setIndiceTableView(int indiceTableView) {
+        this.indiceTableView = indiceTableView;
     }
 }

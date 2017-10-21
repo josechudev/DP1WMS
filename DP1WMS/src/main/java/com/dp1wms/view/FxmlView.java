@@ -49,21 +49,51 @@ public enum FxmlView {
          boolean isResizable(){
                         return false;
                     }
-     }, BUSQUEDA_PRODUCTO{
+     }, BUSQUEDA_PRODUCTO_LOTE{
          @Override
          String getTitle() {
-                        return getStringFromResourceBundle("busquedaproducto.title");
+                        return getStringFromResourceBundle("busquedaproductolote.title");
                     }
 
                  @Override
          String getFxmlFile() {
-                        return "/fxml/BusquedaProducto.fxml";
+                        return "/fxml/BusquedaProductoLote.fxml";
                     }
 
                  @Override
          boolean isResizable(){
                         return false;
                     }
+    },BUSQUEDA_PRODUCTO{
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("busquedaproducto.title");
+        }
+
+        @Override
+        String getFxmlFile() {
+            return "/fxml/BusquedaProducto.fxml";
+        }
+
+        @Override
+        boolean isResizable(){
+            return false;
+        }
+    }, CREAR_LOTE{
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("crearlote.title");
+        }
+
+        @Override
+        String getFxmlFile() {
+            return "/fxml/CrearLote.fxml";
+        }
+
+        @Override
+        boolean isResizable(){
+            return false;
+        }
     },LOGIN {
         @Override
         String getTitle() {
