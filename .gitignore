@@ -95,6 +95,8 @@ hs_err_pid*
 
 #error?
 
-.idea/
+DP1WMS/.idea/
 *.iml
 *.iws
+DP1WMS/*.iml
+DP1WMS/*.iws
