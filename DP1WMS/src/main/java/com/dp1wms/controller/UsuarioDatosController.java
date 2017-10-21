@@ -1,28 +1,12 @@
 package com.dp1wms.controller;
 
-import com.dp1wms.model.UsuarioModel.ListaUsuario;
 import com.dp1wms.model.UsuarioModel.Usuario;
-import com.dp1wms.view.FxmlView;
-import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
 
 @Component
 public class UsuarioDatosController implements FxmlController{
@@ -34,7 +18,7 @@ public class UsuarioDatosController implements FxmlController{
     @FXML private TextField e_password_datos;
     @FXML private Button e_buton_datos;
 
-    private ListaUsuario v_listaUsuario;
+    //private ListaUsuario v_listaUsuario;
     private int v_accion;
     private Usuario v_usuario;
 
@@ -50,12 +34,17 @@ public class UsuarioDatosController implements FxmlController{
     //Control de la ventana DatosUsuario
     public void btnClickAceptar_datos(ActionEvent event){
         System.out.println("Aceptar");
+        Usuario auxUsuario = new Usuario();
+        auxUsuario.setV_id( Integer.parseInt(e_id_datos.getText()));
+        auxUsuario.setV_nombre( e_nombre_datos.getText());
+        auxUsuario.setV_password( e_password_datos.getText());
         if(this.v_accion == 0){
-            v_listaUsuario._agregarUsuario(Integer.parseInt(e_id_datos.getText()), e_nombre_datos.getText(), e_password_datos.getText());
+            v_parentController.crearUsuarioDB(auxUsuario);
         }
         else{
-            v_listaUsuario._eliminarUsuario(Integer.parseInt(e_id_datos.getText()));
-            v_listaUsuario._agregarUsuario(Integer.parseInt(e_id_datos.getText()), e_nombre_datos.getText(), e_password_datos.getText());
+            v_parentController.modificarUsuarioDB(auxUsuario);
+            //v_listaUsuario._eliminarUsuario(Integer.parseInt(e_id_datos.getText()));
+            //v_listaUsuario._agregarUsuario(Integer.parseInt(e_id_datos.getText()), e_nombre_datos.getText(), e_password_datos.getText());
         }
 
         System.out.println("Accion realizada");
@@ -100,7 +89,7 @@ public class UsuarioDatosController implements FxmlController{
             e_buton_datos.setText("Modificar Usuario");
         }
 
-        v_listaUsuario = new ListaUsuario();
+        //v_listaUsuario = new ListaUsuario();
     }
 
 
