@@ -9,6 +9,9 @@ public class Producto {
 
     private int idCategoria;
 
+
+    private String categoria;
+
     private float peso;
 
     private String fechaVencimiento;
@@ -36,6 +39,7 @@ public class Producto {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }*/
 
+
     public int getIdProducto() {
         return idProducto;
     }
@@ -60,6 +64,14 @@ public class Producto {
         this.idCategoria = idCategoria;
     }
 
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
     public float getPeso() {
         return peso;
     }
@@ -90,5 +102,6 @@ public class Producto {
 
     public void setStock(int stock) {
         this.stock = stock;
+
     }
 }
