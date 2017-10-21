@@ -1,5 +1,6 @@
 package com.dp1wms.controller;
 
+import com.dp1wms.model.Empleado;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,7 @@ import javafx.stage.Window;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 
 public class CrearLote implements Initializable{
     @FXML
@@ -85,4 +87,6 @@ public class CrearLote implements Initializable{
     public void initialize(URL url, ResourceBundle rb) {
         this.txb_nombreProducto.setDisable(true);
     }
+
+
 }
