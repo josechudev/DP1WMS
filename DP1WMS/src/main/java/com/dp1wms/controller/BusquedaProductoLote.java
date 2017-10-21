@@ -17,7 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class BusquedaProductoLote  implements Initializable {
+public class
+BusquedaProductoLote  implements Initializable {
     @FXML
     private AnchorPane buscarProductoLoteAnchorPane;
 

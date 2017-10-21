@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MainController">
+<AnchorPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="634.0" prefWidth="1038.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MainController">
    <children>
       <VBox layoutX="65.0" layoutY="104.0" prefHeight="164.0" prefWidth="285.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <MenuBar style="-fx-background-color: #EEEEEE;">
               <menus>
-                <Menu mnemonicParsing="false" text="Menu 1">
+                <Menu mnemonicParsing="false" text="Usuario">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#fooFunct" text="Subitem 1.1" />
-                        <MenuItem mnemonicParsing="false" text="Subitem 1.2" />
+                    <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
                   </items>
                 </Menu>
                   <Menu mnemonicParsing="false" text="Menu 2">
@@ -26,7 +30,50 @@
                   </Menu>
               </menus>
             </MenuBar>
-            <AnchorPane prefHeight="381.0" prefWidth="600.0" style="-fx-background-color: #95999C;" VBox.vgrow="ALWAYS" />
+            <AnchorPane prefHeight="381.0" prefWidth="600.0" style="-fx-background-color: #95999C;" VBox.vgrow="ALWAYS">
+               <children>
+                  <BorderPane layoutX="249.0" layoutY="193.0" prefHeight="517.0" prefWidth="822.0" style="-fx-background-color: rgba(0,0,0,0);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="736.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
+                           <children>
+                              <Separator layoutX="362.0" layoutY="90.0" orientation="VERTICAL" prefHeight="296.0" prefWidth="13.0" AnchorPane.bottomAnchor="14.0" />
+                              <Label fx:id="nombreEmpleadoLabel" layoutX="24.0" layoutY="24.0" prefHeight="27.0" prefWidth="340.0" text="Bienvenido, Fulano">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="tipoEmpleadoLabel" alignment="CENTER_RIGHT" layoutX="366.0" layoutY="22.0" prefHeight="32.0" prefWidth="346.0" text="Master" textFill="#000000b1">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="24.0" layoutY="82.0" text="Acceso Rápido" textFill="#766582">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="408.0" layoutY="82.0" text="Alertas (0)" textFill="#766582">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </center>
+                     <left>
+                        <StackPane prefHeight="427.0" prefWidth="150.0" visible="false" BorderPane.alignment="CENTER" />
+                     </left>
+                     <top>
+                        <StackPane prefHeight="91.0" prefWidth="805.0" visible="false" BorderPane.alignment="CENTER" />
+                     </top>
+                     <right>
+                        <StackPane prefHeight="150.0" prefWidth="150.0" visible="false" BorderPane.alignment="CENTER" />
+                     </right>
+                     <bottom>
+                        <StackPane prefHeight="91.0" prefWidth="805.0" visible="false" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+               </children></AnchorPane>
          </children>
       </VBox>
    </children>

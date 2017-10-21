@@ -55,7 +55,7 @@ public class MantenimientoMovController implements FxmlController{
 
     public void movimientoProducto(ActionEvent event){
         System.out.println("Movimiento de un Producto");
-        this.stageManager.mostarModal(FxmlView.INGRESO_PRODUCTO);
+        this.stageManager.mostrarModal(FxmlView.INGRESO_PRODUCTO);
     }
 
     @Override

@@ -6,8 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-
 
 public class StageManager {
 
@@ -24,7 +22,7 @@ public class StageManager {
         show(viewRootNode, view.getTitle(), view.isResizable());
     }
 
-    public void mostarModal(final FxmlView view){
+    public void mostrarModal(final FxmlView view){
         Parent viewRootNode = loadFromFxmlFilePath(view.getFxmlFile());
         Scene scene = new Scene(viewRootNode);
 
