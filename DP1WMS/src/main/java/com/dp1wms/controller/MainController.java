@@ -74,6 +74,11 @@ public class MainController implements FxmlController {
         this.stageManager.cambiarScene(FxmlView.LOGIN);
     }
 
+    @FXML
+    private void cargarGenerarProforma(){
+        this.stageManager.mostrarModal(FxmlView.GEN_PROFORMA);
+    }
+
     public void setUsuario(Usuario usuario){
         this.usuario = usuario;
     }

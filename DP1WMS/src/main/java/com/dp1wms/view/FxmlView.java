@@ -109,7 +109,23 @@ public enum FxmlView {
         boolean isResizable(){
             return false;
         }
-    },LOGIN {
+    }, GEN_PROFORMA{
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("generarproforma.title");
+        }
+
+        @Override
+        String getFxmlFile() {
+            return "/fxml/Ventas/Proforma.fxml";
+        }
+
+        @Override
+        boolean isResizable(){
+            return true;
+        }
+    },
+    LOGIN {
         @Override
         String getTitle() {
             return getStringFromResourceBundle("login.title");
