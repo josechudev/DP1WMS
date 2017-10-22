@@ -24,7 +24,7 @@
                 </Menu>
                   <Menu mnemonicParsing="false" text="Ventas">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Proforma" />
+                      <MenuItem mnemonicParsing="false" onAction="#cargarGenerarProforma" text="Proforma" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Menu 2">
