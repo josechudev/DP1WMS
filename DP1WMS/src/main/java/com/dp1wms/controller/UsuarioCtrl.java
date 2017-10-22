@@ -1,6 +1,10 @@
 package com.dp1wms.controller;
 
+import com.dp1wms.dao.RepositoryMantEmpleado;
+import com.dp1wms.dao.RepositoryMantTipoEmpleado;
 import com.dp1wms.dao.RepositoryMantUsuario;
+import com.dp1wms.model.Empleado;
+import com.dp1wms.model.TipoEmpleado;
 import com.dp1wms.model.UsuarioModel.Usuario;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
@@ -36,6 +40,10 @@ public class UsuarioCtrl implements FxmlController{
 
     @Autowired
     private RepositoryMantUsuario repositoryMantUsuario;
+    @Autowired
+    private RepositoryMantEmpleado repositoryMantEmpleado;
+    @Autowired
+    private RepositoryMantTipoEmpleado repositoryMantTipoEmpleado;
 
     @Autowired @Lazy
     public  UsuarioCtrl(StageManager stageManager){
@@ -45,14 +53,10 @@ public class UsuarioCtrl implements FxmlController{
     //Los botones del mantenimiento de usuarios
     public void btnClickCrearUsuario(ActionEvent event){
         System.out.println("Agrear Usuario");
-        //this.stageManager.mostarModal(FxmlView.DATOS_USUARIO);
 
         Parent root = null;
         FXMLLoader loader;
-        //
         Usuario auxUsuario = new Usuario();
-        //auxUsuario.setV_id(v_listaUsuario._getNewId());
-        auxUsuario.setV_id(repositoryMantUsuario.newIdUsuario());
         auxUsuario.setV_nombre(null);
         auxUsuario.setV_password(null);
         //
@@ -72,7 +76,6 @@ public class UsuarioCtrl implements FxmlController{
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.show();
-
     }
 
     public void btnClickModificarUsuario(ActionEvent event){
@@ -145,4 +148,21 @@ public class UsuarioCtrl implements FxmlController{
         repositoryMantUsuario.updateUsuario(auxUsuario);
     }
 
+    public void crearEmpleadoDB(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpelado){
+        repositoryMantEmpleado.createEmpleado(auxUsuario, auxEmpleado, auxTipoEmpelado);
+    }
+
+    public void crearTipoEmpleadoDB(TipoEmpleado auxTipoEmpelado){
+        repositoryMantTipoEmpleado.createTipoEmpleado(auxTipoEmpelado);
+    }
+    public void modificarTipoEmpleadoDB(TipoEmpleado auxTipoEmpelado){
+        repositoryMantTipoEmpleado.updateTipoEmpleado(auxTipoEmpelado);
+    }
+    public void eliminarTipoEmpleadoDB(TipoEmpleado auxTipoEmpelado){
+        repositoryMantTipoEmpleado.deleteTipoEmpleado(auxTipoEmpelado);
+    }
+
+    public List<TipoEmpleado> llenarGrillaTipoEmpleado(){
+        return repositoryMantTipoEmpleado.selectAllTipoEmpleado();
+    }
 }
