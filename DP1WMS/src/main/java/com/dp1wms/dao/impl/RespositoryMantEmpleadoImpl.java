@@ -1,12 +1,17 @@
 package com.dp1wms.dao.impl;
 
 import com.dp1wms.dao.RepositoryMantEmpleado;
+import com.dp1wms.dao.mapper.EmpleadoRowMapper;
+import com.dp1wms.dao.mapper.UsuarioRowMapper;
 import com.dp1wms.model.Empleado;
 import com.dp1wms.model.TipoEmpleado;
+import com.dp1wms.model.UsuarioModel.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class RespositoryMantEmpleadoImpl implements RepositoryMantEmpleado {
@@ -45,4 +50,37 @@ public class RespositoryMantEmpleadoImpl implements RepositoryMantEmpleado {
             return null;
         }
     }
+
+    public List<Empleado> selectAllEmpleado(){
+        String sql = "SELECT idempleado, idusuario, nombre, apellidos, email, idtipoempleado FROM empleado ORDER BY idempleado";
+        return jdbcTemplate.query(sql,
+                new EmpleadoRowMapper());
+    }
+
+    public void createEmpleado(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpleado){
+        String sql = "INSERT INTO empleado(idempleado, idusuario, numDoc, nombre, apellidos, email, idtipoempleado) VALUES(default,?,?,?,?,?,?)";
+        jdbcTemplate.update(sql,
+                new Object[] { this.findIdUsuario(auxUsuario), auxEmpleado.getNumDoc(), auxEmpleado.getNombre(), auxEmpleado.getApellidos(),
+                        auxEmpleado.getEmail(), auxTipoEmpleado.getIdtipoempleado()});
+    }
+
+    private int findIdUsuario(Usuario auxUsuario){
+        String sql= "SELECT idUsuario FROM usuario WHERE nombreUsuario = '"+ auxUsuario.getV_nombre() +"'";
+
+        return jdbcTemplate.queryForObject(sql, new Object[]{}, Integer.class);
+    }
+
+    public void updateEmpleado(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpleado){
+        String sql = "UPDATE empleado SET nombre = ?, apellidos = ?, email = ?, idtipoempleado = ? WHERE idempleado= ? and idusuario = ?";
+        jdbcTemplate.update(sql,
+                new Object[] { auxEmpleado.getNombre(), auxEmpleado.getApellidos(), auxEmpleado.getEmail(), auxTipoEmpleado.getIdtipoempleado(),
+                        auxEmpleado.getIdempleado(), auxUsuario.getV_id()});
+    }
+
+    public void deleteEmpleado(Usuario auxUsuario, Empleado auxEmpleado){
+        String sql = "DELETE FROM empleado WHERE idempleado= ? and idusuario = ?";
+        jdbcTemplate.update(sql,
+                new Object[] { auxEmpleado.getIdempleado(), auxUsuario.getV_id() });
+    }
+
 }

@@ -6,6 +6,13 @@ public class TipoEmpleado {
 
     private String descripcion;
 
+    public TipoEmpleado(){}
+
+    public TipoEmpleado(long idtipoempleado, String descripcion){
+        this.idtipoempleado = idtipoempleado;
+        this.descripcion = descripcion;
+    }
+
     public long getIdtipoempleado() {
         return idtipoempleado;
     }
