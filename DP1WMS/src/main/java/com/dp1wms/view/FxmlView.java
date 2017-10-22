@@ -34,7 +34,7 @@ public enum FxmlView {
         boolean isResizable(){
             return false;
         }
-    },MANTENIMIENTO_MOVVIMIENTO {
+    },MANTENIMIENTO_MOVIMIENTO {
         @Override
         String getTitle() {
             return getStringFromResourceBundle("mantenimiento.movimiento.title");
@@ -49,22 +49,37 @@ public enum FxmlView {
         boolean isResizable(){
             return false;
         }
-    }, INGRESO_PRODUCTO{
-        @Override
-        String getTitle() {
-            return getStringFromResourceBundle("ingreso.producto.title");
-        }
+     }, INGRESO_PRODUCTO{
+         @Override
+         String getTitle() {
+                        return getStringFromResourceBundle("ingreso.producto.title");
+                    }
 
-        @Override
-        String getFxmlFile() {
-            return "/fxml/IngresoProducto.fxml";
-        }
+                 @Override
+         String getFxmlFile() {
+                        return "/fxml/IngresoProducto.fxml";
+                    }
 
-        @Override
-        boolean isResizable(){
-            return false;
-        }
-    }, BUSQUEDA_PRODUCTO{
+                 @Override
+         boolean isResizable(){
+                        return false;
+                    }
+     }, BUSQUEDA_PRODUCTO_LOTE{
+         @Override
+         String getTitle() {
+                        return getStringFromResourceBundle("busquedaproductolote.title");
+                    }
+
+                 @Override
+         String getFxmlFile() {
+                        return "/fxml/BusquedaProductoLote.fxml";
+                    }
+
+                 @Override
+         boolean isResizable(){
+                        return false;
+                    }
+    },BUSQUEDA_PRODUCTO{
         @Override
         String getTitle() {
             return getStringFromResourceBundle("busquedaproducto.title");
@@ -79,7 +94,38 @@ public enum FxmlView {
         boolean isResizable(){
             return false;
         }
-    },LOGIN {
+    }, CREAR_LOTE{
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("crearlote.title");
+        }
+
+        @Override
+        String getFxmlFile() {
+            return "/fxml/CrearLote.fxml";
+        }
+
+        @Override
+        boolean isResizable(){
+            return false;
+        }
+    }, GEN_PROFORMA{
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("generarproforma.title");
+        }
+
+        @Override
+        String getFxmlFile() {
+            return "/fxml/Ventas/Proforma.fxml";
+        }
+
+        @Override
+        boolean isResizable(){
+            return true;
+        }
+    },
+    LOGIN {
         @Override
         String getTitle() {
             return getStringFromResourceBundle("login.title");

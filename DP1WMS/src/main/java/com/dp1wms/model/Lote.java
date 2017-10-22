@@ -14,6 +14,8 @@ public class Lote {
 
     private int stockParcial;
 
+    private int indiceTableView;
+
     public int getIdLote() {
         return idLote;
     }
@@ -62,5 +64,14 @@ public class Lote {
 
     public void setStockParcial(int stockParcial) {
         this.stockParcial = stockParcial;
+    }
+
+
+    public int getIndiceTableView() {
+        return indiceTableView;
+    }
+
+    public void setIndiceTableView(int indiceTableView) {
+        this.indiceTableView = indiceTableView;
     }
 }

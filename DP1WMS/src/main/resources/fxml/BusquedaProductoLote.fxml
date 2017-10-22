@@ -7,19 +7,20 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="buscarProductoLoteAnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.BusquedaProductoLote">
+<AnchorPane fx:id="buscarProductoLoteAnchorPane" prefHeight="400.0" prefWidth="656.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.BusquedaProductoLoteController">
    <children>
-      <TableView fx:id="tableViewProductos" layoutX="33.0" layoutY="132.0" prefHeight="200.0" prefWidth="515.0">
+      <TableView fx:id="tableViewProductos" layoutX="33.0" layoutY="132.0" prefHeight="200.0" prefWidth="593.0">
         <columns>
-          <TableColumn fx:id="c_nombre" prefWidth="205.0" text="Nombre Producto" />
-            <TableColumn fx:id="c_cantidadDisponible" prefWidth="150.0" text="Cantidad Disponible" />
-          <TableColumn fx:id="c_fechaEntrada" prefWidth="159.0" text="Fecha Entrada" />
+            <TableColumn fx:id="c_indice" prefWidth="39.0" text="N°" />
+          <TableColumn fx:id="c_nombre" prefWidth="177.0" text="Nombre Producto" />
+            <TableColumn fx:id="c_cantidadDisponible" prefWidth="133.0" text="Cantidad Disponible" />
+          <TableColumn fx:id="c_fechaEntrada" prefWidth="240.0" text="Fecha Entrada" />
         </columns>
       </TableView>
       <Label layoutX="111.0" layoutY="73.0" text="Nombre Producto" />
       <TextField fx:id="txb_nombre" layoutX="217.0" layoutY="69.0" />
-      <Button fx:id="btn_buscar" layoutX="398.0" layoutY="69.0" mnemonicParsing="false" onAction="#buscarProducto" prefHeight="25.0" prefWidth="75.0" text="Buscar" />
-      <Button fx:id="btn_escoger" layoutX="217.0" layoutY="342.0" mnemonicParsing="false" onAction="#escogerProducto" text="Escoger" />
-      <Button fx:id="btn_cancelar" layoutX="359.0" layoutY="342.0" mnemonicParsing="false" onAction="#cancelarBusqueda" text="Cancelar" />
+      <Button fx:id="btn_buscar" layoutX="445.0" layoutY="69.0" mnemonicParsing="false" onAction="#buscarProducto" prefHeight="25.0" prefWidth="96.0" text="Buscar" />
+      <Button fx:id="btn_escoger" layoutX="217.0" layoutY="342.0" mnemonicParsing="false" onAction="#escogerProducto" prefHeight="25.0" prefWidth="86.0" text="Escoger" />
+      <Button fx:id="btn_cancelar" layoutX="387.0" layoutY="342.0" mnemonicParsing="false" onAction="#cancelarBusqueda" prefHeight="25.0" prefWidth="96.0" text="Cancelar" />
    </children>
 </AnchorPane>
