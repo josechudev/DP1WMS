@@ -26,12 +26,12 @@ public class MantenimientoMovController implements FxmlController{
     @FXML
     public void ingresoLote(ActionEvent event){
         System.out.println("Ingreso de Lote");
-        this.stageManager.mostarModal(FxmlView.CREAR_LOTE);
+        this.stageManager.mostrarModal(FxmlView.CREAR_LOTE);
      }
 
     public void movimientoProducto(ActionEvent event){
         System.out.println("Movimiento de un Producto");
-        this.stageManager.mostarModal(FxmlView.INGRESO_PRODUCTO);
+        this.stageManager.mostrarModal(FxmlView.INGRESO_PRODUCTO);
     }
 
     @Override

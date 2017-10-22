@@ -59,7 +59,7 @@ public class IngresoProductoController implements FxmlController {
 
      public void buscarProducto(ActionEvent event){
             System.out.println("Buscar Producto");
-            this.stageManager.mostarModal(FxmlView.BUSQUEDA_PRODUCTO_LOTE);
+            this.stageManager.mostrarModal(FxmlView.BUSQUEDA_PRODUCTO_LOTE);
     }
 
 

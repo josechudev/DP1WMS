@@ -57,7 +57,7 @@ public class CrearLoteController implements FxmlController{
 
     public void buscarProducto(ActionEvent event) {
         System.out.println("Buscar Producto");
-        this.stageManager.mostarModal(FxmlView.BUSQUEDA_PRODUCTO);
+        this.stageManager.mostrarModal(FxmlView.BUSQUEDA_PRODUCTO);
 
 
     }
