@@ -22,6 +22,11 @@
                     <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
                   </items>
                 </Menu>
+                  <Menu mnemonicParsing="false" text="Ventas">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#cargarGenerarProforma" text="Proforma" />
+                    </items>
+                  </Menu>
                   <Menu mnemonicParsing="false" text="Menu 2">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoMovimientos" text="Mantenimiento Movimiento" />
