@@ -102,7 +102,7 @@ public class IngresoProductoController implements FxmlController {
                 try{
                     cantidad = Integer.parseInt(this.txb_cantidad.getText());
                 }catch(Exception e){
-                    System.out.println("Error al ingresar la cantidad");
+                    System.out.println("Error al ingresar la cantidad descrita");
                     return;
                 }
 
