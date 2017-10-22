@@ -1,27 +1,38 @@
 package com.dp1wms.controller;
 
+import com.dp1wms.dao.impl.RespositoryMantEmpleadoImpl;
+import com.dp1wms.model.Empleado;
+import com.dp1wms.model.Usuario;
 import com.dp1wms.view.FxmlView;
 import com.dp1wms.view.StageManager;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.Window;
+import javafx.scene.control.Label;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-
-import java.awt.*;
 import javafx.event.ActionEvent;
-import java.io.IOException;
+import com.dp1wms.dao.RepositoryMantEmpleado;
 
 @Component
 public class MainController implements FxmlController {
 
+    private Usuario usuario;
+    private Empleado empleado;
+
+
+    @FXML
+    private Label nombreEmpleadoLabel;
+    @FXML
+    private Label tipoEmpleadoLabel;
+
     private final StageManager stageManager;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private RepositoryMantEmpleado repositoryMantEmpleado;
 
     @Autowired @Lazy
     public MainController(StageManager stageManager){
@@ -29,41 +40,41 @@ public class MainController implements FxmlController {
     }
 
     @Override
-    public void initialize(){}
-
-   /* public void cargarMantenimientoMovimientos(ActionEvent event){
-        this.stageManager.cambiarScene(FxmlView.MANTMOV);
-    }*/
+    public void initialize(){
+        /**
+         * Cargar información del empleado
+         */
+        long idusuario = this.usuario.getIdusuario();
+        this.empleado = repositoryMantEmpleado.obtenerEmpleadoPorIdUsuario(idusuario);
+        if(this.empleado == null){
+            //Algún error - revisar consola
+            System.exit(0);
+        } else {
+            //Cargar subcontrollador
+            this.nombreEmpleadoLabel.setText("Bienvenido, " + this.empleado.getNombre());
+            this.tipoEmpleadoLabel.setText(this.empleado.getTipoEmpleado().getDescripcion());
+        }
+    }
 
     @FXML
     private void cargarMantenimientoMovimientos(ActionEvent event) {
         System.out.println("cargarMantenimientoMovimientos");
-        /*Parent root = null;
-        FXMLLoader loader;
-        try {
+        this.stageManager.mostrarModal(FxmlView.MANTENIMIENTO_MOVIMIENTO);
+    }
 
-            // root =(Parent) FXMLLoader.load(getClass().getResource("/fxml/BusquedaProductoController.fxml"));
-            loader =new FXMLLoader(getClass().getResource("/fxml/MantenimientoMov.fxml"));
-            root = (Parent) loader.load();
-            //root = (Parent) loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @FXML
+    private void cargarMantenimientoUsuario(ActionEvent event) {
+        System.out.println("cargarMantenimientoUsuario");
+        this.stageManager.mostrarModal(FxmlView.MANTENIMIENTO_USUARIO);
+    }
 
-        Scene scene = new Scene(root);
-        //Window existingWindow = ((Node) event.getSource()).getScene().getWindow(); // linea importnate fake 1
+    @FXML
+    private void cerrarSesion(){
+        this.usuario = null;
+        this.stageManager.cambiarScene(FxmlView.LOGIN);
+    }
 
-
-
-        // create a new stage:
-        Stage stage = new Stage();
-        // make it modal:
-        stage.initModality(Modality.APPLICATION_MODAL);
-        // make its owner the existing window:
-        //stage.initOwner(existingWindow); // linea importante fake 2
-
-        stage.setScene(scene);
-        stage.show();*/
-        this.stageManager.mostarModal(FxmlView.MANTENIMIENTO_MOVIMIENTO);
+    public void setUsuario(Usuario usuario){
+        this.usuario = usuario;
     }
 }
