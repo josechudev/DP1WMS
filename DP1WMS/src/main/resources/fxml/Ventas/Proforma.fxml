@@ -118,7 +118,6 @@
                                  </font>
                               </Label>
                               <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="135.0" text="Buscar Producto" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="58.0" text="Editar" HBox.hgrow="NEVER" />
                               <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="75.0" text="Eliminar" />
                            </children>
                         </HBox>
