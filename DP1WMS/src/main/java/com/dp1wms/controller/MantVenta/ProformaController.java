@@ -5,6 +5,7 @@ import com.dp1wms.controller.MainController;
 import com.dp1wms.model.Cliente;
 import com.dp1wms.model.Envio;
 import com.dp1wms.model.Proforma;
+import com.dp1wms.view.FxmlView;
 import com.dp1wms.view.StageManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -45,6 +46,26 @@ public class ProformaController implements FxmlController{
     public ProformaController(StageManager stageManager, MainController mainController){
         this.stageManager = stageManager;
         this.mainController = mainController;
+    }
+
+    @FXML
+    private void mostrarBusquedaCliente(){
+        this.stageManager.mostrarModal(FxmlView.BUSCAR_CLIENTE);
+    }
+
+    @FXML
+    private void mostrarRegistrarCliente(){
+        this.stageManager.mostrarModal(FxmlView.REGISTRAR_CLIENTE);
+    }
+
+    public void setCliente(Cliente cliente){
+        this.cliente = cliente;
+        this.codigoLabel.setText(String.valueOf(cliente.getIdCliente()));
+        this.nombreLabel.setText(cliente.getRazonSocial());
+        this.rucLabel.setText(cliente.getNumDoc());
+        this.telefonoLabel.setText(cliente.getTelefono());
+        this.emailLabel.setText(cliente.getEmail());
+        this.direccionLabel.setText(cliente.getDireccion());
     }
 
 }

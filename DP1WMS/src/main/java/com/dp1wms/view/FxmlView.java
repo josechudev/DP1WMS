@@ -94,6 +94,36 @@ public enum FxmlView {
         boolean isResizable(){
             return true;
         }
+    }, BUSCAR_CLIENTE{
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("buscarcliente.title");
+        }
+
+        @Override
+        String getFxmlFile() {
+            return "/fxml/Ventas/BuscarCliente.fxml";
+        }
+
+        @Override
+        boolean isResizable(){
+            return true;
+        }
+    }, REGISTRAR_CLIENTE{
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("registrarcliente.title");
+        }
+
+        @Override
+        String getFxmlFile() {
+            return "/fxml/Ventas/RegistrarCliente.fxml";
+        }
+
+        @Override
+        boolean isResizable(){
+            return false;
+        }
     },
     LOGIN {
         @Override
