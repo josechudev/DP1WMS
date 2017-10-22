@@ -35,6 +35,7 @@ public class RespositoryMantEmpleadoImpl implements RepositoryMantEmpleado {
                         TipoEmpleado te  = new TipoEmpleado();
                         e.setIdempleado(rs.getLong("idempleado"));
                         e.setIdusuario(rs.getLong("idusuario"));
+                        e.setNumDoc(rs.getString("numDoc"));
                         e.setNombre(rs.getString("nombre"));
                         e.setApellidos(rs.getString("apellidos"));
                         e.setEmail(rs.getString("email"));
@@ -52,7 +53,7 @@ public class RespositoryMantEmpleadoImpl implements RepositoryMantEmpleado {
     }
 
     public List<Empleado> selectAllEmpleado(){
-        String sql = "SELECT idempleado, idusuario, nombre, apellidos, email, idtipoempleado FROM empleado ORDER BY idempleado";
+        String sql = "SELECT idempleado, idusuario, numDoc, nombre, apellidos, email, idtipoempleado FROM empleado ORDER BY idempleado";
         return jdbcTemplate.query(sql,
                 new EmpleadoRowMapper());
     }
@@ -64,6 +65,12 @@ public class RespositoryMantEmpleadoImpl implements RepositoryMantEmpleado {
                         auxEmpleado.getEmail(), auxTipoEmpleado.getIdtipoempleado()});
     }
 
+    public Usuario findUsuariobyName(String auxName){
+        String sql= "SELECT idUsuario, nombreUsuario, password FROM usuario WHERE nombreUsuario = '"+ auxName +"'";
+        List<Usuario> auxUsuario = jdbcTemplate.query(sql, new UsuarioRowMapper() );
+
+        return auxUsuario.get(0);
+    }
     private int findIdUsuario(Usuario auxUsuario){
         String sql= "SELECT idUsuario FROM usuario WHERE nombreUsuario = '"+ auxUsuario.getV_nombre() +"'";
 
@@ -71,9 +78,9 @@ public class RespositoryMantEmpleadoImpl implements RepositoryMantEmpleado {
     }
 
     public void updateEmpleado(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpleado){
-        String sql = "UPDATE empleado SET nombre = ?, apellidos = ?, email = ?, idtipoempleado = ? WHERE idempleado= ? and idusuario = ?";
+        String sql = "UPDATE empleado SET numDoc = ?, nombre = ?, apellidos = ?, email = ?, idtipoempleado = ? WHERE idempleado= ? and idusuario = ?";
         jdbcTemplate.update(sql,
-                new Object[] { auxEmpleado.getNombre(), auxEmpleado.getApellidos(), auxEmpleado.getEmail(), auxTipoEmpleado.getIdtipoempleado(),
+                new Object[] { auxEmpleado.getNumDoc(), auxEmpleado.getNombre(), auxEmpleado.getApellidos(), auxEmpleado.getEmail(), auxTipoEmpleado.getIdtipoempleado(),
                         auxEmpleado.getIdempleado(), auxUsuario.getV_id()});
     }
 

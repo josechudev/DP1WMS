@@ -18,4 +18,6 @@ public interface RepositoryMantEmpleado {
 
     void deleteEmpleado(Usuario auxUsuario, Empleado auxEmpleado);
 
+    Usuario findUsuariobyName(String auxName);
+
 }

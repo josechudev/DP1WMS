@@ -15,4 +15,6 @@ public interface RepositoryMantTipoEmpleado {
 
     void deleteTipoEmpleado(TipoEmpleado auxTipoEmpleado);
 
+    TipoEmpleado obtenerTipoEmpleadoPorIdTipo(Long auxIdTipo);
+
 }

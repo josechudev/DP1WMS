@@ -14,10 +14,11 @@ public class EmpleadoResultSetExtractor implements ResultSetExtractor {
         Empleado person = new Empleado();
         person.setIdempleado(rs.getLong(1));
         person.setIdusuario(rs.getLong(2));
-        person.setNombre(rs.getString(3));
-        person.setApellidos(rs.getString(4));
-        person.setEmail(rs.getString(5));
-        person.setIdtipoempleado(6);
+        person.setNumDoc(rs.getString(3));
+        person.setNombre(rs.getString(4));
+        person.setApellidos(rs.getString(5));
+        person.setEmail(rs.getString(6));
+        person.setIdtipoempleado(7);
         return person;
     }
 

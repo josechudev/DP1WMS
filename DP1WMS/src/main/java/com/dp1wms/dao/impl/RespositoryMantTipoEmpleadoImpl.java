@@ -42,4 +42,11 @@ public class RespositoryMantTipoEmpleadoImpl implements RepositoryMantTipoEmplea
                 new Object[] { auxTipoEmpleado.getIdtipoempleado() });
     }
 
+    public TipoEmpleado obtenerTipoEmpleadoPorIdTipo(Long auxIdTipo){
+        String sql= "SELECT idtipoempleado, descripcion FROM tipoempleado WHERE idtipoempleado = '"+ Long.toString(auxIdTipo) +"'";
+        List<TipoEmpleado> auxTipoEmpleado = jdbcTemplate.query(sql, new TipoEmpleadoRowMapper() );
+
+        return auxTipoEmpleado.get(0);
+    }
+
 }
