@@ -1,6 +1,5 @@
 package com.dp1wms.view;
 
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public enum FxmlView {
@@ -93,6 +92,47 @@ public enum FxmlView {
         @Override
         boolean isResizable(){
             return true;
+        }
+    }, MANTENIMIENTO_ALMACEN {
+        @Override
+        String getTitle() { return getStringFromResourceBundle("mantenimiento.almacenes.title");}
+
+        @Override
+        String getFxmlFile() { return "/fxml/AlmacenFxml/MantenimientoAlmacenes.fxml"; }
+
+        @Override
+        boolean isResizable() { return true; }
+    },
+    ALMACEN {
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("mantenimiento.almacenes.editaralmacen.title");
+        }
+
+        @Override
+        String getFxmlFile() {
+            return "/fxml/AlmacenFxml/Almacen.fxml";
+        }
+
+        @Override
+        boolean isResizable() {
+            return true;
+        }
+    },
+    NUEVO_ALMACEN {
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("mantenimiento.almacenes.nuevo.titles");
+        }
+
+        @Override
+        String getFxmlFile() {
+            return "/fxml/AlmacenFxml/NuevoAlmacen.fxml";
+        }
+
+        @Override
+        boolean isResizable() {
+            return false;
         }
     },
     LOGIN {

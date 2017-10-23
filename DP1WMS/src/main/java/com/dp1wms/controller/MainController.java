@@ -41,19 +41,19 @@ public class MainController implements FxmlController {
 
     @Override
     public void initialize(){
-        /**
-         * Cargar información del empleado
-         */
-        long idusuario = this.usuario.getIdusuario();
-        this.empleado = repositoryMantEmpleado.obtenerEmpleadoPorIdUsuario(idusuario);
-        if(this.empleado == null){
-            //Algún error - revisar consola
-            System.exit(0);
-        } else {
-            //Cargar subcontrollador
-            this.nombreEmpleadoLabel.setText("Bienvenido, " + this.empleado.getNombre());
-            this.tipoEmpleadoLabel.setText(this.empleado.getTipoEmpleado().getDescripcion());
-        }
+//        /**
+//         * Cargar información del empleado
+//         */
+//        long idusuario = this.usuario.getIdusuario();
+//        this.empleado = repositoryMantEmpleado.obtenerEmpleadoPorIdUsuario(idusuario);
+//        if(this.empleado == null){
+//            //Algún error - revisar consola
+//            System.exit(0);
+//        } else {
+//            //Cargar subcontrollador
+//            this.nombreEmpleadoLabel.setText("Bienvenido, " + this.empleado.getNombre());
+//            this.tipoEmpleadoLabel.setText(this.empleado.getTipoEmpleado().getDescripcion());
+//        }
     }
 
     @FXML
@@ -66,6 +66,12 @@ public class MainController implements FxmlController {
     private void cargarMantenimientoUsuario(ActionEvent event) {
         System.out.println("cargarMantenimientoUsuario");
         this.stageManager.mostrarModal(FxmlView.MANTENIMIENTO_USUARIO);
+    }
+
+    @FXML
+    private void cargarMantenimientoAlmacenes(ActionEvent event) {
+        System.out.println("cargarMantenimientoAlmacenes");
+        this.stageManager.mostrarModal(FxmlView.MANTENIMIENTO_ALMACEN);
     }
 
     @FXML

@@ -43,7 +43,7 @@ public class LoginController implements FxmlController{
      */
     @FXML
     public void onClickIngresarBtn(){
-
+/*
         String username = getUsername();
         String password = getPassword();
         Usuario usuario = new Usuario();
@@ -52,12 +52,15 @@ public class LoginController implements FxmlController{
         if ((usuario = repositorySeguridad.validarCredenciales(usuario)) != null){
             this.clearOutStatusLabel();
             this.mainController.setUsuario(usuario);
+*/
             this.stageManager.cambiarScene(FxmlView.MAIN);
-        } else {
+/*        } else {
             this.borrarCredenciales();
             statusLabel.setText("Nombre de usuario o contraseña inválidos");
         }
+*/
     }
+
 
     private void borrarCredenciales() {
         userField.clear();
