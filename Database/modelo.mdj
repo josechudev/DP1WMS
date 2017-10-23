@@ -11663,7 +11663,7 @@
 									"containerExtending": false,
 									"left": 48,
 									"top": 621,
-									"width": 227.89453125,
+									"width": 229,
 									"height": 13,
 									"autoResize": false,
 									"underline": false,
@@ -11702,7 +11702,7 @@
 											"containerExtending": false,
 											"left": 53,
 											"top": 644,
-											"width": 217.89453125,
+											"width": 219,
 											"height": 13,
 											"autoResize": false
 										},
@@ -11726,7 +11726,7 @@
 											"containerExtending": false,
 											"left": 53,
 											"top": 659,
-											"width": 217.89453125,
+											"width": 219,
 											"height": 13,
 											"autoResize": false
 										}
@@ -11742,7 +11742,7 @@
 									"containerExtending": false,
 									"left": 48,
 									"top": 639,
-									"width": 227.89453125,
+									"width": 229,
 									"height": 38,
 									"autoResize": false
 								}
@@ -11758,7 +11758,7 @@
 							"containerExtending": false,
 							"left": 48,
 							"top": 616,
-							"width": 227.89453125,
+							"width": 229,
 							"height": 61,
 							"autoResize": false,
 							"nameLabel": {
@@ -17056,7 +17056,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFejpNMDhuEY4o="
 							},
-							"name": "alto",
+							"name": "ancho",
 							"type": "INTEGER",
 							"length": 0,
 							"primaryKey": false,
