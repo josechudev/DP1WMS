@@ -137,47 +137,47 @@ public enum MainView implements FxmlView{
         }
     }, MANTENIMIENTO_DESCUENTO{
         @Override
-        String getTitle() {
+        public String getTitle() {
             return getStringFromResourceBundle("mantenimiento.descuento.title");
         }
 
         @Override
-        String getFxmlFile() {
+        public String getFxmlFile() {
             return "/fxml/Descuentos/MantenimientoDescuento.fxml";
         }
 
         @Override
-        boolean isResizable(){
+        public boolean isResizable(){
             return false;
         }
     },DATOS_DESCUENTO{
         @Override
-        String getTitle() {
+        public String getTitle() {
             return getStringFromResourceBundle("datos.descuento.title");
         }
 
         @Override
-        String getFxmlFile() {
+        public String getFxmlFile() {
             return "/fxml/Descuentos/DatosDescuento.fxml";
         }
 
         @Override
-        boolean isResizable(){
+        public boolean isResizable(){
             return false;
         }
     },BUSQUEDA_PRODUCTO_DESC{
         @Override
-        String getTitle() {
+        public String getTitle() {
             return getStringFromResourceBundle("busquedaproducto.title");
         }
 
         @Override
-        String getFxmlFile() {
+        public String getFxmlFile() {
             return "/fxml/Descuentos/BusquedaProductoDesc.fxml";
         }
 
         @Override
-        boolean isResizable(){
+        public boolean isResizable(){
             return false;
         }
     };

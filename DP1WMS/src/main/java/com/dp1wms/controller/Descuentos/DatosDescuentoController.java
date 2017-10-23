@@ -6,7 +6,7 @@ import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.model.CategoriaProducto;
 import com.dp1wms.model.Descuento;
 import com.dp1wms.model.Producto;
-import com.dp1wms.view.FxmlView;
+import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
 import javafx.event.ActionEvent;
@@ -214,12 +214,12 @@ public class DatosDescuentoController implements FxmlController{
 
     public void buscarProductoGen(ActionEvent event){
         productoDescuento = false;
-        this.stageManager.mostrarModal(FxmlView.BUSQUEDA_PRODUCTO_DESC);
+        this.stageManager.mostrarModal(MainView.BUSQUEDA_PRODUCTO_DESC);
     }
 
     public void buscarProductoDesc(ActionEvent event){
         productoDescuento = true;
-        this.stageManager.mostrarModal(FxmlView.BUSQUEDA_PRODUCTO_DESC);
+        this.stageManager.mostrarModal(MainView.BUSQUEDA_PRODUCTO_DESC);
     }
 
     public Boolean busquedaParaGenerador(){

@@ -1,12 +1,9 @@
 package com.dp1wms.controller.Descuentos;
 
 import com.dp1wms.controller.FxmlController;
-import com.dp1wms.controller.IngresoProductoController;
 import com.dp1wms.dao.RepositoryDescuento;
-import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.model.Descuento;
-import com.dp1wms.model.Producto;
-import com.dp1wms.view.FxmlView;
+import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -68,13 +65,13 @@ public class MantenimientoDescuentoController implements FxmlController {
     public void agregarDescuento(ActionEvent event) {
         System.out.println("Agregar Descuento");
         this.esCreacion = true;
-        this.stageManager.mostrarModal(FxmlView.DATOS_DESCUENTO);
+        this.stageManager.mostrarModal(MainView.DATOS_DESCUENTO);
     }
 
     public void modificarDescuento(ActionEvent event){
         System.out.println("Modificar Descuento");
         this.esCreacion = false;
-        this.stageManager.mostrarModal(FxmlView.DATOS_DESCUENTO);
+        this.stageManager.mostrarModal(MainView.DATOS_DESCUENTO);
     }
 
     public Descuento getDescuento(){
