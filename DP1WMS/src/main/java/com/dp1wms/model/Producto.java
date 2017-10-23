@@ -14,6 +14,8 @@ public class Producto {
     private String codigo;
     private float precio;
 
+    private int indiceTableView;
+
     public Producto(){
     }
 
@@ -111,5 +113,14 @@ public class Producto {
 
     public void setPrecio(float precio) {
         this.precio = precio;
+    }
+
+
+    public int getIndiceTableView() {
+        return indiceTableView;
+    }
+
+    public void setIndiceTableView(int indiceTableView) {
+        this.indiceTableView = indiceTableView;
     }
 }

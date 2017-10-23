@@ -7,17 +7,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="crearLoteAnchorPane" prefHeight="332.0" prefWidth="467.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.CrearLote">
+<AnchorPane fx:id="crearLoteAnchorPane" prefHeight="332.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.CrearLoteController">
    <children>
-      <Button fx:id="btn_buscarProducto" layoutX="315.0" layoutY="60.0" mnemonicParsing="false" onAction="#buscarProducto" text="BuscarProducto" />
+      <Button fx:id="btn_buscarProducto" layoutX="477.0" layoutY="60.0" mnemonicParsing="false" onAction="#buscarProducto" text="BuscarProducto" />
       <Label layoutX="14.0" layoutY="64.0" text="Nombre Producto" />
       <TextField fx:id="txb_nombreProducto" layoutX="127.0" layoutY="60.0" />
-      <DatePicker layoutX="127.0" layoutY="147.0" />
-      <DatePicker layoutX="127.0" layoutY="194.0" />
-      <Label layoutX="14.0" layoutY="151.0" text="Fecha Lote" />
-      <Label layoutX="14.0" layoutY="198.0" text="Fecha Entrada" />
-      <Label layoutX="14.0" layoutY="108.0" text="Cantidad" />
-      <TextField layoutX="127.0" layoutY="104.0" />
+      <DatePicker fx:id="dp_fechaLote" layoutX="127.0" layoutY="105.0" />
+      <DatePicker fx:id="dp_fechaEntrada" layoutX="127.0" layoutY="152.0" />
+      <Label layoutX="14.0" layoutY="109.0" text="Fecha Lote" />
+      <Label layoutX="14.0" layoutY="156.0" text="Fecha Entrada" />
+      <Label layoutX="315.0" layoutY="109.0" text="Cantidad Ingreso" />
+      <TextField fx:id="txb_cantidad" layoutX="428.0" layoutY="105.0" />
       <Label layoutX="14.0" layoutY="14.0" text="Registro de un nuevo lote">
          <font>
             <Font size="18.0" />
@@ -25,5 +25,7 @@
       </Label>
       <Button fx:id="btn_registrar" layoutX="150.0" layoutY="279.0" mnemonicParsing="false" onAction="#registrarLote" text="Registrar" />
       <Button fx:id="btn_cancelar" layoutX="315.0" layoutY="279.0" mnemonicParsing="false" onAction="#cancelarRegistrarLote" text="Cancelar" />
+      <Label layoutX="315.0" layoutY="64.0" text="Stock" />
+      <TextField fx:id="txb_stock" layoutX="357.0" layoutY="60.0" prefHeight="25.0" prefWidth="75.0" />
    </children>
 </AnchorPane>
