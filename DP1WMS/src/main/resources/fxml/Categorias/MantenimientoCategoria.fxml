@@ -4,28 +4,29 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.MantenimientoCategoria">
+<AnchorPane prefHeight="273.0" prefWidth="382.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantCategoria.CategoriaController">
    <children>
-      <Label layoutX="45.0" layoutY="24.0" text="Mantenimiento de Categorias">
+      <Label layoutX="29.0" layoutY="59.0" prefHeight="27.0" prefWidth="117.0" text="Acciones">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="29.0" layoutY="25.0" text="Mantenimiento Categorías">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TableView fx:id="tableviewCategoria" layoutX="63.0" layoutY="100.0" prefHeight="200.0" prefWidth="299.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="idCategoria" />
-          <TableColumn prefWidth="217.0" text="Categoria" />
-        </columns>
+      <Button fx:id="btn_CrearCategoria" layoutX="29.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnClickCrearCategoria" prefHeight="0.0" prefWidth="92.0" text="Agregar" />
+      <Button fx:id="btn_ModificarCategoria" layoutX="141.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnClickModificarCategoria" prefHeight="1.0" prefWidth="92.0" text="Modificar" />
+      <Button fx:id="btn_eliminarCategoria" layoutX="253.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnClickEliminarCategoria" prefHeight="14.0" prefWidth="92.0" text="Eliminar" />
+      <TableView fx:id="e_table" layoutX="31.0" layoutY="132.0" prefHeight="127.0" prefWidth="310.0">
+         <columns>
+            <TableColumn fx:id="e_id" prefWidth="48.0" text="Id" />
+            <TableColumn fx:id="e_descripcion" prefWidth="261.0" text="Descripcion" />
+         </columns>
       </TableView>
-      <Button fx:id="btn_nuevaCategoria" layoutX="63.0" layoutY="331.0" mnemonicParsing="false" text="Nueva categoria" />
-      <Button fx:id="btn_eliminarCategoria" layoutX="223.0" layoutY="331.0" mnemonicParsing="false" text="Eliminar categoria" />
-      <Button fx:id="btn_editarCategoria" layoutX="381.0" layoutY="331.0" mnemonicParsing="false" text="Editar categoria" />
-      <TextField layoutX="63.0" layoutY="65.0" />
-      <Button layoutX="239.0" layoutY="65.0" mnemonicParsing="false" text="Buscar categoria" />
    </children>
 </AnchorPane>

@@ -49,7 +49,22 @@ public enum FxmlView {
         boolean isResizable(){
             return false;
         }
-     }, INGRESO_PRODUCTO{
+     },MANTENIMIENTO_CATEGORIA {
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("mantenimiento.movimiento.title");
+        }
+
+        @Override
+        String getFxmlFile() {
+            return "/fxml/Categorias/MantenimientoCategoria.fxml";
+        }
+
+        @Override
+        boolean isResizable(){
+            return false;
+        }
+    }, INGRESO_PRODUCTO{
          @Override
          String getTitle() {
                         return getStringFromResourceBundle("ingreso.producto.title");
