@@ -1,23 +1,15 @@
 package com.dp1wms.controller;
 
-import com.dp1wms.view.FxmlView;
+import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 @Component
@@ -47,7 +39,7 @@ public class IngresoProductoController implements Initializable {
 
     public void buscarProducto(ActionEvent event){
         System.out.println("Buscar Producto");
-        this.stageManager.mostrarModal(FxmlView.BUSQUEDA_PRODUCTO);
+        this.stageManager.mostrarModal(MainView.BUSQUEDA_PRODUCTO);
     }
 
     public void actualizarDataProducto(String nombreProducto,int idProducto){

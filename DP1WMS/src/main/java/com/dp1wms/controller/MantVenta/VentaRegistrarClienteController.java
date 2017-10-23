@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RegistrarClienteController implements FxmlController{
+public class VentaRegistrarClienteController implements FxmlController{
 
     @FXML private TextField rucField;
     @FXML private TextField nombreField;
@@ -27,7 +27,7 @@ public class RegistrarClienteController implements FxmlController{
     private RepositoryMantCliente repositoryMantCliente;
 
     private final StageManager stageManager;
-    private final ProformaController proformaController;
+    private final VentaProformaController ventaProformaController;
 
     @Override
     public void initialize(){
@@ -35,9 +35,9 @@ public class RegistrarClienteController implements FxmlController{
     }
 
     @Autowired @Lazy
-    public RegistrarClienteController(StageManager stageManager, ProformaController proformaController){
+    public VentaRegistrarClienteController(StageManager stageManager, VentaProformaController ventaProformaController){
         this.stageManager = stageManager;
-        this.proformaController = proformaController;
+        this.ventaProformaController = ventaProformaController;
     }
 
     @FXML
@@ -57,7 +57,7 @@ public class RegistrarClienteController implements FxmlController{
             alert.showAndWait();
         } else {
             c = this.repositoryMantCliente.registrarCliente(c);
-            this.proformaController.setCliente(c);
+            this.ventaProformaController.setCliente(c);
             this.cerrarVentana(event);
         }
     }

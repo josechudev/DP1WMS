@@ -5,10 +5,8 @@ import com.dp1wms.dao.RepositoryMantCliente;
 import com.dp1wms.model.Cliente;
 import com.dp1wms.view.StageManager;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -16,7 +14,7 @@ import javafx.event.ActionEvent;
 import java.util.List;
 
 @Component
-public class BusquedaClienteController implements FxmlController{
+public class VentaBusquedaClienteController implements FxmlController{
 
     @FXML private ComboBox campoClienteCB;
     @FXML private TextField busquedaField;
@@ -27,7 +25,7 @@ public class BusquedaClienteController implements FxmlController{
     @FXML private TableColumn<Cliente, String> clienteEmailCol;
 
     private final StageManager stageManager;
-    private final ProformaController proformaController;
+    private final VentaProformaController ventaProformaController;
 
     @Autowired
     private RepositoryMantCliente repositoryMantCliente;
@@ -42,9 +40,9 @@ public class BusquedaClienteController implements FxmlController{
     }
 
     @Autowired @Lazy
-    public BusquedaClienteController(StageManager stageManager, ProformaController proformaController){
+    public VentaBusquedaClienteController(StageManager stageManager, VentaProformaController ventaProformaController){
         this.stageManager = stageManager;
-        this.proformaController = proformaController;
+        this.ventaProformaController = ventaProformaController;
     }
 
     @FXML
@@ -76,9 +74,7 @@ public class BusquedaClienteController implements FxmlController{
             System.exit(1);
         }
         this.limpiarTabla();
-        for(Cliente c: clientes){
-            this.clienteTable.getItems().add(c);
-        }
+        this.clienteTable.getItems().addAll(clientes);
     }
 
     @FXML
@@ -91,16 +87,14 @@ public class BusquedaClienteController implements FxmlController{
             alert.setContentText("Debes seleccionar un cliente");
             alert.showAndWait();
         } else {
-            this.proformaController.setCliente(cliente);
+            this.ventaProformaController.setCliente(cliente);
             this.cerrarVentana(event);
         }
     }
 
     @FXML
     private void cerrarVentana(ActionEvent event){
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        stage.close();
+        this.stageManager.cerrarVentana(event);
     }
 
     private void limpiarTabla(){

@@ -4,9 +4,11 @@ import com.dp1wms.controller.FxmlController;
 import com.dp1wms.controller.MainController;
 import com.dp1wms.model.Cliente;
 import com.dp1wms.model.Envio;
+import com.dp1wms.model.Producto;
 import com.dp1wms.model.Proforma;
-import com.dp1wms.view.FxmlView;
+import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
+import com.dp1wms.view.VentasView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 
 @Component
-public class ProformaController implements FxmlController{
+public class VentaProformaController implements FxmlController{
 
     @FXML private Label codigoLabel;
     @FXML private Label nombreLabel;
@@ -43,19 +45,24 @@ public class ProformaController implements FxmlController{
     }
 
     @Autowired @Lazy
-    public ProformaController(StageManager stageManager, MainController mainController){
+    public VentaProformaController(StageManager stageManager, MainController mainController){
         this.stageManager = stageManager;
         this.mainController = mainController;
     }
 
     @FXML
     private void mostrarBusquedaCliente(){
-        this.stageManager.mostrarModal(FxmlView.BUSCAR_CLIENTE);
+        this.stageManager.mostrarModal(MainView.BUSCAR_CLIENTE);
     }
 
     @FXML
     private void mostrarRegistrarCliente(){
-        this.stageManager.mostrarModal(FxmlView.REGISTRAR_CLIENTE);
+        this.stageManager.mostrarModal(MainView.REGISTRAR_CLIENTE);
+    }
+
+    @FXML
+    private void mostrarBusquedaProducto(){
+        this.stageManager.mostrarModal(VentasView.VENTA_BUSCAR_PROD);
     }
 
     public void setCliente(Cliente cliente){
@@ -68,4 +75,7 @@ public class ProformaController implements FxmlController{
         this.direccionLabel.setText(cliente.getDireccion());
     }
 
+    public void agregarProductoAProforma(Producto producto, int cantidad){
+
+    }
 }

@@ -12,6 +12,7 @@ public class Producto {
     private String descripcion;
     private int stock;
     private String codigo;
+    private float precio;
 
     public Producto(){
     }
@@ -102,5 +103,13 @@ public class Producto {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public float getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
     }
 }
