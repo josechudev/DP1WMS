@@ -21,7 +21,7 @@ public class RepositoryProformaImpl implements RepositoryProforma {
     public List<Producto> buscarProductosParaVenta(String campo, String dato){
         List<Producto> productos = null;
 
-        dato = "%" + dato  + "%";
+        dato = "%" + dato.toLowerCase()  + "%";
         String sql = "SELECT p.idproducto, p.codigo, p.nombreproducto, p.precio, p.idcategoria, cp.descripcion as categoria," +
                         " (p.stock - COALESCE(x.cantidad, 0)) as stock " +
                     "FROM producto p INNER JOIN categoriaproducto cp ON p.idcategoria = cp.idcategoria" +
@@ -31,9 +31,9 @@ public class RepositoryProformaImpl implements RepositoryProforma {
                         "WHERE p.idestadopedido = 1 GROUP BY dp.idproducto" +
                     ") x ON p.idproducto = x.idproducto WHERE p.activo AND ";
         if(campo != null){
-            sql += "p." + campo + " LIKE ?";
+            sql += "lower(p." + campo + ") LIKE ?";
         } else {
-            sql += "cp.descripcion LIKE ?";
+            sql += "lower(cp.descripcion) LIKE ?";
         }
 
         try{
@@ -50,6 +50,7 @@ public class RepositoryProformaImpl implements RepositoryProforma {
         p.setIdProducto(rs.getInt("idproducto"));
         p.setCodigo(rs.getString("codigo"));
         p.setNombreProducto(rs.getString("nombreproducto"));
+        p.setPrecio(rs.getFloat("precio"));
         p.setIdCategoria(rs.getInt("idcategoria"));
         p.setStock(rs.getInt("stock"));
         p.setCategoria(rs.getString("categoria"));

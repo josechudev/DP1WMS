@@ -38,7 +38,7 @@ public class RepositoryMantClienteImpl implements RepositoryMantCliente {
     public List<Cliente> buscarCliente(String campo, String dato){
 
         String sql = "SELECT * FROM cliente WHERE lower(" + campo + ") LIKE ?";
-        dato = "%" + dato + "%";
+        dato = "%" + dato.toLowerCase() + "%";
         try{
             List<Cliente> clientes = this.jdbcTemplate.query(sql, new Object[]{dato}, this::mapCliente);
             return clientes;
