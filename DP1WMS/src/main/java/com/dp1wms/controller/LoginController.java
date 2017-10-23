@@ -7,6 +7,8 @@ import com.dp1wms.view.StageManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -56,6 +58,13 @@ public class LoginController implements FxmlController{
         } else {
             this.borrarCredenciales();
             statusLabel.setText("Nombre de usuario o contraseña inválidos");
+        }
+    }
+
+    @FXML
+    private void onKeyPressedIngresar(KeyEvent event){
+        if(event.getCode() == KeyCode.ENTER){
+            this.onClickIngresarBtn();
         }
     }
 
