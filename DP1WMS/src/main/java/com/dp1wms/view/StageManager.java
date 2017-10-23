@@ -1,5 +1,6 @@
 package com.dp1wms.view;
 
+import com.dp1wms.controller.Descuentos.DatosDescuentoController;
 import com.dp1wms.spring.config.SpringFXMLLoader;
 import javafx.application.Platform;
 import javafx.scene.Parent;

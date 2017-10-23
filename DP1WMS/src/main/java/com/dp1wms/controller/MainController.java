@@ -75,6 +75,12 @@ public class MainController implements FxmlController {
     }
 
     @FXML
+    private void cargarMantenimientoDescuentos(){
+        this.stageManager.mostrarModal(FxmlView.MANTENIMIENTO_DESCUENTO);
+    }
+
+
+    @FXML
     private void cargarGenerarProforma(){
         this.stageManager.mostrarModal(FxmlView.GEN_PROFORMA);
     }
