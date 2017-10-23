@@ -1,7 +1,7 @@
 package com.dp1wms.controller;
 
+import com.dp1wms.view.MainView;
 import com.dp1wms.dao.RepositoryMantMov;
-import com.dp1wms.view.FxmlView;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,12 +26,12 @@ public class MantenimientoMovController implements FxmlController{
     @FXML
     public void ingresoLote(ActionEvent event){
         System.out.println("Ingreso de Lote");
-        this.stageManager.mostrarModal(FxmlView.CREAR_LOTE);
+        this.stageManager.mostrarModal(MainView.CREAR_LOTE);
      }
 
     public void movimientoProducto(ActionEvent event){
         System.out.println("Movimiento de un Producto");
-        this.stageManager.mostrarModal(FxmlView.INGRESO_PRODUCTO);
+        this.stageManager.mostrarModal(MainView.INGRESO_PRODUCTO);
     }
 
     @Override
