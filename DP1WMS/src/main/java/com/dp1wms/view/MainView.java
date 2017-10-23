@@ -30,7 +30,7 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
-    },MANTENIMIENTO_MOVVIMIENTO {
+    },MANTENIMIENTO_MOVIMIENTO {
         @Override
         public String getTitle() {
             return getStringFromResourceBundle("mantenimiento.movimiento.title");
@@ -131,6 +131,51 @@ public enum MainView implements FxmlView{
         public String getFxmlFile() {
             return "/fxml/Login.fxml";
         }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    }, MANTENIMIENTO_DESCUENTO{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("mantenimiento.descuento.title");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Descuentos/MantenimientoDescuento.fxml";
+        }
+
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },DATOS_DESCUENTO{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("datos.descuento.title");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Descuentos/DatosDescuento.fxml";
+        }
+
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },BUSQUEDA_PRODUCTO_DESC{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("busquedaproducto.title");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Descuentos/BusquedaProductoDesc.fxml";
+        }
+
         @Override
         public boolean isResizable(){
             return false;

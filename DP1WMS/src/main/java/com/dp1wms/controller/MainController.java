@@ -58,7 +58,7 @@ public class MainController implements FxmlController {
     @FXML
     private void cargarMantenimientoMovimientos(ActionEvent event) {
         System.out.println("cargarMantenimientoMovimientos");
-        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_MOVVIMIENTO);
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_MOVIMIENTO);
     }
 
     @FXML
@@ -72,6 +72,12 @@ public class MainController implements FxmlController {
         this.usuario = null;
         this.stageManager.cambiarScene(MainView.LOGIN);
     }
+
+    @FXML
+    private void cargarMantenimientoDescuentos(){
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_DESCUENTO);
+    }
+
 
     @FXML
     private void cargarGenerarProforma(){

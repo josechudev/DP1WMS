@@ -1,5 +1,6 @@
-package com.dp1wms.controller;
+package com.dp1wms.controller.Descuentos;
 
+import com.dp1wms.controller.FxmlController;
 import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.model.CategoriaProducto;
 import com.dp1wms.model.Producto;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class BusquedaProductoController implements FxmlController {
+public class BusquedaProductoDescController implements FxmlController {
 
     @FXML
     private AnchorPane buscarProductoAnchorPane;
@@ -47,7 +48,7 @@ public class BusquedaProductoController implements FxmlController {
 
     private List<CategoriaProducto> listaCategorias;
 
-    private CrearLoteController crearLoteController = null;
+    private DatosDescuentoController datosDescuentoController = null;
 
     @Autowired
     private RepositoryMantMov repositoryMantMov;
@@ -55,9 +56,9 @@ public class BusquedaProductoController implements FxmlController {
     private final StageManager stageManager;
 
     @Autowired @Lazy
-     public BusquedaProductoController(StageManager stageManager, CrearLoteController crearLoteController){
+     public BusquedaProductoDescController(StageManager stageManager, DatosDescuentoController datosDescuentoController){
                 this.stageManager = stageManager;
-                this.crearLoteController = crearLoteController;
+                this.datosDescuentoController = datosDescuentoController;
         }
     public void buscarProducto(ActionEvent event){
         System.out.println("Buscar Producto");
@@ -77,7 +78,9 @@ public class BusquedaProductoController implements FxmlController {
         Producto producto = tableViewProductos.getSelectionModel().getSelectedItem();
         System.out.println("Nombre Producto: " + producto.getNombreProducto()+" IdProducto: "+producto.getIdProducto());
 
-        crearLoteController.actualizarDataProducto(producto);
+        Boolean productoGenerador = datosDescuentoController.busquedaParaGenerador();
+
+        datosDescuentoController.actualizarProducto(producto,productoGenerador);
 
         buscarProductoAnchorPane.getScene().getWindow().hide();
     }
