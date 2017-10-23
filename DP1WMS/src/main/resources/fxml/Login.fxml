@@ -28,7 +28,7 @@
             </AnchorPane>
             <AnchorPane prefHeight="390.0" prefWidth="600.0" style="-fx-background-color: #fff;">
                <children>
-                  <Button fx:id="ingresarBtn" layoutX="250.0" layoutY="224.0" mnemonicParsing="false" onAction="#onClickIngresarBtn" onKeyPressed="#onKeyPressedIngresar" prefHeight="40.0" prefWidth="100.0" text="INGRESAR" />
+                  <Button fx:id="ingresarBtn" defaultButton="true" layoutX="250.0" layoutY="224.0" mnemonicParsing="false" onAction="#onClickIngresarBtn" onKeyPressed="#onKeyPressedIngresar" prefHeight="40.0" prefWidth="100.0" text="INGRESAR" />
                   <TextField fx:id="userField" layoutX="180.0" layoutY="64.0" prefHeight="32.0" prefWidth="240.0" />
                   <PasswordField fx:id="passwordField" layoutX="180.0" layoutY="142.0" prefHeight="32.0" prefWidth="240.0" />
                   <Label layoutX="180.0" layoutY="41.0" text="Nombre de usuario" textFill="#040a25">

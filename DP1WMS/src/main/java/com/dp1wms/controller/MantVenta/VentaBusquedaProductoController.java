@@ -95,7 +95,7 @@ public class VentaBusquedaProductoController implements FxmlController{
                 }
             }
             if(cantidad > 0 && cantidad <= p.getStock()){
-                this.ventaProformaController.agregarProductoAProforma(p, cantidad);
+                this.ventaProformaController.agregarProductoAPreEnvio(p, cantidad);
                 this.cerrarVentana(event);
             } else {//show error
                 this.stageManager.mostrarErrorDialog(ERR_CANT_TITLE, ERR_CANT_HEADER, ERR_CANT_CONTENT);
