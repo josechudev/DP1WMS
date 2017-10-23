@@ -11,7 +11,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
+
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,8 +44,8 @@ public class VentaBusquedaProductoController implements FxmlController{
     @Autowired
     private RepositoryProforma repositoryProforma;
 
-    private final StageManager stageManager;
-    private final VentaProformaController ventaProformaController;
+    private StageManager stageManager;
+    private VentaProformaController ventaProformaController;
 
     @FXML
     private void buscarProducto(){
@@ -53,7 +57,8 @@ public class VentaBusquedaProductoController implements FxmlController{
                 break;
             }
             case 1:{
-                campo = "nombre";
+                campo = "nombreproducto";
+                break;
             }
             case 2:{
                 campo = null;
@@ -73,7 +78,7 @@ public class VentaBusquedaProductoController implements FxmlController{
         if(p == null){
             this.stageManager.mostrarErrorDialog(ERR_PROD_TITLE, ERR_PROD_HEADER, ERR_PROD_CONTENT);
         } else {
-            TextInputDialog dialog = new TextInputDialog("Hey");
+            TextInputDialog dialog = new TextInputDialog("1");
             dialog.setTitle("Confirmación");
             dialog.setHeaderText("Producto: " + p.getNombreProducto());
             dialog.setContentText("Ingrese la cantidad:");
@@ -89,7 +94,7 @@ public class VentaBusquedaProductoController implements FxmlController{
                     cantidad = 0;
                 }
             }
-            if(cantidad > 0){
+            if(cantidad > 0 && cantidad <= p.getStock()){
                 this.ventaProformaController.agregarProductoAProforma(p, cantidad);
                 this.cerrarVentana(event);
             } else {//show error
@@ -126,4 +131,5 @@ public class VentaBusquedaProductoController implements FxmlController{
         this.stageManager = stageManager;
         this.ventaProformaController = ventaProformaController;
     }
+
 }
