@@ -35,7 +35,7 @@ public class StageManager {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.setTitle(view.getTitle());
-        stage.setResizable(false);
+        stage.setResizable(view.isResizable());
         stage.show();
     }
 

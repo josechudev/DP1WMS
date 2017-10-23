@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantVenta.VentaProformaPreviewController">
+   <children>
+      <ScrollPane fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+               <children>
+                  <VBox layoutX="215.0" layoutY="93.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label text="Proforma">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="proformaTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                          <columns>
+                            <TableColumn fx:id="codigoTC" prefWidth="75.0" text="Codigo" />
+                            <TableColumn fx:id="productoTC" prefWidth="75.0" text="Producto" />
+                              <TableColumn fx:id="cantidadTC" prefWidth="75.0" text="Cantidad" />
+                              <TableColumn fx:id="precioTC" prefWidth="75.0" text="Precio" />
+                              <TableColumn fx:id="descuentoTC" prefWidth="75.0" text="Descuento" />
+                              <TableColumn fx:id="totalParcialTC" prefWidth="75.0" text="Total" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <VBox spacing="5.0">
+                           <children>
+                              <HBox alignment="TOP_RIGHT" prefWidth="560.0" spacing="20.0">
+                                 <children>
+                                    <Label text="Total sin flete" />
+                                    <Label fx:id="totalSinFleteLabel" text="0" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="20.0" right="20.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="10.0" prefWidth="560.0" spacing="20.0">
+                                 <children>
+                                    <Label text="Costo Flete:" />
+                                    <Label fx:id="costoFleteLabel" text="0" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="20.0" right="20.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="29.0" prefWidth="560.0" spacing="20.0">
+                                 <children>
+                                    <Label text="Total:" />
+                                    <Label fx:id="totalLabel" text="0" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="20.0" right="20.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <HBox prefHeight="20.0" prefWidth="560.0" VBox.vgrow="NEVER">
+                           <children>
+                              <Region prefHeight="40.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                              <Button mnemonicParsing="false" onAction="#cerrarVentana" text="Cerrar" />
+                              <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

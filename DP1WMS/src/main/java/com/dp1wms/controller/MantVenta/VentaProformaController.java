@@ -9,6 +9,7 @@ import com.dp1wms.view.VentasView;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -102,12 +103,12 @@ public class VentaProformaController implements FxmlController{
 
     @FXML
     private void mostrarBusquedaCliente(){
-        this.stageManager.mostrarModal(MainView.BUSCAR_CLIENTE);
+        this.stageManager.mostrarModal(VentasView.BUSCAR_CLIENTE);
     }
 
     @FXML
     private void mostrarRegistrarCliente(){
-        this.stageManager.mostrarModal(MainView.REGISTRAR_CLIENTE);
+        this.stageManager.mostrarModal(VentasView.REGISTRAR_CLIENTE);
     }
 
     @FXML
@@ -233,7 +234,6 @@ public class VentaProformaController implements FxmlController{
     @FXML
     private void editarEnvio(){
         Envio env = this.enviosTable.getSelectionModel().getSelectedItem();
-        int index = this.enviosTable.getSelectionModel().getSelectedIndex();
         if(env == null){
             this.stageManager.mostrarErrorDialog("Error Envio", null, "Debe seleccionar un envio que desea editar");
         } else {
@@ -301,5 +301,54 @@ public class VentaProformaController implements FxmlController{
 
     private void llenarTableEnvios(){
         this.enviosTable.getItems().addAll(envios);
+    }
+
+    @FXML private void cerrarVentana(ActionEvent event){
+        this.stageManager.cerrarVentana(event);
+    }
+
+    @FXML private void registrarProforma() {
+        this.generarProforma();
+    }
+
+    @FXML
+    private void mostrarProformaPreview(){
+        if(this.envios.size() == 0){
+            this.stageManager.mostrarErrorDialog("Error envios", null, "Debe registrar al menos un envio");
+            return;
+        }
+        this.generarProforma();
+        this.stageManager.mostrarModal(VentasView.PROFORMA_PREVIEW);
+    }
+
+    private void generarProforma(){
+        this.proforma = new Proforma();
+        for(Envio envio: this.envios){
+            for(DetalleEnvio de: envio.getDetalleEnvio()){
+                this.proforma.agregarProducto(de.getProducto(), de.getCantidad());
+            }
+        }
+        //calcular descuento y subtotal
+        for(DetalleProforma dp: this.proforma.getDetallesProforma()){
+            dp.setSubTotal(dp.getProducto().getPrecio() * dp.getCantidad());
+        }
+
+        //total sin flete, costo flete, total
+        float totalSinFlete = 0;
+        for(DetalleProforma dp: this.proforma.getDetallesProforma()){
+            totalSinFlete += dp.getSubTotal();
+        }
+        float costoFlete = 0;
+        for(Envio envio: this.envios){
+            costoFlete += envio.getCostoFlete();
+        }
+        float total = totalSinFlete + costoFlete;
+        this.proforma.setTotalSinFlete(totalSinFlete);
+        this.proforma.setCostoFlete(costoFlete);
+        this.proforma.setTotal(total);
+    }
+
+    public Proforma getProforma(){
+        return this.proforma;
     }
 }

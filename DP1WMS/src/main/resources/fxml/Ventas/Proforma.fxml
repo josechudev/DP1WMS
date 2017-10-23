@@ -133,14 +133,30 @@
                                 <columns>
                                   <TableColumn fx:id="envCodigoTC" editable="false" prefWidth="44.0" text="Codigo" />
                                   <TableColumn fx:id="envProductoTC" editable="false" prefWidth="42.0" text="Producto" />
-                                    <TableColumn fx:id="envPrecioTC" editable="false" prefWidth="75.0" text="Precio" />
                                     <TableColumn fx:id="envCantidadTC" prefWidth="75.0" text="Cantidad" />
+                                    <TableColumn fx:id="envPrecioTC" editable="false" prefWidth="75.0" text="Precio Unit" />
                                     <TableColumn fx:id="envSubtotalTC" editable="false" prefWidth="75.0" text="Subtotal" />
                                 </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
                               </TableView>
+                              <HBox alignment="TOP_RIGHT" prefWidth="1152.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Total Parcial:">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="totalPreEnvio" text="0" />
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </HBox>
                            </children>
                         </VBox>
                         <GridPane hgap="10.0">
@@ -216,9 +232,9 @@
                         <HBox prefHeight="25.0" prefWidth="1168.0" spacing="20.0">
                            <children>
                               <Region prefHeight="22.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                              <Button mnemonicParsing="false" text="Ver Proforma" />
-                              <Button mnemonicParsing="false" text="Registrar Proforma" />
-                              <Button mnemonicParsing="false" text="Cancelar" />
+                              <Button mnemonicParsing="false" onAction="#mostrarProformaPreview" text="Ver Proforma" />
+                              <Button mnemonicParsing="false" onAction="#registrarProforma" text="Registrar Proforma" />
+                              <Button mnemonicParsing="false" onAction="#cerrarVentana" text="Cancelar" />
                               <Region layoutX="10.0" layoutY="10.0" prefHeight="22.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                            </children>
                            <padding>
