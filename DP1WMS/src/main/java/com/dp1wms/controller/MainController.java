@@ -59,7 +59,7 @@ public class MainController implements FxmlController {
     @FXML
     private void cargarMantenimientoMovimientos(ActionEvent event) {
         System.out.println("cargarMantenimientoMovimientos");
-        this.stageManager.mostrarModal(FxmlView.MANTENIMIENTO_MOVVIMIENTO);
+        this.stageManager.mostrarModal(FxmlView.MANTENIMIENTO_MOVIMIENTO);
     }
 
     @FXML
