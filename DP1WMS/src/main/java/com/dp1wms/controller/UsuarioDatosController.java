@@ -67,6 +67,7 @@ public class UsuarioDatosController implements FxmlController{
         }
         else{
             v_parentController.modificarUsuarioDB(auxUsuario);
+            v_parentController.modificarEmpleadoDB(auxUsuario, auxEmpleado, auxTipoEmpleado);
             //v_listaUsuario._eliminarUsuario(Integer.parseInt(e_id_datos.getText()));
             //v_listaUsuario._agregarUsuario(Integer.parseInt(e_id_datos.getText()), e_nombre_datos.getText(), e_password_datos.getText());
         }
@@ -98,28 +99,30 @@ public class UsuarioDatosController implements FxmlController{
         this.v_parentController = v_parentController;
     }
 
-    public void _setData(Usuario auxUsuario, int v_accion){
+    public void _setData(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpleado, int v_accion){
 
         e_id_datos.setText("0");
         e_id_empleado.setText("0");
-
-        //Se modifica luego
-        e_id_datos.setText(Integer.toString(auxUsuario.getV_id()));
-        e_nombre_datos.setText(auxUsuario.getV_nombre());
-        e_password_datos.setText(auxUsuario.getV_password());
-
-
-
         this.v_accion = v_accion;
 
         if(this.v_accion == 0){
             e_buton_datos.setText("Crear Usuario");
         }
         else{
+            e_id_datos.setText(Integer.toString(auxUsuario.getV_id()));
+            e_nombre_datos.setText(auxUsuario.getV_nombre());
+            e_password_datos.setText("");
+
+            e_id_empleado.setText(Long.toString(auxEmpleado.getIdempleado()));
+            e_numDoc_empleado.setText(auxEmpleado.getNumDoc());
+            e_nombre_empleado.setText(auxEmpleado.getNombre());
+            e_apellido_empleado.setText(auxEmpleado.getApellidos());
+            e_email_empleado.setText(auxEmpleado.getEmail());
+
+            e_id_tipoEmpleado.setText(Long.toString(auxTipoEmpleado.getIdtipoempleado()));
+            e_descripcion_tipoEmpleado.setText(auxTipoEmpleado.getDescripcion());
             e_buton_datos.setText("Modificar Usuario");
         }
-
-        //v_listaUsuario = new ListaUsuario();
     }
 
     public void btnClickSeleccionarTipoEmpleado(ActionEvent event) {
