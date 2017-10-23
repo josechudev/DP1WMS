@@ -56,6 +56,19 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
+    }, CREAR_LOTE{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("crearlote.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/CrearLote.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
     }, BUSQUEDA_PRODUCTO{
         @Override
         public String getTitle() {
