@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="1209.0" style="-fx-padding: 30px;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantVenta.ProformaController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="1241.0" style="-fx-padding: 30px;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantVenta.VentaProformaController">
    <children>
       <VBox layoutX="79.0" layoutY="27.0" prefHeight="323.0" prefWidth="386.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -25,8 +25,8 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Button mnemonicParsing="false" text="Buscar Cliente" />
-                  <Button layoutX="143.0" layoutY="10.0" mnemonicParsing="false" text="Nuevo Cliente" />
+                  <Button mnemonicParsing="false" onAction="#mostrarBusquedaCliente" text="Buscar Cliente" />
+                  <Button layoutX="143.0" layoutY="10.0" mnemonicParsing="false" onAction="#mostrarRegistrarCliente" text="Nuevo Cliente" />
                </children>
             </HBox>
             <GridPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="137.0" prefWidth="987.0" VBox.vgrow="NEVER">
@@ -48,7 +48,7 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <Label prefHeight="16.0" prefWidth="161.0" text="Razón Social/Nombre:" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                  <Label contentDisplay="RIGHT" text="Razón Social/Nombre:" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -110,15 +110,15 @@
                <children>
                   <VBox prefHeight="322.0" prefWidth="0.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox prefHeight="30.0" prefWidth="470.0" spacing="20.0" style="-fx-padding: 0 0 10px 0;">
+                        <HBox prefWidth="470.0" spacing="20.0" style="-fx-padding: 0 0 10px 0;">
                            <children>
-                              <Label prefHeight="26.0" prefWidth="190.0" text="Detalle de Proforma">
+                              <Label prefHeight="26.0" text="Detalle de Proforma">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="135.0" text="Buscar Producto" />
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="75.0" text="Eliminar" />
+                              <Button mnemonicParsing="false" onAction="#mostrarBusquedaProducto" text="Buscar Producto" />
+                              <Button mnemonicParsing="false" text="Eliminar" />
                            </children>
                         </HBox>
                         <TableView fx:id="proformaTable" prefHeight="285.0" prefWidth="529.0" VBox.vgrow="ALWAYS">
@@ -140,9 +140,9 @@
                   <Separator orientation="VERTICAL" prefHeight="130.0" prefWidth="46.0" style="-fx-padding: 0  20px;" HBox.hgrow="NEVER" />
                   <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox prefHeight="36.0" prefWidth="470.0" spacing="20.0" style="-fx-padding: 0 0 10px 0;">
+                        <HBox prefWidth="470.0" spacing="20.0" style="-fx-padding: 0 0 10px 0;">
                            <children>
-                              <Label prefHeight="21.0" prefWidth="73.0" text="Envios" textOverrun="CLIP">
+                              <Label text="Envios" textOverrun="CLIP">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
