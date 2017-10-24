@@ -89,7 +89,7 @@ public class BusquedaProductoController implements FxmlController {
     private void limpiarTabla(){
         tableViewProductos.getItems().clear();
         c_nombre.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombreProducto"));
-        c_categoria.setCellValueFactory(new PropertyValueFactory<Producto, String>("categoria"));
+        c_categoria.setCellValueFactory(new PropertyValueFactory<Producto, String>("Categoria"));
         c_indice.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("indiceTableView"));
         c_stock.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("stock"));
         tableViewProductos.setEditable(true);
@@ -148,7 +148,7 @@ public class BusquedaProductoController implements FxmlController {
     public void initialize() {
         this.listaProductos = obtenerProductos();
         c_nombre.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombreProducto"));
-        c_categoria.setCellValueFactory(new PropertyValueFactory<Producto, String>("categoria"));
+        c_categoria.setCellValueFactory(new PropertyValueFactory<Producto, String>("Categoria"));
         c_indice.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("indiceTableView"));
         c_stock.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("stock"));
         tableViewProductos.setEditable(true);

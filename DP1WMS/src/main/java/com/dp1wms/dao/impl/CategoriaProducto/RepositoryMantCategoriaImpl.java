@@ -1,7 +1,7 @@
 package com.dp1wms.dao.impl.CategoriaProducto;
 
 import com.dp1wms.dao.ICategoriaProducto.RepositoryMantCategoria;
-import com.dp1wms.dao.mapper.categoria.CategoriaRowMapper;
+import com.dp1wms.dao.mapper.Categoria.CategoriaRowMapper;
 import com.dp1wms.model.CategoriaProducto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
