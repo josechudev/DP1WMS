@@ -12,6 +12,7 @@ public class TipoEmpleadoResultSetExtractor implements ResultSetExtractor {
 
     @Override
     public Object extractData(ResultSet rs) throws SQLException {
+
         TipoEmpleado auxTipoEmpleado = new TipoEmpleado();
         auxTipoEmpleado.setIdtipoempleado(rs.getLong(1));
         auxTipoEmpleado.setDescripcion(rs.getString(2));

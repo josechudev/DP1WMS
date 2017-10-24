@@ -1,7 +1,10 @@
 package com.dp1wms.spring.config;
 
+import com.dp1wms.controller.MantenimientoTipoEmpleadoController;
 import com.dp1wms.controller.Descuentos.DatosDescuentoController;
 import com.dp1wms.controller.Descuentos.MantenimientoDescuentoController;
+import com.dp1wms.controller.MantVenta.VentaProformaController;
+import com.dp1wms.controller.MantVenta.VentaProformaPreviewController;
 import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.dao.impl.RepositoryMantMovImpl;
 import com.dp1wms.view.StageManager;
@@ -28,4 +31,10 @@ public class AppJavaConfig {
     public StageManager stageManager(Stage stage) throws IOException {
         return new StageManager(springFXMLLoader, stage);
     }
+
+    @Bean @Lazy
+    public MantenimientoTipoEmpleadoController mantenimientoTipoEmpleadocontroller(StageManager stageManager) {
+        return new MantenimientoTipoEmpleadoController(stageManager);
+    }
+
 }
