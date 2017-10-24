@@ -33,10 +33,4 @@ public class Usuario implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public void imprimir(){
-        System.err.println(this.idusuario);
-        System.err.println(this.nombreusuario);
-        System.err.println(this.password);
-    }
 }

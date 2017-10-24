@@ -1,10 +1,10 @@
 package com.dp1wms.controller;
 
-import com.dp1wms.dao.impl.RespositoryMantEmpleadoImpl;
 import com.dp1wms.model.Empleado;
 import com.dp1wms.model.Usuario;
-import com.dp1wms.view.FxmlView;
+import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
+import com.dp1wms.view.VentasView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,22 +59,59 @@ public class MainController implements FxmlController {
     @FXML
     private void cargarMantenimientoMovimientos(ActionEvent event) {
         System.out.println("cargarMantenimientoMovimientos");
-        this.stageManager.mostrarModal(FxmlView.MANTENIMIENTO_MOVIMIENTO);
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_MOVIMIENTO);
     }
 
     @FXML
     private void cargarMantenimientoUsuario(ActionEvent event) {
         System.out.println("cargarMantenimientoUsuario");
-        this.stageManager.mostrarModal(FxmlView.MANTENIMIENTO_USUARIO);
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_USUARIO);
     }
+
+    @FXML
+    private void cargarMantenimientoRol(ActionEvent event) {
+        System.out.println("cargarMantenimientoTipoEmpleado");
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_TIPOEMPLEADO);
+    }
+
+
+    @FXML
+    private void cargarMantenimientoCategoria(ActionEvent event) {
+        System.out.println("cargarMantenimientoCategoria");
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_CATEGORIA);
+    }
+
+    @FXML
+    private void cargarMantenimientoProducto(ActionEvent event) {
+        System.out.println("cargarMantenimientoProducto");
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_PRODUCTO);
+    }
+
 
     @FXML
     private void cerrarSesion(){
         this.usuario = null;
-        this.stageManager.cambiarScene(FxmlView.LOGIN);
+        this.stageManager.cambiarScene(MainView.LOGIN);
     }
+
+    @FXML
+    private void cargarMantenimientoDescuentos(){
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_DESCUENTO);
+    }
+
+
+    @FXML
+    private void cargarGenerarProforma(){
+        this.stageManager.mostrarModal(VentasView.GEN_PROFORMA);
+    }
+
+
 
     public void setUsuario(Usuario usuario){
         this.usuario = usuario;
+    }
+
+    public Empleado getEmpleado(){
+        return this.empleado;
     }
 }
