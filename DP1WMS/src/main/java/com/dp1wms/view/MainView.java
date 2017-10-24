@@ -64,7 +64,7 @@ public enum MainView implements FxmlView{
         }
         @Override
         public boolean isResizable(){return false;}
-    }
+    
     },MANTENIMIENTO_CATEGORIA {
         @Override
         public String getTitle() {
