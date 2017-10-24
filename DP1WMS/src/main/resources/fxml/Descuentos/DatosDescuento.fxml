@@ -42,8 +42,8 @@
       <DatePicker fx:id="dp_fechaInicio" layoutX="87.0" layoutY="320.0" />
       <DatePicker fx:id="dp_fechaFin" layoutX="86.0" layoutY="353.0" />
       <Label fx:id="txa_descripcion" layoutX="308.0" layoutY="324.0" text="Descripcion:" />
-      <Button fx:id="btnGuardar" layoutX="385.0" layoutY="418.0" mnemonicParsing="false" onAction="#guardarFormulario" prefHeight="25.0" prefWidth="88.0" text="Guardar" />
-      <Button fx:id="btnCancelar" layoutX="258.0" layoutY="418.0" mnemonicParsing="false" onAction="#cancelarFormulario" prefHeight="25.0" prefWidth="88.0" text="Cancelar" />
+      <Button fx:id="btnGuardar" layoutX="242.0" layoutY="418.0" mnemonicParsing="false" onAction="#guardarFormulario" prefHeight="25.0" prefWidth="88.0" text="Guardar" />
+      <Button fx:id="btnCancelar" layoutX="388.0" layoutY="418.0" mnemonicParsing="false" onAction="#cancelarFormulario" prefHeight="25.0" prefWidth="88.0" text="Cancelar" />
       <TextField fx:id="txb_descripcion" layoutX="385.0" layoutY="320.0" prefHeight="60.0" prefWidth="314.0" />
       <RadioButton fx:id="rb_prodGen" layoutX="28.0" layoutY="161.0" mnemonicParsing="false" onAction="#radioButtonProdGenAccion" />
       <RadioButton fx:id="rb_catGen" layoutX="27.0" layoutY="197.0" mnemonicParsing="false" onAction="#radioButtonCatGenAccion" />
