@@ -1,5 +1,6 @@
 package com.dp1wms.controller;
 
+import com.dp1wms.view.MainView;
 import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.model.Lote;
 import com.dp1wms.model.Producto;
@@ -9,6 +10,7 @@ import com.dp1wms.view.StageManager;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
@@ -16,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -57,9 +61,9 @@ public class IngresoProductoController implements FxmlController {
                 this.stageManager = stageManager;
     }
 
-     public void buscarProducto(ActionEvent event){
-            System.out.println("Buscar Producto");
-            this.stageManager.mostrarModal(FxmlView.BUSQUEDA_PRODUCTO_LOTE);
+    public void buscarProducto(ActionEvent event){
+        System.out.println("Buscar Producto");
+        this.stageManager.mostrarModal(MainView.BUSQUEDA_PRODUCTO);
     }
 
 

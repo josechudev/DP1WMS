@@ -1,9 +1,13 @@
 package com.dp1wms.view;
 
+import com.dp1wms.controller.Descuentos.DatosDescuentoController;
 import com.dp1wms.spring.config.SpringFXMLLoader;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -31,7 +35,7 @@ public class StageManager {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.setTitle(view.getTitle());
-        stage.setResizable(false);
+        stage.setResizable(view.isResizable());
         stage.show();
     }
 
@@ -74,5 +78,27 @@ public class StageManager {
         System.err.println(errorMsg);
         exception.printStackTrace();
         Platform.exit();
+    }
+
+    public void cerrarVentana(ActionEvent event){
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        stage.close();
+    }
+
+    public void mostrarErrorDialog(String title, String header, String content){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    public void mostrarInfonDialog(String title, String header, String content){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

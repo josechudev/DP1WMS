@@ -16,7 +16,7 @@ public class RepositoryMantUsuarioImpl implements RepositoryMantUsuario {
     private JdbcTemplate jdbcTemplate;
 
     public List<Usuario> selectAllUsuario(){
-        String sql = "SELECT * FROM usuario ORDER BY idUsuario";
+        String sql = "SELECT idUsuario, nombreUsuario, password FROM usuario ORDER BY idUsuario";
         return jdbcTemplate.query(sql,
                 new UsuarioRowMapper());
     }
@@ -28,13 +28,13 @@ public class RepositoryMantUsuarioImpl implements RepositoryMantUsuario {
     }
 
     public void createUsuario(Usuario auxUsuario){
-        String sql = "INSERT INTO usuario (idUsuario, nombreUsuario, password) VALUES(?,?,?)";
+        String sql = "INSERT INTO usuario (idUsuario, nombreUsuario, password) VALUES(default, ?, crypt(?, gen_salt('md5')))";
         jdbcTemplate.update(sql,
-                new Object[] { auxUsuario.getV_id(), auxUsuario.getV_nombre(), auxUsuario.getV_password() });
+                new Object[] { auxUsuario.getV_nombre(), auxUsuario.getV_password() });
     }
 
     public void updateUsuario(Usuario auxUsuario){
-        String sql = "UPDATE usuario SET nombreUsuario  = ?, password  = ? WHERE idUsuario = ?";
+        String sql = "UPDATE usuario SET nombreUsuario  = ?, password  = crypt(?, gen_salt('md5')) WHERE idUsuario = ?";
         jdbcTemplate.update(sql,
                 new Object[] { auxUsuario.getV_nombre(), auxUsuario.getV_password(), auxUsuario.getV_id()});
     }
