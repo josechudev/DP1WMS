@@ -4,6 +4,7 @@ import com.dp1wms.model.Empleado;
 import com.dp1wms.model.Usuario;
 import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
+import com.dp1wms.view.VentasView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,12 +94,16 @@ public class MainController implements FxmlController {
 
     @FXML
     private void cargarGenerarProforma(){
-        this.stageManager.mostrarModal(MainView.GEN_PROFORMA);
+        this.stageManager.mostrarModal(VentasView.GEN_PROFORMA);
     }
 
 
 
     public void setUsuario(Usuario usuario){
         this.usuario = usuario;
+    }
+
+    public Empleado getEmpleado(){
+        return this.empleado;
     }
 }
