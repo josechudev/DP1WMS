@@ -75,7 +75,7 @@ public class MainController implements FxmlController {
     }
 
 
-
+    @FXML
     private void cargarMantenimientoCategoria(ActionEvent event) {
         System.out.println("cargarMantenimientoCategoria");
         this.stageManager.mostrarModal(MainView.MANTENIMIENTO_CATEGORIA);
