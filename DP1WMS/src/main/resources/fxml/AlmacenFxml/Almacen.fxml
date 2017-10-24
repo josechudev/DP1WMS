@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="almacen" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="449.0" prefWidth="664.0" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="449.0" prefWidth="664.0" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.almacenes.AlmacenController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -29,7 +29,7 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </Label>
-            <TextField id="tfNombre" prefHeight="25.0" prefWidth="142.0" />
+            <TextField id="tfNombre" fx:id="tfNombre" prefHeight="25.0" prefWidth="142.0" />
          </children>
       </HBox>
       <FlowPane maxHeight="50.0" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.vgrow="NEVER">
@@ -38,7 +38,7 @@
                <children>
                   <Label text="Largo" GridPane.valignment="TOP" />
                   <Label text="m" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <TextField id="tfLargo" GridPane.rowIndex="1" />
+                  <TextField id="tfLargo" fx:id="tfLargo" GridPane.rowIndex="1" />
                </children>
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="99.0" minWidth="10.0" prefWidth="93.0" />
@@ -56,7 +56,7 @@
                <children>
                   <Label text="Ancho" GridPane.valignment="TOP" />
                   <Label text="m" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <TextField id="tfAncho" GridPane.rowIndex="1" />
+                  <TextField id="tfAncho" fx:id="tfAncho" GridPane.rowIndex="1" />
                </children>
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="99.0" minWidth="10.0" prefWidth="93.0" />
@@ -73,8 +73,7 @@
             <GridPane maxHeight="50.0" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="119.0">
                <children>
                   <Label text="Superficie Total" GridPane.valignment="TOP" />
-                  <Label text="m2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <TextField id="tfSuperficie" GridPane.rowIndex="1" />
+                  <Label fx:id="lbSuperficie" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                </children>
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="99.0" minWidth="10.0" prefWidth="93.0" />

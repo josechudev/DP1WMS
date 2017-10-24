@@ -8,13 +8,8 @@ public enum AlmacenView implements FxmlView{
         public String getTitle() {
             return getStringFromResourceBundle("mantenimiento.almacenes.editaralmacen.title");
         }
-        @Override
-        public String getFxmlFile() {
-            return "/fxml/AlmacenFxml/Almacen.fxml";
-        }
-
-        @Override
-        public boolean isResizable() {
+        @Override public String getFxmlFile() { return "/fxml/AlmacenFxml/Almacen.fxml"; }
+        @Override public boolean isResizable() {
             return false;
         }
     };
