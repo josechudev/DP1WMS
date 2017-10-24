@@ -97,7 +97,7 @@ public class CategoriaController implements FxmlController {
     }
 
     @FXML public void btnClickEliminarCategoria(ActionEvent actionEvent) {
-        System.out.println("Eliminar Usuario");
+        System.out.println("Eliminar MantUsuario");
 
         if(e_table.getSelectionModel().getSelectedItem() == null)
             return;

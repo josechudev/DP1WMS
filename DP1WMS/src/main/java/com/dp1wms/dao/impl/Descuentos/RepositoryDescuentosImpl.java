@@ -1,4 +1,4 @@
-package com.dp1wms.dao.impl;
+package com.dp1wms.dao.impl.Descuentos;
 
 import com.dp1wms.dao.RepositoryDescuento;
 import com.dp1wms.model.Descuento;

@@ -1,9 +1,8 @@
-package com.dp1wms.controller;
+package com.dp1wms.controller.MantRoles;
 
 
-import com.dp1wms.dao.impl.RespositoryMantTipoEmpleadoImpl;
+import com.dp1wms.dao.impl.Usuario.RespositoryMantTipoEmpleadoImpl;
 import com.dp1wms.model.TipoEmpleado;
-import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +13,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.aspectj.org.eclipse.jdt.internal.core.SourceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;

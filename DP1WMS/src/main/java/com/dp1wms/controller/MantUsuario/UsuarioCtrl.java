@@ -1,5 +1,6 @@
-package com.dp1wms.controller;
+package com.dp1wms.controller.MantUsuario;
 
+import com.dp1wms.controller.FxmlController;
 import com.dp1wms.dao.RepositoryMantEmpleado;
 import com.dp1wms.dao.RepositoryMantTipoEmpleado;
 import com.dp1wms.dao.RepositoryMantUsuario;
@@ -27,7 +28,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
-public class UsuarioCtrl implements FxmlController{
+public class UsuarioCtrl implements FxmlController {
 
     private final StageManager stageManager;
 
@@ -52,7 +53,7 @@ public class UsuarioCtrl implements FxmlController{
 
     //Los botones del mantenimiento de usuarios
     public void btnClickCrearUsuario(ActionEvent event){
-        System.out.println("Agrear Usuario");
+        System.out.println("Agrear MantUsuario");
 
         Parent root = null;
         FXMLLoader loader;
@@ -79,7 +80,7 @@ public class UsuarioCtrl implements FxmlController{
     }
 
     public void btnClickModificarUsuario(ActionEvent event){
-        System.out.println("Modificar Usuario");
+        System.out.println("Modificar MantUsuario");
 
         if(e_table.getSelectionModel().getSelectedItem() == null)
             return;
@@ -109,7 +110,7 @@ public class UsuarioCtrl implements FxmlController{
     }
 
     public void btnClickEliminarUsuario(ActionEvent event){
-        System.out.println("Eliminar Usuario");
+        System.out.println("Eliminar MantUsuario");
 
         if(e_table.getSelectionModel().getSelectedItem() == null)
             return;

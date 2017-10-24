@@ -36,7 +36,7 @@ public enum MainView implements FxmlView{
         }
         @Override
         public String getFxmlFile() {
-            return "/fxml/MantenimientoMov.fxml";
+            return "/fxml/Movimiento/MantenimientoMov.fxml";
         }
         @Override
         public boolean isResizable(){
@@ -49,7 +49,7 @@ public enum MainView implements FxmlView{
         }
         @Override
         public String getFxmlFile() {
-            return "/fxml/MantenimientoTipoEmpleado.fxml";
+            return "/fxml/Movimiento/MantenimientoTipoEmpleado.fxml";
         }
         @Override
         public boolean isResizable(){return false;}
@@ -60,7 +60,7 @@ public enum MainView implements FxmlView{
         }
         @Override
         public String getFxmlFile() {
-            return "/fxml/CrearTipoEmpleado.fxml";
+            return "/fxml/UsuarioFxml/CrearTipoEmpleado.fxml";
         }
         @Override
         public boolean isResizable(){return false;}
@@ -103,7 +103,7 @@ public enum MainView implements FxmlView{
         }
         @Override
         public String getFxmlFile() {
-            return "/fxml/IngresoProducto.fxml";
+            return "/fxml/Lote/IngresoProducto.fxml";
         }
         @Override
         public boolean isResizable(){
@@ -116,7 +116,7 @@ public enum MainView implements FxmlView{
         }
         @Override
         public String getFxmlFile() {
-            return "/fxml/CrearLote.fxml";
+            return "/fxml/Lote/CrearLote.fxml";
         }
         @Override
         public boolean isResizable(){
@@ -129,7 +129,7 @@ public enum MainView implements FxmlView{
         }
         @Override
         public String getFxmlFile() {
-            return "/fxml/BusquedaProducto.fxml";
+            return "/fxml/Lote/BusquedaProducto.fxml";
         }
         @Override
         public boolean isResizable(){

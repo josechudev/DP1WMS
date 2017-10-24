@@ -1,4 +1,4 @@
-package com.dp1wms.dao.impl;
+package com.dp1wms.dao.impl.Venta;
 
 import com.dp1wms.dao.RepositoryMantCliente;
 import com.dp1wms.model.Cliente;

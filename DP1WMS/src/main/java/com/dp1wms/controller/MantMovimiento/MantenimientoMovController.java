@@ -1,5 +1,6 @@
-package com.dp1wms.controller;
+package com.dp1wms.controller.MantMovimiento;
 
+import com.dp1wms.controller.FxmlController;
 import com.dp1wms.view.MainView;
 import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.view.StageManager;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class MantenimientoMovController implements FxmlController{
+public class MantenimientoMovController implements FxmlController {
     @Autowired
     private RepositoryMantMov repositoryMantMov;
 
@@ -25,7 +26,7 @@ public class MantenimientoMovController implements FxmlController{
 
     @FXML
     public void ingresoLote(ActionEvent event){
-        System.out.println("Ingreso de Lote");
+        System.out.println("Ingreso de MantLote");
         this.stageManager.mostrarModal(MainView.CREAR_LOTE);
      }
 

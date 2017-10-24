@@ -1,6 +1,6 @@
-package com.dp1wms.controller;
+package com.dp1wms.controller.MantRoles;
 
-import com.dp1wms.dao.impl.RespositoryMantTipoEmpleadoImpl;
+import com.dp1wms.dao.impl.Usuario.RespositoryMantTipoEmpleadoImpl;
 import com.dp1wms.model.RolxSeccion;
 import com.dp1wms.model.Seccion;
 import com.dp1wms.model.TipoEmpleado;
@@ -16,13 +16,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TreeView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import javax.swing.*;
-import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;

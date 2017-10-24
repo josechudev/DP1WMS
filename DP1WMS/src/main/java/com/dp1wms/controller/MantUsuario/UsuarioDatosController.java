@@ -1,5 +1,6 @@
-package com.dp1wms.controller;
+package com.dp1wms.controller.MantUsuario;
 
+import com.dp1wms.controller.FxmlController;
 import com.dp1wms.model.Empleado;
 import com.dp1wms.model.TipoEmpleado;
 import com.dp1wms.model.UsuarioModel.Usuario;
@@ -20,7 +21,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
-public class UsuarioDatosController implements FxmlController{
+public class UsuarioDatosController implements FxmlController {
 
     //private final StageManager stageManager;
 
@@ -106,7 +107,7 @@ public class UsuarioDatosController implements FxmlController{
         this.v_accion = v_accion;
 
         if(this.v_accion == 0){
-            e_buton_datos.setText("Crear Usuario");
+            e_buton_datos.setText("Crear MantUsuario");
         }
         else{
             e_id_datos.setText(Integer.toString(auxUsuario.getV_id()));
@@ -121,7 +122,7 @@ public class UsuarioDatosController implements FxmlController{
 
             e_id_tipoEmpleado.setText(Long.toString(auxTipoEmpleado.getIdtipoempleado()));
             e_descripcion_tipoEmpleado.setText(auxTipoEmpleado.getDescripcion());
-            e_buton_datos.setText("Modificar Usuario");
+            e_buton_datos.setText("Modificar MantUsuario");
         }
     }
 

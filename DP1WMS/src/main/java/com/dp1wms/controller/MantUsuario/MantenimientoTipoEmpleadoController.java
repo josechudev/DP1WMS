@@ -1,11 +1,7 @@
-package com.dp1wms.controller;
+package com.dp1wms.controller.MantUsuario;
 
-import com.dp1wms.dao.RepositoryMantTipoEmpleado;
-import com.dp1wms.dao.RepositoryMantUsuario;
-import com.dp1wms.dao.impl.RespositoryMantTipoEmpleadoImpl;
+import com.dp1wms.controller.FxmlController;
 import com.dp1wms.model.TipoEmpleado;
-import com.dp1wms.model.UsuarioModel.Usuario;
-import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,8 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -25,12 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.List;
 
 @Component
-public class MantenimientoTipoEmpleadoController implements FxmlController{
+public class MantenimientoTipoEmpleadoController implements FxmlController {
 
     @FXML private TableView<TipoEmpleado> e_table;
     @FXML private TableColumn<TipoEmpleado, Long> e_id;
@@ -70,7 +63,7 @@ public class MantenimientoTipoEmpleadoController implements FxmlController{
     }
 
     public void btnClickModificar(ActionEvent event){
-        System.out.println("Modificar Tipo Usuario");
+        System.out.println("Modificar Tipo MantUsuario");
         if(e_table.getSelectionModel().getSelectedItem() == null)
             return;
         TipoEmpleado auxTipoUsuario = e_table.getSelectionModel().getSelectedItem();

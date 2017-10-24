@@ -1,8 +1,8 @@
-package com.dp1wms.controller;
+package com.dp1wms.controller.MantLote;
 
+import com.dp1wms.controller.FxmlController;
 import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.model.Producto;
-import com.dp1wms.view.FxmlView;
 import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
@@ -21,7 +21,7 @@ import java.text.ParsePosition;
 import java.util.Date;
 
 @Component
-public class CrearLoteController implements FxmlController{
+public class CrearLoteController implements FxmlController {
     @FXML
     private TextField txb_nombreProducto;
 
@@ -70,7 +70,7 @@ public class CrearLoteController implements FxmlController{
     }
 
     public void registrarLote(ActionEvent event){
-        System.out.println("Registrar Lote");
+        System.out.println("Registrar MantLote");
        if((this.dp_fechaLote.getValue() != null) && (this.dp_fechaEntrada.getValue() != null) && (this.txb_cantidad != null) &&(this.txb_nombreProducto != null)){
            Timestamp fechaLote = null;
            Timestamp fechaEntrada = null;
@@ -117,7 +117,7 @@ public class CrearLoteController implements FxmlController{
     }
 
     public void cancelarRegistrarLote(ActionEvent event){
-        System.out.println("Se cancelo el registro del Lote");
+        System.out.println("Se cancelo el registro del MantLote");
         crearLoteAnchorPane.getScene().getWindow().hide();
     }
 

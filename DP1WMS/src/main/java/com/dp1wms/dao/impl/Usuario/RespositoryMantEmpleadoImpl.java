@@ -1,4 +1,4 @@
-package com.dp1wms.dao.impl;
+package com.dp1wms.dao.impl.Usuario;
 
 import com.dp1wms.dao.RepositoryMantEmpleado;
 import com.dp1wms.dao.mapper.EmpleadoRowMapper;

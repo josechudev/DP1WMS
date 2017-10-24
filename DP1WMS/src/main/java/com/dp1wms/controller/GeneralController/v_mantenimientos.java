@@ -33,7 +33,7 @@ public class v_mantenimientos {
 
         Parent crearVentana = null;
         try {
-            crearVentana = FXMLLoader.load(getClass().getResource("/fxml/MantenimientoMov.fxml"));
+            crearVentana = FXMLLoader.load(getClass().getResource("/fxml/Movimiento/MantenimientoMov.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

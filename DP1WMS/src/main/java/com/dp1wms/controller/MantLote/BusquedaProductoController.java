@@ -1,5 +1,6 @@
-package com.dp1wms.controller;
+package com.dp1wms.controller.MantLote;
 
+import com.dp1wms.controller.FxmlController;
 import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.model.CategoriaProducto;
 import com.dp1wms.model.Producto;

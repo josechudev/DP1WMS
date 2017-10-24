@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="483.0" prefWidth="351.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.CrearRolController">
+<AnchorPane prefHeight="483.0" prefWidth="351.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantRoles.CrearRolController">
    <children>
       <TextField fx:id="text_nombre_rol" layoutX="55.0" layoutY="147.0" />
       <Label layoutX="64.0" layoutY="124.0" text="Nombre del Rol" />

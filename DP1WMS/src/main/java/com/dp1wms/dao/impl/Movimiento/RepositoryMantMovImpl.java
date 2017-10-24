@@ -1,4 +1,4 @@
-package com.dp1wms.dao.impl;
+package com.dp1wms.dao.impl.Movimiento;
 
 import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.model.CategoriaProducto;

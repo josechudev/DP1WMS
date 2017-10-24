@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="crearLoteAnchorPane" prefHeight="332.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.CrearLoteController">
+<AnchorPane fx:id="crearLoteAnchorPane" prefHeight="332.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantLote.CrearLoteController">
    <children>
       <Button fx:id="btn_buscarProducto" layoutX="477.0" layoutY="60.0" mnemonicParsing="false" onAction="#buscarProducto" text="BuscarProducto" />
       <Label layoutX="14.0" layoutY="64.0" text="Nombre Producto" />

@@ -1,26 +1,18 @@
-package com.dp1wms.controller;
+package com.dp1wms.controller.MantUsuario;
 
+import com.dp1wms.controller.FxmlController;
 import com.dp1wms.model.TipoEmpleado;
 import com.dp1wms.model.UsuarioModel.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.util.List;
-
 @Component
-public class TipoEmpleadoDatosController implements FxmlController{
+public class TipoEmpleadoDatosController implements FxmlController {
 
     //private final StageManager stageManager;
 

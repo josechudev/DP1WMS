@@ -5,7 +5,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="338.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantenimientoRolesController">
+<AnchorPane prefHeight="338.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantRoles.MantenimientoRolesController">
    <children>
       <Button fx:id="boton_nuevo" layoutX="105.0" layoutY="279.0" mnemonicParsing="false" onAction="#click_boton_nuevo" text="Nuevo" />
       <CheckBox fx:id="usuarios" layoutX="325.0" layoutY="70.0" mnemonicParsing="false" text="Mantenimiento de Usuarios" />

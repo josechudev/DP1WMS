@@ -118,7 +118,7 @@ public class ProductoController  implements FxmlController {
         this._llenarGrilla();
     }
     public void btnClickEliminar(ActionEvent actionEvent){
-        System.out.println("Eliminar Usuario");
+        System.out.println("Eliminar MantUsuario");
 
         if(tableViewProductos.getSelectionModel().getSelectedItem() == null)
             return;
