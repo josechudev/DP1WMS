@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="1283.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" ><!--fx:controller="com.dp1wms.controller.MantProducto.ProductoController"-->
+<AnchorPane prefHeight="400.0" prefWidth="1283.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantProducto.ProductoController">
    <children>
       <Label layoutX="36.0" layoutY="53.0" text="Acciones">
          <font>
