@@ -1,6 +1,8 @@
 package com.dp1wms.controller;
 
 
+import com.dp1wms.dao.impl.RespositoryMantTipoEmpleadoImpl;
+import com.dp1wms.model.TipoEmpleado;
 import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
@@ -9,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.aspectj.org.eclipse.jdt.internal.core.SourceType;
@@ -34,18 +37,24 @@ public class CrearRolController implements Initializable{
     @FXML private CheckBox check_almacenes;
     @FXML private CheckBox check_ventas;
     @FXML private TextField text_nombre_rol;
+    @FXML private Label mensaje;
 
     @Autowired @Lazy
     public CrearRolController(StageManager stageManager){
         this.stageManager = stageManager;
     }
 
+    @Autowired
+    private RespositoryMantTipoEmpleadoImpl repo_tipo_empleado;
+
 
     @FXML
     private void click_boton_guardar(ActionEvent event) {
-        System.out.println(text_nombre_rol.getText());
+
+        TipoEmpleado tipoEmpleado = new TipoEmpleado();
 
         List<String> permisos = new ArrayList<String>();
+
         if (check_almacenes.isSelected()){
             permisos.add(check_almacenes.getText());
         }
@@ -58,8 +67,24 @@ public class CrearRolController implements Initializable{
         if (check_usuarios.isSelected()){
             permisos.add(check_usuarios.getText());
         }
-        System.out.println(permisos);
+
+        //inserto en tabla intermedia
+        TipoEmpleado empleado=repo_tipo_empleado.getTipoEmpleadoxnombre(text_nombre_rol.getText());
+        if (empleado.getDescripcion() != "Nulo"){
+            mensaje.setText("El rol asignado ya existe");
+        }
+        else{
+            repo_tipo_empleado.asignarTodosPermisos(text_nombre_rol.getText(),permisos);
+            mensaje.setText("");
+            Node node = (Node) event.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+            stage.close();
+        }
+
+
     }
+
+
 
     @FXML
     private void click_boton_cancelar(ActionEvent event) {
@@ -71,6 +96,7 @@ public class CrearRolController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        mensaje.setText("");
         System.out.println("Creación de Roles");
     }
 }

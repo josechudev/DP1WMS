@@ -8,6 +8,7 @@ public class TipoEmpleado {
 
     private String descripcion;
     private List<String> permisos;
+    private Boolean activado;
 
     public TipoEmpleado(){}
 
