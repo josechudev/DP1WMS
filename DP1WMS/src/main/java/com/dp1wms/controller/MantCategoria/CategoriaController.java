@@ -78,7 +78,7 @@ public class CategoriaController implements FxmlController {
         Parent root = null;
         FXMLLoader loader;
         try {
-            loader =new FXMLLoader(getClass().getResource("/fxml/UsuarioFxml/DatosUsuario.fxml"));
+            loader =new FXMLLoader(getClass().getResource("/fxml/Categorias/DatosCategoria.fxml"));
             root = (Parent) loader.load();
             CategoriaDatosController controller = loader.getController();
             //1 es modificar
