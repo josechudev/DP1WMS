@@ -23,7 +23,7 @@ public class RepositoryProformaImpl implements RepositoryProforma {
         List<Producto> productos = null;
 
         dato = "%" + dato.toLowerCase()  + "%";
-        String sql = "SELECT p.idproducto, p.codigo, p.nombreproducto, p.precio, p.idcategoria, cp.descripcion as categoria," +
+        String sql = "SELECT p.idproducto, p.codigo, p.nombreproducto, p.precio, p.idcategoria, cp.descripcion as Categoria," +
                         " (p.stock - COALESCE(x.cantidad, 0)) as stock " +
                     "FROM producto p INNER JOIN categoriaproducto cp ON p.idcategoria = cp.idcategoria" +
                     " LEFT JOIN ( " +
@@ -116,7 +116,7 @@ public class RepositoryProformaImpl implements RepositoryProforma {
         p.setPrecio(rs.getFloat("precio"));
         p.setIdCategoria(rs.getInt("idcategoria"));
         p.setStock(rs.getInt("stock"));
-        p.setCategoria(rs.getString("categoria"));
+        p.setCategoria(rs.getString("Categoria"));
         return p;
     }
 }
