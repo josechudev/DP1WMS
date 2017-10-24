@@ -42,7 +42,7 @@ public class ProductoDatosController  implements FxmlController {
 
             txt_prodId.setText(Integer.toString(producto.getIdProducto()));
             txt_prodPeso.setText(Float.toString(producto.getPeso()));
-            txt_prodCategoria.setText(producto.getCategoria());
+            txt_prodCategoria.setText(Integer.toString(producto.getIdCategoria()));
             txt_prodNombre.setText(producto.getNombreProducto());
             txt_prodFechaV.setText(producto.getFechaVencimiento());
             txt_prodCod.setText(producto.getCodigo());
@@ -60,7 +60,7 @@ public class ProductoDatosController  implements FxmlController {
         Producto producto = new Producto();
         producto.setIdProducto(Integer.parseInt(txt_prodId.getText()));
         producto.setPeso(Float.parseFloat(txt_prodPeso.getText()));
-        producto.setCategoria(txt_prodCategoria.getText());
+        producto.setIdCategoria(Integer.parseInt(txt_prodCategoria.getText()));
         producto.setNombreProducto(txt_prodNombre.getText());
         producto.setFechaVencimiento(txt_prodFechaV.getText());
         producto.setCodigo(txt_prodCod.getText());
@@ -85,6 +85,6 @@ public class ProductoDatosController  implements FxmlController {
     }
 
     public void setV_parentController(ProductoController productoController) {
-        this.v_parentController = v_parentController;
+        this.v_parentController = productoController;
     }
 }
