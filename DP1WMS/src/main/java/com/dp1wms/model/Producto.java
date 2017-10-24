@@ -4,24 +4,19 @@ package com.dp1wms.model;
 public class Producto {
 
     private int idProducto;
-
     private String nombreProducto;
-
     private int idCategoria;
-
-
     private String categoria;
-
     private float peso;
-
     private String fechaVencimiento;
-
     private String descripcion;
-
     private int stock;
+    private String codigo;
+    private float precio;
+
+    private int indiceTableView;
 
     public Producto(){
-
     }
 
     public Producto(int idProducto, String nombreProducto, int idCategoria, float peso, String fechaVencimiento, String descripcion, int stock) {
@@ -64,7 +59,6 @@ public class Producto {
         this.idCategoria = idCategoria;
     }
 
-
     public String getCategoria() {
         return categoria;
     }
@@ -103,5 +97,30 @@ public class Producto {
     public void setStock(int stock) {
         this.stock = stock;
 
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public float getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
+    }
+
+
+    public int getIndiceTableView() {
+        return indiceTableView;
+    }
+
+    public void setIndiceTableView(int indiceTableView) {
+        this.indiceTableView = indiceTableView;
     }
 }

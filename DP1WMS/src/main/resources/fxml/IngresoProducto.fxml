@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="346.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.IngresoProductoController">
+<AnchorPane fx:id="ingresoProductoAnchorePane" prefHeight="346.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.IngresoProductoController">
    <children>
       <Label layoutX="33.0" layoutY="55.0" text="Nombre Producto" />
       <TextField fx:id="txb_nombreProd" layoutX="137.0" layoutY="51.0" prefHeight="26.0" prefWidth="123.0" />
-      <Button fx:id="btn_buscar" layoutX="292.0" layoutY="51.0" mnemonicParsing="false" onAction="#buscarProducto" text="Buscar Producto" />
+      <Button fx:id="btn_buscar" layoutX="473.0" layoutY="52.0" mnemonicParsing="false" onAction="#buscarProducto" prefHeight="25.0" prefWidth="113.0" text="Buscar Producto" />
       <Label layoutX="33.0" layoutY="97.0" text="Cantidad" />
       <TextField fx:id="txb_cantidad" layoutX="137.0" layoutY="93.0" prefHeight="25.0" prefWidth="123.0" />
       <Label layoutX="273.0" layoutY="97.0" text="Motivo" />
@@ -27,7 +27,9 @@
       </Label>
       <Label layoutX="35.0" layoutY="183.0" text="Observaciones" />
       <TextArea fx:id="txa_observaciones" layoutX="137.0" layoutY="187.0" prefHeight="55.0" prefWidth="379.0" />
-      <Button fx:id="btn_registrar" layoutX="137.0" layoutY="304.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Registrar Ingreso" />
-      <Button layoutX="370.0" layoutY="304.0" mnemonicParsing="false" text="Cancelar" />
+      <Button fx:id="btn_registrar" layoutX="137.0" layoutY="304.0" mnemonicParsing="false" onAction="#registrarIngresoProducto" prefHeight="26.0" prefWidth="150.0" text="Registrar Ingreso" />
+      <Button layoutX="370.0" layoutY="304.0" mnemonicParsing="false" onAction="#cancelarRegistro" text="Cancelar" />
+      <Label layoutX="273.0" layoutY="55.0" text="Stock" />
+      <TextField fx:id="txb_stock" layoutX="333.0" layoutY="51.0" prefHeight="25.0" prefWidth="106.0" />
    </children>
 </AnchorPane>

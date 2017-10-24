@@ -1,5 +1,7 @@
 package com.dp1wms.spring.config;
 
+import com.dp1wms.controller.Descuentos.DatosDescuentoController;
+import com.dp1wms.controller.Descuentos.MantenimientoDescuentoController;
 import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.dao.impl.RepositoryMantMovImpl;
 import com.dp1wms.view.StageManager;
@@ -23,7 +25,7 @@ public class AppJavaConfig {
 
     @Bean
     @Lazy(value = true) //Stage only created after Spring context bootstap
-    public StageManager stageCtrl(Stage stage) throws IOException {
+    public StageManager stageManager(Stage stage) throws IOException {
         return new StageManager(springFXMLLoader, stage);
     }
 }

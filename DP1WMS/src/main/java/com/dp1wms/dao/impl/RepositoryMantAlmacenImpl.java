@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class RepositoryMantAlmacenImpl implements RepositoryMantAlmacen{
@@ -20,6 +21,7 @@ public class RepositoryMantAlmacenImpl implements RepositoryMantAlmacen{
         return (List<Almacen>) jdbcTemplate.query(sql, new AlmacenRowMapper());
     }
 
+    @Transactional (rollbackFor = Exception.class)
     public int crearAlmacen(Almacen auxAlmacen){
         String sql = "INSERT INTO almacen (nombre, direccion, largo, ancho) VALUES (?,?,?,?)";
         return jdbcTemplate.update(sql, auxAlmacen.getNombre(), auxAlmacen.getDireccion(), auxAlmacen.getLargo(), auxAlmacen.getAncho());

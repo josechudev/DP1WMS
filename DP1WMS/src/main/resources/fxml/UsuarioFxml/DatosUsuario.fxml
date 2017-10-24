@@ -5,15 +5,32 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="273.0" prefWidth="382.0" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.UsuarioDatosController">
+<AnchorPane prefHeight="323.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.UsuarioDatosController">
     <children>
-        <TextField fx:id="e_id_datos" editable="false" layoutX="42.0" layoutY="57.0" prefWidth="200.0" />
-        <TextField fx:id="e_nombre_datos" layoutX="42.0" layoutY="109.0" prefWidth="200.0" />
-        <TextField fx:id="e_password_datos" layoutX="42.0" layoutY="160.0" prefWidth="200.0" />
-        <Label layoutX="42.0" layoutY="40.0" text="Id:" />
-        <Label layoutX="45.0" layoutY="92.0" text="Nombre:" />
-        <Label layoutX="42.0" layoutY="143.0" text="Password:" />
-        <Button fx:id="e_buton_datos" layoutX="92.0" layoutY="201.0" mnemonicParsing="false" onAction="#btnClickAceptar_datos" text="Aceptar" />
-        <Button layoutX="242.0" layoutY="201.0" mnemonicParsing="false" onAction="#btnClickCancelar_datos" text="Cancelar" />
+        <TextField fx:id="e_id_datos" editable="false" layoutX="26.0" layoutY="58.0" prefHeight="25.0" prefWidth="25.0" />
+        <TextField fx:id="e_nombre_datos" layoutX="26.0" layoutY="118.0" prefHeight="25.0" prefWidth="95.0" />
+        <TextField fx:id="e_password_datos" layoutX="26.0" layoutY="180.0" prefHeight="25.0" prefWidth="95.0" />
+        <Label layoutX="26.0" layoutY="41.0" text="Id:" />
+        <Label layoutX="29.0" layoutY="101.0" text="User:" />
+        <Label layoutX="25.0" layoutY="166.0" text="Password:" />
+
+        <TextField fx:id="e_id_empleado" editable="false" layoutX="177.0" layoutY="58.0" prefHeight="25.0" prefWidth="25.0" />
+        <TextField fx:id="e_numDoc_empleado" layoutX="177.0" layoutY="118.0" prefHeight="25.0" prefWidth="95.0" />
+        <TextField fx:id="e_nombre_empleado" layoutX="177.0" layoutY="180.0" prefHeight="25.0" prefWidth="95.0" />
+        <TextField fx:id="e_apellido_empleado" layoutX="287.0" layoutY="118.0" prefHeight="25.0" prefWidth="95.0" />
+        <TextField fx:id="e_email_empleado" layoutX="287.0" layoutY="180.0" prefHeight="25.0" prefWidth="95.0" />
+        <Label layoutX="177.0" layoutY="43.0" text="IdEmpleado:" />
+        <Label layoutX="177.0" layoutY="102.0" text="NumDoc:" />
+        <Label layoutX="177.0" layoutY="166.0" text="Nombre:" />
+        <Label layoutX="286.0" layoutY="102.0" text="Apellido:" />
+        <Label layoutX="286.0" layoutY="166.0" text="Email:" />
+
+        <TextField fx:id="e_id_tipoEmpleado" editable="false" layoutX="433.0" layoutY="118.0" prefHeight="25.0" prefWidth="25.0" />
+        <TextField fx:id="e_descripcion_tipoEmpleado" editable="false" layoutX="433.0" layoutY="180.0" prefHeight="25.0" prefWidth="95.0" />
+        <Label layoutX="433.0" layoutY="102.0" text="Id:" />
+        <Label layoutX="433.0" layoutY="166.0" text="Descripcion:" />
+        <Button fx:id="e_buton_datos" layoutX="133.0" layoutY="261.0" mnemonicParsing="false" onAction="#btnClickAceptar_datos" text="Aceptar" />
+        <Button layoutX="384.0" layoutY="261.0" mnemonicParsing="false" onAction="#btnClickCancelar_datos" text="Cancelar" />
+        <Button layoutX="401.0" layoutY="58.0" mnemonicParsing="false" onAction="#btnClickSeleccionarTipoEmpleado" text="Escoger Tipo de empleado" />
     </children>
 </AnchorPane>

@@ -1,9 +1,8 @@
 package com.dp1wms.controller;
 
-import com.dp1wms.dao.impl.RespositoryMantEmpleadoImpl;
 import com.dp1wms.model.Empleado;
 import com.dp1wms.model.Usuario;
-import com.dp1wms.view.FxmlView;
+import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -59,31 +58,51 @@ public class MainController implements FxmlController {
     @FXML
     private void cargarMantenimientoMovimientos(ActionEvent event) {
         System.out.println("cargarMantenimientoMovimientos");
-        this.stageManager.mostrarModal(FxmlView.MANTENIMIENTO_MOVVIMIENTO);
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_MOVIMIENTO);
     }
 
     @FXML
     private void cargarMantenimientoUsuario(ActionEvent event) {
         System.out.println("cargarMantenimientoUsuario");
-        this.stageManager.mostrarModal(FxmlView.MANTENIMIENTO_USUARIO);
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_USUARIO);
+    }
+
+    @FXML
+    private void cargarMantenimientoCategoria(ActionEvent event) {
+        System.out.println("cargarMantenimientoCategoria");
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_CATEGORIA);
+    }
+
+    @FXML
+    private void cargarMantenimientoProducto(ActionEvent event) {
+        System.out.println("cargarMantenimientoProducto");
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_PRODUCTO);
     }
 
     @FXML
     private void cargarMantenimientoAlmacenes(ActionEvent event) {
         System.out.println("cargarMantenimientoAlmacenes");
-        this.stageManager.mostrarModal(FxmlView.MANTENIMIENTO_ALMACEN);
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_ALMACEN);
     }
 
     @FXML
     private void cerrarSesion(){
         this.usuario = null;
-        this.stageManager.cambiarScene(FxmlView.LOGIN);
+        this.stageManager.cambiarScene(MainView.LOGIN);
     }
 
     @FXML
-    private void cargarGenerarProforma(){
-        this.stageManager.mostrarModal(FxmlView.GEN_PROFORMA);
+    private void cargarMantenimientoDescuentos(){
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_DESCUENTO);
     }
+
+
+    @FXML
+    private void cargarGenerarProforma(){
+        this.stageManager.mostrarModal(MainView.GEN_PROFORMA);
+    }
+
+
 
     public void setUsuario(Usuario usuario){
         this.usuario = usuario;

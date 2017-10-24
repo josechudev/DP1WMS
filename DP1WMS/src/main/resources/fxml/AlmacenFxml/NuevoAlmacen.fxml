@@ -26,14 +26,14 @@
       <Label text="Largo (m)" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
       <Label text="Ancho (m)" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
       <Label text="Superficie total" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-      <TextField fx:id="tfNombre" GridPane.columnIndex="1" />
-      <TextField fx:id="tfDireccion" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <TextField fx:id="tfLargo" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <TextField fx:id="tfNombre"  GridPane.columnIndex="1" />
+      <TextField fx:id="tfDireccion"  GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="tfLargo" onKeyReleased="#calcularSuperficie" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
       </TextField>
-      <TextField fx:id="tfAncho" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <TextField fx:id="tfAncho" onKeyReleased="#calcularSuperficie" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
