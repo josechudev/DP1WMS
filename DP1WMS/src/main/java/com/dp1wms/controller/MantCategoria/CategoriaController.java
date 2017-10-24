@@ -35,9 +35,9 @@ public class CategoriaController implements FxmlController {
     @FXML private TableColumn <CategoriaProducto,String> e_descripcion;
 
     @Autowired
-    private RepositoryMantCategoria repositryMantCategoria;
+    private RepositoryMantCategoria repositoryMantCategoria;
     @Autowired @Lazy
-    public  CategoriaController (StageManager stageManager){
+    public CategoriaController (StageManager stageManager){
         this.stageManager = stageManager;
     }
 
@@ -47,7 +47,7 @@ public class CategoriaController implements FxmlController {
         FXMLLoader loader;
         CategoriaProducto categoriaProducto = new CategoriaProducto();
         try{
-            loader = new FXMLLoader(getClass().getResource("/fxml/Categorias/DatosCategoria.xml"));
+            loader = new FXMLLoader(getClass().getResource("/fxml/Categorias/DatosCategoria.fxml"));
             root = (Parent) loader.load();
             CategoriaDatosController controller = loader.getController();
             controller._setData(categoriaProducto,0);
@@ -93,6 +93,7 @@ public class CategoriaController implements FxmlController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.show();
+        this._llenarGrilla();
     }
 
     @FXML public void btnClickEliminarCategoria(ActionEvent actionEvent) {
@@ -103,31 +104,33 @@ public class CategoriaController implements FxmlController {
 
         CategoriaProducto categoriaProducto = e_table.getSelectionModel().getSelectedItem();
 
-        repositryMantCategoria.deleteCategoria(categoriaProducto);
+        repositoryMantCategoria.deleteCategoria(categoriaProducto);
 
         this._llenarGrilla();
     }
 
     private void _llenarGrilla() {
         e_table.getItems().clear();
-        List<CategoriaProducto> categoriaProductoList = repositryMantCategoria.selectAllCategoria();
-        for (CategoriaProducto cat: categoriaProductoList
-             ) {
-            e_table.getItems().add(new CategoriaProducto(cat.getIdCategoria(),cat.getDescripcion()));
+        List<CategoriaProducto> categoriaProductoList = repositoryMantCategoria.selectAllCategoria();
+
+        for(int i = 0; i < categoriaProductoList.size(); i++){
+            e_table.getItems().add(new CategoriaProducto( categoriaProductoList.get(i).getIdCategoria(),categoriaProductoList.get(i).getDescripcion()));
         }
     }
 
     @Override
     public void initialize() {
-        e_id.setCellValueFactory(new PropertyValueFactory<CategoriaProducto,Integer>("v_id"));
-        e_descripcion.setCellValueFactory(new PropertyValueFactory<CategoriaProducto,String>("v_descripcion"));
+
+        e_id.setCellValueFactory(new PropertyValueFactory<CategoriaProducto,Integer>("IdCategoria"));
+        e_descripcion.setCellValueFactory(new PropertyValueFactory<CategoriaProducto,String>("Descripcion"));
         this._llenarGrilla();
     }
+
     public void crearCategoriaDB(CategoriaProducto categoriaProducto){
-        repositryMantCategoria.createCategoria(categoriaProducto);
+        repositoryMantCategoria.createCategoria(categoriaProducto);
     }
     public void  modificarCategoriaBD(CategoriaProducto categoriaProducto){
-        repositryMantCategoria.updateCategoria(categoriaProducto);
+        repositoryMantCategoria.updateCategoria(categoriaProducto);
     }
 
 }

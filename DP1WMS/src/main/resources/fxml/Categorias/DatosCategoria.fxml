@@ -5,13 +5,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="216.0" prefWidth="297.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantCategoria.CategoriaDatosController">
+<AnchorPane prefHeight="239.0" prefWidth="401.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantCategoria.CategoriaDatosController">
    <children>
-      <TextField fx:id="idCategoria" editable="false" layoutX="56.0" layoutY="87.0" prefHeight="25.0" prefWidth="25.0" />
+      <TextField fx:id="e_idCategoria" editable="true" layoutX="56.0" layoutY="87.0" prefHeight="25.0" prefWidth="25.0" />
       <Label layoutX="58.0" layoutY="70.0" text="Id:" />
-      <TextField fx:id="descripcionCategoria" editable="false" layoutX="102.0" layoutY="87.0" prefHeight="25.0" prefWidth="167.0" />
+      <TextField fx:id="e_descripcionCategoria" editable="true" layoutX="102.0" layoutY="87.0" prefHeight="26.0" prefWidth="224.0" />
       <Label layoutX="101.0" layoutY="70.0" text="Descripcion:" />
       <Button fx:id="btn_aceptar" layoutX="73.0" layoutY="167.0" mnemonicParsing="false" onAction="#btnClickAceptar" text="Aceptar" />
-      <Button fx:id="btn_cancelar" layoutX="155.0" layoutY="167.0" mnemonicParsing="false" onAction="#btnClickCancelar" text="Cancelar" />
+      <Button fx:id="btn_cancelar" layoutX="248.0" layoutY="167.0" mnemonicParsing="false" onAction="#btnClickCancelar" text="Cancelar" />
    </children>
 </AnchorPane>
