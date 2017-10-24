@@ -55,13 +55,13 @@ public class MainController implements FxmlController {
             this.tipoEmpleadoLabel.setText(this.empleado.getTipoEmpleado().getDescripcion());
         }
     }
-
+/*
     @FXML
     private void cargarMantenimientoMovimientos(ActionEvent event) {
         System.out.println("cargarMantenimientoMovimientos");
         this.stageManager.mostrarModal(MainView.MANTENIMIENTO_MOVIMIENTO);
     }
-
+*/
     @FXML
     private void cargarMantenimientoUsuario(ActionEvent event) {
         System.out.println("cargarMantenimientoUsuario");
@@ -85,6 +85,18 @@ public class MainController implements FxmlController {
     private void cargarMantenimientoProducto(ActionEvent event) {
         System.out.println("cargarMantenimientoProducto");
         this.stageManager.mostrarModal(MainView.MANTENIMIENTO_PRODUCTO);
+    }
+
+    @FXML
+    private void cargarCrearLote(ActionEvent event) {
+        System.out.println("cargarCrearLote");
+        this.stageManager.mostrarModal(MainView.CREAR_LOTE);
+    }
+
+    @FXML
+    private void cargarIngresoProducto(ActionEvent event) {
+        System.out.println("cargarIngreso/SalidaProducto");
+        this.stageManager.mostrarModal(MainView.INGRESO_PRODUCTO);
     }
 
 
