@@ -25,18 +25,18 @@ public class CategoriaDatosController implements FxmlController{
 
     }
 
-    public void _setData(CategoriaProducto categoriaProducto, int i) {
+    public void _setData(CategoriaProducto categoriaProducto, int v_accion) {
         e_idCategoria.setText("0");
         e_descripcionCategoria.setText("0");
         this.v_accion=v_accion;
 
         if(this.v_accion==0){
-            btn_aceptar.setText("Crear categoria");
+            btn_aceptar.setText("Crear Categoria");
         }
         else{
             e_descripcionCategoria.setText(categoriaProducto.getDescripcion());
             e_idCategoria.setText(Integer.toString(categoriaProducto.getIdCategoria()));
-            btn_aceptar.setText("Modificar categoria");
+            btn_aceptar.setText("Modificar Categoria");
         }
     }
 

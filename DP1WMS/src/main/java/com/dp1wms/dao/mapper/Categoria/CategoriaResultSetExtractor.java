@@ -1,4 +1,4 @@
-package com.dp1wms.dao.mapper.categoria;
+package com.dp1wms.dao.mapper.Categoria;
 
 import com.dp1wms.model.CategoriaProducto;
 import org.springframework.dao.DataAccessException;

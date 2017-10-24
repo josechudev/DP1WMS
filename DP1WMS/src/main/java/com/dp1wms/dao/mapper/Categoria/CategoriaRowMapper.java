@@ -1,4 +1,4 @@
-package com.dp1wms.dao.mapper.categoria;
+package com.dp1wms.dao.mapper.Categoria;
 
 import org.springframework.jdbc.core.RowMapper;
 

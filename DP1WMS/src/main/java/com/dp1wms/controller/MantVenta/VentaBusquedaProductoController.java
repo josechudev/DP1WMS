@@ -114,7 +114,7 @@ public class VentaBusquedaProductoController implements FxmlController{
         this.codigoTC.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("codigo"));
         this.nombreTC.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombreProducto"));
         this.precioTC.setCellValueFactory(new PropertyValueFactory<Producto, Float>("precio"));
-        this.categoriaTC.setCellValueFactory(new PropertyValueFactory<Producto, String>("categoria"));
+        this.categoriaTC.setCellValueFactory(new PropertyValueFactory<Producto, String>("Categoria"));
         this.stockTC.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("stock"));
         this.productoTable.setEditable(false);
     }
