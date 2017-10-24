@@ -29,7 +29,7 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
-    },MANTENIMIENTO_MOVVIMIENTO {
+    },MANTENIMIENTO_MOVIMIENTO {
         @Override
         public String getTitle() {
             return getStringFromResourceBundle("mantenimiento.movimiento.title");
@@ -64,9 +64,39 @@ public enum MainView implements FxmlView{
         }
         @Override
         public boolean isResizable(){return false;}
-    },
+    }
+    },MANTENIMIENTO_CATEGORIA {
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("mantenimiento.categorias.title");
+        }
 
-    INGRESO_PRODUCTO{
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Categorias/MantenimientoCategoria.fxml";
+        }
+
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },MANTENIMIENTO_PRODUCTO {
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("mantenimiento.productos.title");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Productos/MantenimientoProductos.fxml";
+        }
+
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    }
+    , INGRESO_PRODUCTO{
         @Override
         public String getTitle() {
             return getStringFromResourceBundle("ingreso.producto.title");
@@ -105,45 +135,6 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
-    }, GEN_PROFORMA{
-        @Override
-        public String getTitle() {
-            return getStringFromResourceBundle("generarproforma.title");
-        }
-        @Override
-        public String getFxmlFile() {
-            return "/fxml/Ventas/Proforma.fxml";
-        }
-        @Override
-        public boolean isResizable(){
-            return true;
-        }
-    }, BUSCAR_CLIENTE{
-        @Override
-        public String getTitle() {
-            return getStringFromResourceBundle("buscarcliente.title");
-        }
-        @Override
-        public String getFxmlFile() {
-            return "/fxml/Ventas/BuscarCliente.fxml";
-        }
-        @Override
-        public boolean isResizable(){
-            return true;
-        }
-    }, REGISTRAR_CLIENTE{
-        @Override
-        public String getTitle() {
-            return getStringFromResourceBundle("registrarcliente.title");
-        }
-        @Override
-        public String getFxmlFile() {
-            return "/fxml/Ventas/RegistrarCliente.fxml";
-        }
-        @Override
-        public boolean isResizable(){
-            return false;
-        }
     },
     LOGIN {
         @Override
@@ -154,6 +145,51 @@ public enum MainView implements FxmlView{
         public String getFxmlFile() {
             return "/fxml/Login.fxml";
         }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    }, MANTENIMIENTO_DESCUENTO{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("mantenimiento.descuento.title");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Descuentos/MantenimientoDescuento.fxml";
+        }
+
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },DATOS_DESCUENTO{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("datos.descuento.title");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Descuentos/DatosDescuento.fxml";
+        }
+
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },BUSQUEDA_PRODUCTO_DESC{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("busquedaproducto.title");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Descuentos/BusquedaProductoDesc.fxml";
+        }
+
         @Override
         public boolean isResizable(){
             return false;

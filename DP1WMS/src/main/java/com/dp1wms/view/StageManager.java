@@ -1,5 +1,6 @@
 package com.dp1wms.view;
 
+import com.dp1wms.controller.Descuentos.DatosDescuentoController;
 import com.dp1wms.spring.config.SpringFXMLLoader;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -34,7 +35,7 @@ public class StageManager {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.setTitle(view.getTitle());
-        stage.setResizable(false);
+        stage.setResizable(view.isResizable());
         stage.show();
     }
 
@@ -86,6 +87,14 @@ public class StageManager {
     }
 
     public void mostrarErrorDialog(String title, String header, String content){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    public void mostrarInfonDialog(String title, String header, String content){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);

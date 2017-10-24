@@ -32,10 +32,7 @@ public class VentaBusquedaClienteController implements FxmlController{
 
     @Override
     public void initialize(){
-        this.campoClienteCB.getItems().add("RUC");
-        this.campoClienteCB.getItems().add("Razon Social");
-        this.campoClienteCB.getItems().add("Telefono");
-        this.campoClienteCB.getItems().add("Email");
+        this.campoClienteCB.getItems().addAll("RUC", "Razon Social", "Telefono", "Email");
         this.campoClienteCB.getSelectionModel().select(0);
     }
 

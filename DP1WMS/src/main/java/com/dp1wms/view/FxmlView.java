@@ -5,4 +5,5 @@ public interface FxmlView {
     String getFxmlFile();
     boolean isResizable();
     String getStringFromResourceBundle(String key);
+
 }
