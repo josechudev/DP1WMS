@@ -43,7 +43,40 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
-    }, INGRESO_PRODUCTO{
+    },MANTENIMIENTO_CATEGORIA {
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("mantenimiento.categorias.title");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Categorias/MantenimientoCategoria.fxml";
+        }
+
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },MANTENIMIENTO_PRODUCTO {
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("mantenimiento.productos.title");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Productos/MantenimientoProductos.fxml";
+        }
+
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    }
+
+
+    , INGRESO_PRODUCTO{
         @Override
         public String getTitle() {
             return getStringFromResourceBundle("ingreso.producto.title");
