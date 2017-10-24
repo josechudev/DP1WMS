@@ -88,4 +88,8 @@ public class MainController implements FxmlController {
     public void setUsuario(Usuario usuario){
         this.usuario = usuario;
     }
+
+    public Empleado getEmpleado(){
+        return this.empleado;
+    }
 }

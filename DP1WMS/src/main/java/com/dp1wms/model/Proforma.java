@@ -3,6 +3,7 @@ package com.dp1wms.model;
 import java.util.ArrayList;
 
 public class Proforma {
+    private int idProforma;
     private long idEmpleado;
     private long idCliente;
     private float totalSinFlete;
@@ -91,5 +92,13 @@ public class Proforma {
 
     public void setTotal(float total) {
         this.total = total;
+    }
+
+    public int getIdProforma() {
+        return idProforma;
+    }
+
+    public void setIdProforma(int idProforma) {
+        this.idProforma = idProforma;
     }
 }

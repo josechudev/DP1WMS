@@ -2,6 +2,7 @@ package com.dp1wms.controller.MantVenta;
 
 import com.dp1wms.controller.FxmlController;
 import com.dp1wms.controller.MainController;
+import com.dp1wms.dao.RepositoryProforma;
 import com.dp1wms.model.*;
 import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
@@ -49,6 +50,7 @@ public class VentaProformaController implements FxmlController{
     @FXML private Button agregarEnvioBtn;
     @FXML private Button limpiarDatosBtn;
 
+    @FXML private TextArea observacionTA;
 
     @FXML private TableView<Envio> enviosTable;
     @FXML private TableColumn<Envio, String> envioDestinoTC;
@@ -65,6 +67,9 @@ public class VentaProformaController implements FxmlController{
 
     private final StageManager stageManager;
     private final MainController mainController;
+
+    @Autowired
+    private RepositoryProforma repositoryProforma;
 
     @Override
     public void initialize(){
@@ -307,8 +312,32 @@ public class VentaProformaController implements FxmlController{
         this.stageManager.cerrarVentana(event);
     }
 
-    @FXML private void registrarProforma() {
+    @FXML private void registrarProforma(ActionEvent event) {
+        if(this.envios.size() == 0){
+            this.stageManager.mostrarErrorDialog("Error proforma", null,
+                    "Debe registrar al menos un envío");
+            return;
+        }
+        if(this.cliente == null){
+            this.stageManager.mostrarErrorDialog("Error proforma", null,
+                    "Debe seleccionar un cliente");
+            return;
+        }
         this.generarProforma();
+        boolean res = false;
+        try {
+            res = this.repositoryProforma.registrarProformaYEnvios(this.proforma, this.envios);
+        } catch (Exception e ){
+            res = false;
+        }
+        if(!res){
+            this.stageManager.mostrarErrorDialog("Error registrar proforma", null,
+                    "Hubo un error al intentar registrar la proforma y los envios.\n" +
+                            "Inténtelo otra vez.");
+        } else {
+            this.stageManager.mostrarInfonDialog("Proforma", null, "Se registró satisfactoriamente");
+            this.cerrarVentana(event);
+        }
     }
 
     @FXML
@@ -346,6 +375,16 @@ public class VentaProformaController implements FxmlController{
         this.proforma.setTotalSinFlete(totalSinFlete);
         this.proforma.setCostoFlete(costoFlete);
         this.proforma.setTotal(total);
+
+        //observaciones
+        this.proforma.setObservaciones(this.observacionTA.getText());
+
+        //Empleado
+        Empleado empleado = this.mainController.getEmpleado();
+        this.proforma.setIdEmpleado(empleado.getIdempleado());
+
+        //Cliente
+        this.proforma.setIdCliente(this.cliente.getIdCliente());
     }
 
     public Proforma getProforma(){
