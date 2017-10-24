@@ -42,6 +42,16 @@ public class Descuento {
 
     private String categoriaDescuento;
 
+    private int prioridad;
+
+    public int getPrioridad(){
+        return this.prioridad;
+    }
+
+    public void setPrioridad(int prioridad){
+        this.prioridad = prioridad;
+    }
+
 
     public int getIdDescuento() {
         return idDescuento;

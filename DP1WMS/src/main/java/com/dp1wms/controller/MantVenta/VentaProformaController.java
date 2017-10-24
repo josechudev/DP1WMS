@@ -2,9 +2,9 @@ package com.dp1wms.controller.MantVenta;
 
 import com.dp1wms.controller.FxmlController;
 import com.dp1wms.controller.MainController;
+import com.dp1wms.dao.RepositoryDescuento;
 import com.dp1wms.dao.RepositoryProforma;
 import com.dp1wms.model.*;
-import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import com.dp1wms.view.VentasView;
 
@@ -18,13 +18,11 @@ import javafx.util.StringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import sun.security.krb5.internal.crypto.Des;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class VentaProformaController implements FxmlController{
@@ -70,6 +68,8 @@ public class VentaProformaController implements FxmlController{
 
     @Autowired
     private RepositoryProforma repositoryProforma;
+    @Autowired
+    private RepositoryDescuento repositoryDescuento;
 
     @Override
     public void initialize(){
@@ -323,7 +323,11 @@ public class VentaProformaController implements FxmlController{
                     "Debe seleccionar un cliente");
             return;
         }
-        this.generarProforma();
+        boolean exito = this.generarProforma();
+        if(!exito){
+            this.stageManager.mostrarErrorDialog("Error proforma", null, "Hubo un error relacionado a los descuentos");
+            return;
+        }
         boolean res = false;
         try {
             res = this.repositoryProforma.registrarProformaYEnvios(this.proforma, this.envios);
@@ -346,11 +350,19 @@ public class VentaProformaController implements FxmlController{
             this.stageManager.mostrarErrorDialog("Error envios", null, "Debe registrar al menos un envio");
             return;
         }
-        this.generarProforma();
+        if(this.cliente == null){
+            this.stageManager.mostrarErrorDialog("Error proforma", null, "Debe indicar el cliente");
+            return;
+        }
+        boolean exito = this.generarProforma();
+        if(!exito){
+            this.stageManager.mostrarErrorDialog("Error proforma", null, "Hubo un error relacionado a los descuentos");
+            return;
+        }
         this.stageManager.mostrarModal(VentasView.PROFORMA_PREVIEW);
     }
 
-    private void generarProforma(){
+    private boolean generarProforma(){
         this.proforma = new Proforma();
         for(Envio envio: this.envios){
             for(DetalleEnvio de: envio.getDetalleEnvio()){
@@ -358,8 +370,15 @@ public class VentaProformaController implements FxmlController{
             }
         }
         //calcular descuento y subtotal
+        List<Descuento> descuentos = this.repositoryDescuento.obtenerDescuentosActivos();
+        if(descuentos == null){
+            return false;
+        }
+
+        aplicarDescuentos(descuentos, this.proforma);
+
         for(DetalleProforma dp: this.proforma.getDetallesProforma()){
-            dp.setSubTotal(dp.getProducto().getPrecio() * dp.getCantidad());
+            dp.setSubTotal(dp.getProducto().getPrecio() * dp.getCantidad() - dp.getDescuento());
         }
 
         //total sin flete, costo flete, total
@@ -385,9 +404,200 @@ public class VentaProformaController implements FxmlController{
 
         //Cliente
         this.proforma.setIdCliente(this.cliente.getIdCliente());
+
+        return true;
     }
+
+    private void aplicarDescuentos(List<Descuento> descuentos, Proforma proforma){
+        ArrayList<DescuentoXProds> descuentoXProds = new ArrayList<>();
+
+        //Eliminar descuentos no válidos
+        ArrayList<Descuento> descValidos = this.descuentosValidos(descuentos, proforma);
+
+        //aplicar prioridades a los descuentos
+        this.orderDescuentos(descValidos);
+
+        //aplicar descuentos por porcentaje primero
+        this.aplicarDescuentosPorPorcentaje(descValidos, proforma);
+
+        //aplicar descuentos restantes
+        for(Descuento desc: descValidos){
+            if(desc.getPrioridad() < 7){
+                for(DetalleProforma dp: proforma.getDetallesProforma()){
+                    if(dp.getDescuento() <= 0){//aplica
+                        Producto p = dp.getProducto();
+                        if(desc.getIdProductoDescuento() == p.getIdProducto() ||
+                           desc.getIdCategoriaProdDesc() == p.getIdCategoria()){
+                            dp.setDescuento((float) (dp.getCantidad() * p.getPrecio() * desc.getValorDescuento()));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private ArrayList<Descuento> descuentosValidos(List<Descuento> descuentos, Proforma proforma){
+        ArrayList<Descuento> descValidos = new ArrayList<>();
+        for(Descuento desc: descuentos){
+            boolean valido = false;
+            switch(desc.getDescripcion()){
+                case Descuento.DESC_P:{//por porcentaje
+                    if(desc.getIdProductoDescuento() > 0){ //por producto
+                        DetalleProforma detalleProf = null;
+                        for(DetalleProforma dp: proforma.getDetallesProforma()){
+                            if(dp.getProducto().getIdProducto() == desc.getIdProductoDescuento()){
+                                detalleProf = dp;
+                                break;
+                            }
+                        }
+                        valido = (detalleProf != null);                    }
+                    else if(desc.getIdCategoriaProdDesc() > 0){
+                        ArrayList<DetalleProforma> variosDP = new ArrayList<>();
+                        for(DetalleProforma dp: proforma.getDetallesProforma()){
+                            if(dp.getProducto().getIdCategoria() == desc.getIdCategoriaProdDesc()){
+                                variosDP.add(dp);
+                            }
+                        }
+                        valido = (variosDP.size() > 0);
+                    }
+                    break;
+                }
+                default:{//por cantidad
+                    int cantidadGenerador = 0;
+                    if(desc.getIdProductoGenerador() > 0){//por producto
+                        cantidadGenerador = obtenerCantidadPorIdProd(proforma, desc.getIdProductoGenerador());
+                    } else {//por categoria
+                        cantidadGenerador = obtenerCantidadPorIdCat(proforma, desc.getIdCategoriaProdGen());
+                    }
+                    int cantidadTarget = 0;
+                    if(desc.getIdProductoDescuento() > 0){
+                        cantidadTarget = obtenerCantidadPorIdProd(proforma, desc.getIdProductoDescuento());
+                    } else {
+                        cantidadTarget = obtenerCantidadPorIdCat(proforma, desc.getIdCategoriaProdGen());
+                    }
+                    valido = (cantidadGenerador >= desc.getCantProdGen() && cantidadTarget >= desc.getCantProdDesc());
+                    break;
+                }
+            }
+            if(valido){
+                descValidos.add(desc);
+            }
+        }
+        return descValidos;
+    }
+
+    private int obtenerCantidadPorIdProd(Proforma proforma, int idProducto){
+        int cantidad = 0;
+        for(DetalleProforma dp: proforma.getDetallesProforma()){
+            if(dp.getProducto().getIdProducto() == idProducto){
+                cantidad = dp.getCantidad();
+                break;
+            }
+        }
+        return cantidad;
+    }
+
+    private int obtenerCantidadPorIdCat(Proforma proforma, int idCategoria){
+        int cantidad = 0;
+        for(DetalleProforma dp: proforma.getDetallesProforma()){
+            if(dp.getProducto().getIdCategoria() == idCategoria){
+                cantidad += dp.getCantidad();
+            }
+        }
+        return cantidad;
+    }
+
+    private void orderDescuentos(ArrayList<Descuento> descuentos){
+        //asignar prioridades
+        for(Descuento desc: descuentos){
+            switch (desc.getDescripcion()){
+                case Descuento.DESC_P:{//por porcentaje
+                    desc.setPrioridad(7);
+                    break;
+                }
+                case Descuento.DESC_C:{//por cantidad (3x2)
+                    if(desc.getIdCategoriaProdGen() > 0){ //categoria de producto
+                        desc.setPrioridad(6);
+                    } else { //producto
+                        desc.setPrioridad(5);
+                    }
+                    break;
+                }
+                case Descuento.DESC_B:{//bonificacion por especie
+                    if(desc.getIdCategoriaProdGen() > 0 && desc.getIdCategoriaProdGen() > 0){
+                        desc.setPrioridad(4);
+                    } else if (desc.getIdCategoriaProdGen() > 0 && desc.getIdProductoDescuento() > 0){
+                        desc.setPrioridad(3);
+                    } else if (desc.getIdProductoGenerador() > 0 && desc.getIdProductoDescuento() > 0){
+                        desc.setPrioridad(2);
+                    } else {
+                        desc.setPrioridad(1);
+                    }
+                    break;
+                }
+            }
+        }
+        //ordenar
+        Collections.sort(descuentos, new Comparator<Descuento>() {
+            @Override
+            public int compare(Descuento o1, Descuento o2) {
+                return o2.getPrioridad() - o1.getPrioridad();
+            }
+        });
+    }
+
+    private void aplicarDescuentosPorPorcentaje(ArrayList<Descuento> descuentos, Proforma proforma){
+        for(DetalleProforma dp: proforma.getDetallesProforma()){
+            ArrayList<Float> complementoDesc = new ArrayList<>();
+            Producto p = dp.getProducto();
+            for(Descuento desc: descuentos){
+                if(desc.getPrioridad() < 7){
+                    break;
+                }
+                if(desc.getIdProductoGenerador() == p.getIdProducto() || desc.getIdCategoriaProdGen() == p.getIdProducto()){
+                    complementoDesc.add(new Float(1.0 - desc.getValorDescuento()));
+                }
+            }
+            if(complementoDesc.size() > 0){
+                float comDescTotal = 1;
+                for(Float cd: complementoDesc){
+                    comDescTotal *= cd.floatValue();
+                }
+                float descTotal = 1 - comDescTotal;
+                dp.setDescuento(dp.getCantidad() * p.getPrecio() * descTotal);
+            }
+        }
+    }
+
 
     public Proforma getProforma(){
         return this.proforma;
+    }
+
+    private class DescuentoXProds{
+
+        private Descuento descuentos;
+        private ArrayList<DetalleProforma> detallesProformas; //productos
+
+        public DescuentoXProds(){
+            this.setDetallesProformas(new ArrayList<DetalleProforma>());
+        }
+
+
+        public Descuento getDescuentos() {
+            return descuentos;
+        }
+
+        public void setDescuentos(Descuento descuentos) {
+            this.descuentos = descuentos;
+        }
+
+        public ArrayList<DetalleProforma> getDetallesProformas() {
+            return detallesProformas;
+        }
+
+        public void setDetallesProformas(ArrayList<DetalleProforma> detallesProformas) {
+            this.detallesProformas = detallesProformas;
+        }
     }
 }
