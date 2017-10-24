@@ -45,7 +45,7 @@ public enum MainView implements FxmlView{
     } , MANTENIMIENTO_TIPOEMPLEADO {
         @Override
         public String getTitle() {
-            return getStringFromResourceBundle("mantenimiento.movimiento.title");
+            return getStringFromResourceBundle("mantenimiento.roles.title");
         }
         @Override
         public String getFxmlFile() {
