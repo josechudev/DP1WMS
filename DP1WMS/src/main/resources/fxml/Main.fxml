@@ -32,6 +32,7 @@
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoMovimientos" text="Mantenimiento Movimiento" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoUsuario" text="Mantenimiento Usuario" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoRol" text="Mantenimiento Roles" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoCategoria" text="Mantenimiento de Categorias" />
                      </items>
                   </Menu>

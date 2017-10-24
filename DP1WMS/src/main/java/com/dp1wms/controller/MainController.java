@@ -69,6 +69,13 @@ public class MainController implements FxmlController {
     }
 
     @FXML
+    private void cargarMantenimientoRol(ActionEvent event) {
+        System.out.println("cargarMantenimientoTipoEmpleado");
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_TIPOEMPLEADO);
+    }
+
+
+    @FXML
     private void cargarMantenimientoCategoria(ActionEvent event) {
         System.out.println("cargarMantenimientoCategoria");
         this.stageManager.mostrarModal(MainView.MANTENIMIENTO_CATEGORIA);
@@ -79,6 +86,7 @@ public class MainController implements FxmlController {
         System.out.println("cargarMantenimientoProducto");
         this.stageManager.mostrarModal(MainView.MANTENIMIENTO_PRODUCTO);
     }
+
 
     @FXML
     private void cerrarSesion(){

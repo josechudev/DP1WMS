@@ -1,5 +1,6 @@
 package com.dp1wms.spring.config;
 
+import com.dp1wms.controller.MantenimientoTipoEmpleadoController;
 import com.dp1wms.controller.Descuentos.DatosDescuentoController;
 import com.dp1wms.controller.Descuentos.MantenimientoDescuentoController;
 import com.dp1wms.controller.MantVenta.VentaProformaController;
@@ -29,6 +30,11 @@ public class AppJavaConfig {
     @Lazy(value = true) //Stage only created after Spring context bootstap
     public StageManager stageManager(Stage stage) throws IOException {
         return new StageManager(springFXMLLoader, stage);
+    }
+
+    @Bean @Lazy
+    public MantenimientoTipoEmpleadoController mantenimientoTipoEmpleadocontroller(StageManager stageManager) {
+        return new MantenimientoTipoEmpleadoController(stageManager);
     }
 
 }
