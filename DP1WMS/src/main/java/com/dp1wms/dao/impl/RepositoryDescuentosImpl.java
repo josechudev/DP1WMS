@@ -177,4 +177,16 @@ public class RepositoryDescuentosImpl implements RepositoryDescuento {
         }
         return 1;
     }
+
+    public List<Descuento> obtenerDescuentosActivos(){
+        String sql = "SELECT * from descuento where fechainicio <= now() " +
+                    "AND fechafin >= now() and activo";
+        try{
+            List<Descuento> descuentos = jdbcTemplate.query(sql, new Object[]{}, this::mapParam);
+            return descuentos;
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
