@@ -42,7 +42,7 @@ public class CategoriaController implements FxmlController {
     }
 
     public void btnClickCrearCategoria(ActionEvent event){
-        System.out.printf( "Crear categoria");
+        System.out.printf( "Crear Categoria");
         Parent root = null;
         FXMLLoader loader;
         CategoriaProducto categoriaProducto = new CategoriaProducto();
@@ -120,7 +120,6 @@ public class CategoriaController implements FxmlController {
 
     @Override
     public void initialize() {
-
         e_id.setCellValueFactory(new PropertyValueFactory<CategoriaProducto,Integer>("IdCategoria"));
         e_descripcion.setCellValueFactory(new PropertyValueFactory<CategoriaProducto,String>("Descripcion"));
         this._llenarGrilla();

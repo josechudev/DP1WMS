@@ -3,6 +3,7 @@ package com.dp1wms.model;
 
 public class Producto {
 
+
     private int idProducto;
     private String nombreProducto;
     private int idCategoria;
@@ -13,11 +14,30 @@ public class Producto {
     private int stock;
     private String codigo;
     private float precio;
+    private  boolean activo;
+    private String fechaCreacion;
 
     private int indiceTableView;
 
     public Producto(){
     }
+
+    public Producto(int idproducto, String nombreProducto, int idCategoria, String categoria, float peso, String fechaVencimiento, String descripcion, int stock, String codigo, float precio, boolean activo, String fechaCreacion) {
+        this.idProducto = idproducto;
+        this.nombreProducto = nombreProducto;
+        this.idCategoria = idCategoria;
+        this.categoria = categoria;
+        this.peso = peso;
+        this.fechaVencimiento = fechaVencimiento;
+        this.descripcion = descripcion;
+        this.stock = stock;
+        this.codigo = codigo;
+        this.precio = precio;
+        this.activo = activo;
+        this.fechaCreacion = fechaCreacion;
+
+    }
+
 
     public Producto(int idProducto, String nombreProducto, int idCategoria, float peso, String fechaVencimiento, String descripcion, int stock) {
         this.idProducto = idProducto;
@@ -29,11 +49,46 @@ public class Producto {
         this.stock = stock;
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public Producto(Producto producto) {
+        this.idProducto = producto.getIdProducto();
+        this.nombreProducto = producto.getNombreProducto();
+        this.idCategoria = producto.getIdCategoria();
+        this.categoria = producto.getCategoria();
+        this.peso = producto.getPeso();
+        this.fechaVencimiento = producto.getFechaVencimiento();
+        this.descripcion = producto.getDescripcion();
+        this.stock = producto.stock;
+        this.codigo = producto.getCodigo();
+        this.precio = producto.getPrecio();
+        this.activo = producto.isActivo();
+        this.fechaCreacion = producto.getFechaCreacion();
+    }
+
     /*
     public Producto() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }*/
 
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    public String getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(String fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
 
     public int getIdProducto() {
         return idProducto;
