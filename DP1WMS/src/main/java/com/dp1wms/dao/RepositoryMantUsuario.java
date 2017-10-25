@@ -9,7 +9,7 @@ public interface RepositoryMantUsuario {
 
     void createUsuario(Usuario auxUsuario);
 
-    void updateUsuario(Usuario auxUsuario);
+    void updateUsuario(Usuario auxUsuario, boolean auxModificarPassword);
 
     void deleteUsuario(Usuario auxUsuario);
 

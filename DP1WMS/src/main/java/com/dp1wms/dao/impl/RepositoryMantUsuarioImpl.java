@@ -22,21 +22,31 @@ public class RepositoryMantUsuarioImpl implements RepositoryMantUsuario {
     }
 
     public void createUsuario(Usuario auxUsuario){
-        String sql = "INSERT INTO usuario (idUsuario, nombreUsuario, password) VALUES(default, ?, crypt(?, gen_salt('md5')))";
+
+        String sql = "INSERT INTO usuario (idUsuario, nombreUsuario, password)" +
+                                "VALUES(default, ?, crypt(?, gen_salt('md5')) )";
         jdbcTemplate.update(sql,
                 new Object[] { auxUsuario.getV_nombre(), auxUsuario.getV_password() });
     }
 
-    public void updateUsuario(Usuario auxUsuario){
-        String sql = "UPDATE usuario SET nombreUsuario  = ?, password  = crypt(?, gen_salt('md5')) WHERE idUsuario = ?";
-        jdbcTemplate.update(sql,
-                new Object[] { auxUsuario.getV_nombre(), auxUsuario.getV_password(), auxUsuario.getV_id()});
+    public void updateUsuario(Usuario auxUsuario, boolean auxModificarPassword){
+        if(auxModificarPassword){
+            String sql = "UPDATE usuario SET nombreUsuario  = ?, password  = crypt(?, gen_salt('md5')) WHERE idUsuario = ?";
+            jdbcTemplate.update(sql,
+                    new Object[] { auxUsuario.getV_nombre(), auxUsuario.getV_password(), auxUsuario.getV_id()});
+        }
+        else{
+            String sql = "UPDATE usuario SET nombreUsuario  = ? WHERE idUsuario = ?";
+            jdbcTemplate.update(sql,
+                    new Object[] { auxUsuario.getV_nombre(), auxUsuario.getV_id()});
+        }
     }
 
     public void deleteUsuario(Usuario auxUsuario){
-        String sql = "DELETE FROM usuario WHERE idUsuario= ?";
-        jdbcTemplate.update(sql,
-                new Object[] { auxUsuario.getV_id() });
+        //String sql = "DELETE FROM usuario WHERE idUsuario= ?";
+        //String sql = "UPDATE usuario SET activo = false WHERE idUsuario= ?";
+        //jdbcTemplate.update(sql,
+        //        new Object[] { auxUsuario.getV_id() });
     }
 
     public Usuario findUsuariobyId(int auxIdUser){
