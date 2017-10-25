@@ -3,9 +3,11 @@ package com.dp1wms.dao.impl;
 import com.dp1wms.dao.RepositoryMantEmpleado;
 import com.dp1wms.dao.mapper.EmpleadoRowMapper;
 import com.dp1wms.dao.mapper.UsuarioRowMapper;
+import com.dp1wms.dao.mapper.UsuarioXEmpleadoRowMapper;
 import com.dp1wms.model.Empleado;
 import com.dp1wms.model.TipoEmpleado;
 import com.dp1wms.model.UsuarioModel.Usuario;
+import com.dp1wms.model.UsuarioModel.UsuarioXEmpleado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -21,8 +23,6 @@ public class RespositoryMantEmpleadoImpl implements RepositoryMantEmpleado {
 
     @Override
     public Empleado obtenerEmpleadoPorIdUsuario(long idUsuario){
-
-
 
         String sql = "SELECT e.*, tp.descripcion as tipoempleado " +
                     "FROM empleado e INNER JOIN tipoempleado tp " +
@@ -50,6 +50,19 @@ public class RespositoryMantEmpleadoImpl implements RepositoryMantEmpleado {
             e.printStackTrace();
             return null;
         }
+
+    }
+
+    public List<UsuarioXEmpleado> obtenerUsuarioXEmpleadoPorIdUsuario(){
+
+        String sql = "SELECT u.idUsuario, u.nombreUsuario, " +
+                "e.numDoc, e.nombre, e.apellidos, " +
+                "tp.descripcion " +
+                "FROM usuario u INNER JOIN empleado e ON u.idusuario = e.idusuario " +
+                "INNER JOIN tipoempleado tp ON e.idtipoempleado = tp.idtipoempleado";
+        return jdbcTemplate.query(sql,
+                new UsuarioXEmpleadoRowMapper());
+
     }
 
     public List<Empleado> selectAllEmpleado(){
@@ -59,7 +72,8 @@ public class RespositoryMantEmpleadoImpl implements RepositoryMantEmpleado {
     }
 
     public void createEmpleado(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpleado){
-        String sql = "INSERT INTO empleado(idempleado, idusuario, numDoc, nombre, apellidos, email, idtipoempleado) VALUES(default,?,?,?,?,?,?)";
+        String sql = "INSERT INTO empleado(idempleado, idusuario, numDoc, nombre, apellidos, email, idtipoempleado) " +
+                                    "VALUES(default,?,?,?,?,?,?)";
         jdbcTemplate.update(sql,
                 new Object[] { this.findIdUsuario(auxUsuario), auxEmpleado.getNumDoc(), auxEmpleado.getNombre(), auxEmpleado.getApellidos(),
                         auxEmpleado.getEmail(), auxTipoEmpleado.getIdtipoempleado()});

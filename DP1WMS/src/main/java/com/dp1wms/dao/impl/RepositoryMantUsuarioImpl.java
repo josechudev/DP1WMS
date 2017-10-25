@@ -21,12 +21,6 @@ public class RepositoryMantUsuarioImpl implements RepositoryMantUsuario {
                 new UsuarioRowMapper());
     }
 
-    public int newIdUsuario(){
-        String sql= "SELECT MAX(idUsuario) FROM usuario";
-
-        return jdbcTemplate.queryForObject(sql, new Object[]{}, Integer.class) + 1;
-    }
-
     public void createUsuario(Usuario auxUsuario){
         String sql = "INSERT INTO usuario (idUsuario, nombreUsuario, password) VALUES(default, ?, crypt(?, gen_salt('md5')))";
         jdbcTemplate.update(sql,
@@ -43,6 +37,13 @@ public class RepositoryMantUsuarioImpl implements RepositoryMantUsuario {
         String sql = "DELETE FROM usuario WHERE idUsuario= ?";
         jdbcTemplate.update(sql,
                 new Object[] { auxUsuario.getV_id() });
+    }
+
+    public Usuario findUsuariobyId(int auxIdUser){
+        String sql= "SELECT idUsuario, nombreUsuario, password FROM usuario WHERE idUsuario = '"+ auxIdUser +"'";
+        List<Usuario> auxUsuario = jdbcTemplate.query(sql, new UsuarioRowMapper() );
+
+        return auxUsuario.get(0);
     }
 
 }

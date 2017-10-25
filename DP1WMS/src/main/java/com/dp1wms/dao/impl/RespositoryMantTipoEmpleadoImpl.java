@@ -54,6 +54,13 @@ public class RespositoryMantTipoEmpleadoImpl implements RepositoryMantTipoEmplea
         return auxTipoEmpleado.get(0);
     }
 
+    public TipoEmpleado obtenerTipoEmpleadoPorDescripcion(String auxDescripcion){
+        String sql= "SELECT idtipoempleado, descripcion FROM tipoempleado WHERE descripcion = '"+ auxDescripcion +"'";
+        List<TipoEmpleado> auxTipoEmpleado = jdbcTemplate.query(sql, new TipoEmpleadoRowMapper() );
+
+        return auxTipoEmpleado.get(0);
+    }
+
 
 
     //Para Mantenimiento de Roles
