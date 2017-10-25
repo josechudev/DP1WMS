@@ -1,5 +1,6 @@
 package com.dp1wms.dao.impl;
 
+import com.dp1wms.controller.MainController;
 import com.dp1wms.dao.RepositoryMantCliente;
 import com.dp1wms.model.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,17 @@ public class RepositoryMantClienteImpl implements RepositoryMantCliente {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private MainController mainController;
+
     public Cliente registrarCliente(Cliente cliente){
-        String sql = "INSERT INTO cliente (numdoc, razonsocial, telefono, direccion, email) " +
-                     "values (?, ?, ?, ?, ?) RETURNING idcliente";
+        String sql = "INSERT INTO cliente (numdoc, razonsocial, telefono, direccion, email, idempleadoauditado) " +
+                     "values (?, ?, ?, ?, ?, ?) RETURNING idcliente";
         try {
-            Cliente c = (Cliente) this.jdbcTemplate.queryForObject(sql, new Object[]{cliente.getNumDoc(),
-            cliente.getRazonSocial(), cliente.getTelefono(), cliente.getDireccion(), cliente.getEmail()},
+            Cliente c = (Cliente) this.jdbcTemplate.queryForObject(sql, new Object[]{
+                    cliente.getNumDoc(), cliente.getRazonSocial(),
+                            cliente.getTelefono(), cliente.getDireccion(),
+                            cliente.getEmail(), mainController.getEmpleado().getIdempleado()},
                     (rs, i)->{
                 Cliente cl = new Cliente();
                 cl.setIdCliente(rs.getLong("idcliente"));

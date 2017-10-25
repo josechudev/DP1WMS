@@ -1,11 +1,3 @@
-
-CREATE TRIGGER actualizarStockProductoLote
-  AFTER INSERT
-  ON public.detallemovimiento
-  FOR EACH ROW
-  EXECUTE PROCEDURE actualizarStock();
-
-
 CREATE OR REPLACE FUNCTION actualizarStock()
   RETURNS trigger AS
 $BODY$
@@ -35,5 +27,13 @@ BEGIN
     end if;
  	RETURN NEW;
 END;
+
 $BODY$ LANGUAGE plpgsql;
 select actualizarStock();
+
+
+CREATE TRIGGER actualizarStockProductoLote
+  AFTER INSERT
+  ON public.detallemovimiento
+  FOR EACH ROW
+  EXECUTE PROCEDURE actualizarStock();

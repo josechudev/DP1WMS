@@ -7,7 +7,7 @@ public class DetalleProforma {
     private float descuento;
     private Producto producto;
 
-    private float subTotal;
+    private float subtotal;
 
 
     public int getIdDetalleProforma() {
@@ -54,11 +54,11 @@ public class DetalleProforma {
         this.producto = producto;
     }
 
-    public float getSubTotal() {
-        return subTotal;
+    public float getSubtotal() {
+        return subtotal;
     }
 
-    public void setSubTotal(float subTotal) {
-        this.subTotal = subTotal;
+    public void setSubtotal(float subTotal) {
+        this.subtotal = subTotal;
     }
 }
