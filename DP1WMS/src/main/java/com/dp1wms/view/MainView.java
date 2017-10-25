@@ -194,6 +194,53 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
+    }, MANTENIMIENTO_ALMACEN {
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("mantenimiento.almacenes.title");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/AlmacenFxml/MantenimientoAlmacenes.fxml";
+        }
+
+        @Override
+        public boolean isResizable() {
+            return true;
+        }
+    },
+    ALMACEN {
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("mantenimiento.almacenes.editaralmacen.title");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/AlmacenFxml/Almacen.fxml";
+        }
+
+        @Override
+        public boolean isResizable() {
+            return true;
+        }
+    },
+    NUEVO_ALMACEN {
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("mantenimiento.almacenes.nuevo.titles");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/AlmacenFxml/NuevoAlmacen.fxml";
+        }
+
+        @Override
+        public boolean isResizable() {
+            return false;
+        }
     };
 
     public String getStringFromResourceBundle(String key) {
