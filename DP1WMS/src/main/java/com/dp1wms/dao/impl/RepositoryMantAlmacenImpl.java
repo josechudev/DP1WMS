@@ -27,6 +27,19 @@ public class RepositoryMantAlmacenImpl implements RepositoryMantAlmacen{
         return jdbcTemplate.update(sql, auxAlmacen.getNombre(), auxAlmacen.getDireccion(), auxAlmacen.getLargo(), auxAlmacen.getAncho());
     }
 
+    @Transactional (rollbackFor = Exception.class)
+    public int eliminarAlmacen(Almacen auxAlmacen){
+        String sql= "DELETE FROM almacen WHERE idAlmacen = ?";
+        return jdbcTemplate.update(sql, auxAlmacen.getIdAlmacen());
+    }
+
+    @Transactional (rollbackFor = Exception.class)
+    public int editarAlmacen(Almacen auxAlmacen){
+        String sql = "UPDATE almacen SET nombre = ?, direccion = ?, largo = ?, ancho = ? where idalmacen = ?";
+        return jdbcTemplate.update(sql, auxAlmacen.getNombre(), auxAlmacen.getDireccion(), auxAlmacen.getLargo(),
+                auxAlmacen.getAncho(), auxAlmacen.getIdAlmacen());
+    }
+
     public Almacen obtenerAlmacenById() {
         return null;
     }

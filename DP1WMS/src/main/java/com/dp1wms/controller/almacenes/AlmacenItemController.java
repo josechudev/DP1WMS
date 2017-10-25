@@ -11,14 +11,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Component
-public class AlmacenItemController extends GridPane implements FxmlController{
+public class AlmacenItemController extends GridPane {
 
     @FXML private Label lbNombre;
     @FXML private Label lbDireccion;
@@ -27,10 +23,9 @@ public class AlmacenItemController extends GridPane implements FxmlController{
     @FXML private Label lbSuperficieValue;
 
     private Almacen almacen;
-    private StageManager stageManager;
+    private MantenimientoAlmacenesController mantenimientoAlmacenesController;
 
-    @Autowired @Lazy
-    public AlmacenItemController(StageManager stageManager){
+    public AlmacenItemController(MantenimientoAlmacenesController mantenimientoAlmacenesController, Almacen almacen){
         super();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AlmacenFxml/AlmacenListItem.fxml"));
@@ -42,18 +37,14 @@ public class AlmacenItemController extends GridPane implements FxmlController{
             throw new RuntimeException(exception);
         }
 
-        this.stageManager = stageManager;
-    }
-
-    @Override
-    public void initialize() {
-
+        this.mantenimientoAlmacenesController = mantenimientoAlmacenesController;
+        this.almacen = almacen;
     }
 
     @FXML
     public void onClick(MouseEvent event){
         if (this.almacen != null) {
-            stageManager.mostrarModal(AlmacenView.VISTA_ALMACEN);
+            mantenimientoAlmacenesController.editarAlmacen(almacen);
         }
     }
 

@@ -8,4 +8,6 @@ public interface RepositoryMantAlmacen {
     List<Almacen> obtenerAlmacenes();
     Almacen obtenerAlmacenById();
     int crearAlmacen(Almacen auxAlmacen);
+    int editarAlmacen(Almacen auxAlmacen);
+    int eliminarAlmacen(Almacen auxAlmacen);
 }

@@ -3,6 +3,7 @@ package com.dp1wms.controller.almacenes;
 import com.dp1wms.controller.FxmlController;
 import com.dp1wms.dao.impl.RepositoryMantAlmacenImpl;
 import com.dp1wms.model.Almacen;
+import com.dp1wms.view.AlmacenView;
 import com.dp1wms.view.FxmlView;
 import com.dp1wms.view.StageManager;
 import com.dp1wms.view.MainView;
@@ -21,15 +22,13 @@ import java.util.List;
 @Component
 public class MantenimientoAlmacenesController implements FxmlController {
 
-    @FXML
-    private GridPane mantenimientoAlmacenes;
-    @FXML
-    private VBox vbAlmacenes;
+    @FXML private GridPane mantenimientoAlmacenes;
+    @FXML private VBox vbAlmacenes;
 
-    @Autowired
-    private RepositoryMantAlmacenImpl repositoryMantAlmacen;
+    @Autowired private RepositoryMantAlmacenImpl repositoryMantAlmacen;
 
     private StageManager stageManager;
+    private Almacen almacenSeleccionado;
 
     @Autowired @Lazy
     public MantenimientoAlmacenesController(StageManager stageManager){
@@ -38,6 +37,7 @@ public class MantenimientoAlmacenesController implements FxmlController {
 
     @Override
     public void initialize() {
+        this.almacenSeleccionado = null;
         obtenerAlmacenes();
     }
 
@@ -49,6 +49,15 @@ public class MantenimientoAlmacenesController implements FxmlController {
         auxAlmacen.setAncho(ancho);
 
         return repositoryMantAlmacen.crearAlmacen(auxAlmacen);
+    }
+
+    public void editarAlmacen(Almacen almacen){
+        this.almacenSeleccionado = almacen;
+        this.stageManager.mostrarModal(AlmacenView.VISTA_ALMACEN);
+    }
+
+    public Almacen getAlmacenSeleccionado(){
+        return this.almacenSeleccionado;
     }
 
     public void refrescarAlmacenes(){
@@ -72,7 +81,7 @@ public class MantenimientoAlmacenesController implements FxmlController {
         List<Almacen> almacenes = repositoryMantAlmacen.obtenerAlmacenes();
 
         for(Almacen alm: almacenes){
-            AlmacenItemController itemAlmacen = new AlmacenItemController(stageManager);
+            AlmacenItemController itemAlmacen = new AlmacenItemController(this, alm);
             itemAlmacen.setAlmacen(alm);
             vbListAlmacenes.add(itemAlmacen);
         }
