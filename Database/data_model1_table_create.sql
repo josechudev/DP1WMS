@@ -505,6 +505,7 @@ CREATE TABLE public.auditoria (
 	PRIMARY KEY (idauditoria)
 );
 
+
 create table auditoria (
 	idauditoria serial not null, 
 	tabla text not null, idempleado integer not null, 
