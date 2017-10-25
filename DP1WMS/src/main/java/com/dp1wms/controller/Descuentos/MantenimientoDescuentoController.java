@@ -1,8 +1,8 @@
 package com.dp1wms.controller.Descuentos;
 
 import com.dp1wms.controller.FxmlController;
-import com.dp1wms.dao.RepositoryDescuento;
-import com.dp1wms.model.Descuento;
+import com.dp1wms.dao.RepositoryCondicion;
+import com.dp1wms.model.Condicion;
 import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
@@ -21,35 +21,35 @@ import java.util.List;
 @Component
 public class MantenimientoDescuentoController implements FxmlController {
     @Autowired
-    private RepositoryDescuento repositoryDescuento;
+    private RepositoryCondicion repositoryCondicion;
 
     @FXML
-    private TableView<Descuento> tableViewDescuentos = new TableView<Descuento>();
+    private TableView<Condicion> tableViewDescuentos = new TableView<Condicion>();
 
-    List<Descuento> listaDescuentos;
+    List<Condicion> listaCondicions;
 
     @FXML
-    private TableColumn<Descuento,Integer> c_indice;
+    private TableColumn<Condicion,Integer> c_indice;
     @FXML
-    private TableColumn<Descuento,String> c_tipoDescuento;
+    private TableColumn<Condicion,String> c_tipoDescuento;
     @FXML
-    private TableColumn<Descuento,String> c_productoGen;
+    private TableColumn<Condicion,String> c_productoGen;
     @FXML
-    private TableColumn<Descuento,String> c_categoriaGen;
+    private TableColumn<Condicion,String> c_categoriaGen;
     @FXML
-    private TableColumn<Descuento,Integer> c_cantidadGen;
+    private TableColumn<Condicion,Integer> c_cantidadGen;
     @FXML
-    private TableColumn<Descuento,String> c_ProdDesc;
+    private TableColumn<Condicion,String> c_ProdDesc;
     @FXML
-    private TableColumn<Descuento,String> c_categoriaDesc;
+    private TableColumn<Condicion,String> c_categoriaDesc;
     @FXML
-    private TableColumn<Descuento,Integer> c_cantidadDesc;
+    private TableColumn<Condicion,Integer> c_cantidadDesc;
     @FXML
-    private TableColumn<Descuento,Double> c_porcentajeDesc;
+    private TableColumn<Condicion,Double> c_porcentajeDesc;
     @FXML
-    private TableColumn<Descuento,Timestamp> c_fechaInicio;
+    private TableColumn<Condicion,Timestamp> c_fechaInicio;
     @FXML
-    private TableColumn<Descuento,Timestamp> c_fechaFin;
+    private TableColumn<Condicion,Timestamp> c_fechaFin;
 
 
     private final StageManager stageManager;
@@ -63,34 +63,34 @@ public class MantenimientoDescuentoController implements FxmlController {
     }
 
     public void agregarDescuento(ActionEvent event) {
-        System.out.println("Agregar Descuento");
+        System.out.println("Agregar Condicion");
         this.esCreacion = true;
         this.stageManager.mostrarModal(MainView.DATOS_DESCUENTO);
     }
 
     public void modificarDescuento(ActionEvent event){
-        System.out.println("Modificar Descuento");
+        System.out.println("Modificar Condicion");
         this.esCreacion = false;
         this.stageManager.mostrarModal(MainView.DATOS_DESCUENTO);
     }
 
-    public Descuento getDescuento(){
-        Descuento descuento = tableViewDescuentos.getSelectionModel().getSelectedItem();
-        return descuento;
+    public Condicion getDescuento(){
+        Condicion condicion = tableViewDescuentos.getSelectionModel().getSelectedItem();
+        return condicion;
     }
 
     public void eliminarDescuento(ActionEvent event){
 
-        System.out.println("Eliminar Descuento");
-        Descuento descuento = tableViewDescuentos.getSelectionModel().getSelectedItem();
-        repositoryDescuento.eliminarDescuento(descuento.getIdDescuento());
+        System.out.println("Eliminar Condicion");
+        Condicion condicion = tableViewDescuentos.getSelectionModel().getSelectedItem();
+        repositoryCondicion.eliminarDescuento(condicion.getIdDescuento());
         this.actualizarTabla();
     }
 
     public void actualizarTabla(){
-        this.listaDescuentos = this.repositoryDescuento.obtenerDescuentos();
+        this.listaCondicions = this.repositoryCondicion.obtenerDescuentos();
         this.limpiarTabla();
-        this.llenarTabla(this.listaDescuentos);
+        this.llenarTabla(this.listaCondicions);
     }
 
 
@@ -100,49 +100,49 @@ public class MantenimientoDescuentoController implements FxmlController {
 
     private void limpiarTabla(){
         tableViewDescuentos.getItems().clear();
-        c_indice.setCellValueFactory(new PropertyValueFactory<Descuento, Integer>("indiceTabla"));
-        c_tipoDescuento.setCellValueFactory(new PropertyValueFactory<Descuento, String>("TipoDescuento"));
-        c_productoGen.setCellValueFactory(new PropertyValueFactory<Descuento, String>("nombreProductoGenerador"));
-        c_categoriaGen.setCellValueFactory(new PropertyValueFactory<Descuento, String>("categoriaGenerador"));
-        c_cantidadGen.setCellValueFactory(new PropertyValueFactory<Descuento, Integer>("cantProdGen"));
-        c_ProdDesc.setCellValueFactory(new PropertyValueFactory<Descuento, String>("nombreProductoDescuento"));
-        c_categoriaDesc.setCellValueFactory(new PropertyValueFactory<Descuento, String>("categoriaDescuento"));
-        c_cantidadDesc.setCellValueFactory(new PropertyValueFactory<Descuento, Integer>("cantProdDesc"));
-        c_porcentajeDesc.setCellValueFactory(new PropertyValueFactory<Descuento, Double>("valorDescuento"));
-        c_fechaInicio.setCellValueFactory(new PropertyValueFactory<Descuento, Timestamp>("fechaInicio"));
-        c_fechaFin.setCellValueFactory(new PropertyValueFactory<Descuento, Timestamp>("fechaFin"));
+        c_indice.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("indiceTabla"));
+        c_tipoDescuento.setCellValueFactory(new PropertyValueFactory<Condicion, String>("TipoDescuento"));
+        c_productoGen.setCellValueFactory(new PropertyValueFactory<Condicion, String>("nombreProductoGenerador"));
+        c_categoriaGen.setCellValueFactory(new PropertyValueFactory<Condicion, String>("categoriaGenerador"));
+        c_cantidadGen.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("cantProdGen"));
+        c_ProdDesc.setCellValueFactory(new PropertyValueFactory<Condicion, String>("nombreProductoDescuento"));
+        c_categoriaDesc.setCellValueFactory(new PropertyValueFactory<Condicion, String>("categoriaDescuento"));
+        c_cantidadDesc.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("cantProdDesc"));
+        c_porcentajeDesc.setCellValueFactory(new PropertyValueFactory<Condicion, Double>("valorDescuento"));
+        c_fechaInicio.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaInicio"));
+        c_fechaFin.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaFin"));
         tableViewDescuentos.setEditable(true);
     }
 
 
-    private void llenarTabla(List<Descuento> listaDesc){
+    private void llenarTabla(List<Condicion> listaDesc){
         Integer indice = 1;
-        for(Descuento descuento:listaDesc){
-            descuento.setIndiceTabla(indice);
+        for(Condicion condicion :listaDesc){
+            condicion.setIndiceTabla(indice);
             indice++;
-            this.tableViewDescuentos.getItems().add(descuento);
+            this.tableViewDescuentos.getItems().add(condicion);
         }
     }
 
 
     @Override
     public void initialize() {
-        this.listaDescuentos = repositoryDescuento.obtenerDescuentos();
-        c_indice.setCellValueFactory(new PropertyValueFactory<Descuento, Integer>("indiceTabla"));
-        c_tipoDescuento.setCellValueFactory(new PropertyValueFactory<Descuento, String>("TipoDescuento"));
-        c_productoGen.setCellValueFactory(new PropertyValueFactory<Descuento, String>("nombreProductoGenerador"));
-        c_categoriaGen.setCellValueFactory(new PropertyValueFactory<Descuento, String>("categoriaGenerador"));
-        c_cantidadGen.setCellValueFactory(new PropertyValueFactory<Descuento, Integer>("cantProdGen"));
-        c_ProdDesc.setCellValueFactory(new PropertyValueFactory<Descuento, String>("nombreProductoDescuento"));
-        c_categoriaDesc.setCellValueFactory(new PropertyValueFactory<Descuento, String>("categoriaDescuento"));
-        c_cantidadDesc.setCellValueFactory(new PropertyValueFactory<Descuento, Integer>("cantProdDesc"));
-        c_porcentajeDesc.setCellValueFactory(new PropertyValueFactory<Descuento, Double>("valorDescuento"));
-        c_fechaInicio.setCellValueFactory(new PropertyValueFactory<Descuento, Timestamp>("fechaInicio"));
-        c_fechaFin.setCellValueFactory(new PropertyValueFactory<Descuento, Timestamp>("fechaFin"));
+        this.listaCondicions = repositoryCondicion.obtenerDescuentos();
+        c_indice.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("indiceTabla"));
+        c_tipoDescuento.setCellValueFactory(new PropertyValueFactory<Condicion, String>("TipoDescuento"));
+        c_productoGen.setCellValueFactory(new PropertyValueFactory<Condicion, String>("nombreProductoGenerador"));
+        c_categoriaGen.setCellValueFactory(new PropertyValueFactory<Condicion, String>("categoriaGenerador"));
+        c_cantidadGen.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("cantProdGen"));
+        c_ProdDesc.setCellValueFactory(new PropertyValueFactory<Condicion, String>("nombreProductoDescuento"));
+        c_categoriaDesc.setCellValueFactory(new PropertyValueFactory<Condicion, String>("categoriaDescuento"));
+        c_cantidadDesc.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("cantProdDesc"));
+        c_porcentajeDesc.setCellValueFactory(new PropertyValueFactory<Condicion, Double>("valorDescuento"));
+        c_fechaInicio.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaInicio"));
+        c_fechaFin.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaFin"));
         tableViewDescuentos.setEditable(true);
 
 
-        this.llenarTabla(this.listaDescuentos);
-        System.out.println("Cantidad Descuentos -> "+listaDescuentos.size());
+        this.llenarTabla(this.listaCondicions);
+        System.out.println("Cantidad Descuentos -> "+ listaCondicions.size());
     }
 }

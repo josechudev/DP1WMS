@@ -2,7 +2,7 @@ package com.dp1wms.model;
 
 import java.sql.Timestamp;
 
-public class Descuento {
+public class Condicion {
 
     public static final String DESC_C = "Cantidad";
     public static final String DESC_B = "Bonificacion Por Especie";

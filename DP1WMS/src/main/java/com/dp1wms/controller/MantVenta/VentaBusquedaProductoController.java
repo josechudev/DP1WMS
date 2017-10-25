@@ -39,7 +39,6 @@ public class VentaBusquedaProductoController implements FxmlController{
     @FXML private TableColumn<Producto, String> nombreTC;
     @FXML private TableColumn<Producto, Float> precioTC;
     @FXML private TableColumn<Producto, String> categoriaTC;
-    @FXML private TableColumn<Producto, Integer> stockTC;
 
     @Autowired
     private RepositoryProforma repositoryProforma;
@@ -94,8 +93,8 @@ public class VentaBusquedaProductoController implements FxmlController{
                     cantidad = 0;
                 }
             }
-            if(cantidad > 0 && cantidad <= p.getStock()){
-                this.ventaProformaController.agregarProductoAPreEnvio(p, cantidad);
+            if(cantidad > 0){
+                this.ventaProformaController.agregarProducto(p, cantidad);
                 this.cerrarVentana(event);
             } else {//show error
                 this.stageManager.mostrarErrorDialog(ERR_CANT_TITLE, ERR_CANT_HEADER, ERR_CANT_CONTENT);
@@ -115,7 +114,6 @@ public class VentaBusquedaProductoController implements FxmlController{
         this.nombreTC.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombreProducto"));
         this.precioTC.setCellValueFactory(new PropertyValueFactory<Producto, Float>("precio"));
         this.categoriaTC.setCellValueFactory(new PropertyValueFactory<Producto, String>("Categoria"));
-        this.stockTC.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("stock"));
         this.productoTable.setEditable(false);
     }
 
