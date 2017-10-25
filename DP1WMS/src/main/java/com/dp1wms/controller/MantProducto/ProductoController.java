@@ -100,7 +100,7 @@ public class ProductoController  implements FxmlController {
         Parent root = null;
         FXMLLoader loader;
         try {
-            loader =new FXMLLoader(getClass().getResource("/fxml/UsuarioFxml/DatosUsuario.fxml"));
+            loader =new FXMLLoader(getClass().getResource("/fxml/Productos/DatosProducto.fxml"));
             root = (Parent) loader.load();
             ProductoDatosController controller = loader.getController();
             //1 es modificar

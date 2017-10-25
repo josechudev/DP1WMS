@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 
+import java.sql.Timestamp;
 import java.util.List;
 @Repository
 public class RepositoryMantProductoImpl implements RepositoryMantProducto {
@@ -51,15 +52,15 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
 
     @Override
     public void updateProducto(Producto producto) {
-        String sql = "UPDATE producto SET nombreproducto = ?, peso=?,fechavencimiento=?" +
-                "descripcion=?,precio=?,stock=?,idcategoria=?,codigo=?,fechacreacion=?";
+        String sql = "UPDATE producto SET nombreproducto = ?, peso=?,fechavencimiento=?," +
+                "descripcion=?,precio=?,stock=?,idcategoria=?,fechacreacion=? WHERE idproducto=?";
         jdbcTemplate.update(sql,new Object[]{producto.getNombreProducto(),producto.getPeso(),
-                producto.getFechaVencimiento(),producto.getFechaVencimiento(),producto.getDescripcion(),
+                Timestamp.valueOf(producto.getFechaVencimiento()),producto.getDescripcion(),
                 producto.getPrecio(),
                 producto.getStock(),
                 producto.getIdCategoria(),
-                producto.getCodigo(),
-                producto.getFechaCreacion()
+                Timestamp.valueOf(producto.getFechaCreacion()),
+                producto.getIdProducto()
     });
     }
 

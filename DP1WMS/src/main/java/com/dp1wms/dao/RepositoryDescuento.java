@@ -11,4 +11,5 @@ public interface RepositoryDescuento {
     int registrarDescuento(Descuento descuento);
     int eliminarDescuento(int id);
     int actualizarDescuento(Descuento descuento);
+    List<Descuento> obtenerDescuentosActivos();
 }

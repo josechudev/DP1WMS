@@ -34,10 +34,16 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Administracion">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoMovimientos" text="Movimientos" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoUsuario" text="Usuarios" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoCategoria" text="Categorias" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoAlmacenes" text="Almacenes" />
+                        <Menu mnemonicParsing="false" text="Mantenimiento Movimiento">
+                          <items>
+                              <MenuItem mnemonicParsing="false" onAction="#cargarIngresoProducto" text="Ingreso/Salida Producto" />
+                            <MenuItem mnemonicParsing="false" onAction="#cargarCrearLote" text="Crear Lote" />
+                          </items>
+                        </Menu>
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoRol" text="Mantenimiento Roles" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Productos">

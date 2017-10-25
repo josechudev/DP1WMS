@@ -1,6 +1,5 @@
 package com.dp1wms.view;
 
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public enum MainView implements FxmlView{
@@ -43,6 +42,29 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
+    } , MANTENIMIENTO_TIPOEMPLEADO {
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("mantenimiento.roles.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/MantenimientoTipoEmpleado.fxml";
+        }
+        @Override
+        public boolean isResizable(){return false;}
+    }, NUEVO_TIPOEMPLEADO {
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("mantenimiento.movimiento.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/CrearTipoEmpleado.fxml";
+        }
+        @Override
+        public boolean isResizable(){return false;}
+    
     },MANTENIMIENTO_CATEGORIA {
         @Override
         public String getTitle() {
@@ -74,8 +96,6 @@ public enum MainView implements FxmlView{
             return false;
         }
     }
-
-
     , INGRESO_PRODUCTO{
         @Override
         public String getTitle() {
