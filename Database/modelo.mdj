@@ -3504,7 +3504,7 @@
 									"height": 13,
 									"autoResize": false,
 									"underline": false,
-									"text": "Descuento",
+									"text": "Condicion",
 									"horizontalAlignment": 2,
 									"verticalAlignment": 5,
 									"wordWrap": false
@@ -3830,6 +3830,30 @@
 											"width": 268.47265625,
 											"height": 13,
 											"autoResize": false
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAFfVMDvEJbdvnY=",
+											"_parent": {
+												"$ref": "AAAAAAFejrAMEB4lwqM="
+											},
+											"model": {
+												"$ref": "AAAAAAFfVMDuv5baEIo="
+											},
+											"visible": true,
+											"enabled": true,
+											"lineColor": "#000000",
+											"fillColor": "#ffffff",
+											"fontColor": "#000000",
+											"font": "Arial;13;0",
+											"showShadow": true,
+											"containerChangeable": false,
+											"containerExtending": false,
+											"left": 1837,
+											"top": 575,
+											"width": 268.47265625,
+											"height": 13,
+											"autoResize": false
 										}
 									],
 									"visible": true,
@@ -3844,7 +3868,7 @@
 									"left": 1832,
 									"top": 375,
 									"width": 278.47265625,
-									"height": 203,
+									"height": 218,
 									"autoResize": false
 								}
 							],
@@ -3860,7 +3884,7 @@
 							"left": 1832,
 							"top": 352,
 							"width": 278.47265625,
-							"height": 226,
+							"height": 241,
 							"autoResize": false,
 							"nameLabel": {
 								"$ref": "AAAAAAFejrAMEB4k3hA="
@@ -5296,6 +5320,23 @@
 						{
 							"_type": "ERDEntityView",
 							"_id": "AAAAAAFejrxK4R+paAA=",
+								"$ref": "AAAAAAFejq5Qsx373RU="
+							},
+							"lineStyle": 1,
+							"points": "454:895;680:722",
+							"nameLabel": {
+								"$ref": "AAAAAAFejrqGeB9ak2s="
+							},
+							"tailNameLabel": {
+								"$ref": "AAAAAAFejrqGeB9bvHY="
+							},
+							"headNameLabel": {
+								"$ref": "AAAAAAFejrqGeB9cS9A="
+							}
+						},
+						{
+							"_type": "ERDRelationshipView",
+							"_id": "AAAAAAFejrsuYh+MlH4=",
 							"_parent": {
 								"$ref": "AAAAAAFejpMWnxtzHtY="
 							},
@@ -12682,7 +12723,7 @@
 									"lineColor": "#000000",
 									"fillColor": "#ffffff",
 									"fontColor": "#000000",
-									"font": "Arial;13;0",
+									"font": "Arial;13;1",
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
@@ -14441,7 +14482,7 @@
 							"length": 0,
 							"primaryKey": false,
 							"foreignKey": false,
-							"nullable": false,
+							"nullable": true,
 							"unique": false
 						},
 						{
@@ -14496,7 +14537,10 @@
 							"type": "INTEGER",
 							"length": 0,
 							"primaryKey": false,
-							"foreignKey": false,
+							"foreignKey": true,
+							"referenceTo": {
+								"$ref": "AAAAAAFekUlCNBE8eDc="
+							},
 							"nullable": false,
 							"unique": false
 						},
@@ -14523,9 +14567,9 @@
 							"_parent": {
 								"$ref": "AAAAAAFejqgOVxvVGB8="
 							},
-							"name": "codigo",
-							"type": "VARCHAR",
-							"length": "255",
+							"name": "idEmpleadoAuditado",
+							"type": "INTEGER",
+							"length": 0,
 							"primaryKey": false,
 							"foreignKey": false,
 							"nullable": false,
@@ -14840,7 +14884,7 @@
 									"$ref": "AAAAAAFejtDL6SJJKN0="
 								},
 								"reference": {
-									"$ref": "AAAAAAFejqgOVxvVGB8="
+									"$ref": "AAAAAAFejsCLEiAvfXY="
 								},
 								"cardinality": "0..*"
 							},
@@ -14868,156 +14912,6 @@
 								"_id": "AAAAAAFejtDkmSJnCfc=",
 								"_parent": {
 									"$ref": "AAAAAAFejtDkmSJlqR0="
-								},
-								"reference": {
-									"$ref": "AAAAAAFejqgOVxvVGB8="
-								},
-								"cardinality": "0..*"
-							},
-							"identifying": true
-						},
-						{
-							"_type": "ERDRelationship",
-							"_id": "AAAAAAFekSM+nA9nQSI=",
-							"_parent": {
-								"$ref": "AAAAAAFejqjephwKr90="
-							},
-							"end1": {
-								"_type": "ERDRelationshipEnd",
-								"_id": "AAAAAAFekSM+nA9oQDY=",
-								"_parent": {
-									"$ref": "AAAAAAFekSM+nA9nQSI="
-								},
-								"reference": {
-									"$ref": "AAAAAAFejqjephwKr90="
-								},
-								"cardinality": "1"
-							},
-							"end2": {
-								"_type": "ERDRelationshipEnd",
-								"_id": "AAAAAAFekSM+nA9pYJ8=",
-								"_parent": {
-									"$ref": "AAAAAAFekSM+nA9nQSI="
-								},
-								"reference": {
-									"$ref": "AAAAAAFejqf59xvIvsY="
-								},
-								"cardinality": "0..*"
-							},
-							"identifying": true
-						},
-						{
-							"_type": "ERDRelationship",
-							"_id": "AAAAAAFenBAqYaHy94M=",
-							"_parent": {
-								"$ref": "AAAAAAFejqjephwKr90="
-							},
-							"end1": {
-								"_type": "ERDRelationshipEnd",
-								"_id": "AAAAAAFenBAqYaHzS9g=",
-								"_parent": {
-									"$ref": "AAAAAAFenBAqYaHy94M="
-								},
-								"reference": {
-									"$ref": "AAAAAAFejqjephwKr90="
-								},
-								"cardinality": "1"
-							},
-							"end2": {
-								"_type": "ERDRelationshipEnd",
-								"_id": "AAAAAAFenBAqYaH0weM=",
-								"_parent": {
-									"$ref": "AAAAAAFenBAqYaHy94M="
-								},
-								"reference": {
-									"$ref": "AAAAAAFejqjephwKr90="
-								},
-								"cardinality": "0..*"
-							},
-							"identifying": true
-						},
-						{
-							"_type": "ERDRelationship",
-							"_id": "AAAAAAFenBIQqaKgpeg=",
-							"_parent": {
-								"$ref": "AAAAAAFejqjephwKr90="
-							},
-							"end1": {
-								"_type": "ERDRelationshipEnd",
-								"_id": "AAAAAAFenBIQqaKhsEE=",
-								"_parent": {
-									"$ref": "AAAAAAFenBIQqaKgpeg="
-								},
-								"reference": {
-									"$ref": "AAAAAAFejqjephwKr90="
-								},
-								"cardinality": "1"
-							},
-							"end2": {
-								"_type": "ERDRelationshipEnd",
-								"_id": "AAAAAAFenBIQqaKiToo=",
-								"_parent": {
-									"$ref": "AAAAAAFenBIQqaKgpeg="
-								},
-								"reference": {
-									"$ref": "AAAAAAFejqgOVxvVGB8="
-								},
-								"cardinality": "0..*"
-							},
-							"identifying": true
-						},
-						{
-							"_type": "ERDRelationship",
-							"_id": "AAAAAAFeq7LnLS2njA4=",
-							"_parent": {
-								"$ref": "AAAAAAFejqjephwKr90="
-							},
-							"end1": {
-								"_type": "ERDRelationshipEnd",
-								"_id": "AAAAAAFeq7LnLS2o+mU=",
-								"_parent": {
-									"$ref": "AAAAAAFeq7LnLS2njA4="
-								},
-								"reference": {
-									"$ref": "AAAAAAFejqjephwKr90="
-								},
-								"cardinality": "1"
-							},
-							"end2": {
-								"_type": "ERDRelationshipEnd",
-								"_id": "AAAAAAFeq7LnLS2pClE=",
-								"_parent": {
-									"$ref": "AAAAAAFeq7LnLS2njA4="
-								},
-								"reference": {
-									"$ref": "AAAAAAFejsCLEiAvfXY="
-								},
-								"cardinality": "1"
-							},
-							"identifying": true
-						},
-						{
-							"_type": "ERDRelationship",
-							"_id": "AAAAAAFetUUUh+GD8Q8=",
-							"_parent": {
-								"$ref": "AAAAAAFejqjephwKr90="
-							},
-							"end1": {
-								"_type": "ERDRelationshipEnd",
-								"_id": "AAAAAAFetUUUh+GEZu0=",
-								"_parent": {
-									"$ref": "AAAAAAFetUUUh+GD8Q8="
-								},
-								"reference": {
-									"$ref": "AAAAAAFejqjephwKr90="
-								},
-								"cardinality": "1"
-							},
-							"end2": {
-								"_type": "ERDRelationshipEnd",
-								"_id": "AAAAAAFetUUUh+GF1gs=",
-								"_parent": {
-									"$ref": "AAAAAAFetUUUh+GD8Q8="
 								},
 								"reference": {
 									"$ref": "AAAAAAFejqf59xvIvsY="
@@ -15139,6 +15033,403 @@
 							},
 							"name": "fechaCreacion",
 							"type": "TIMESTAMP",
+							"length": 0,
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": false
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFfVEMkTktr5sw=",
+							"_parent": {
+								"$ref": "AAAAAAFejqjephwKr90="
+							},
+							"name": "idEmpleadoAuditado",
+							"type": "INTEGER",
+							"length": 0,
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": true,
+							"unique": false
+						}
+					]
+				},
+				{
+					"_type": "ERDEntity",
+					"_id": "AAAAAAFejqmI7hw0T8c=",
+					"_parent": {
+						"$ref": "AAAAAAFejpMWnxtytr4="
+					},
+					"name": "TipoMovimiento",
+					"ownedElements": [
+						{
+							"_type": "ERDRelationship",
+							"_id": "AAAAAAFekSM+nA9nQSI=",
+							"_parent": {
+								"$ref": "AAAAAAFejqjephwKr90="
+							},
+							"end1": {
+								"_type": "ERDRelationshipEnd",
+								"_id": "AAAAAAFekSM+nA9oQDY=",
+								"_parent": {
+									"$ref": "AAAAAAFekSM+nA9nQSI="
+								},
+								"reference": {
+									"$ref": "AAAAAAFejqjephwKr90="
+								},
+								"cardinality": "1"
+							},
+							"end2": {
+								"_type": "ERDRelationshipEnd",
+								"_id": "AAAAAAFekSM+nA9pYJ8=",
+								"_parent": {
+									"$ref": "AAAAAAFekSM+nA9nQSI="
+								},
+								"reference": {
+									"$ref": "AAAAAAFejqf59xvIvsY="
+								},
+								"cardinality": "0..*"
+							},
+							"identifying": true
+						}
+					],
+					"columns": [
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFekUlCNBE8eDc=",
+							"_parent": {
+								"$ref": "AAAAAAFejqmI7hw0T8c="
+							},
+							"name": "idTipoMovimiento",
+							"type": "INTEGER",
+							"length": "-1",
+							"primaryKey": true,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": false
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFekUlbYBFDH28=",
+							"_parent": {
+								"$ref": "AAAAAAFejqmI7hw0T8c="
+							},
+							"name": "descripcion",
+							"type": "VARCHAR",
+							"length": "255",
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": false
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFfPRIlQqKgnN4=",
+							"_parent": {
+								"$ref": "AAAAAAFejqmI7hw0T8c="
+							},
+							"name": "esIngreso",
+							"type": "BOOLEAN",
+							"length": 0,
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": false
+						}
+					]
+				},
+				{
+					"_type": "ERDEntity",
+					"_id": "AAAAAAFejqm3kBxBuVo=",
+					"_parent": {
+						"$ref": "AAAAAAFejpMWnxtytr4="
+					},
+					"name": "MotivoTraslado",
+					"ownedElements": [
+						{
+							"_type": "ERDRelationship",
+
+							"_id": "AAAAAAFenBAqYaHy94M=",
+							"_parent": {
+								"$ref": "AAAAAAFejqjephwKr90="
+							},
+							"end1": {
+								"_type": "ERDRelationshipEnd",
+								"_id": "AAAAAAFenBAqYaHzS9g=",
+								"_parent": {
+									"$ref": "AAAAAAFenBAqYaHy94M="
+								},
+								"reference": {
+									"$ref": "AAAAAAFejqjephwKr90="
+								},
+								"cardinality": "1"
+							},
+							"end2": {
+								"_type": "ERDRelationshipEnd",
+								"_id": "AAAAAAFenBAqYaH0weM=",
+								"_parent": {
+									"$ref": "AAAAAAFenBAqYaHy94M="
+								},
+								"reference": {
+									"$ref": "AAAAAAFejrXmJx6sYqg="
+								},
+								"cardinality": "0..*"
+							},
+							"identifying": true
+						}
+					],
+					"columns": [
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFekY6s6BP/CVw=",
+							"_parent": {
+								"$ref": "AAAAAAFejqm3kBxBuVo="
+							},
+							"name": "idMotivoTraslado",
+							"type": "INTEGER",
+							"length": "-1",
+							"primaryKey": true,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": false
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFekY7PhBQG/LU=",
+							"_parent": {
+								"$ref": "AAAAAAFejqm3kBxBuVo="
+							},
+							"name": "descripcion",
+							"type": "VARCHAR",
+							"length": "255",
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": false
+						}
+					]
+				},
+				{
+					"_type": "ERDEntity",
+					"_id": "AAAAAAFejqoT6hxTZjM=",
+					"_parent": {
+						"$ref": "AAAAAAFejpMWnxtytr4="
+					},
+					"name": "Empleado",
+					"ownedElements": [
+						{
+							"_type": "ERDRelationship",
+							"_id": "AAAAAAFenBIQqaKgpeg=",
+							"_parent": {
+								"$ref": "AAAAAAFejqjephwKr90="
+							},
+							"end1": {
+								"_type": "ERDRelationshipEnd",
+								"_id": "AAAAAAFenBIQqaKhsEE=",
+								"_parent": {
+									"$ref": "AAAAAAFenBIQqaKgpeg="
+								},
+								"reference": {
+									"$ref": "AAAAAAFejqjephwKr90="
+								},
+								"cardinality": "0..*"
+							},
+							"end2": {
+								"_type": "ERDRelationshipEnd",
+
+								"_id": "AAAAAAFenBIQqaKiToo=",
+								"_parent": {
+									"$ref": "AAAAAAFenBIQqaKgpeg="
+								},
+								"reference": {
+									"$ref": "AAAAAAFejqgOVxvVGB8="
+
+								},
+								"cardinality": "0..*"
+							},
+							"identifying": true
+						},
+						{
+							"_type": "ERDRelationship",
+
+							"_id": "AAAAAAFeq7LnLS2njA4=",
+							"_parent": {
+								"$ref": "AAAAAAFejqjephwKr90="
+							},
+							"end1": {
+								"_type": "ERDRelationshipEnd",
+								"_id": "AAAAAAFeq7LnLS2o+mU=",
+								"_parent": {
+									"$ref": "AAAAAAFeq7LnLS2njA4="
+								},
+								"reference": {
+									"$ref": "AAAAAAFejqjephwKr90="
+								},
+								"cardinality": "1..*"
+							},
+							"end2": {
+								"_type": "ERDRelationshipEnd",
+
+								"_id": "AAAAAAFeq7LnLS2pClE=",
+								"_parent": {
+									"$ref": "AAAAAAFeq7LnLS2njA4="
+								},
+								"reference": {
+									"$ref": "AAAAAAFejq5Qsh35Kv4="
+								},
+								"cardinality": "1"
+							},
+							"identifying": true
+						},
+						{
+							"_type": "ERDRelationship",
+
+							"_id": "AAAAAAFetUUUh+GD8Q8=",
+							"_parent": {
+								"$ref": "AAAAAAFejqjephwKr90="
+							},
+							"end1": {
+								"_type": "ERDRelationshipEnd",
+								"_id": "AAAAAAFetUUUh+GEZu0=",
+								"_parent": {
+									"$ref": "AAAAAAFetUUUh+GD8Q8="
+								},
+								"reference": {
+									"$ref": "AAAAAAFejqjephwKr90="
+								},
+								"cardinality": "1"
+							},
+							"end2": {
+								"_type": "ERDRelationshipEnd",
+
+								"_id": "AAAAAAFetUUUh+GF1gs=",
+								"_parent": {
+									"$ref": "AAAAAAFetUUUh+GD8Q8="
+								},
+								"reference": {
+									"$ref": "AAAAAAFejqf59xvIvsY="
+								},
+								"cardinality": "0..*"
+							},
+							"identifying": true
+						},
+						{
+							"_type": "ERDRelationship",
+
+							"_id": "AAAAAAFfLk1V9D0jqXs=",
+							"_parent": {
+								"$ref": "AAAAAAFejqjephwKr90="
+							},
+							"end1": {
+								"_type": "ERDRelationshipEnd",
+								"_id": "AAAAAAFfLk1V9D0k8dA=",
+								"_parent": {
+									"$ref": "AAAAAAFfLk1V9D0jqXs="
+								},
+								"reference": {
+									"$ref": "AAAAAAFejqjephwKr90="
+								},
+								"cardinality": "1"
+							},
+							"end2": {
+								"_type": "ERDRelationshipEnd",
+
+								"_id": "AAAAAAFfLk1V9D0lQis=",
+								"_parent": {
+									"$ref": "AAAAAAFfLk1V9D0jqXs="
+								},
+								"reference": {
+									"$ref": "AAAAAAFejsCLEiAvfXY="
+
+								},
+								"cardinality": "1"
+							},
+							"identifying": true
+						}
+					],
+					"columns": [
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFekWU2bxIelcQ=",
+							"_parent": {
+								"$ref": "AAAAAAFejqjephwKr90="
+							},
+							"name": "idLote",
+							"type": "INTEGER",
+							"length": "-1",
+							"primaryKey": true,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": false
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFenBI9TKK1pSM=",
+							"_parent": {
+								"$ref": "AAAAAAFejqjephwKr90="
+							},
+							"name": "idProducto",
+							"type": "INTEGER",
+							"length": 0,
+							"primaryKey": true,
+							"foreignKey": true,
+							"referenceTo": {
+								"$ref": "AAAAAAFekUnMBBFLM3s="
+							},
+							"nullable": false,
+							"unique": false
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFekWVVJBIs15U=",
+							"_parent": {
+								"$ref": "AAAAAAFejqjephwKr90="
+							},
+							"name": "fechaLote",
+							"type": "TIMESTAMP",
+							"length": 0,
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": false
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFekWVm/xIzmEI=",
+							"_parent": {
+								"$ref": "AAAAAAFejqjephwKr90="
+							},
+							"name": "fechaEntrada",
+							"type": "TIMESTAMP",
+							"length": 0,
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": true,
+							"unique": false
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFfNxjxy/+83YM=",
+							"_parent": {
+								"$ref": "AAAAAAFejqjephwKr90="
+							},
+							"name": "stockParical",
+							"type": "INTEGER",
+							"length": 0,
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": false
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFfQdq8BUcnMZ0=",
+							"_parent": {
+								"$ref": "AAAAAAFejqjephwKr90="
+							},
+							"name": "activo",
+							"type": "BOOLEAN",
 							"length": 0,
 							"primaryKey": false,
 							"foreignKey": false,
@@ -15338,7 +15629,7 @@
 								"reference": {
 									"$ref": "AAAAAAFejqoT6hxTZjM="
 								},
-								"cardinality": "0..*"
+								"cardinality": "1"
 							},
 							"end2": {
 								"_type": "ERDRelationshipEnd",
@@ -15349,10 +15640,12 @@
 								"reference": {
 									"$ref": "AAAAAAFejqozGBxh7eo="
 								},
-								"cardinality": "0..*"
+								"cardinality": "1"
 							},
 							"identifying": true
-						},
+						}
+					],
+					"columns": [
 						{
 							"_type": "ERDRelationship",
 							"_id": "AAAAAAFejq6E1h4I9V8=",
@@ -15381,7 +15674,13 @@
 								},
 								"cardinality": "0..*"
 							},
-							"identifying": true
+							"name": "nombreUsuario",
+							"type": "VARCHAR",
+							"length": "255",
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": true
 						},
 						{
 							"_type": "ERDRelationship",
@@ -15411,8 +15710,38 @@
 								},
 								"cardinality": "0..*"
 							},
-							"identifying": true
+							"name": "password",
+							"type": "VARCHAR",
+							"length": "255",
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": false
 						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFfQcyOaEbs7/o=",
+							"_parent": {
+								"$ref": "AAAAAAFejqpoZxyBK1o="
+							},
+							"name": "fechaCreacion",
+							"type": "TIMESTAMP",
+							"length": 0,
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": false
+						}
+					]
+				},
+				{
+					"_type": "ERDEntity",
+					"_id": "AAAAAAFejq5Qsh35Kv4=",
+					"_parent": {
+						"$ref": "AAAAAAFejpMWnxtytr4="
+					},
+					"name": "ComprobantePago",
+					"ownedElements": [
 						{
 							"_type": "ERDRelationship",
 							"_id": "AAAAAAFetTrkyOEXH9U=",
@@ -15627,7 +15956,7 @@
 								"reference": {
 									"$ref": "AAAAAAFejqoT6hxTZjM="
 								},
-								"cardinality": "0..*"
+								"cardinality": "1"
 							},
 							"identifying": true
 						},
@@ -15657,7 +15986,7 @@
 								"reference": {
 									"$ref": "AAAAAAFfRqNkufX2eqk="
 								},
-								"cardinality": "0..*"
+								"cardinality": "1"
 							},
 							"identifying": true
 						}
@@ -15687,7 +16016,10 @@
 							"type": "VARCHAR",
 							"length": "255",
 							"primaryKey": false,
-							"foreignKey": false,
+							"foreignKey": true,
+							"referenceTo": {
+								"$ref": "AAAAAAFfMFhvOj4+/e8="
+							},
 							"nullable": false,
 							"unique": false
 						},
@@ -15769,9 +16101,12 @@
 							},
 							"name": "idUsuario",
 							"type": "INTEGER",
-							"length": "-1",
-							"primaryKey": true,
-							"foreignKey": false,
+							"length": 0,
+							"primaryKey": false,
+							"foreignKey": true,
+							"referenceTo": {
+								"$ref": "AAAAAAFekTQsoxAoniA="
+							},
 							"nullable": false,
 							"unique": false
 						},
@@ -15916,7 +16251,9 @@
 								"cardinality": "0..*"
 							},
 							"identifying": true
-						},
+						}
+					],
+					"columns": [
 						{
 							"_type": "ERDRelationship",
 							"_id": "AAAAAAFfUTQVKUhQ9Oo=",
@@ -15944,8 +16281,18 @@
 									"$ref": "AAAAAAFfLg5akzcIJVA="
 								},
 								"cardinality": "1"
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFfLiByEzk194A=",
+							"_parent": {
+								"$ref": "AAAAAAFejrAMDx4hlgc="
 							},
-							"identifying": true
+							"name": "idDescuento",
+							"type": "INTEGER",
+							"length": "-1",
+							"primaryKey": true,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": false
 						},
 						{
 							"_type": "ERDRelationship",
@@ -15974,11 +16321,47 @@
 									"$ref": "AAAAAAFfUVtABUm6dYc="
 								},
 								"cardinality": "1"
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFekVBaoBGgQ2I=",
+							"_parent": {
+								"$ref": "AAAAAAFejrAMDx4hlgc="
 							},
-							"identifying": true
-						}
-					],
-					"columns": [
+							"name": "tipoDescuento",
+							"type": "VARCHAR",
+							"length": "255",
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": false
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFfLiAt5Tko9Qo=",
+							"_parent": {
+								"$ref": "AAAAAAFejrAMDx4hlgc="
+							},
+							"name": "idProductoGenerador",
+							"type": "INTEGER",
+							"length": 0,
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": true,
+							"unique": false
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFfLiROjjlktgw=",
+							"_parent": {
+								"$ref": "AAAAAAFejrAMDx4hlgc="
+							},
+							"name": "idCategoriaProdGen",
+							"type": "INTEGER",
+							"length": 0,
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": true,
+							"unique": false
+						},
 						{
 							"_type": "ERDColumn",
 							"_id": "AAAAAAFekTHQUw/m1iQ=",
@@ -15987,8 +16370,8 @@
 							},
 							"name": "idComprobante",
 							"type": "INTEGER",
-							"length": "-1",
-							"primaryKey": true,
+							"length": 0,
+							"primaryKey": false,
 							"foreignKey": false,
 							"nullable": false,
 							"unique": false
@@ -16007,7 +16390,12 @@
 							"referenceTo": {
 								"$ref": "AAAAAAFekScaqg/XFgc="
 							},
-							"nullable": false,
+							"name": "idCategoriaProdDesc",
+							"type": "INTEGER",
+							"length": 0,
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": true,
 							"unique": false
 						},
 						{
@@ -16092,12 +16480,12 @@
 							"_parent": {
 								"$ref": "AAAAAAFejq5Qsh35Kv4="
 							},
-							"name": "fechaCreacion",
-							"type": "TIMESTAMP",
+							"name": "idEmpleadoAuditado",
+							"type": "INTEGER",
 							"length": 0,
 							"primaryKey": false,
 							"foreignKey": false,
-							"nullable": false,
+							"nullable": true,
 							"unique": false
 						},
 						{
@@ -16153,7 +16541,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFejpMWnxtytr4="
 					},
-					"name": "Descuento",
+					"name": "Condicion",
 					"ownedElements": [
 						{
 							"_type": "ERDRelationship",
@@ -16223,7 +16611,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFejrAMDx4hlgc="
 							},
-							"name": "idDescuento",
+							"name": "idCondicion",
 							"type": "INTEGER",
 							"length": "-1",
 							"primaryKey": true,
@@ -16237,7 +16625,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFejrAMDx4hlgc="
 							},
-							"name": "tipoDescuento",
+							"name": "tipoCondicion",
 							"type": "VARCHAR",
 							"length": "255",
 							"primaryKey": false,
@@ -16398,6 +16786,34 @@
 							"foreignKey": false,
 							"nullable": true,
 							"unique": false
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFfVMDuv5baEIo=",
+							"_parent": {
+								"$ref": "AAAAAAFejrAMDx4hlgc="
+							},
+							"name": "prioridad",
+							"type": "INTEGER",
+							"length": 0,
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": false,
+							"unique": false
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFfVERaJEudkBI=",
+							"_parent": {
+								"$ref": "AAAAAAFejrWeWB6IyIU="
+							},
+							"name": "idEmpleadoAuditado",
+							"type": "INTEGER",
+							"length": 0,
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": true,
+							"unique": false
 						}
 					]
 				},
@@ -16465,7 +16881,7 @@
 								"reference": {
 									"$ref": "AAAAAAFejsg8YSFv7B0="
 								},
-								"cardinality": "0..*"
+								"cardinality": "1"
 							},
 							"identifying": true
 						},
@@ -16495,7 +16911,7 @@
 								"reference": {
 									"$ref": "AAAAAAFfUVtABUm6dYc="
 								},
-								"cardinality": "0..*"
+								"cardinality": "1"
 							},
 							"identifying": true
 						}
@@ -16756,7 +17172,7 @@
 							"length": "-1",
 							"primaryKey": true,
 							"foreignKey": false,
-							"nullable": false,
+							"nullable": true,
 							"unique": false
 						},
 						{
