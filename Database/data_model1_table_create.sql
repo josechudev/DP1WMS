@@ -155,8 +155,8 @@ CREATE INDEX ON public.comprobantepago
 	(idempleadoauditado);
 
 
-CREATE TABLE public.descuento (
-	iddescuento serial NOT NULL,
+CREATE TABLE public.condicion (
+	condicion serial NOT NULL,
 	tipodescuento varchar(255) NOT NULL,
 	idproductogenerador integer,
 	idcategoriaprodgen integer,
@@ -169,7 +169,8 @@ CREATE TABLE public.descuento (
 	fechafin timestamp without time zone NOT NULL,
 	descripcion varchar(255) NOT NULL,
 	idempleadoauditado integer,
-	PRIMARY KEY (iddescuento)
+	prioridad integer NOT NULL,
+	PRIMARY KEY (idcondicion)
 );
 
 
@@ -504,8 +505,21 @@ CREATE TABLE public.auditoria (
 	PRIMARY KEY (idauditoria)
 );
 
-CREATE INDEX ON public.auditoria
-	(idempleado);
+create table auditoria (
+	idauditoria serial not null, 
+	tabla text not null, idempleado integer not null, 
+	fecha timestamp without time zone not null default now(), 
+	accion text not null check (accion in ('I', 'D', 'U')), 
+	dataoriginal text, 
+	datanueva text, 
+	query text) 
+with (fillfactor=100);
+
+CREATE INDEX ON public.auditoria (idempleado);
+
+CREATE INDEX ON public.auditoria (fecha);
+
+CREATE INDEX ON public.auditoria (accion);
 
 
 ALTER TABLE public.rack ADD CONSTRAINT FK_rack__idarea FOREIGN KEY (idarea) REFERENCES public.area(idarea);

@@ -3504,7 +3504,7 @@
 									"height": 13,
 									"autoResize": false,
 									"underline": false,
-									"text": "Descuento",
+									"text": "Condicion",
 									"horizontalAlignment": 2,
 									"verticalAlignment": 5,
 									"wordWrap": false
@@ -3830,6 +3830,30 @@
 											"width": 268.47265625,
 											"height": 13,
 											"autoResize": false
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAFfVMDvEJbdvnY=",
+											"_parent": {
+												"$ref": "AAAAAAFejrAMEB4lwqM="
+											},
+											"model": {
+												"$ref": "AAAAAAFfVMDuv5baEIo="
+											},
+											"visible": true,
+											"enabled": true,
+											"lineColor": "#000000",
+											"fillColor": "#ffffff",
+											"fontColor": "#000000",
+											"font": "Arial;13;0",
+											"showShadow": true,
+											"containerChangeable": false,
+											"containerExtending": false,
+											"left": 1837,
+											"top": 575,
+											"width": 268.47265625,
+											"height": 13,
+											"autoResize": false
 										}
 									],
 									"visible": true,
@@ -3844,7 +3868,7 @@
 									"left": 1832,
 									"top": 375,
 									"width": 278.47265625,
-									"height": 203,
+									"height": 218,
 									"autoResize": false
 								}
 							],
@@ -3860,7 +3884,7 @@
 							"left": 1832,
 							"top": 352,
 							"width": 278.47265625,
-							"height": 226,
+							"height": 241,
 							"autoResize": false,
 							"nameLabel": {
 								"$ref": "AAAAAAFejrAMEB4k3hA="
@@ -16153,7 +16177,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFejpMWnxtytr4="
 					},
-					"name": "Descuento",
+					"name": "Condicion",
 					"ownedElements": [
 						{
 							"_type": "ERDRelationship",
@@ -16223,7 +16247,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFejrAMDx4hlgc="
 							},
-							"name": "idDescuento",
+							"name": "idCondicion",
 							"type": "INTEGER",
 							"length": "-1",
 							"primaryKey": true,
@@ -16237,7 +16261,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFejrAMDx4hlgc="
 							},
-							"name": "tipoDescuento",
+							"name": "tipoCondicion",
 							"type": "VARCHAR",
 							"length": "255",
 							"primaryKey": false,
@@ -16397,6 +16421,20 @@
 							"primaryKey": false,
 							"foreignKey": false,
 							"nullable": true,
+							"unique": false
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAFfVMDuv5baEIo=",
+							"_parent": {
+								"$ref": "AAAAAAFejrAMDx4hlgc="
+							},
+							"name": "prioridad",
+							"type": "INTEGER",
+							"length": 0,
+							"primaryKey": false,
+							"foreignKey": false,
+							"nullable": false,
 							"unique": false
 						}
 					]
