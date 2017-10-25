@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -29,20 +30,13 @@ public class UsuarioDatosController implements FxmlController{
     @FXML private TextField e_id_tipoEmpleado, e_descripcion_tipoEmpleado;
     @FXML private Button e_buton_datos;
 
-    //private ListaUsuario v_listaUsuario;
+    @FXML private ComboBox e_tipoEmpleado;
+
     private int v_accion;
     private Usuario v_usuario;
 
     public static UsuarioCtrl v_parentController;
 
-    /*
-    @Autowired @Lazy
-    public UsuarioDatosController(StageManager stageManager){
-        this.stageManager = stageManager;
-    }
-    */
-
-    //Control de la ventana DatosUsuario
     public void btnClickAceptar_datos(ActionEvent event){
         System.out.println("Aceptar");
         Usuario auxUsuario = new Usuario();
@@ -61,6 +55,9 @@ public class UsuarioDatosController implements FxmlController{
         TipoEmpleado auxTipoEmpleado = new TipoEmpleado();
         auxTipoEmpleado.setIdtipoempleado(Long.parseLong(e_id_tipoEmpleado.getText()));
         auxTipoEmpleado.setDescripcion(e_descripcion_tipoEmpleado.getText());
+
+        System.out.printf("%d - %s\n", auxTipoEmpleado.getIdtipoempleado(), auxTipoEmpleado.getDescripcion());
+
         if(this.v_accion == 0){
             v_parentController.crearUsuarioDB(auxUsuario);
             v_parentController.crearEmpleadoDB(auxUsuario, auxEmpleado, auxTipoEmpleado);
@@ -68,16 +65,8 @@ public class UsuarioDatosController implements FxmlController{
         else{
             v_parentController.modificarUsuarioDB(auxUsuario);
             v_parentController.modificarEmpleadoDB(auxUsuario, auxEmpleado, auxTipoEmpleado);
-            //v_listaUsuario._eliminarUsuario(Integer.parseInt(e_id_datos.getText()));
-            //v_listaUsuario._agregarUsuario(Integer.parseInt(e_id_datos.getText()), e_nombre_datos.getText(), e_password_datos.getText());
         }
-
         System.out.println("Accion realizada");
-        /*
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UsuarioFxml/MantenimientoUsuario.fxml"));
-        UsuarioCtrl controller = loader.getController();
-        controller.initialize();
-        */
 
         v_parentController.initialize();
 
@@ -103,9 +92,17 @@ public class UsuarioDatosController implements FxmlController{
 
         e_id_datos.setText("0");
         e_id_empleado.setText("0");
+        e_id_tipoEmpleado.setText("0");
         this.v_accion = v_accion;
 
+        List<TipoEmpleado> iniciarTipoEmpleado = v_parentController.llenarGrillaTipoEmpleado();
+        for(int i = 0; i < iniciarTipoEmpleado.size(); i++) {
+            e_tipoEmpleado.getItems().add(iniciarTipoEmpleado.get(i).getDescripcion());
+            System.out.printf("%d - %s\n", iniciarTipoEmpleado.get(i).getIdtipoempleado(), iniciarTipoEmpleado.get(i).getDescripcion());
+        }
         if(this.v_accion == 0){
+            e_tipoEmpleado.getSelectionModel().select(iniciarTipoEmpleado.get(0).getDescripcion());
+            _setTipoEmpleado(iniciarTipoEmpleado.get(0));
             e_buton_datos.setText("Crear Usuario");
         }
         else{
@@ -119,10 +116,13 @@ public class UsuarioDatosController implements FxmlController{
             e_apellido_empleado.setText(auxEmpleado.getApellidos());
             e_email_empleado.setText(auxEmpleado.getEmail());
 
+            e_tipoEmpleado.getSelectionModel().select(auxTipoEmpleado.getDescripcion());
             e_id_tipoEmpleado.setText(Long.toString(auxTipoEmpleado.getIdtipoempleado()));
             e_descripcion_tipoEmpleado.setText(auxTipoEmpleado.getDescripcion());
             e_buton_datos.setText("Modificar Usuario");
         }
+
+
     }
 
     public void btnClickSeleccionarTipoEmpleado(ActionEvent event) {
@@ -148,6 +148,11 @@ public class UsuarioDatosController implements FxmlController{
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void ComboBoxSelectTipoUsuario(ActionEvent event){
+        TipoEmpleado AuxTipoEmpleado = v_parentController.obtenerTipoEmpleadoPorDescripcion( e_tipoEmpleado.getValue().toString() );
+        _setTipoEmpleado(AuxTipoEmpleado);
     }
 
     public void _setTipoEmpleado(TipoEmpleado auxTipoEmpleado){
