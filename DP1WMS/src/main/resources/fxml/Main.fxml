@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -11,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="634.0" prefWidth="1038.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MainController">
+<AnchorPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="634.0" prefWidth="1038.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MainController">
    <children>
       <VBox layoutX="65.0" layoutY="104.0" prefHeight="164.0" prefWidth="285.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -28,17 +32,18 @@
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoDescuentos" text="Descuentos" />
                     </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Parámetros de sistema">
+                  <Menu mnemonicParsing="false" text="Administracion">
                      <items>
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoUsuario" text="Usuarios" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoCategoria" text="Categorias" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoAlmacenes" text="Almacenes" />
                         <Menu mnemonicParsing="false" text="Mantenimiento Movimiento">
                           <items>
                               <MenuItem mnemonicParsing="false" onAction="#cargarIngresoProducto" text="Ingreso/Salida Producto" />
                             <MenuItem mnemonicParsing="false" onAction="#cargarCrearLote" text="Crear Lote" />
                           </items>
                         </Menu>
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoUsuario" text="Mantenimiento Usuario" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoRol" text="Mantenimiento Roles" />
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoCategoria" text="Mantenimiento de Categorias" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Productos">
