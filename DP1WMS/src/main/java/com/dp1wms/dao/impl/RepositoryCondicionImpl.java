@@ -1,7 +1,7 @@
 package com.dp1wms.dao.impl;
 
-import com.dp1wms.dao.RepositoryDescuento;
-import com.dp1wms.model.Descuento;
+import com.dp1wms.dao.RepositoryCondicion;
+import com.dp1wms.model.Condicion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,33 +10,32 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
-public class RepositoryDescuentosImpl implements RepositoryDescuento {
+public class RepositoryCondicionImpl implements RepositoryCondicion {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
 
-    public List<Descuento> obtenerDescuentos() {
+    public List<Condicion> obtenerDescuentos() {
         //String SQL = "SELECT d.iddescuento,d.tipodescuento,d.idproductogenerador,d.idcategoriaprodgen,d.cantprodgen,d.idproductodescuento,d.idcategoriaproddesc,d.cantproddesc,d.valordescuento,d.fechainicio,d.fechafin,d.descripcion,c1.descripcion as categoriagenerador,c2.descripcion as categoriadescuento,p1.nombreproducto as productogenerador,p2.nombreproducto as productodescuento FROM public.descuento d,public.producto p1,public.producto p2 ,public.categoriaproducto c1,public.categoriaproducto c2 WHERE p1.idproducto = d.idproductogenerador and p2.idproducto = d.idproductodescuento and c1.idcategoria = d.idcategoriaprodgen and c2.idcategoria = d.idcategoriaproddesc";
         String SQL = "SELECT iddescuento,tipodescuento,idproductogenerador,idcategoriaprodgen,cantprodgen,idproductodescuento,idcategoriaproddesc,cantproddesc,valordescuento,fechainicio,fechafin,descripcion FROM public.descuento";
 
-        List<Descuento> listaDescuentos = null;
+        List<Condicion> listaCondicions = null;
         try {
-            listaDescuentos = jdbcTemplate.query(SQL, new Object[]{}, this::mapParam);
+            listaCondicions = jdbcTemplate.query(SQL, new Object[]{}, this::mapParam);
         } catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
         }
-        for(Descuento descuento:listaDescuentos){
-            descuento.setNombreProductoGenerador(obtenerNombreProducto(descuento.getIdProductoGenerador()));
-            descuento.setNombreProductoDescuento(obtenerNombreProducto(descuento.getIdProductoDescuento()));
-            descuento.setCategoriaGenerador(obtenerDescripcionCategoria(descuento.getIdCategoriaProdGen()));
-            descuento.setCategoriaDescuento(obtenerDescripcionCategoria(descuento.getIdCategoriaProdDesc()));
+        for(Condicion condicion : listaCondicions){
+            condicion.setNombreProductoGenerador(obtenerNombreProducto(condicion.getIdProductoGenerador()));
+            condicion.setNombreProductoDescuento(obtenerNombreProducto(condicion.getIdProductoDescuento()));
+            condicion.setCategoriaGenerador(obtenerDescripcionCategoria(condicion.getIdCategoriaProdGen()));
+            condicion.setCategoriaDescuento(obtenerDescripcionCategoria(condicion.getIdCategoriaProdDesc()));
         }
-        return listaDescuentos;
+        return listaCondicions;
     }
 
     public String obtenerNombreProducto(int idProducto){
@@ -74,54 +73,54 @@ public class RepositoryDescuentosImpl implements RepositoryDescuento {
 
     }
 
-    public Descuento mapParam(ResultSet rs, int i) throws SQLException {
-        Descuento descuento = new Descuento();
+    public Condicion mapParam(ResultSet rs, int i) throws SQLException {
+        Condicion condicion = new Condicion();
 
-        descuento.setIdDescuento(rs.getInt("iddescuento"));
-        descuento.setTipoDescuento(rs.getString("tipodescuento"));
-        descuento.setIdProductoGenerador(rs.getInt("idproductogenerador"));
-        descuento.setIdCategoriaProdGen(rs.getInt("idcategoriaprodgen"));
-        descuento.setCantProdGen(rs.getInt("cantprodgen"));
-        descuento.setIdProductoDescuento(rs.getInt("idproductodescuento"));
-        descuento.setIdCategoriaProdDesc(rs.getInt("idcategoriaproddesc"));
-        descuento.setCantProdDesc(rs.getInt("cantproddesc"));
-        descuento.setValorDescuento(rs.getDouble("valordescuento"));
-        descuento.setFechaInicio(rs.getTimestamp("fechainicio"));
-        descuento.setFechaFin(rs.getTimestamp("fechafin"));
-        descuento.setDescripcion(rs.getString("descripcion"));
-        /*descuento.setCategoriaGenerador(rs.getString("categoriagenerador"));
-        descuento.setCategoriaDescuento(rs.getString("categoriadescuento"));
-        descuento.setNombreProductoGenerador(rs.getString("productogenerador"));
-        descuento.setNombreProductoDescuento(rs.getString("productodescuento"));*/
+        condicion.setIdDescuento(rs.getInt("iddescuento"));
+        condicion.setTipoDescuento(rs.getString("tipodescuento"));
+        condicion.setIdProductoGenerador(rs.getInt("idproductogenerador"));
+        condicion.setIdCategoriaProdGen(rs.getInt("idcategoriaprodgen"));
+        condicion.setCantProdGen(rs.getInt("cantprodgen"));
+        condicion.setIdProductoDescuento(rs.getInt("idproductodescuento"));
+        condicion.setIdCategoriaProdDesc(rs.getInt("idcategoriaproddesc"));
+        condicion.setCantProdDesc(rs.getInt("cantproddesc"));
+        condicion.setValorDescuento(rs.getDouble("valordescuento"));
+        condicion.setFechaInicio(rs.getTimestamp("fechainicio"));
+        condicion.setFechaFin(rs.getTimestamp("fechafin"));
+        condicion.setDescripcion(rs.getString("descripcion"));
+        /*condicion.setCategoriaGenerador(rs.getString("categoriagenerador"));
+        condicion.setCategoriaDescuento(rs.getString("categoriadescuento"));
+        condicion.setNombreProductoGenerador(rs.getString("productogenerador"));
+        condicion.setNombreProductoDescuento(rs.getString("productodescuento"));*/
 
-        return descuento;
+        return condicion;
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public int registrarDescuento(Descuento descuento) {
+    public int registrarDescuento(Condicion condicion) {
         // el stock parcial no se debe insertar directamente en lote, es trabajo del trigger por eso se pone de valor cero
-        String SQL = "INSERT INTO public.descuento (tipodescuento,idproductogenerador,idcategoriaprodgen,cantprodgen,idproductodescuento,idcategoriaproddesc,cantproddesc,valordescuento,fechainicio,fechafin,descripcion) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+        String SQL = "INSERT INTO public.condicion (tipodescuento,idproductogenerador,idcategoriaprodgen,cantprodgen,idproductodescuento,idcategoriaproddesc,cantproddesc,valordescuento,fechainicio,fechafin,descripcion) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 
-        Long idProdDescuento = new Long(descuento.getIdProductoDescuento());
+        Long idProdDescuento = new Long(condicion.getIdProductoDescuento());
         if(idProdDescuento == -1){
             idProdDescuento = null;
         }
-        Long idProdGen = new Long(descuento.getIdProductoGenerador());
+        Long idProdGen = new Long(condicion.getIdProductoGenerador());
         if(idProdGen == -1){
             idProdGen = null;
         }
-        Long idCategoriaDescuento = new Long(descuento.getIdCategoriaProdDesc());
+        Long idCategoriaDescuento = new Long(condicion.getIdCategoriaProdDesc());
         if(idCategoriaDescuento == -1){
             idCategoriaDescuento = null;
         }
-        Long idCategoriaGen = new Long(descuento.getIdCategoriaProdGen());
+        Long idCategoriaGen = new Long(condicion.getIdCategoriaProdGen());
         if(idCategoriaGen == -1){
             idCategoriaGen = null;
         }
 
         try {
-            jdbcTemplate.update(SQL, new Object[]{ descuento.getTipoDescuento(),idProdGen, idCategoriaGen, descuento.getCantProdGen(), idProdDescuento, idCategoriaDescuento, descuento.getCantProdDesc(), descuento.getValorDescuento(), descuento.getFechaInicio(), descuento.getFechaFin(), descuento.getDescripcion()});
-            System.out.println("Se ha insertado en la tabla descuento");
+            jdbcTemplate.update(SQL, new Object[]{ condicion.getTipoDescuento(),idProdGen, idCategoriaGen, condicion.getCantProdGen(), idProdDescuento, idCategoriaDescuento, condicion.getCantProdDesc(), condicion.getValorDescuento(), condicion.getFechaInicio(), condicion.getFechaFin(), condicion.getDescripcion()});
+            System.out.println("Se ha insertado en la tabla condicion");
         } catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
             throw e;
@@ -130,31 +129,31 @@ public class RepositoryDescuentosImpl implements RepositoryDescuento {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public int actualizarDescuento(Descuento descuento) {
+    public int actualizarDescuento(Condicion condicion) {
         // el stock parcial no se debe insertar directamente en lote, es trabajo del trigger por eso se pone de valor cero
-        String SQL = "UPDATE public.descuento SET tipodescuento = ?,idproductogenerador = ?,idcategoriaprodgen = ?,cantprodgen = ?,idproductodescuento = ?,idcategoriaproddesc = ?,cantproddesc = ?,valordescuento = ?,fechainicio = ?,fechafin = ?,descripcion = ? where iddescuento = ?";
+        String SQL = "UPDATE public.condicion SET tipodescuento = ?,idproductogenerador = ?,idcategoriaprodgen = ?,cantprodgen = ?,idproductodescuento = ?,idcategoriaproddesc = ?,cantproddesc = ?,valordescuento = ?,fechainicio = ?,fechafin = ?,descripcion = ? where iddescuento = ?";
 
-        Long idProdDescuento = new Long(descuento.getIdProductoDescuento());
+        Long idProdDescuento = new Long(condicion.getIdProductoDescuento());
         if(idProdDescuento == -1){
             idProdDescuento = null;
         }
-        Long idProdGen = new Long(descuento.getIdProductoGenerador());
+        Long idProdGen = new Long(condicion.getIdProductoGenerador());
         if(idProdGen == -1){
             idProdGen = null;
         }
-        Long idCategoriaDescuento = new Long(descuento.getIdCategoriaProdDesc());
+        Long idCategoriaDescuento = new Long(condicion.getIdCategoriaProdDesc());
         if(idCategoriaDescuento == -1){
             idCategoriaDescuento = null;
         }
-        Long idCategoriaGen = new Long(descuento.getIdCategoriaProdGen());
+        Long idCategoriaGen = new Long(condicion.getIdCategoriaProdGen());
         if(idCategoriaGen == -1){
             idCategoriaGen = null;
         }
 
         try {
-            int i = jdbcTemplate.update(SQL, new Object[]{ descuento.getTipoDescuento(),idProdGen, idCategoriaGen, descuento.getCantProdGen(), idProdDescuento, idCategoriaDescuento, descuento.getCantProdDesc(), descuento.getValorDescuento(), descuento.getFechaInicio(), descuento.getFechaFin(), descuento.getDescripcion(),descuento.getIdDescuento()});
+            int i = jdbcTemplate.update(SQL, new Object[]{ condicion.getTipoDescuento(),idProdGen, idCategoriaGen, condicion.getCantProdGen(), idProdDescuento, idCategoriaDescuento, condicion.getCantProdDesc(), condicion.getValorDescuento(), condicion.getFechaInicio(), condicion.getFechaFin(), condicion.getDescripcion(), condicion.getIdDescuento()});
             System.out.println("Filas afectadas -> "+ i);
-            System.out.println("Se ha actualizo en la tabla descuento");
+            System.out.println("Se ha actualizo en la tabla condicion");
         } catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
             throw e;
@@ -178,12 +177,12 @@ public class RepositoryDescuentosImpl implements RepositoryDescuento {
         return 1;
     }
 
-    public List<Descuento> obtenerDescuentosActivos(){
-        String sql = "SELECT * from descuento where fechainicio <= now() " +
+    public List<Condicion> obtenerCondicionesActivos(){
+        String sql = "SELECT * from condicion where fechainicio <= now() " +
                     "AND fechafin >= now() and activo";
         try{
-            List<Descuento> descuentos = jdbcTemplate.query(sql, new Object[]{}, this::mapParam);
-            return descuentos;
+            List<Condicion> condicions = jdbcTemplate.query(sql, new Object[]{}, this::mapParam);
+            return condicions;
         } catch (Exception e){
             e.printStackTrace();
             return null;

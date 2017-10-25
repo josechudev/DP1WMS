@@ -29,19 +29,6 @@ public enum VentasView implements FxmlView {
         public boolean isResizable(){
             return true;
         }
-    }, PROFORMA_PREVIEW {
-        @Override
-        public String getTitle() {
-            return getStringFromResourceBundle("ventas.proforma_preview.title");
-        }
-        @Override
-        public String getFxmlFile() {
-            return "/fxml/Ventas/ProformaPreview.fxml";
-        }
-        @Override
-        public boolean isResizable(){
-            return true;
-        }
     }, BUSCAR_CLIENTE{
         @Override
         public String getTitle() {

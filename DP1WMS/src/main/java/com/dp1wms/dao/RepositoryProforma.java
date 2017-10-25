@@ -11,5 +11,5 @@ public interface RepositoryProforma {
 
     List<Producto> buscarProductosParaVenta(String campo, String dato);
 
-    boolean registrarProformaYEnvios(Proforma profoma, ArrayList<Envio> envios);
+    boolean registrarProforma(Proforma profoma);
 }
