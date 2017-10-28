@@ -74,12 +74,12 @@ public class RespositoryMantEmpleadoImpl implements RepositoryMantEmpleado {
                 new EmpleadoRowMapper());
     }
 
-    public void createEmpleado(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpleado){
-        String sql = "INSERT INTO empleado(idempleado, idusuario, numDoc, nombre, apellidos, email, idtipoempleado) " +
-                                    "VALUES(default,?,?,?,?,?,?)";
+    public void createEmpleado(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpleado, Long auxIdEmpleadoAuditado){
+        String sql = "INSERT INTO empleado(idempleado, idusuario, numDoc, nombre, apellidos, email, idtipoempleado, idEmpleadoAuditado) " +
+                                    "VALUES(default,?,?,?,?,?,?,?)";
         jdbcTemplate.update(sql,
                 new Object[] { this.findIdUsuario(auxUsuario), auxEmpleado.getNumDoc(), auxEmpleado.getNombre(), auxEmpleado.getApellidos(),
-                        auxEmpleado.getEmail(), auxTipoEmpleado.getIdtipoempleado()});
+                        auxEmpleado.getEmail(), auxTipoEmpleado.getIdtipoempleado(), auxIdEmpleadoAuditado});
     }
 
     public Usuario findUsuariobyName(String auxName){
@@ -100,24 +100,36 @@ public class RespositoryMantEmpleadoImpl implements RepositoryMantEmpleado {
         return jdbcTemplate.queryForObject(sql, new Object[]{}, Integer.class);
     }
 
-    public void updateEmpleado(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpleado){
-        String sql = "UPDATE empleado SET numDoc = ?, nombre = ?, apellidos = ?, email = ?, idtipoempleado = ? WHERE idempleado= ? and idusuario = ?";
+    public void updateEmpleado(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpleado, Long auxIdEmpleadoAuditado){
+        String sql = "UPDATE empleado SET numDoc = ?, nombre = ?, apellidos = ?, email = ?, idtipoempleado = ? , idEmpleadoAuditado = ? " +
+                "WHERE idempleado= ? and idusuario = ?";
         jdbcTemplate.update(sql,
                 new Object[] { auxEmpleado.getNumDoc(), auxEmpleado.getNombre(), auxEmpleado.getApellidos(), auxEmpleado.getEmail(), auxTipoEmpleado.getIdtipoempleado(),
+                        auxIdEmpleadoAuditado,
                         auxEmpleado.getIdempleado(), auxUsuario.getV_id()});
     }
 
-    public void deleteEmpleado(Usuario auxUsuario, Empleado auxEmpleado){
+    public void deleteEmpleado(Usuario auxUsuario, Empleado auxEmpleado, Long auxIdEmpleadoAuditado){
         //String sql = "DELETE FROM empleado WHERE idempleado= ? and idusuario = ?";
-        String sql = "UPDATE empleado SET activo = false WHERE idempleado= ? and idusuario = ?";
+        String sql = "UPDATE empleado SET activo = false , idEmpleadoAuditado = ? " +
+                "WHERE idempleado= ? and idusuario = ?";
         jdbcTemplate.update(sql,
-                new Object[] { auxEmpleado.getIdempleado(), auxUsuario.getV_id() });
+                new Object[] { auxIdEmpleadoAuditado,
+                        auxEmpleado.getIdempleado(), auxUsuario.getV_id() });
     }
 
     public void cargaMasivaDatos(List<Empleado> auxListaEmpleado, List<String> auxNombreUsuario, List<String> auxNombreTipoEmpleado){
+        //Delete all empleados
+
         for(int i = 0; i < auxListaEmpleado.size(); i++){
             Usuario auxUsuario = findUsuariobyName(auxNombreUsuario.get(i));
             TipoEmpleado auxTipoEmepleado = getTipoEmpleadoPorDescripcion(auxNombreTipoEmpleado.get(i));
+
+            String sql = "INSERT INTO empleado(idempleado, idusuario, numDoc, nombre, apellidos, email, idtipoempleado) " +
+                    "VALUES(default,?,?,?,?,?,?)";
+            jdbcTemplate.update(sql,
+                    new Object[] { this.findIdUsuario(auxUsuario), auxListaEmpleado.get(i).getNumDoc(), auxListaEmpleado.get(i).getNombre(),
+                            auxListaEmpleado.get(i).getApellidos(), auxListaEmpleado.get(i).getEmail(), auxTipoEmepleado.getIdtipoempleado()});
         }
     }
 
