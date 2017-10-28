@@ -6,7 +6,6 @@ public class DetalleProforma {
     private int cantidad;
     private float descuento;
     private Producto producto;
-
     private float subtotal;
 
 

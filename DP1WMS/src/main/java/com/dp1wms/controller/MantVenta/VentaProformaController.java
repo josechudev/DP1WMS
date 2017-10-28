@@ -2,9 +2,11 @@ package com.dp1wms.controller.MantVenta;
 
 import com.dp1wms.controller.FxmlController;
 import com.dp1wms.controller.MainController;
+import com.dp1wms.controller.MantCliente.ClienteInfoController;
 import com.dp1wms.dao.RepositoryCondicion;
 import com.dp1wms.dao.RepositoryProforma;
 import com.dp1wms.model.*;
+import com.dp1wms.view.ClientesView;
 import com.dp1wms.view.StageManager;
 import com.dp1wms.view.VentasView;
 
@@ -47,6 +49,7 @@ public class VentaProformaController implements FxmlController{
 
     private StageManager stageManager;
     private MainController mainController;
+    private ClienteInfoController clienteInfoController;
 
     @Autowired private RepositoryProforma repositoryProforma;
     @Autowired private RepositoryCondicion repositoryCondicion;
@@ -60,9 +63,11 @@ public class VentaProformaController implements FxmlController{
     }
 
     @Autowired @Lazy
-    public VentaProformaController(StageManager stageManager, MainController mainController){
+    public VentaProformaController(StageManager stageManager, MainController mainController,
+                                   ClienteInfoController clienteInfoController){
         this.stageManager = stageManager;
         this.mainController = mainController;
+        this.clienteInfoController = clienteInfoController;
     }
 
     @FXML
@@ -72,7 +77,15 @@ public class VentaProformaController implements FxmlController{
 
     @FXML
     private void mostrarRegistrarCliente(){
-        this.stageManager.mostrarModal(VentasView.REGISTRAR_CLIENTE);
+        this.clienteInfoController.setCliente(null);
+
+        this.stageManager.mostrarModal(ClientesView.INFO);
+
+        Cliente c = this.clienteInfoController.getCliente();
+        if(c != null){
+            this.cliente = new Cliente(c);
+            this.completarCamposClientes();
+        }
     }
 
     @FXML
@@ -82,6 +95,10 @@ public class VentaProformaController implements FxmlController{
 
     public void setCliente(Cliente cliente){
         this.cliente = cliente;
+        this.completarCamposClientes();
+    }
+
+    private void completarCamposClientes(){
         this.codigoLabel.setText(String.valueOf(cliente.getIdCliente()));
         this.nombreLabel.setText(cliente.getRazonSocial());
         this.rucLabel.setText(cliente.getNumDoc());
@@ -202,7 +219,7 @@ public class VentaProformaController implements FxmlController{
                     "Hubo un error al intentar registrar la proforma. " +
                             "Inténtelo otra vez.");
         } else {
-            this.stageManager.mostrarInfonDialog("Proforma", null, "Se registró satisfactoriamente");
+            this.stageManager.mostrarInfoDialog("Proforma", null, "Se registró satisfactoriamente");
             this.cerrarVentana(event);
         }
     }
