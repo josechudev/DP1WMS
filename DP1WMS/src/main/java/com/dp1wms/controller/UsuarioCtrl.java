@@ -32,6 +32,8 @@ public class UsuarioCtrl implements FxmlController{
 
     private final StageManager stageManager;
 
+    private com.dp1wms.model.Usuario usuario;
+
     @FXML private TableView<UsuarioXEmpleado> e_table;
     @FXML private TableColumn<UsuarioXEmpleado, Integer> e_id;
     @FXML private TableColumn<UsuarioXEmpleado, String> e_user;
@@ -120,7 +122,7 @@ public class UsuarioCtrl implements FxmlController{
 
         UsuarioXEmpleado auxUsuarioXEmpleado = e_table.getSelectionModel().getSelectedItem();
         Usuario auxUsuario = repositoryMantUsuario.findUsuariobyId(auxUsuarioXEmpleado.getV_id_user());
-        repositoryMantEmpleado.deleteEmpleado(auxUsuario, repositoryMantEmpleado.obtenerEmpleadoPorIdUsuario(auxUsuario.getV_id()) );
+        repositoryMantEmpleado.deleteEmpleado(auxUsuario, repositoryMantEmpleado.obtenerEmpleadoPorIdUsuario(auxUsuario.getV_id()), this.usuario.getIdusuario() );
         repositoryMantUsuario.deleteUsuario(auxUsuario);
 
         this._llenarGrilla();
@@ -159,13 +161,13 @@ public class UsuarioCtrl implements FxmlController{
     }
 
     public void crearEmpleadoDB(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpelado){
-        repositoryMantEmpleado.createEmpleado(auxUsuario, auxEmpleado, auxTipoEmpelado);
+        repositoryMantEmpleado.createEmpleado(auxUsuario, auxEmpleado, auxTipoEmpelado, this.usuario.getIdusuario());
     }
     public void modificarEmpleadoDB(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpelado){
-        repositoryMantEmpleado.updateEmpleado(auxUsuario, auxEmpleado, auxTipoEmpelado);
+        repositoryMantEmpleado.updateEmpleado(auxUsuario, auxEmpleado, auxTipoEmpelado, this.usuario.getIdusuario());
     }
     public void eliminarEmpleadoDB(Usuario auxUsuario, Empleado auxEmpleado){
-        repositoryMantEmpleado.deleteEmpleado(auxUsuario, auxEmpleado);
+        repositoryMantEmpleado.deleteEmpleado(auxUsuario, auxEmpleado, this.usuario.getIdusuario());
     }
 
     public void crearTipoEmpleadoDB(TipoEmpleado auxTipoEmpelado){
@@ -183,6 +185,10 @@ public class UsuarioCtrl implements FxmlController{
 
     public List<TipoEmpleado> llenarGrillaTipoEmpleado(){
         return repositoryMantTipoEmpleado.selectAllTipoEmpleado();
+    }
+
+    public void setUsuario(com.dp1wms.model.Usuario usuario){
+        this.usuario = usuario;
     }
 
 }
