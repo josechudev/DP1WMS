@@ -4,6 +4,7 @@ import com.dp1wms.controller.FxmlController;
 import com.dp1wms.dao.RepositoryMantCliente;
 import com.dp1wms.model.Cliente;
 import com.dp1wms.view.StageManager;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,6 +24,8 @@ public class VentaBusquedaClienteController implements FxmlController{
     @FXML private TableColumn<Cliente, String> clienteRazonSocialCol;
     @FXML private TableColumn<Cliente, String> clienteTelefonoCol;
     @FXML private TableColumn<Cliente, String> clienteEmailCol;
+    @FXML private TableColumn<Cliente, String> estadoCol;
+
 
     private final StageManager stageManager;
     private final VentaProformaController ventaProformaController;
@@ -100,6 +103,9 @@ public class VentaBusquedaClienteController implements FxmlController{
         this.clienteEmailCol.setCellValueFactory(new PropertyValueFactory<Cliente, String>("email"));
         this.clienteRazonSocialCol.setCellValueFactory(new PropertyValueFactory<Cliente, String>("razonSocial"));
         this.clienteTelefonoCol.setCellValueFactory(new PropertyValueFactory<Cliente, String>("telefono"));
+        this.estadoCol.setCellValueFactory(value->{
+            return new SimpleStringProperty(value.getValue().isActivo()?"Hablitado":"Deshabilitado");
+        });
         this.clienteTable.setEditable(false);
     }
 
