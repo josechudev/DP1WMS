@@ -12,7 +12,7 @@
         <TextField fx:id="e_id_datos" editable="false" layoutX="0.0" layoutY="0.0" prefHeight="0.0" prefWidth="0.0" visible="false" />
         <TextField fx:id="e_nombre_datos" layoutX="22.0" layoutY="56.0" prefHeight="25.0" prefWidth="133.0" />
         <TextField fx:id="e_password_datos" layoutX="22.0" layoutY="118.0" prefHeight="25.0" prefWidth="133.0" />
-        <CheckBox layoutX="22.0" layoutY="150.0" mnemonicParsing="false" text="Modificar contraseña" />
+        <CheckBox fx:id="e_modPassword" layoutX="22.0" layoutY="150.0" mnemonicParsing="false" text="Modificar contraseña" onAction="#checkBoxAction" />
         <Label layoutX="0.0" layoutY="0.0" text="Id:" visible="false" />
         <Label layoutX="25.0" layoutY="39.0" text="User:" />
         <Label layoutX="21.0" layoutY="104.0" text="Password:" />

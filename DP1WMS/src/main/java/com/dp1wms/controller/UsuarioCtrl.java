@@ -99,8 +99,8 @@ public class UsuarioCtrl implements FxmlController{
             root = (Parent) loader.load();
             UsuarioDatosController controller = loader.getController();
             //1 es modificar
-            controller._setData(auxUsuario, auxEmpleado, auxTipoEmpleado,1);
             controller.setV_parentController(this);
+            controller._setData(auxUsuario, auxEmpleado, auxTipoEmpleado,1);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -154,8 +154,8 @@ public class UsuarioCtrl implements FxmlController{
         repositoryMantUsuario.createUsuario(auxUsuario);
     }
 
-    public void modificarUsuarioDB(Usuario auxUsuario){
-        repositoryMantUsuario.updateUsuario(auxUsuario);
+    public void modificarUsuarioDB(Usuario auxUsuario, boolean auxModificarPassword){
+        repositoryMantUsuario.updateUsuario(auxUsuario, auxModificarPassword);
     }
 
     public void crearEmpleadoDB(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpelado){

@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
@@ -32,8 +33,12 @@ public class UsuarioDatosController implements FxmlController{
 
     @FXML private ComboBox e_tipoEmpleado;
 
+    @FXML private CheckBox e_modPassword;
+
     private int v_accion;
     private Usuario v_usuario;
+
+    private boolean v_ModificarPassword;
 
     public static UsuarioCtrl v_parentController;
 
@@ -63,7 +68,7 @@ public class UsuarioDatosController implements FxmlController{
             v_parentController.crearEmpleadoDB(auxUsuario, auxEmpleado, auxTipoEmpleado);
         }
         else{
-            v_parentController.modificarUsuarioDB(auxUsuario);
+            v_parentController.modificarUsuarioDB(auxUsuario, v_ModificarPassword);
             v_parentController.modificarEmpleadoDB(auxUsuario, auxEmpleado, auxTipoEmpleado);
         }
         System.out.println("Accion realizada");
@@ -94,18 +99,21 @@ public class UsuarioDatosController implements FxmlController{
         e_id_empleado.setText("0");
         e_id_tipoEmpleado.setText("0");
         this.v_accion = v_accion;
-
+        v_ModificarPassword = false;
         List<TipoEmpleado> iniciarTipoEmpleado = v_parentController.llenarGrillaTipoEmpleado();
         for(int i = 0; i < iniciarTipoEmpleado.size(); i++) {
             e_tipoEmpleado.getItems().add(iniciarTipoEmpleado.get(i).getDescripcion());
             System.out.printf("%d - %s\n", iniciarTipoEmpleado.get(i).getIdtipoempleado(), iniciarTipoEmpleado.get(i).getDescripcion());
         }
         if(this.v_accion == 0){
+            e_modPassword.setVisible(false);
             e_tipoEmpleado.getSelectionModel().select(iniciarTipoEmpleado.get(0).getDescripcion());
             _setTipoEmpleado(iniciarTipoEmpleado.get(0));
             e_buton_datos.setText("Crear Usuario");
         }
         else{
+            e_modPassword.setVisible(true);
+            e_modPassword.setSelected(false);
             e_id_datos.setText(Integer.toString(auxUsuario.getV_id()));
             e_nombre_datos.setText(auxUsuario.getV_nombre());
             e_password_datos.setText("");
@@ -153,6 +161,13 @@ public class UsuarioDatosController implements FxmlController{
     public void ComboBoxSelectTipoUsuario(ActionEvent event){
         TipoEmpleado AuxTipoEmpleado = v_parentController.obtenerTipoEmpleadoPorDescripcion( e_tipoEmpleado.getValue().toString() );
         _setTipoEmpleado(AuxTipoEmpleado);
+    }
+
+    public void checkBoxAction(ActionEvent event){
+        if(e_modPassword.isSelected())
+            v_ModificarPassword = true;
+        else
+            v_ModificarPassword = false;
     }
 
     public void _setTipoEmpleado(TipoEmpleado auxTipoEmpleado){
