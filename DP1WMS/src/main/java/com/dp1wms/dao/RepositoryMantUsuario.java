@@ -14,4 +14,8 @@ public interface RepositoryMantUsuario {
     void deleteUsuario(Usuario auxUsuario);
 
     Usuario findUsuariobyId(int auxIdUser);
+
+    boolean existeUsuario(String auxNameUser);
+
+    boolean coincideUsuarioId(String auxNameUser, int auxIdUser);
 }
