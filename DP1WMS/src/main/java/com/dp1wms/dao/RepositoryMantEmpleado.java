@@ -23,5 +23,4 @@ public interface RepositoryMantEmpleado {
 
     Usuario findUsuariobyName(String auxName);
 
-    void cargaMasivaDatos(List<Empleado> auxListaEmpleado, List<String> auxNombreUsuario, List<String> auxNombreTipoEmpleado);
 }
