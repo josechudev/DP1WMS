@@ -111,11 +111,11 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
 
 
 
-        String SQL = "INSERT INTO public.movimiento (totalproductos,observaciones,fechamovimiento,idtipomovimiento) VALUES (?,?,?,?) RETURNING idmovimiento";
+        String SQL = "INSERT INTO public.movimiento (totalproductos,observaciones,fechamovimiento,idtipomovimiento,idempleadoauditado) VALUES (?,?,?,?,?) RETURNING idmovimiento";
 
        int idMovimiento = 0;
         try {
-            Movimiento movimientoInsertado = (Movimiento) this.jdbcTemplate.queryForObject(SQL, new Object[]{totalProductos,observaciones,fecha,idTipoMovimiento},
+            Movimiento movimientoInsertado = (Movimiento) this.jdbcTemplate.queryForObject(SQL, new Object[]{totalProductos,observaciones,fecha,idTipoMovimiento,idEmpleadoAuditado},
                     (rs, i)->{
                         Movimiento movimientoTemporal = new Movimiento();
                         movimientoTemporal.setIdMovimiento(rs.getInt("idmovimiento"));
