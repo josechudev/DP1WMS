@@ -3,8 +3,8 @@ package com.dp1wms.model;
 import java.util.ArrayList;
 
 public class Envio {
-    private int idEnvio;
-    private int idProforma;
+    private Long idEnvio;
+    private Long idProforma;
     private String fechaEnvio;
     private String destino;
     private float costoFlete;
@@ -38,21 +38,7 @@ public class Envio {
         return newDE;
     }
 
-    public int getIdEnvio() {
-        return idEnvio;
-    }
 
-    public void setIdEnvio(int idEnvio) {
-        this.idEnvio = idEnvio;
-    }
-
-    public int getIdProforma() {
-        return idProforma;
-    }
-
-    public void setIdProforma(int idProforma) {
-        this.idProforma = idProforma;
-    }
 
     public String getFechaEnvio() {
         return fechaEnvio;
@@ -92,5 +78,21 @@ public class Envio {
             total += de.getCantidad();
         }
         return total;
+    }
+
+    public Long getIdEnvio() {
+        return idEnvio;
+    }
+
+    public void setIdEnvio(Long idEnvio) {
+        this.idEnvio = idEnvio;
+    }
+
+    public Long getIdProforma() {
+        return idProforma;
+    }
+
+    public void setIdProforma(Long idProforma) {
+        this.idProforma = idProforma;
     }
 }

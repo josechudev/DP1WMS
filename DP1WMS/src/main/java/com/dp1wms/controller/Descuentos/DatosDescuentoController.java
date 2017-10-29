@@ -27,6 +27,9 @@ import java.util.List;
 @Component
 public class DatosDescuentoController implements FxmlController{
 
+
+    @FXML
+    private TitledPane titledPaneGen;
     @FXML
     private AnchorPane datosDescuentoAnchorPane;
     @FXML
@@ -61,6 +64,22 @@ public class DatosDescuentoController implements FxmlController{
     private RadioButton rb_catGen;
     @FXML
     private RadioButton rb_prodGen;
+    @FXML
+    private Label label_ProductoGen;
+    @FXML
+    private Label labelCategoriaGen;
+    @FXML
+    private Label labelCantidadGen;
+    @FXML
+    private Button btn_buscarGen;
+    @FXML
+    private Label labelCategoriaDesc;
+    @FXML
+    private Label labelProductoDesc;
+    @FXML
+    private Button btn_buscarDesc;
+
+    //private Condicion condicion;
 
     @Autowired
     private RepositoryCondicion repositoryCondicion;
@@ -135,32 +154,66 @@ public class DatosDescuentoController implements FxmlController{
     public void guardarFormulario(ActionEvent event){
 
         Condicion condicion = new Condicion();
+
         condicion.setTipoCondicion(this.cb_tipoDescuento.getValue().toString());
-        condicion.setIdProductoGenerador(this.idproductoGenerador);
-        condicion.setIdCategoriaProdGen(this.cb_categoriaGenerador.getValue().getIdCategoria());
-        int cantidadProdGen;
-        try{
-            cantidadProdGen = Integer.parseInt(this.txb_cantidadGenerador.getText());
-        }catch(Exception e){
-            System.out.println("Error al ingresar la cantidad descrita");
-            return;
+
+
+        if(this.txb_productoGenerador.getText().equalsIgnoreCase("")){
+            condicion.setIdProductoGenerador(-1);
+        }else{
+            condicion.setIdProductoGenerador(this.idproductoGenerador);
         }
+
+
+        if(this.cb_categoriaGenerador.getValue() == null){
+            condicion.setIdCategoriaProdGen(-1);
+        }else{
+            condicion.setIdCategoriaProdGen(this.cb_categoriaGenerador.getValue().getIdCategoria());
+        }
+
+        int cantidadProdGen = 1;
+        if(!this.txb_cantidadGenerador.getText().equalsIgnoreCase("")){
+            try{
+                cantidadProdGen = Integer.parseInt(this.txb_cantidadGenerador.getText());
+            }catch(Exception e){
+                System.out.println("Error al ingresar la cantidad generador descrita");
+                return;
+            }
+        }
+
         condicion.setCantProdGen(cantidadProdGen);
-        condicion.setIdProductoDescuento(this.idproductoDescuento);
-        condicion.setIdCategoriaProdDesc(this.cb_categoriaDescuento.getValue().getIdCategoria());
-        int cantidadProdDesc;
-        try{
-            cantidadProdDesc = Integer.parseInt(this.txb_cantidadDescuento.getText());
-        }catch(Exception e){
-            System.out.println("Error al ingresar la cantidad descrita");
-            return;
+
+
+        if(this.txb_productoDescuento.getText().equalsIgnoreCase("")){
+            condicion.setIdProductoDescuento(-1);
+        }else{
+            condicion.setIdProductoDescuento(this.idproductoDescuento);
         }
+
+        if(this.cb_categoriaDescuento.getValue() == null){
+            condicion.setIdCategoriaProdDesc(-1);
+        }else{
+            condicion.setIdCategoriaProdDesc(this.cb_categoriaDescuento.getValue().getIdCategoria());
+        }
+
+
+        int cantidadProdDesc = 1;
+
+        if(!this.txb_cantidadDescuento.getText().equalsIgnoreCase("")){
+            try{
+                cantidadProdDesc = Integer.parseInt(this.txb_cantidadDescuento.getText());
+            }catch(Exception e){
+                System.out.println("Error al ingresar la cantidad descuento descrita");
+                return;
+            }
+        }
+
         condicion.setCantProdDesc(cantidadProdDesc);
         Double valorDescuento;
         try{
             valorDescuento = Double.parseDouble(this.txb_valorDescuento.getText());
         }catch(Exception e){
-            System.out.println("Error al ingresar la cantidad descrita");
+            System.out.println("Error al ingresar valor descuento");
             return;
         }
         condicion.setValorDescuento(valorDescuento);
@@ -196,6 +249,12 @@ public class DatosDescuentoController implements FxmlController{
             condicion.setIdCategoriaProdDesc(-1);
         }else{
             condicion.setIdProductoDescuento(-1);
+        }
+
+        if(condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_P)){
+            condicion.setIdProductoGenerador(condicion.getIdProductoDescuento());
+            condicion.setIdCategoriaProdGen(condicion.getIdCategoriaProdDesc());
+            condicion.setCantProdGen(1);
         }
 
         condicion.setIdEmpleadoAuditado(this.idEmpleadoAuditado);
@@ -244,6 +303,8 @@ public class DatosDescuentoController implements FxmlController{
     private void llenarFormulario(Condicion condicion){
 
         System.out.println("Se va a llenar el formulario...");
+        this.reestructurarFormulario(condicion.getTipoCondicion());
+
         this.cb_tipoDescuento.setValue(condicion.getTipoCondicion());
         this.txb_productoGenerador.setText(condicion.getNombreProductoGenerador());
         this.idproductoGenerador = condicion.getIdProductoGenerador();
@@ -258,22 +319,66 @@ public class DatosDescuentoController implements FxmlController{
         this.iddescuento = condicion.getIdCondicion();
     }
 
-    public void radioButtonProdGenAccion(ActionEvent event){
-            this.rb_prodGen.setSelected(true);
-            this.rb_catGen.setSelected(false);
-    }
-    public void radioButtonCatGenAccion(ActionEvent event){
-        this.rb_prodGen.setSelected(false);
-        this.rb_catGen.setSelected(true);
+    public void ocultarDatosGenerador(){
+        this.titledPaneGen.setVisible(false);
+        this.rb_prodGen.setVisible(false);
+        this.rb_catGen.setVisible(false);
+        this.txb_productoGenerador.setVisible(false);
+        this.cb_categoriaGenerador.setVisible(false);
+        this.txb_cantidadGenerador.setVisible(false);
+        this.label_ProductoGen.setVisible(false);
+        this.labelCantidadGen.setVisible(false);
+        this.labelCategoriaGen.setVisible(false);
+        this.btn_buscarGen.setVisible(false);
     }
 
+    private void reestructurarFormulario(String valorCondicion){
+        if(Condicion.DESC_P.equalsIgnoreCase(valorCondicion)){
+            this.ocultarDatosGenerador();
+        }
+    }
+
+    public void cambiarTipoDescuento(ActionEvent event){
+        String valorComboCondicion = this.cb_tipoDescuento.getValue().toString();
+       this.reestructurarFormulario(valorComboCondicion);
+    }
+    // true activa los datos de producto generador, false los datos de la categoria
+    public void activarDatosProdGen(Boolean accion){
+        this.rb_prodGen.setSelected(accion);
+        this.label_ProductoGen.setDisable(!accion);
+        this.txb_productoGenerador.setDisable(!accion);
+        this.btn_buscarGen.setDisable(!accion);
+
+        this.rb_catGen.setSelected(!accion);
+        this.labelCategoriaGen.setDisable(accion);
+        this.cb_categoriaGenerador.setDisable(accion);
+    }
+
+    public void radioButtonProdGenAccion(ActionEvent event){
+           this.activarDatosProdGen(true);
+    }
+    public void radioButtonCatGenAccion(ActionEvent event){
+        this.activarDatosProdGen(false);
+    }
+
+    // true activa los datos de producto descuento, false los datos de la categoria
+    public void activarDatosProdDesc(Boolean accion){
+        this.rb_prodDesc.setSelected(accion);
+        this.labelProductoDesc.setDisable(!accion);
+        this.txb_productoDescuento.setDisable(!accion);
+        this.btn_buscarDesc.setDisable(!accion);
+
+        this.rb_catDesc.setSelected(!accion);
+        this.labelCategoriaDesc.setDisable(accion);
+        this.cb_categoriaDescuento.setDisable(accion);
+    }
+
+
     public void radioButtonProdDescAccion(ActionEvent event){
-        this.rb_prodDesc.setSelected(true);
-        this.rb_catDesc.setSelected(false);
+        this.activarDatosProdDesc(true);
     }
     public void radioButtonCatDescAccion(ActionEvent event){
-        this.rb_prodDesc.setSelected(false);
-        this.rb_catDesc.setSelected(true);
+        this.activarDatosProdDesc(false);
     }
 
     @Override
@@ -294,11 +399,8 @@ public class DatosDescuentoController implements FxmlController{
 
         this.txb_productoDescuento.setDisable(true);
 
-
-        this.rb_prodDesc.setSelected(true);
-        this.rb_catDesc.setSelected(false);
-        this.rb_prodGen.setSelected(true);
-        this.rb_catGen.setSelected(false);
+        this.activarDatosProdGen(true);
+        this.activarDatosProdDesc(true);
 
 
         this.esCreacion = this.mantenimientoDescuentoController.esCreacion();
