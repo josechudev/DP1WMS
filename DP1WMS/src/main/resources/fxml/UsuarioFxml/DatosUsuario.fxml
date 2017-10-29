@@ -1,19 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="273.0" prefWidth="382.0" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.UsuarioDatosController">
+<AnchorPane prefHeight="395.0" prefWidth="394.0" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.UsuarioDatosController">
     <children>
-        <TextField fx:id="e_id_datos" editable="false" layoutX="42.0" layoutY="57.0" prefWidth="200.0" />
-        <TextField fx:id="e_nombre_datos" layoutX="42.0" layoutY="109.0" prefWidth="200.0" />
-        <TextField fx:id="e_password_datos" layoutX="42.0" layoutY="160.0" prefWidth="200.0" />
-        <Label layoutX="42.0" layoutY="40.0" text="Id:" />
-        <Label layoutX="45.0" layoutY="92.0" text="Nombre:" />
-        <Label layoutX="42.0" layoutY="143.0" text="Password:" />
-        <Button fx:id="e_buton_datos" layoutX="92.0" layoutY="201.0" mnemonicParsing="false" onAction="#btnClickAceptar_datos" text="Aceptar" />
-        <Button layoutX="242.0" layoutY="201.0" mnemonicParsing="false" onAction="#btnClickCancelar_datos" text="Cancelar" />
+        <TextField fx:id="e_id_datos" editable="false" layoutX="0.0" layoutY="0.0" prefHeight="0.0" prefWidth="0.0" visible="false" />
+        <TextField fx:id="e_nombre_datos" layoutX="22.0" layoutY="56.0" prefHeight="25.0" prefWidth="133.0" />
+        <TextField fx:id="e_password_datos" layoutX="22.0" layoutY="118.0" prefHeight="25.0" prefWidth="133.0" />
+        <CheckBox fx:id="e_modPassword" layoutX="22.0" layoutY="150.0" mnemonicParsing="false" text="Modificar contraseña" onAction="#checkBoxAction" />
+        <Label layoutX="0.0" layoutY="0.0" text="Id:" visible="false" />
+        <Label layoutX="25.0" layoutY="39.0" text="User:" />
+        <Label layoutX="21.0" layoutY="104.0" text="Password:" />
+
+        <TextField fx:id="e_id_empleado" editable="false" layoutX="0.0" layoutY="0.0" prefHeight="0.0" prefWidth="0.0" visible="false" />
+        <TextField fx:id="e_numDoc_empleado" layoutX="205.0" layoutY="56.0" prefHeight="25.0" prefWidth="160.0" />
+        <TextField fx:id="e_nombre_empleado" layoutX="205.0" layoutY="118.0" prefHeight="25.0" prefWidth="160.0" />
+        <TextField fx:id="e_apellido_empleado" layoutX="205.0" layoutY="180.0" prefHeight="25.0" prefWidth="160.0" />
+        <TextField fx:id="e_email_empleado" layoutX="205.0" layoutY="242.0" prefHeight="25.0" prefWidth="160.0" />
+        <Label layoutX="0.0" layoutY="0.0" text="IdEmpleado:" visible="false" />
+        <Label layoutX="205.0" layoutY="39.0" text="NumDoc:" />
+        <Label layoutX="205.0" layoutY="103.0" text="Nombre:" />
+        <Label layoutX="205.0" layoutY="158.0" text="Apellido:" />
+        <Label layoutX="205.0" layoutY="222.0" text="Email:" />
+
+        <TextField fx:id="e_id_tipoEmpleado" editable="false" layoutX="0.0" layoutY="0.0" prefHeight="0.0" prefWidth="0.0" visible="false" />
+        <TextField fx:id="e_descripcion_tipoEmpleado" editable="false" layoutX="0.0" layoutY="0.0" prefHeight="0.0" prefWidth="0.0" visible="false" />
+        <Label layoutX="0.0" layoutY="0.0" text="Id:" visible="false" />
+        <Label layoutX="0.0" layoutY="0.0" text="Descripcion:" visible="false" />
+        <Button fx:id="e_buton_datos" layoutX="74.0" layoutY="346.0" mnemonicParsing="false" onAction="#btnClickAceptar_datos" text="Aceptar" />
+        <Button layoutX="249.0" layoutY="346.0" mnemonicParsing="false" onAction="#btnClickCancelar_datos" text="Cancelar" />
+        <Button layoutX="102.0" layoutY="169.0" mnemonicParsing="false" onAction="#btnClickSeleccionarTipoEmpleado" text="Escoger Tipo de empleado" visible="false" />
+        <ComboBox fx:id="e_tipoEmpleado" layoutX="205.0" layoutY="304.0" onAction="#ComboBoxSelectTipoUsuario" prefHeight="25.0" prefWidth="160.0" />
+        <Label layoutX="205.0" layoutY="287.0" text="Tipo Empleado:" />
     </children>
 </AnchorPane>

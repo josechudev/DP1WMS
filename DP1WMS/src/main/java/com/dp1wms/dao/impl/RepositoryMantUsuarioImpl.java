@@ -16,33 +16,44 @@ public class RepositoryMantUsuarioImpl implements RepositoryMantUsuario {
     private JdbcTemplate jdbcTemplate;
 
     public List<Usuario> selectAllUsuario(){
-        String sql = "SELECT * FROM usuario ORDER BY idUsuario";
+        String sql = "SELECT idUsuario, nombreUsuario, password FROM usuario ORDER BY idUsuario";
         return jdbcTemplate.query(sql,
                 new UsuarioRowMapper());
     }
 
-    public int newIdUsuario(){
-        String sql= "SELECT MAX(idUsuario) FROM usuario";
-
-        return jdbcTemplate.queryForObject(sql, new Object[]{}, Integer.class) + 1;
-    }
-
     public void createUsuario(Usuario auxUsuario){
-        String sql = "INSERT INTO usuario (idUsuario, nombreUsuario, password) VALUES(?,?,?)";
+
+        String sql = "INSERT INTO usuario (idUsuario, nombreUsuario, password)" +
+                                "VALUES(default, ?, crypt(?, gen_salt('md5')) )";
         jdbcTemplate.update(sql,
-                new Object[] { auxUsuario.getV_id(), auxUsuario.getV_nombre(), auxUsuario.getV_password() });
+                new Object[] { auxUsuario.getV_nombre(), auxUsuario.getV_password() });
     }
 
-    public void updateUsuario(Usuario auxUsuario){
-        String sql = "UPDATE usuario SET nombreUsuario  = ?, password  = ? WHERE idUsuario = ?";
-        jdbcTemplate.update(sql,
-                new Object[] { auxUsuario.getV_nombre(), auxUsuario.getV_password(), auxUsuario.getV_id()});
+    public void updateUsuario(Usuario auxUsuario, boolean auxModificarPassword){
+        if(auxModificarPassword){
+            String sql = "UPDATE usuario SET nombreUsuario  = ?, password  = crypt(?, gen_salt('md5')) WHERE idUsuario = ?";
+            jdbcTemplate.update(sql,
+                    new Object[] { auxUsuario.getV_nombre(), auxUsuario.getV_password(), auxUsuario.getV_id()});
+        }
+        else{
+            String sql = "UPDATE usuario SET nombreUsuario  = ? WHERE idUsuario = ?";
+            jdbcTemplate.update(sql,
+                    new Object[] { auxUsuario.getV_nombre(), auxUsuario.getV_id()});
+        }
     }
 
     public void deleteUsuario(Usuario auxUsuario){
-        String sql = "DELETE FROM usuario WHERE idUsuario= ?";
-        jdbcTemplate.update(sql,
-                new Object[] { auxUsuario.getV_id() });
+        //String sql = "DELETE FROM usuario WHERE idUsuario= ?";
+        //String sql = "UPDATE usuario SET activo = false WHERE idUsuario= ?";
+        //jdbcTemplate.update(sql,
+        //        new Object[] { auxUsuario.getV_id() });
+    }
+
+    public Usuario findUsuariobyId(int auxIdUser){
+        String sql= "SELECT idUsuario, nombreUsuario, password FROM usuario WHERE idUsuario = '"+ auxIdUser +"'";
+        List<Usuario> auxUsuario = jdbcTemplate.query(sql, new UsuarioRowMapper() );
+
+        return auxUsuario.get(0);
     }
 
 }

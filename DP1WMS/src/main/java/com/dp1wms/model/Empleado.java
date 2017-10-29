@@ -8,6 +8,8 @@ public class Empleado implements Serializable {
 
     private long idusuario;
 
+    private String numDoc;
+
     private String nombre;
 
     private String apellidos;
@@ -39,7 +41,10 @@ public class Empleado implements Serializable {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        if(nombre != null)
+            this.nombre = nombre;
+        else
+            this.nombre = "";
     }
 
     public String getApellidos() {
@@ -47,7 +52,10 @@ public class Empleado implements Serializable {
     }
 
     public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+        if(apellidos != null)
+            this.apellidos = apellidos;
+        else
+            this.apellidos = "";
     }
 
     public String getEmail() {
@@ -55,7 +63,10 @@ public class Empleado implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if(email != null)
+            this.email = email;
+        else
+            this.email = "";
     }
 
     public long getIdtipoempleado() {
@@ -75,5 +86,16 @@ public class Empleado implements Serializable {
 
     public void setTipoEmpleado(TipoEmpleado tipoEmpleado) {
         this.tipoEmpleado = tipoEmpleado;
+    }
+
+    public String getNumDoc() {
+        return numDoc;
+    }
+
+    public void setNumDoc(String numDoc) {
+        if(numDoc != null)
+            this.numDoc = numDoc;
+        else
+            this.numDoc = "";
     }
 }
