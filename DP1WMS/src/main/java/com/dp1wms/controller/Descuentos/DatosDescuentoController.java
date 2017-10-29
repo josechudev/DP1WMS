@@ -90,6 +90,8 @@ public class DatosDescuentoController implements FxmlController{
 
     private int iddescuento;
 
+    Long idEmpleadoAuditado = null;
+
     @Autowired
     @Lazy
     public DatosDescuentoController(StageManager stageManager,MantenimientoDescuentoController mantenimientoDescuentoController) {
@@ -133,7 +135,7 @@ public class DatosDescuentoController implements FxmlController{
     public void guardarFormulario(ActionEvent event){
 
         Condicion condicion = new Condicion();
-        condicion.setTipoDescuento(this.cb_tipoDescuento.getValue().toString());
+        condicion.setTipoCondicion(this.cb_tipoDescuento.getValue().toString());
         condicion.setIdProductoGenerador(this.idproductoGenerador);
         condicion.setIdCategoriaProdGen(this.cb_categoriaGenerador.getValue().getIdCategoria());
         int cantidadProdGen;
@@ -195,11 +197,13 @@ public class DatosDescuentoController implements FxmlController{
         }else{
             condicion.setIdProductoDescuento(-1);
         }
+
+        condicion.setIdEmpleadoAuditado(this.idEmpleadoAuditado);
         if(this.esCreacion){
             repositoryCondicion.registrarDescuento(condicion);
         }else{
             //update
-            condicion.setIdDescuento(this.iddescuento);
+            condicion.setIdCondicion(this.iddescuento);
             repositoryCondicion.actualizarDescuento(condicion);
         }
 
@@ -240,7 +244,7 @@ public class DatosDescuentoController implements FxmlController{
     private void llenarFormulario(Condicion condicion){
 
         System.out.println("Se va a llenar el formulario...");
-        this.cb_tipoDescuento.setValue(condicion.getTipoDescuento());
+        this.cb_tipoDescuento.setValue(condicion.getTipoCondicion());
         this.txb_productoGenerador.setText(condicion.getNombreProductoGenerador());
         this.idproductoGenerador = condicion.getIdProductoGenerador();
         this.txb_cantidadGenerador.setText(""+ condicion.getCantProdGen());
@@ -251,7 +255,7 @@ public class DatosDescuentoController implements FxmlController{
         //this.dp_fechaFin
         this.txb_descripcion.setText(condicion.getDescripcion());
         this.txb_valorDescuento.setText(""+ condicion.getValorDescuento());
-        this.iddescuento = condicion.getIdDescuento();
+        this.iddescuento = condicion.getIdCondicion();
     }
 
     public void radioButtonProdGenAccion(ActionEvent event){
@@ -301,6 +305,7 @@ public class DatosDescuentoController implements FxmlController{
 
         if(this.esCreacion){
             l_nombreFormulario.setText("Crear Condicion");
+            this.idEmpleadoAuditado = this.mantenimientoDescuentoController.getIdEmpleadoAuditado();
             for(CategoriaProducto categoria : listaCategorias){
                 this.cb_categoriaDescuento.getItems().add(categoria);
                 this.cb_categoriaGenerador.getItems().add(categoria);
@@ -311,7 +316,8 @@ public class DatosDescuentoController implements FxmlController{
 
             System.out.println("controller == null ? " +this.mantenimientoDescuentoController == null );
             Condicion condicion = this.mantenimientoDescuentoController.getDescuento();
-            System.out.println("id condicion -> " + condicion.getIdDescuento());
+            this.idEmpleadoAuditado = condicion.getIdEmpleadoAuditado();
+            System.out.println("id condicion -> " + condicion.getIdCondicion());
             for(CategoriaProducto categoria : listaCategorias){
                 this.cb_categoriaDescuento.getItems().add(categoria);
                 this.cb_categoriaGenerador.getItems().add(categoria);
