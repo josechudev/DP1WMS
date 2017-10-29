@@ -241,6 +241,19 @@ public enum MainView implements FxmlView{
         public boolean isResizable() {
             return false;
         }
+    },BUSQUEDA_PRODUCTO_LOTE{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("busquedaproducto.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/BusquedaProductoLote.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
     };
 
     public String getStringFromResourceBundle(String key) {
