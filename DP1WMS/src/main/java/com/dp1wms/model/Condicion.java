@@ -8,9 +8,9 @@ public class Condicion {
     public static final String DESC_B = "Bonificacion Por Especie";
     public static final String DESC_P = "Porcentaje";
 
-    private int idDescuento;
+    private int idCondicion;
 
-    private String TipoDescuento;
+    private String tipoCondicion;
 
     private int idProductoGenerador;
 
@@ -44,6 +44,8 @@ public class Condicion {
 
     private int prioridad;
 
+    private Long idEmpleadoAuditado;
+
     public int getPrioridad(){
         return this.prioridad;
     }
@@ -53,20 +55,20 @@ public class Condicion {
     }
 
 
-    public int getIdDescuento() {
-        return idDescuento;
+    public int getIdCondicion() {
+        return idCondicion;
     }
 
-    public void setIdDescuento(int idDescuento) {
-        this.idDescuento = idDescuento;
+    public void setIdCondicion(int idCondicion) {
+        this.idCondicion = idCondicion;
     }
 
-    public String getTipoDescuento() {
-        return TipoDescuento;
+    public String getTipoCondicion() {
+        return tipoCondicion;
     }
 
-    public void setTipoDescuento(String tipoDescuento) {
-        TipoDescuento = tipoDescuento;
+    public void setTipoCondicion(String tipoCondicion) {
+        this.tipoCondicion = tipoCondicion;
     }
 
     public int getIdProductoGenerador() {
@@ -187,5 +189,13 @@ public class Condicion {
 
     public void setCategoriaDescuento(String categoriaDescuento) {
         this.categoriaDescuento = categoriaDescuento;
+    }
+
+    public Long getIdEmpleadoAuditado() {
+        return idEmpleadoAuditado;
+    }
+
+    public void setIdEmpleadoAuditado(Long idEmpleadoAuditado) {
+        this.idEmpleadoAuditado = idEmpleadoAuditado;
     }
 }

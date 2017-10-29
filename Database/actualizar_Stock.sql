@@ -29,6 +29,8 @@ BEGIN
 END;
 
 $BODY$ LANGUAGE plpgsql;
+select actualizarStock();
+
 
 CREATE TRIGGER actualizarStockProductoLote
   AFTER INSERT
