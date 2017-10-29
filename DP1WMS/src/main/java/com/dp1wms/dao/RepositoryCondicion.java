@@ -9,7 +9,7 @@ public interface RepositoryCondicion {
 
     List<Condicion> obtenerDescuentos();
     int registrarDescuento(Condicion condicion);
-    int eliminarDescuento(int id);
+    int eliminarDescuento(int id,Long idEmpleadoAuditado);
     int actualizarDescuento(Condicion condicion);
     List<Condicion> obtenerCondicionesActivos();
 }
