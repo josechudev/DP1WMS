@@ -6,8 +6,6 @@ public class Proforma {
     private int idProforma;
     private long idEmpleado;
     private long idCliente;
-    private float totalSinFlete;
-    private float costoFlete;
     private float total;
     private String observaciones;
 
@@ -69,23 +67,6 @@ public class Proforma {
     public void setDetallesProforma(ArrayList<DetalleProforma> detallesProforma) {
         this.detallesProforma = detallesProforma;
     }
-
-    public float getTotalSinFlete() {
-        return totalSinFlete;
-    }
-
-    public void setTotalSinFlete(float totalSinFlote) {
-        this.totalSinFlete = totalSinFlote;
-    }
-
-    public float getCostoFlete() {
-        return costoFlete;
-    }
-
-    public void setCostoFlete(float costoFlote) {
-        this.costoFlete = costoFlote;
-    }
-
     public float getTotal() {
         return total;
     }
@@ -100,5 +81,15 @@ public class Proforma {
 
     public void setIdProforma(int idProforma) {
         this.idProforma = idProforma;
+    }
+
+    public void calcularTotal(){
+        float total = 0;
+        for(DetalleProforma dp: this.detallesProforma){
+            float desc = dp.getDescuento();
+            dp.setSubtotal(dp.getCantidad()*dp.getProducto().getPrecio() - desc);
+            total += dp.getSubtotal();
+        }
+        this.total = total;
     }
 }

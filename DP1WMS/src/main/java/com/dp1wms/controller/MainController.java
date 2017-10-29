@@ -2,6 +2,7 @@ package com.dp1wms.controller;
 
 import com.dp1wms.model.Empleado;
 import com.dp1wms.model.Usuario;
+import com.dp1wms.view.ClientesView;
 import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import com.dp1wms.view.VentasView;
@@ -28,6 +29,8 @@ public class MainController implements FxmlController {
 
     private final StageManager stageManager;
 
+    private final UsuarioCtrl usuarioCtrl;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -35,15 +38,13 @@ public class MainController implements FxmlController {
     private RepositoryMantEmpleado repositoryMantEmpleado;
 
     @Autowired @Lazy
-    public MainController(StageManager stageManager){
+    public MainController(StageManager stageManager, UsuarioCtrl usuarioCtrl){
         this.stageManager = stageManager;
+        this.usuarioCtrl = usuarioCtrl;
     }
 
     @Override
     public void initialize(){
-        /**
-         * Cargar información del empleado
-         */
         long idusuario = this.usuario.getIdusuario();
         this.empleado = repositoryMantEmpleado.obtenerEmpleadoPorIdUsuario(idusuario);
         if(this.empleado == null){
@@ -65,7 +66,13 @@ public class MainController implements FxmlController {
     @FXML
     private void cargarMantenimientoUsuario(ActionEvent event) {
         System.out.println("cargarMantenimientoUsuario");
+        this.usuarioCtrl.setUsuario(usuario);
         this.stageManager.mostrarModal(MainView.MANTENIMIENTO_USUARIO);
+    }
+
+    @FXML
+    private void cargarMantenimientoCliente(){
+        this.stageManager.mostrarModal(ClientesView.MAIN);
     }
 
     @FXML
@@ -85,6 +92,12 @@ public class MainController implements FxmlController {
     private void cargarMantenimientoProducto(ActionEvent event) {
         System.out.println("cargarMantenimientoProducto");
         this.stageManager.mostrarModal(MainView.MANTENIMIENTO_PRODUCTO);
+    }
+
+    @FXML
+    private void cargarMantenimientoAlmacenes(ActionEvent event) {
+        System.out.println("cargarMantenimientoAlmacenes");
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_ALMACEN);
     }
 
     @FXML

@@ -34,7 +34,6 @@
                 <TableColumn fx:id="nombreTC" prefWidth="75.0" text="Nombre" />
                   <TableColumn fx:id="precioTC" prefWidth="75.0" style="-fx-alignment: CENTER-RIGHT;" text="Precio" />
                   <TableColumn fx:id="categoriaTC" prefWidth="75.0" text="Categoria" />
-                  <TableColumn fx:id="stockTC" prefWidth="75.0" text="Stock" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

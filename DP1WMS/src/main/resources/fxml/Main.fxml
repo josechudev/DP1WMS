@@ -28,17 +28,19 @@
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoDescuentos" text="Descuentos" />
                     </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Parámetros de sistema">
+                  <Menu mnemonicParsing="false" text="Administracion">
                      <items>
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoUsuario" text="Usuarios" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoCliente" text="Clientes" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoCategoria" text="Categorias" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoAlmacenes" text="Almacenes" />
                         <Menu mnemonicParsing="false" text="Mantenimiento Movimiento">
                           <items>
                               <MenuItem mnemonicParsing="false" onAction="#cargarIngresoProducto" text="Ingreso/Salida Producto" />
                             <MenuItem mnemonicParsing="false" onAction="#cargarCrearLote" text="Crear Lote" />
                           </items>
                         </Menu>
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoUsuario" text="Mantenimiento Usuario" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoRol" text="Mantenimiento Roles" />
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoCategoria" text="Mantenimiento de Categorias" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Productos">
