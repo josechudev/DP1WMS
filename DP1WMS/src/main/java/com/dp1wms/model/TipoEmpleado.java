@@ -1,10 +1,21 @@
 package com.dp1wms.model;
 
+import java.util.List;
+
 public class TipoEmpleado {
 
     private long idtipoempleado;
 
     private String descripcion;
+    private List<String> permisos;
+    private Boolean activado;
+
+    public TipoEmpleado(){}
+
+    public TipoEmpleado(long idtipoempleado, String descripcion){
+        this.idtipoempleado = idtipoempleado;
+        this.descripcion = descripcion;
+    }
 
     public long getIdtipoempleado() {
         return idtipoempleado;
@@ -20,5 +31,13 @@ public class TipoEmpleado {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public List<String> getPermisos() {
+        return permisos;
+    }
+
+    public void setPermisos(List<String> permisos) {
+        this.permisos = permisos;
     }
 }

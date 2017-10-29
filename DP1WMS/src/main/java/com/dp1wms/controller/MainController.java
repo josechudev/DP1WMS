@@ -1,10 +1,11 @@
 package com.dp1wms.controller;
 
-import com.dp1wms.dao.impl.RespositoryMantEmpleadoImpl;
 import com.dp1wms.model.Empleado;
 import com.dp1wms.model.Usuario;
-import com.dp1wms.view.FxmlView;
+import com.dp1wms.view.ClientesView;
+import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
+import com.dp1wms.view.VentasView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class MainController implements FxmlController {
 
     private final StageManager stageManager;
 
+    private final UsuarioCtrl usuarioCtrl;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -35,15 +38,13 @@ public class MainController implements FxmlController {
     private RepositoryMantEmpleado repositoryMantEmpleado;
 
     @Autowired @Lazy
-    public MainController(StageManager stageManager){
+    public MainController(StageManager stageManager, UsuarioCtrl usuarioCtrl){
         this.stageManager = stageManager;
+        this.usuarioCtrl = usuarioCtrl;
     }
 
     @Override
     public void initialize(){
-        /**
-         * Cargar información del empleado
-         */
         long idusuario = this.usuario.getIdusuario();
         this.empleado = repositoryMantEmpleado.obtenerEmpleadoPorIdUsuario(idusuario);
         if(this.empleado == null){
@@ -55,26 +56,87 @@ public class MainController implements FxmlController {
             this.tipoEmpleadoLabel.setText(this.empleado.getTipoEmpleado().getDescripcion());
         }
     }
-
+/*
     @FXML
     private void cargarMantenimientoMovimientos(ActionEvent event) {
         System.out.println("cargarMantenimientoMovimientos");
-        this.stageManager.mostrarModal(FxmlView.MANTENIMIENTO_MOVIMIENTO);
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_MOVIMIENTO);
     }
-
+*/
     @FXML
     private void cargarMantenimientoUsuario(ActionEvent event) {
         System.out.println("cargarMantenimientoUsuario");
-        this.stageManager.mostrarModal(FxmlView.MANTENIMIENTO_USUARIO);
+        this.usuarioCtrl.setUsuario(usuario);
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_USUARIO);
     }
+
+    @FXML
+    private void cargarMantenimientoCliente(){
+        this.stageManager.mostrarModal(ClientesView.MAIN);
+    }
+
+    @FXML
+    private void cargarMantenimientoRol(ActionEvent event) {
+        System.out.println("cargarMantenimientoTipoEmpleado");
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_TIPOEMPLEADO);
+    }
+
+
+    @FXML
+    private void cargarMantenimientoCategoria(ActionEvent event) {
+        System.out.println("cargarMantenimientoCategoria");
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_CATEGORIA);
+    }
+
+    @FXML
+    private void cargarMantenimientoProducto(ActionEvent event) {
+        System.out.println("cargarMantenimientoProducto");
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_PRODUCTO);
+    }
+
+    @FXML
+    private void cargarMantenimientoAlmacenes(ActionEvent event) {
+        System.out.println("cargarMantenimientoAlmacenes");
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_ALMACEN);
+    }
+
+    @FXML
+    private void cargarCrearLote(ActionEvent event) {
+        System.out.println("cargarCrearLote");
+        this.stageManager.mostrarModal(MainView.CREAR_LOTE);
+    }
+
+    @FXML
+    private void cargarIngresoProducto(ActionEvent event) {
+        System.out.println("cargarIngreso/SalidaProducto");
+        this.stageManager.mostrarModal(MainView.INGRESO_PRODUCTO);
+    }
+
 
     @FXML
     private void cerrarSesion(){
         this.usuario = null;
-        this.stageManager.cambiarScene(FxmlView.LOGIN);
+        this.stageManager.cambiarScene(MainView.LOGIN);
     }
+
+    @FXML
+    private void cargarMantenimientoDescuentos(){
+        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_DESCUENTO);
+    }
+
+
+    @FXML
+    private void cargarGenerarProforma(){
+        this.stageManager.mostrarModal(VentasView.GEN_PROFORMA);
+    }
+
+
 
     public void setUsuario(Usuario usuario){
         this.usuario = usuario;
+    }
+
+    public Empleado getEmpleado(){
+        return this.empleado;
     }
 }

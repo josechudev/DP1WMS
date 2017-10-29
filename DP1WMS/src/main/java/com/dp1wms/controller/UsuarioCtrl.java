@@ -1,7 +1,12 @@
 package com.dp1wms.controller;
 
+import com.dp1wms.dao.RepositoryMantEmpleado;
+import com.dp1wms.dao.RepositoryMantTipoEmpleado;
 import com.dp1wms.dao.RepositoryMantUsuario;
+import com.dp1wms.model.Empleado;
+import com.dp1wms.model.TipoEmpleado;
 import com.dp1wms.model.UsuarioModel.Usuario;
+import com.dp1wms.model.UsuarioModel.UsuarioXEmpleado;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,15 +32,22 @@ public class UsuarioCtrl implements FxmlController{
 
     private final StageManager stageManager;
 
-    @FXML private TableView<Usuario> e_table;
-    @FXML private TableColumn<Usuario, Integer> e_id;
-    @FXML private TableColumn<Usuario, String> e_nombre;
-    @FXML private TableColumn<Usuario, String> e_password;
+    private com.dp1wms.model.Usuario usuario;
 
-    //private ListaUsuario v_listaUsuario;
+    @FXML private TableView<UsuarioXEmpleado> e_table;
+    @FXML private TableColumn<UsuarioXEmpleado, Integer> e_id;
+    @FXML private TableColumn<UsuarioXEmpleado, String> e_user;
+    @FXML private TableColumn<UsuarioXEmpleado, String> e_numDoc;
+    @FXML private TableColumn<UsuarioXEmpleado, String> e_nombre;
+    @FXML private TableColumn<UsuarioXEmpleado, String> e_apellido;
+    @FXML private TableColumn<UsuarioXEmpleado, String> e_descripcion;
 
     @Autowired
     private RepositoryMantUsuario repositoryMantUsuario;
+    @Autowired
+    private RepositoryMantEmpleado repositoryMantEmpleado;
+    @Autowired
+    private RepositoryMantTipoEmpleado repositoryMantTipoEmpleado;
 
     @Autowired @Lazy
     public  UsuarioCtrl(StageManager stageManager){
@@ -45,24 +57,21 @@ public class UsuarioCtrl implements FxmlController{
     //Los botones del mantenimiento de usuarios
     public void btnClickCrearUsuario(ActionEvent event){
         System.out.println("Agrear Usuario");
-        //this.stageManager.mostarModal(FxmlView.DATOS_USUARIO);
 
         Parent root = null;
         FXMLLoader loader;
-        //
         Usuario auxUsuario = new Usuario();
-        //auxUsuario.setV_id(v_listaUsuario._getNewId());
-        auxUsuario.setV_id(repositoryMantUsuario.newIdUsuario());
-        auxUsuario.setV_nombre(null);
-        auxUsuario.setV_password(null);
+        Empleado auxEmpleado = new Empleado();
+        TipoEmpleado auxTipoEmpleado = new TipoEmpleado();
         //
         try {
             loader =new FXMLLoader(getClass().getResource("/fxml/UsuarioFxml/DatosUsuario.fxml"));
             root = (Parent) loader.load();
             UsuarioDatosController controller = loader.getController();
             //0 es crear
-            controller._setData(auxUsuario,0);
             controller.setV_parentController(this);
+            controller._setData(auxUsuario,auxEmpleado,auxTipoEmpleado,0);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,7 +81,6 @@ public class UsuarioCtrl implements FxmlController{
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.show();
-
     }
 
     public void btnClickModificarUsuario(ActionEvent event){
@@ -81,8 +89,11 @@ public class UsuarioCtrl implements FxmlController{
         if(e_table.getSelectionModel().getSelectedItem() == null)
             return;
 
-        //this.stageManager.mostarModal(FxmlView.DATOS_USUARIO);
-        Usuario auxUsuario = e_table.getSelectionModel().getSelectedItem();
+        UsuarioXEmpleado auxUsuarioXEmpleado = e_table.getSelectionModel().getSelectedItem();
+        Usuario auxUsuario = repositoryMantUsuario.findUsuariobyId(auxUsuarioXEmpleado.getV_id_user());
+        Empleado auxEmpleado = repositoryMantEmpleado.obtenerEmpleadoPorIdUsuario( auxUsuario.getV_id() );
+        TipoEmpleado auxTipoEmpleado = repositoryMantTipoEmpleado.obtenerTipoEmpleadoPorIdTipo(auxEmpleado.getIdtipoempleado());
+
         Parent root = null;
         FXMLLoader loader;
         try {
@@ -90,8 +101,8 @@ public class UsuarioCtrl implements FxmlController{
             root = (Parent) loader.load();
             UsuarioDatosController controller = loader.getController();
             //1 es modificar
-            controller._setData(auxUsuario, 1);
             controller.setV_parentController(this);
+            controller._setData(auxUsuario, auxEmpleado, auxTipoEmpleado,1);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -109,31 +120,35 @@ public class UsuarioCtrl implements FxmlController{
         if(e_table.getSelectionModel().getSelectedItem() == null)
             return;
 
-        Usuario auxUsuario = e_table.getSelectionModel().getSelectedItem();
+        UsuarioXEmpleado auxUsuarioXEmpleado = e_table.getSelectionModel().getSelectedItem();
+        Usuario auxUsuario = repositoryMantUsuario.findUsuariobyId(auxUsuarioXEmpleado.getV_id_user());
+        repositoryMantEmpleado.deleteEmpleado(auxUsuario, repositoryMantEmpleado.obtenerEmpleadoPorIdUsuario(auxUsuario.getV_id()), this.usuario.getIdusuario() );
         repositoryMantUsuario.deleteUsuario(auxUsuario);
-        //v_listaUsuario._eliminarUsuario(auxUsuario.getV_id());
 
         this._llenarGrilla();
     }
 
     @Override
     public void initialize() {
-        e_id.setCellValueFactory(new PropertyValueFactory<Usuario, Integer>("v_id"));
-        e_nombre.setCellValueFactory(new PropertyValueFactory<Usuario, String>("v_nombre"));
-        e_password.setCellValueFactory(new PropertyValueFactory<Usuario, String>("v_password"));
+        e_id.setCellValueFactory(new PropertyValueFactory<UsuarioXEmpleado, Integer>("v_id_user"));
+        e_user.setCellValueFactory(new PropertyValueFactory<UsuarioXEmpleado, String>("v_user"));
+        e_numDoc.setCellValueFactory(new PropertyValueFactory<UsuarioXEmpleado, String>("v_numDoc"));
+        e_nombre.setCellValueFactory(new PropertyValueFactory<UsuarioXEmpleado, String>("v_nombre"));
+        e_apellido.setCellValueFactory(new PropertyValueFactory<UsuarioXEmpleado, String>("v_apellido"));
+        e_descripcion.setCellValueFactory(new PropertyValueFactory<UsuarioXEmpleado, String>("v_descripcion"));
 
-        //No se usa
-        //v_listaUsuario = new ListaUsuario();
         this._llenarGrilla();
     }
 
     private void _llenarGrilla(){
 
         e_table.getItems().clear();
-
-        List<Usuario> auxListaUsuarios = repositoryMantUsuario.selectAllUsuario();
-        for(int i = 0; i < auxListaUsuarios.size(); i++){
-            e_table.getItems().add(new Usuario( auxListaUsuarios.get(i).getV_id(), auxListaUsuarios.get(i).getV_nombre(), auxListaUsuarios.get(i).getV_password() ) );
+        List<UsuarioXEmpleado> auxListaUsuarioXEmpleado = repositoryMantEmpleado.obtenerUsuarioXEmpleadoPorIdUsuario();
+        for(int i = 0; i < auxListaUsuarioXEmpleado.size(); i++){
+            e_table.getItems().add(new UsuarioXEmpleado( auxListaUsuarioXEmpleado.get(i).getV_id_user(),
+                    auxListaUsuarioXEmpleado.get(i).getV_user(), auxListaUsuarioXEmpleado.get(i).getV_numDoc(),
+                    auxListaUsuarioXEmpleado.get(i).getV_nombre(), auxListaUsuarioXEmpleado.get(i).getV_apellido(),
+                    auxListaUsuarioXEmpleado.get(i).getV_descripcion() ));
         }
     }
 
@@ -141,8 +156,39 @@ public class UsuarioCtrl implements FxmlController{
         repositoryMantUsuario.createUsuario(auxUsuario);
     }
 
-    public void modificarUsuarioDB(Usuario auxUsuario){
-        repositoryMantUsuario.updateUsuario(auxUsuario);
+    public void modificarUsuarioDB(Usuario auxUsuario, boolean auxModificarPassword){
+        repositoryMantUsuario.updateUsuario(auxUsuario, auxModificarPassword);
+    }
+
+    public void crearEmpleadoDB(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpelado){
+        repositoryMantEmpleado.createEmpleado(auxUsuario, auxEmpleado, auxTipoEmpelado, this.usuario.getIdusuario());
+    }
+    public void modificarEmpleadoDB(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpelado){
+        repositoryMantEmpleado.updateEmpleado(auxUsuario, auxEmpleado, auxTipoEmpelado, this.usuario.getIdusuario());
+    }
+    public void eliminarEmpleadoDB(Usuario auxUsuario, Empleado auxEmpleado){
+        repositoryMantEmpleado.deleteEmpleado(auxUsuario, auxEmpleado, this.usuario.getIdusuario());
+    }
+
+    public void crearTipoEmpleadoDB(TipoEmpleado auxTipoEmpelado){
+        repositoryMantTipoEmpleado.createTipoEmpleado(auxTipoEmpelado);
+    }
+    public void modificarTipoEmpleadoDB(TipoEmpleado auxTipoEmpelado){
+        repositoryMantTipoEmpleado.updateTipoEmpleado(auxTipoEmpelado);
+    }
+    public void eliminarTipoEmpleadoDB(TipoEmpleado auxTipoEmpelado){
+        repositoryMantTipoEmpleado.deleteTipoEmpleado(auxTipoEmpelado);
+    }
+    public TipoEmpleado obtenerTipoEmpleadoPorDescripcion(String auxDescripcion){
+        return repositoryMantTipoEmpleado.obtenerTipoEmpleadoPorDescripcion(auxDescripcion);
+    }
+
+    public List<TipoEmpleado> llenarGrillaTipoEmpleado(){
+        return repositoryMantTipoEmpleado.selectAllTipoEmpleado();
+    }
+
+    public void setUsuario(com.dp1wms.model.Usuario usuario){
+        this.usuario = usuario;
     }
 
 }
