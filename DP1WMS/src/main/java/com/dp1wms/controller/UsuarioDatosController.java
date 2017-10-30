@@ -23,7 +23,9 @@ import java.util.List;
 
 @Component
 public class UsuarioDatosController implements FxmlController{
+
     //private final StageManager stageManager;
+
     @FXML private TextField e_id_datos, e_nombre_datos,e_password_datos;
     @FXML private TextField e_id_empleado, e_numDoc_empleado, e_nombre_empleado, e_apellido_empleado, e_email_empleado;
     @FXML private TextField e_id_tipoEmpleado, e_descripcion_tipoEmpleado;
@@ -40,12 +42,12 @@ public class UsuarioDatosController implements FxmlController{
 
     public static UsuarioCtrl v_parentController;
 
-    public void btnClickAceptar_datos(ActionEvent event) {
+    public void btnClickAceptar_datos(ActionEvent event){
         System.out.println("Aceptar");
         Usuario auxUsuario = new Usuario();
-        auxUsuario.setV_id(Integer.parseInt(e_id_datos.getText()));
-        auxUsuario.setV_nombre(e_nombre_datos.getText());
-        auxUsuario.setV_password(e_password_datos.getText());
+        auxUsuario.setV_id( Integer.parseInt(e_id_datos.getText()));
+        auxUsuario.setV_nombre( e_nombre_datos.getText());
+        auxUsuario.setV_password( e_password_datos.getText());
 
         Empleado auxEmpleado = new Empleado();
         auxEmpleado.setIdempleado(Long.parseLong(e_id_empleado.getText()));
@@ -61,29 +63,13 @@ public class UsuarioDatosController implements FxmlController{
 
         System.out.printf("%d - %s\n", auxTipoEmpleado.getIdtipoempleado(), auxTipoEmpleado.getDescripcion());
 
-
-        if(this.v_accion == 0) {
-            //Revisa que el usuario no este en uso
-            if ( !v_parentController.existeUsuarioDB(auxUsuario.getV_nombre()) ){
-                v_parentController.crearUsuarioDB(auxUsuario);
-                v_parentController.crearEmpleadoDB(auxUsuario, auxEmpleado, auxTipoEmpleado);
-            }
-            else{
-                v_parentController.showPopUp("No se permite usuarios repetidos.", event);
-                return;
-            }
+        if(this.v_accion == 0){
+            v_parentController.crearUsuarioDB(auxUsuario);
+            v_parentController.crearEmpleadoDB(auxUsuario, auxEmpleado, auxTipoEmpleado);
         }
         else{
-            //El usuario no esta en uso || El usuario coincide con el Id
-            if((!v_parentController.existeUsuarioDB(auxUsuario.getV_nombre()))
-                    || (v_parentController.coincideUsuarioIdDB(auxUsuario.getV_nombre(),auxUsuario.getV_id()))) {
-                v_parentController.modificarUsuarioDB(auxUsuario, v_ModificarPassword);
-                v_parentController.modificarEmpleadoDB(auxUsuario, auxEmpleado, auxTipoEmpleado);
-            }
-            else{
-                v_parentController.showPopUp("No se permite usuarios repetidos.", event);
-                return;
-            }
+            v_parentController.modificarUsuarioDB(auxUsuario, v_ModificarPassword);
+            v_parentController.modificarEmpleadoDB(auxUsuario, auxEmpleado, auxTipoEmpleado);
         }
         System.out.println("Accion realizada");
 

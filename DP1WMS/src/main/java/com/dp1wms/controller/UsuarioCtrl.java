@@ -59,11 +59,7 @@ public class UsuarioCtrl implements FxmlController{
     //Los botones del mantenimiento de usuarios
     public void btnClickCrearUsuario(ActionEvent event){
         System.out.println("Agrear Usuario");
-        if( (repositoryMantTipoEmpleado.selectAllTipoEmpleado() == null)
-                || (repositoryMantTipoEmpleado.selectAllTipoEmpleado().size() == 0) ){
-            showPopUp("No se ha registrado ningun tipo de empleado", event);
-            return;
-        }
+
         Parent root = null;
         FXMLLoader loader;
         Usuario auxUsuario = new Usuario();
@@ -77,6 +73,7 @@ public class UsuarioCtrl implements FxmlController{
             //0 es crear
             controller.setV_parentController(this);
             controller._setData(auxUsuario,auxEmpleado,auxTipoEmpleado,0);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,17 +87,15 @@ public class UsuarioCtrl implements FxmlController{
 
     public void btnClickModificarUsuario(ActionEvent event){
         System.out.println("Modificar Usuario");
+
         if(e_table.getSelectionModel().getSelectedItem() == null)
             return;
-        if( (repositoryMantTipoEmpleado.selectAllTipoEmpleado() == null)
-                || (repositoryMantTipoEmpleado.selectAllTipoEmpleado().size() == 0) ){
-            showPopUp("No se ha registrado ningun tipo de empleado", event);
-            return;
-        }
+
         UsuarioXEmpleado auxUsuarioXEmpleado = e_table.getSelectionModel().getSelectedItem();
         Usuario auxUsuario = repositoryMantUsuario.findUsuariobyId(auxUsuarioXEmpleado.getV_id_user());
         Empleado auxEmpleado = repositoryMantEmpleado.obtenerEmpleadoPorIdUsuario( auxUsuario.getV_id() );
         TipoEmpleado auxTipoEmpleado = repositoryMantTipoEmpleado.obtenerTipoEmpleadoPorIdTipo(auxEmpleado.getIdtipoempleado());
+
         Parent root = null;
         FXMLLoader loader;
         try {
@@ -123,8 +118,10 @@ public class UsuarioCtrl implements FxmlController{
 
     public void btnClickEliminarUsuario(ActionEvent event){
         System.out.println("Eliminar Usuario");
+
         if(e_table.getSelectionModel().getSelectedItem() == null)
             return;
+
         UsuarioXEmpleado auxUsuarioXEmpleado = e_table.getSelectionModel().getSelectedItem();
         Usuario auxUsuario = repositoryMantUsuario.findUsuariobyId(auxUsuarioXEmpleado.getV_id_user());
         repositoryMantEmpleado.deleteEmpleado(auxUsuario, repositoryMantEmpleado.obtenerEmpleadoPorIdUsuario(auxUsuario.getV_id()), this.usuario.getIdusuario() );
@@ -155,6 +152,7 @@ public class UsuarioCtrl implements FxmlController{
     }
 
     private void _llenarGrilla(){
+
         e_table.getItems().clear();
         List<UsuarioXEmpleado> auxListaUsuarioXEmpleado = repositoryMantEmpleado.obtenerUsuarioXEmpleadoPorIdUsuario();
         try {
@@ -165,9 +163,6 @@ public class UsuarioCtrl implements FxmlController{
                         auxListaUsuarioXEmpleado.get(i).getV_descripcion(),
                         auxListaUsuarioXEmpleado.get(i).getV_activo() ));
             }
-        }
-        catch(Exception e){
-            e.printStackTrace();
         }
     }
 
@@ -206,34 +201,8 @@ public class UsuarioCtrl implements FxmlController{
         return repositoryMantTipoEmpleado.selectAllTipoEmpleado();
     }
 
-    public boolean existeUsuarioDB(String auxUserName){
-        return repositoryMantUsuario.existeUsuario(auxUserName);
-    }
-
-    public boolean coincideUsuarioIdDB(String auxUserName, int auxId){
-        return repositoryMantUsuario.coincideUsuarioId(auxUserName, auxId);
-    }
-
     public void setUsuario(com.dp1wms.model.Usuario usuario){
         this.usuario = usuario;
     }
 
-    public void showPopUp(String auxText, ActionEvent event){
-        Parent root = null;
-        FXMLLoader loader;
-        try {
-            loader =new FXMLLoader(getClass().getResource("/fxml/PopUp.fxml"));
-            root = (Parent) loader.load();
-            PopUpController controller = loader.getController();
-            controller.setLabelPopUp(auxText);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Scene scene = new Scene(root);
-        Window existingWindow = ((Node) event.getSource()).getScene().getWindow();
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(scene);
-        stage.show();
-    }
 }
