@@ -21,6 +21,8 @@ public class UsuarioXEmpleadoResultSetExtractor implements ResultSetExtractor {
         person.setV_apellido(rs.getString(5));
         person.setV_descripcion(rs.getString(6));
 
+        person.setV_activo(rs.getBoolean(7));
+
         return person;
     }
 
