@@ -57,10 +57,9 @@ public class RespositoryMantEmpleadoImpl implements RepositoryMantEmpleado {
     public List<UsuarioXEmpleado> obtenerUsuarioXEmpleadoPorIdUsuario(){
         String sql = "SELECT u.idUsuario, u.nombreUsuario, " +
                 "e.numDoc, e.nombre, e.apellidos, " +
-                "tp.descripcion " +
+                "tp.descripcion, e.activo " +
                 "FROM usuario u INNER JOIN empleado e ON u.idusuario = e.idusuario " +
                 "INNER JOIN tipoempleado tp ON e.idtipoempleado = tp.idtipoempleado " +
-                "WHERE e.activo = true " +
                 "ORDER BY u.idUsuario";
         try{
             return jdbcTemplate.query(sql,
@@ -153,6 +152,18 @@ public class RespositoryMantEmpleadoImpl implements RepositoryMantEmpleado {
         }
     }
 
+    public void activeEmpleado(Usuario auxUsuario, Empleado auxEmpleado, Long auxIdEmpleadoAuditado){
+        String sql = "UPDATE empleado SET activo = true , idEmpleadoAuditado = ? " +
+                "WHERE idempleado= ? and idusuario = ?";
+        try{
+            jdbcTemplate.update(sql,
+                    new Object[] { auxIdEmpleadoAuditado,
+                            auxEmpleado.getIdempleado(), auxUsuario.getV_id() });
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     private TipoEmpleado getTipoEmpleadoPorDescripcion(String auxDescripcion){
         String sql= "SELECT idtipoempleado, descripcion FROM tipoempleado WHERE descripcion = '" +
