@@ -267,6 +267,32 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
+    },RETIRO_ENVIO{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("retiroenvio.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Envios/RetirarEnvio.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },SELECCONAR_LOTE{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("seleccionarLote.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Envios/SeleccionarLote.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
     };
 
     public String getStringFromResourceBundle(String key) {

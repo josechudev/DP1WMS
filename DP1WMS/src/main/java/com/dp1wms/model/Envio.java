@@ -1,15 +1,21 @@
 package com.dp1wms.model;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Envio {
     private Long idEnvio;
-    private Long idProforma;
-    private String fechaEnvio;
+    private Long idPedido;
+    private Timestamp fechaEnvio;
     private String destino;
     private float costoFlete;
+    private Long idCliente;
+    private String razonSocial;
+    private int indiceTabla;
+    private Boolean realizado;
 
-    private ArrayList<DetalleEnvio> detalleEnvio;
+    private List<DetalleEnvio> detalleEnvio;
 
     public Envio(){
         this.detalleEnvio = new ArrayList<DetalleEnvio>();
@@ -39,15 +45,6 @@ public class Envio {
     }
 
 
-
-    public String getFechaEnvio() {
-        return fechaEnvio;
-    }
-
-    public void setFechaEnvio(String fechaEnvio) {
-        this.fechaEnvio = fechaEnvio;
-    }
-
     public String getDestino() {
         return destino;
     }
@@ -64,11 +61,11 @@ public class Envio {
         this.costoFlete = costoFlete;
     }
 
-    public ArrayList<DetalleEnvio> getDetalleEnvio() {
+    public List<DetalleEnvio> getDetalleEnvio() {
         return detalleEnvio;
     }
 
-    public void setDetalleEnvio(ArrayList<DetalleEnvio> detalleEnvio) {
+    public void setDetalleEnvio(List<DetalleEnvio> detalleEnvio) {
         this.detalleEnvio = detalleEnvio;
     }
 
@@ -88,11 +85,53 @@ public class Envio {
         this.idEnvio = idEnvio;
     }
 
-    public Long getIdProforma() {
-        return idProforma;
+
+    public Long getIdPedido() {
+        return idPedido;
     }
 
-    public void setIdProforma(Long idProforma) {
-        this.idProforma = idProforma;
+    public void setIdPedido(Long idPedido) {
+        this.idPedido = idPedido;
+    }
+
+    public Timestamp getFechaEnvio() {
+        return fechaEnvio;
+    }
+
+    public void setFechaEnvio(Timestamp fechaEnvio) {
+        this.fechaEnvio = fechaEnvio;
+    }
+
+
+    public Long getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public String getRazonSocial() {
+        return razonSocial;
+    }
+
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
+
+    public int getIndiceTabla() {
+        return indiceTabla;
+    }
+
+    public void setIndiceTabla(int indiceTabla) {
+        this.indiceTabla = indiceTabla;
+    }
+
+    public Boolean getRealizado() {
+        return realizado;
+    }
+
+    public void setRealizado(Boolean realizado) {
+        this.realizado = realizado;
     }
 }
