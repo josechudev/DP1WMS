@@ -29,6 +29,8 @@ public class MainController implements FxmlController {
 
     private final StageManager stageManager;
 
+    private final UsuarioCtrl usuarioCtrl;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -36,8 +38,9 @@ public class MainController implements FxmlController {
     private RepositoryMantEmpleado repositoryMantEmpleado;
 
     @Autowired @Lazy
-    public MainController(StageManager stageManager){
+    public MainController(StageManager stageManager, UsuarioCtrl usuarioCtrl){
         this.stageManager = stageManager;
+        this.usuarioCtrl = usuarioCtrl;
     }
 
     @Override
@@ -63,6 +66,7 @@ public class MainController implements FxmlController {
     @FXML
     private void cargarMantenimientoUsuario(ActionEvent event) {
         System.out.println("cargarMantenimientoUsuario");
+        this.usuarioCtrl.setUsuario(usuario);
         this.stageManager.mostrarModal(MainView.MANTENIMIENTO_USUARIO);
     }
 
@@ -126,6 +130,10 @@ public class MainController implements FxmlController {
         this.stageManager.mostrarModal(VentasView.GEN_PROFORMA);
     }
 
+    @FXML
+    private void cargarListaEnviosPendientes(){
+        this.stageManager.mostrarModal(MainView.LISTAR_ENVIOS);
+    }
 
 
     public void setUsuario(Usuario usuario){

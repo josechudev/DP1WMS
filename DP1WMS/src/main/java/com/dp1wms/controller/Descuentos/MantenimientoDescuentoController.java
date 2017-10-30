@@ -1,20 +1,27 @@
 package com.dp1wms.controller.Descuentos;
 
 import com.dp1wms.controller.FxmlController;
+import com.dp1wms.controller.MainController;
 import com.dp1wms.dao.RepositoryCondicion;
 import com.dp1wms.model.Condicion;
 import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javafx.scene.control.TableView;
 
+import java.io.IOException;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -28,6 +35,9 @@ public class MantenimientoDescuentoController implements FxmlController {
 
     List<Condicion> listaCondicions;
 
+
+    @FXML
+    private AnchorPane mantDescuentoAnchorPane;
     @FXML
     private TableColumn<Condicion,Integer> c_indice;
     @FXML
@@ -51,6 +61,9 @@ public class MantenimientoDescuentoController implements FxmlController {
     @FXML
     private TableColumn<Condicion,Timestamp> c_fechaFin;
 
+    private MainController mainController;
+
+    Long idEmpleadoAuditado = null;
 
     private final StageManager stageManager;
 
@@ -58,8 +71,9 @@ public class MantenimientoDescuentoController implements FxmlController {
 
     @Autowired
     @Lazy
-    public MantenimientoDescuentoController(StageManager stageManager) {
+    public MantenimientoDescuentoController(StageManager stageManager,MainController mainController) {
         this.stageManager = stageManager;
+        this.mainController = mainController;
     }
 
     public void agregarDescuento(ActionEvent event) {
@@ -76,14 +90,19 @@ public class MantenimientoDescuentoController implements FxmlController {
 
     public Condicion getDescuento(){
         Condicion condicion = tableViewDescuentos.getSelectionModel().getSelectedItem();
+        condicion.setIdEmpleadoAuditado(this.idEmpleadoAuditado);
         return condicion;
+    }
+
+    public Long getIdEmpleadoAuditado(){
+        return this.idEmpleadoAuditado;
     }
 
     public void eliminarDescuento(ActionEvent event){
 
         System.out.println("Eliminar Condicion");
         Condicion condicion = tableViewDescuentos.getSelectionModel().getSelectedItem();
-        repositoryCondicion.eliminarDescuento(condicion.getIdDescuento());
+        repositoryCondicion.eliminarDescuento(condicion.getIdCondicion(),this.idEmpleadoAuditado);
         this.actualizarTabla();
     }
 
@@ -101,7 +120,7 @@ public class MantenimientoDescuentoController implements FxmlController {
     private void limpiarTabla(){
         tableViewDescuentos.getItems().clear();
         c_indice.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("indiceTabla"));
-        c_tipoDescuento.setCellValueFactory(new PropertyValueFactory<Condicion, String>("TipoDescuento"));
+        c_tipoDescuento.setCellValueFactory(new PropertyValueFactory<Condicion, String>("tipoCondicion"));
         c_productoGen.setCellValueFactory(new PropertyValueFactory<Condicion, String>("nombreProductoGenerador"));
         c_categoriaGen.setCellValueFactory(new PropertyValueFactory<Condicion, String>("categoriaGenerador"));
         c_cantidadGen.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("cantProdGen"));
@@ -129,7 +148,7 @@ public class MantenimientoDescuentoController implements FxmlController {
     public void initialize() {
         this.listaCondicions = repositoryCondicion.obtenerDescuentos();
         c_indice.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("indiceTabla"));
-        c_tipoDescuento.setCellValueFactory(new PropertyValueFactory<Condicion, String>("TipoDescuento"));
+        c_tipoDescuento.setCellValueFactory(new PropertyValueFactory<Condicion, String>("tipoCondicion"));
         c_productoGen.setCellValueFactory(new PropertyValueFactory<Condicion, String>("nombreProductoGenerador"));
         c_categoriaGen.setCellValueFactory(new PropertyValueFactory<Condicion, String>("categoriaGenerador"));
         c_cantidadGen.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("cantProdGen"));
@@ -144,5 +163,7 @@ public class MantenimientoDescuentoController implements FxmlController {
 
         this.llenarTabla(this.listaCondicions);
         System.out.println("Cantidad Descuentos -> "+ listaCondicions.size());
+
+        this.idEmpleadoAuditado = this.mainController.getEmpleado().getIdempleado();
     }
 }

@@ -44,68 +44,57 @@
                               <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="392.0" minWidth="10.0" prefWidth="373.0" />
                           </columnConstraints>
                           <rowConstraints>
-                              <RowConstraints maxHeight="56.0" minHeight="9.0" prefHeight="29.0" vgrow="NEVER" />
                               <RowConstraints maxHeight="91.0" minHeight="10.0" prefHeight="42.0" vgrow="NEVER" />
                             <RowConstraints maxHeight="115.0" minHeight="10.0" prefHeight="38.0" vgrow="NEVER" />
                             <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="37.0" vgrow="NEVER" />
                           </rowConstraints>
                            <children>
-                              <Label text="Codigo:" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                              <Label prefHeight="16.0" text="Razón Social/Nombre:" textAlignment="RIGHT" GridPane.halignment="RIGHT">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Label prefHeight="16.0" text="Razón Social/Nombre:" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                              <Label text="N° Doc / RUC:" GridPane.columnIndex="2">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Label text="N° Doc / RUC:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <Label text="Teléfono:" GridPane.rowIndex="1">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Label text="Teléfono:" GridPane.rowIndex="2">
+                              <Label text="Dirección:" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Label text="Dirección:" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                              <Label text="Email:" GridPane.rowIndex="2">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Label text="Email:" GridPane.rowIndex="3">
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="codigoLabel" text="(sin asignar)" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                              <Label fx:id="nombreLabel" text="(sin asignar)" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                                  <padding>
                                     <Insets left="5.0" right="5.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="nombreLabel" text="(sin asignar)" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                              <Label fx:id="telefonoLabel" text="(sin asignar)" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                                  <padding>
                                     <Insets left="5.0" right="5.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="telefonoLabel" text="(sin asignar)" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+                              <Label fx:id="emailLabel" text="(sin asignar)" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
                                  <padding>
                                     <Insets left="5.0" right="5.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="emailLabel" text="(sin asignar)" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+                              <Label fx:id="rucLabel" text="(sin asignar)" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                                  <padding>
                                     <Insets left="5.0" right="5.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="rucLabel" text="(sin asignar)" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
-                                 <padding>
-                                    <Insets left="5.0" right="5.0" />
-                                 </padding>
-                              </Label>
-                              <Label fx:id="direccionLabel" text="(sin asignar)" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+                              <Label fx:id="direccionLabel" text="(sin asignar)" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                                  <padding>
                                     <Insets left="5.0" right="5.0" />
                                  </padding>
@@ -117,11 +106,12 @@
                            <children>
                               <HBox prefHeight="30.0" prefWidth="470.0" spacing="20.0" style="-fx-padding: 0 0 10px 0;" VBox.vgrow="NEVER">
                                  <children>
-                                    <Label prefHeight="26.0" text="Proforma">
+                                    <Label prefHeight="26.0" text="Pedido">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
+                                    <Button layoutX="86.0" layoutY="10.0" mnemonicParsing="false" prefHeight="26.0" text="Completar con Proforma" />
                                     <Button mnemonicParsing="false" onAction="#mostrarBusquedaProducto" prefHeight="26.0" text="Buscar Producto" />
                                     <Button mnemonicParsing="false" onAction="#modificarCantidadDetalle" text="Modificar Cantidad" />
                                     <Button mnemonicParsing="false" onAction="#eliminarDetalle" prefHeight="26.0" text="Eliminar" />
@@ -140,14 +130,14 @@
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
                               </TableView>
-                              <HBox alignment="TOP_RIGHT" prefWidth="1152.0" spacing="10.0" VBox.vgrow="NEVER">
+                              <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="353.0" prefWidth="1152.0" spacing="10.0">
                                  <children>
                                     <Label text="Total:">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="totalLabel" text="0" />
+                                    <Label fx:id="totalLabel1" text="0" />
                                  </children>
                                  <opaqueInsets>
                                     <Insets />
@@ -175,7 +165,7 @@
                         <HBox prefHeight="25.0" prefWidth="1168.0" spacing="20.0">
                            <children>
                               <Region prefHeight="22.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                              <Button mnemonicParsing="false" onAction="#registrarProforma" text="Registrar Proforma" />
+                              <Button mnemonicParsing="false" onAction="#registrarProforma" text="Registrar Pedido" />
                               <Button mnemonicParsing="false" onAction="#cerrarVentana" text="Cancelar" />
                               <Region layoutX="10.0" layoutY="10.0" prefHeight="22.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                            </children>

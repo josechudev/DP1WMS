@@ -22,10 +22,9 @@
                     <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
                   </items>
                 </Menu>
-                  <Menu mnemonicParsing="false" text="Ventas">
+                  <Menu mnemonicParsing="false" text="Productos">
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#cargarGenerarProforma" text="Proforma" />
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoDescuentos" text="Descuentos" />
+                      <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoProducto" text="Mantenimiento productos" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Administracion">
@@ -43,9 +42,13 @@
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoRol" text="Mantenimiento Roles" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Productos">
+                  <Menu mnemonicParsing="false" text="Ventas">
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoProducto" text="Mantenimiento productos" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoDescuentos" text="Descuentos" />
+                        <MenuItem mnemonicParsing="false" text="Consultar Proforma" />
+                      <MenuItem mnemonicParsing="false" onAction="#cargarGenerarProforma" text="Generar Proforma" />
+                        <MenuItem mnemonicParsing="false" text="Generar Pedido" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarListaEnviosPendientes" text="Envios Pendientes" />
                     </items>
                   </Menu>
               </menus>

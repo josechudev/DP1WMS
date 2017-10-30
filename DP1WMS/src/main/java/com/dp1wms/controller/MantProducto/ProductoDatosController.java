@@ -5,11 +5,13 @@ import com.dp1wms.model.Producto;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
 ;import javax.xml.soap.Text;
+import java.text.ParseException;
 
 
 @Component
@@ -26,10 +28,13 @@ public class ProductoDatosController  implements FxmlController {
     @FXML private TextField txt_prodPrecio;
     @FXML private TextField txt_prodFechaC;
     @FXML private TextField txt_prodStock;
-    @FXML private TextField txt_prodActivo;
+    @FXML private ComboBox cb_prodActivo;
     @FXML private Button btn_aceptar, btn_cancelar;
+    @FXML private TextField txt_prodDescripcion;
     @Override
     public void initialize() {
+        cb_prodActivo.getItems().removeAll(cb_prodActivo.getItems());
+        cb_prodActivo.getItems().addAll("Activo","Inactivo");
 
     }
 
@@ -41,6 +46,7 @@ public class ProductoDatosController  implements FxmlController {
         else{
 
             txt_prodId.setText(Integer.toString(producto.getIdProducto()));
+            txt_prodDescripcion.setText(producto.getDescripcion());
             txt_prodPeso.setText(Float.toString(producto.getPeso()));
             txt_prodCategoria.setText(Integer.toString(producto.getIdCategoria()));
             txt_prodNombre.setText(producto.getNombreProducto());
@@ -49,25 +55,28 @@ public class ProductoDatosController  implements FxmlController {
             txt_prodPrecio.setText(Float.toString(producto.getPrecio()));
             txt_prodFechaC.setText(producto.getFechaCreacion());
             txt_prodStock.setText(Integer.toString(producto.getStock()));
-            txt_prodActivo.setText(Boolean.toString(producto.isActivo()));
+            cb_prodActivo.getSelectionModel().select(producto.isActivo());
             btn_aceptar.setText("Modificar Producto");
         }
     }
 
 
-    public void btnClickAceptar(ActionEvent actionEvent) {
+    public void btnClickAceptar(ActionEvent actionEvent) throws ParseException {
         System.out.println("Aceptar");
         Producto producto = new Producto();
-        producto.setIdProducto(Integer.parseInt(txt_prodId.getText()));
+        producto.setIdProducto(Integer.parseInt(v_accion==0?"0":txt_prodId.getText()));
         producto.setPeso(Float.parseFloat(txt_prodPeso.getText()));
         producto.setIdCategoria(Integer.parseInt(txt_prodCategoria.getText()));
+        producto.setDescripcion(txt_prodDescripcion.getText());
         producto.setNombreProducto(txt_prodNombre.getText());
         producto.setFechaVencimiento(txt_prodFechaV.getText());
         producto.setCodigo(txt_prodCod.getText());
         producto.setPrecio(Float.parseFloat(txt_prodPrecio.getText()));
         producto.setFechaCreacion(txt_prodFechaC.getText());
-        producto.setStock(Integer.parseInt(txt_prodStock.getText()));
-        producto.setActivo(Boolean.parseBoolean(txt_prodStock.getText()));
+        producto.setStock(v_accion==0?0:Integer.parseInt(txt_prodStock.getText()));
+        if(cb_prodActivo.getValue().equals("Activo"))
+            System.out.println(cb_prodActivo.getValue());
+        producto.setActivo(cb_prodActivo.getValue().equals("Activo")?true:false);
         if(this.v_accion ==0){
             v_parentController.crearProductoBD(producto);
         }else {

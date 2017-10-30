@@ -15,11 +15,13 @@ public interface RepositoryMantEmpleado {
 
     List<UsuarioXEmpleado> obtenerUsuarioXEmpleadoPorIdUsuario();
 
-    void createEmpleado(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpleado);
+    void createEmpleado(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpleado, Long auxIdEmpleadoAuditado);
 
-    void updateEmpleado(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpleado);
+    void updateEmpleado(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpleado, Long auxIdEmpleadoAuditado);
 
-    void deleteEmpleado(Usuario auxUsuario, Empleado auxEmpleado);
+    void deleteEmpleado(Usuario auxUsuario, Empleado auxEmpleado, Long auxIdEmpleadoAuditado);
+
+    void activeEmpleado(Usuario auxUsuario, Empleado auxEmpleado, Long auxIdEmpleadoAuditado);
 
     Usuario findUsuariobyName(String auxName);
 

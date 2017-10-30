@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.SplittableRandom;
@@ -54,10 +55,10 @@ public class ProductoController  implements FxmlController {
     @FXML private  TableColumn<Producto,String>c_prodDescripcion;
     @FXML private  TableColumn<Producto,Float>c_prodPrecio;
     @FXML private  TableColumn<Producto,Integer>c_prodStock;
-    @FXML private  TableColumn<Producto,Integer>c_prodCat;
+    @FXML private  TableColumn<Producto,String>c_prodCat;
     @FXML private  TableColumn<Producto,String>c_prodCod;
     @FXML private  TableColumn<Producto,String>c_prodFechaC;
-    @FXML private TableColumn<Producto, Boolean> c_prodAct;
+    @FXML private TableColumn<Producto, String> c_prodAct;
     @Autowired
     private RepositoryMantProducto repositoryMantProducto;
     @Autowired
@@ -125,7 +126,7 @@ public class ProductoController  implements FxmlController {
 
         Producto producto = tableViewProductos.getSelectionModel().getSelectedItem();
 
-        repositoryMantProducto.deleteProducto(producto);
+        eliminarProductoBD(producto);
 
         this._llenarGrilla();
     }
@@ -142,8 +143,8 @@ public class ProductoController  implements FxmlController {
     @Override
     public void initialize() {
         c_indice.setCellValueFactory(new PropertyValueFactory<Producto,Integer>("IdProducto"));
-        c_prodAct.setCellValueFactory(new PropertyValueFactory<Producto,Boolean>("Activo"));
-        c_prodCat.setCellValueFactory(new PropertyValueFactory<Producto,Integer>("IdCategoria"));
+        c_prodAct.setCellValueFactory(new PropertyValueFactory<Producto,String>("Activo"));
+        c_prodCat.setCellValueFactory(new PropertyValueFactory<Producto,String>("Categoria"));
         c_prodCod.setCellValueFactory(new PropertyValueFactory<Producto,String>("Codigo"));
         c_prodDescripcion.setCellValueFactory(new PropertyValueFactory<Producto,String>("Descripcion"));
         c_prodFechaC.setCellValueFactory(new PropertyValueFactory<Producto,String>("FechaCreacion"));
@@ -157,7 +158,7 @@ public class ProductoController  implements FxmlController {
         this._llenarGrilla();
     }
 
-    public void crearProductoBD(Producto producto){
+    public void crearProductoBD(Producto producto) throws ParseException {
         repositoryMantProducto.createProducto(producto);
     }
     public void  modificarProductoBD(Producto producto){

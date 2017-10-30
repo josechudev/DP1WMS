@@ -21,7 +21,7 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
 
     public List<Condicion> obtenerDescuentos() {
         //String SQL = "SELECT d.iddescuento,d.tipodescuento,d.idproductogenerador,d.idcategoriaprodgen,d.cantprodgen,d.idproductodescuento,d.idcategoriaproddesc,d.cantproddesc,d.valordescuento,d.fechainicio,d.fechafin,d.descripcion,c1.descripcion as categoriagenerador,c2.descripcion as categoriadescuento,p1.nombreproducto as productogenerador,p2.nombreproducto as productodescuento FROM public.descuento d,public.producto p1,public.producto p2 ,public.categoriaproducto c1,public.categoriaproducto c2 WHERE p1.idproducto = d.idproductogenerador and p2.idproducto = d.idproductodescuento and c1.idcategoria = d.idcategoriaprodgen and c2.idcategoria = d.idcategoriaproddesc";
-        String SQL = "SELECT iddescuento,tipodescuento,idproductogenerador,idcategoriaprodgen,cantprodgen,idproductodescuento,idcategoriaproddesc,cantproddesc,valordescuento,fechainicio,fechafin,descripcion FROM public.descuento";
+        String SQL = "SELECT idcondicion,tipocondicion,idproductogenerador,idcategoriaprodgen,cantprodgen,idproductodescuento,idcategoriaproddesc,cantproddesc,valordescuento,fechainicio,fechafin,descripcion FROM public.condicion";
 
         List<Condicion> listaCondicions = null;
         try {
@@ -76,8 +76,8 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
     public Condicion mapParam(ResultSet rs, int i) throws SQLException {
         Condicion condicion = new Condicion();
 
-        condicion.setIdDescuento(rs.getInt("iddescuento"));
-        condicion.setTipoDescuento(rs.getString("tipodescuento"));
+        condicion.setIdCondicion(rs.getInt("idcondicion"));
+        condicion.setTipoCondicion(rs.getString("tipocondicion"));
         condicion.setIdProductoGenerador(rs.getInt("idproductogenerador"));
         condicion.setIdCategoriaProdGen(rs.getInt("idcategoriaprodgen"));
         condicion.setCantProdGen(rs.getInt("cantprodgen"));
@@ -99,7 +99,7 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
     @Transactional(rollbackFor = Exception.class)
     public int registrarDescuento(Condicion condicion) {
         // el stock parcial no se debe insertar directamente en lote, es trabajo del trigger por eso se pone de valor cero
-        String SQL = "INSERT INTO public.condicion (tipodescuento,idproductogenerador,idcategoriaprodgen,cantprodgen,idproductodescuento,idcategoriaproddesc,cantproddesc,valordescuento,fechainicio,fechafin,descripcion) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+        String SQL = "INSERT INTO public.condicion (tipocondicion,idproductogenerador,idcategoriaprodgen,cantprodgen,idproductodescuento,idcategoriaproddesc,cantproddesc,valordescuento,fechainicio,fechafin,descripcion,idempleadoauditado) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
 
         Long idProdDescuento = new Long(condicion.getIdProductoDescuento());
         if(idProdDescuento == -1){
@@ -119,7 +119,7 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
         }
 
         try {
-            jdbcTemplate.update(SQL, new Object[]{ condicion.getTipoDescuento(),idProdGen, idCategoriaGen, condicion.getCantProdGen(), idProdDescuento, idCategoriaDescuento, condicion.getCantProdDesc(), condicion.getValorDescuento(), condicion.getFechaInicio(), condicion.getFechaFin(), condicion.getDescripcion()});
+            jdbcTemplate.update(SQL, new Object[]{ condicion.getTipoCondicion(),idProdGen, idCategoriaGen, condicion.getCantProdGen(), idProdDescuento, idCategoriaDescuento, condicion.getCantProdDesc(), condicion.getValorDescuento(), condicion.getFechaInicio(), condicion.getFechaFin(), condicion.getDescripcion(),condicion.getIdEmpleadoAuditado()});
             System.out.println("Se ha insertado en la tabla condicion");
         } catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
@@ -131,7 +131,7 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
     @Transactional(rollbackFor = Exception.class)
     public int actualizarDescuento(Condicion condicion) {
         // el stock parcial no se debe insertar directamente en lote, es trabajo del trigger por eso se pone de valor cero
-        String SQL = "UPDATE public.condicion SET tipodescuento = ?,idproductogenerador = ?,idcategoriaprodgen = ?,cantprodgen = ?,idproductodescuento = ?,idcategoriaproddesc = ?,cantproddesc = ?,valordescuento = ?,fechainicio = ?,fechafin = ?,descripcion = ? where iddescuento = ?";
+        String SQL = "UPDATE public.condicion SET tipocondicion = ?,idproductogenerador = ?,idcategoriaprodgen = ?,cantprodgen = ?,idproductodescuento = ?,idcategoriaproddesc = ?,cantproddesc = ?,valordescuento = ?,fechainicio = ?,fechafin = ?,descripcion = ?,idempleadoauditado = ? where idcondicion = ?";
 
         Long idProdDescuento = new Long(condicion.getIdProductoDescuento());
         if(idProdDescuento == -1){
@@ -151,7 +151,7 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
         }
 
         try {
-            int i = jdbcTemplate.update(SQL, new Object[]{ condicion.getTipoDescuento(),idProdGen, idCategoriaGen, condicion.getCantProdGen(), idProdDescuento, idCategoriaDescuento, condicion.getCantProdDesc(), condicion.getValorDescuento(), condicion.getFechaInicio(), condicion.getFechaFin(), condicion.getDescripcion(), condicion.getIdDescuento()});
+            int i = jdbcTemplate.update(SQL, new Object[]{ condicion.getTipoCondicion(),idProdGen, idCategoriaGen, condicion.getCantProdGen(), idProdDescuento, idCategoriaDescuento, condicion.getCantProdDesc(), condicion.getValorDescuento(), condicion.getFechaInicio(), condicion.getFechaFin(), condicion.getDescripcion(),condicion.getIdEmpleadoAuditado(), condicion.getIdCondicion()});
             System.out.println("Filas afectadas -> "+ i);
             System.out.println("Se ha actualizo en la tabla condicion");
         } catch (EmptyResultDataAccessException e) {
@@ -163,13 +163,13 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public int eliminarDescuento(int id) {
-        // el stock parcial no se debe insertar directamente en lote, es trabajo del trigger por eso se pone de valor cero
-        String SQL = "DELETE FROM public.descuento WHERE iddescuento = ?";
+    public int eliminarDescuento(int id,Long idEmpleadoAuditado) {
+        //String SQL = "DELETE FROM public.condicion WHERE idcondicion = ?";
+        String SQL = "UPDATE public.condicion SET activo = false,idempleadoauditado = ? where idcondicion = ?";
 
         try {
-            jdbcTemplate.update(SQL, new Object[]{id});
-            System.out.println("Se ha eliminado en la tabla descuento");
+            jdbcTemplate.update(SQL, new Object[]{idEmpleadoAuditado,id});
+            System.out.println("Se ha eliminado en la tabla condicion");
         } catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
             throw e;
@@ -178,7 +178,7 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
     }
 
     public List<Condicion> obtenerCondicionesActivos(){
-        String sql = "SELECT * from condicion where fechainicio <= now() " +
+        String sql = "SELECT * from public.condicion where fechainicio <= now() " +
                     "AND fechafin >= now() and activo";
         try{
             List<Condicion> condicions = jdbcTemplate.query(sql, new Object[]{}, this::mapParam);

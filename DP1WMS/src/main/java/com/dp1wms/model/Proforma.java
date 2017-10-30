@@ -2,7 +2,7 @@ package com.dp1wms.model;
 
 import java.util.ArrayList;
 
-public class Proforma {
+public class Proforma implements Cabecera{
     private int idProforma;
     private long idEmpleado;
     private long idCliente;
@@ -91,5 +91,14 @@ public class Proforma {
             total += dp.getSubtotal();
         }
         this.total = total;
+    }
+
+    @Override
+    public Detalle getDetalle(int i) {
+        return this.detallesProforma.get(i);
+    }
+
+    public int getCantidadDetalle(){
+        return this.detallesProforma.size();
     }
 }

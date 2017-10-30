@@ -9,9 +9,13 @@ public interface RepositoryMantUsuario {
 
     void createUsuario(Usuario auxUsuario);
 
-    void updateUsuario(Usuario auxUsuario);
+    void updateUsuario(Usuario auxUsuario, boolean auxModificarPassword);
 
     void deleteUsuario(Usuario auxUsuario);
 
     Usuario findUsuariobyId(int auxIdUser);
+
+    boolean existeUsuario(String auxNameUser);
+
+    boolean coincideUsuarioId(String auxNameUser, int auxIdUser);
 }

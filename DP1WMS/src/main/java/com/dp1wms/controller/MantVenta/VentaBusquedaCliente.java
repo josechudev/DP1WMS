@@ -15,7 +15,7 @@ import javafx.event.ActionEvent;
 import java.util.List;
 
 @Component
-public class VentaBusquedaClienteController implements FxmlController{
+public class VentaBusquedaCliente implements FxmlController{
 
     @FXML private ComboBox campoClienteCB;
     @FXML private TextField busquedaField;
@@ -28,7 +28,8 @@ public class VentaBusquedaClienteController implements FxmlController{
 
 
     private final StageManager stageManager;
-    private final VentaProformaController ventaProformaController;
+
+    private Cliente cliente;
 
     @Autowired
     private RepositoryMantCliente repositoryMantCliente;
@@ -40,9 +41,8 @@ public class VentaBusquedaClienteController implements FxmlController{
     }
 
     @Autowired @Lazy
-    public VentaBusquedaClienteController(StageManager stageManager, VentaProformaController ventaProformaController){
+    public VentaBusquedaCliente(StageManager stageManager){
         this.stageManager = stageManager;
-        this.ventaProformaController = ventaProformaController;
     }
 
     @FXML
@@ -87,7 +87,7 @@ public class VentaBusquedaClienteController implements FxmlController{
             alert.setContentText("Debes seleccionar un cliente");
             alert.showAndWait();
         } else {
-            this.ventaProformaController.setCliente(cliente);
+            this.setCliente(cliente);
             this.cerrarVentana(event);
         }
     }
@@ -109,4 +109,11 @@ public class VentaBusquedaClienteController implements FxmlController{
         this.clienteTable.setEditable(false);
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 }

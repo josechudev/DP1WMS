@@ -8,6 +8,8 @@ public class UsuarioXEmpleado {
     private String v_apellido;
     private String v_descripcion;
 
+    private boolean v_activo;
+
     public UsuarioXEmpleado(){
         this.setV_id_user(0);
         this.setV_user(null);
@@ -17,13 +19,14 @@ public class UsuarioXEmpleado {
         this.setV_descripcion(null);
     }
 
-    public UsuarioXEmpleado(int v_id_user, String v_user, String v_numDoc, String v_nombre, String v_apellido, String v_descripcion){
+    public UsuarioXEmpleado(int v_id_user, String v_user, String v_numDoc, String v_nombre, String v_apellido, String v_descripcion, boolean v_activo){
         this.setV_id_user(v_id_user);
         this.setV_user(v_user);
         this.setV_numDoc(v_numDoc);
         this.setV_nombre(v_nombre);
         this.setV_apellido(v_apellido);
         this.setV_descripcion(v_descripcion);
+        this.setV_activo(v_activo);
     }
 
     public int getV_id_user() {
@@ -82,5 +85,13 @@ public class UsuarioXEmpleado {
         if( v_descripcion == null )
             v_descripcion = "";
         this.v_descripcion = v_descripcion;
+    }
+
+    public boolean getV_activo() {
+        return v_activo;
+    }
+
+    public void setV_activo(boolean v_activo) {
+        this.v_activo = v_activo;
     }
 }
