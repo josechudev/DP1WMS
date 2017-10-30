@@ -55,39 +55,60 @@ public class RespositoryMantEmpleadoImpl implements RepositoryMantEmpleado {
     }
 
     public List<UsuarioXEmpleado> obtenerUsuarioXEmpleadoPorIdUsuario(){
-
         String sql = "SELECT u.idUsuario, u.nombreUsuario, " +
                 "e.numDoc, e.nombre, e.apellidos, " +
                 "tp.descripcion, e.activo " +
                 "FROM usuario u INNER JOIN empleado e ON u.idusuario = e.idusuario " +
                 "INNER JOIN tipoempleado tp ON e.idtipoempleado = tp.idtipoempleado " +
                 "ORDER BY u.idUsuario";
-        return jdbcTemplate.query(sql,
-                new UsuarioXEmpleadoRowMapper());
-
+        try{
+            return jdbcTemplate.query(sql,
+                    new UsuarioXEmpleadoRowMapper());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public List<Empleado> selectAllEmpleado(){
-        String sql = "SELECT idempleado, idusuario, numDoc, nombre, apellidos, email, idtipoempleado FROM empleado WHERE activo = true ORDER BY idempleado";
-        return jdbcTemplate.query(sql,
-                new EmpleadoRowMapper());
+        String sql = "SELECT idempleado, idusuario, numDoc, nombre, apellidos, email, idtipoempleado " + "" +
+                "FROM empleado WHERE activo = true ORDER BY idempleado";
+        try{
+            return jdbcTemplate.query(sql,
+                    new EmpleadoRowMapper());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void createEmpleado(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpleado, Long auxIdEmpleadoAuditado){
         String sql = "INSERT INTO empleado(idempleado, idusuario, numDoc, nombre, apellidos, email, idtipoempleado, idEmpleadoAuditado) " +
-                                    "VALUES(default,?,?,?,?,?,?,?)";
-        jdbcTemplate.update(sql,
-                new Object[] { this.findIdUsuario(auxUsuario), auxEmpleado.getNumDoc(), auxEmpleado.getNombre(), auxEmpleado.getApellidos(),
-                        auxEmpleado.getEmail(), auxTipoEmpleado.getIdtipoempleado(), auxIdEmpleadoAuditado});
+                "VALUES(default,?,?,?,?,?,?,?)";
+        try{
+            jdbcTemplate.update(sql,
+                    new Object[] { this.findIdUsuario(auxUsuario), auxEmpleado.getNumDoc(), auxEmpleado.getNombre(), auxEmpleado.getApellidos(),
+                            auxEmpleado.getEmail(), auxTipoEmpleado.getIdtipoempleado(), auxIdEmpleadoAuditado});
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public Usuario findUsuariobyName(String auxName){
         String sql= "SELECT u.idUsuario, u.nombreUsuario, u.password " +
                 "FROM usuario u INNER JOIN empleado e ON u.idusuario = e.idusuario " +
                 "WHERE u.nombreUsuario = '"+ auxName +"' and e.activo = true";
-        List<Usuario> auxUsuario = jdbcTemplate.query(sql, new UsuarioRowMapper() );
-
-        return auxUsuario.get(0);
+        try{
+            List<Usuario> auxUsuario = jdbcTemplate.query(sql, new UsuarioRowMapper() );
+            return auxUsuario.get(0);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private int findIdUsuario(Usuario auxUsuario){
@@ -95,26 +116,40 @@ public class RespositoryMantEmpleadoImpl implements RepositoryMantEmpleado {
                 "FROM usuario u " +
                 "WHERE u.nombreUsuario = '"+ auxUsuario.getV_nombre() +"' " +
                 "ORDER BY u.idUsuario DESC";
-
-        return jdbcTemplate.queryForObject(sql, new Object[]{}, Integer.class);
+        try{
+            return jdbcTemplate.queryForObject(sql, new Object[]{}, Integer.class);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     public void updateEmpleado(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpleado, Long auxIdEmpleadoAuditado){
         String sql = "UPDATE empleado SET numDoc = ?, nombre = ?, apellidos = ?, email = ?, idtipoempleado = ? , idEmpleadoAuditado = ? " +
                 "WHERE idempleado= ? and idusuario = ?";
-        jdbcTemplate.update(sql,
-                new Object[] { auxEmpleado.getNumDoc(), auxEmpleado.getNombre(), auxEmpleado.getApellidos(), auxEmpleado.getEmail(), auxTipoEmpleado.getIdtipoempleado(),
-                        auxIdEmpleadoAuditado,
-                        auxEmpleado.getIdempleado(), auxUsuario.getV_id()});
+        try{
+            jdbcTemplate.update(sql,
+                    new Object[] { auxEmpleado.getNumDoc(), auxEmpleado.getNombre(), auxEmpleado.getApellidos(), auxEmpleado.getEmail(), auxTipoEmpleado.getIdtipoempleado(),
+                            auxIdEmpleadoAuditado,
+                            auxEmpleado.getIdempleado(), auxUsuario.getV_id()});
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void deleteEmpleado(Usuario auxUsuario, Empleado auxEmpleado, Long auxIdEmpleadoAuditado){
-        //String sql = "DELETE FROM empleado WHERE idempleado= ? and idusuario = ?";
         String sql = "UPDATE empleado SET activo = false , idEmpleadoAuditado = ? " +
                 "WHERE idempleado= ? and idusuario = ?";
-        jdbcTemplate.update(sql,
-                new Object[] { auxIdEmpleadoAuditado,
-                        auxEmpleado.getIdempleado(), auxUsuario.getV_id() });
+        try{
+            jdbcTemplate.update(sql,
+                    new Object[] { auxIdEmpleadoAuditado,
+                            auxEmpleado.getIdempleado(), auxUsuario.getV_id() });
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void activeEmpleado(Usuario auxUsuario, Empleado auxEmpleado, Long auxIdEmpleadoAuditado){
@@ -130,23 +165,20 @@ public class RespositoryMantEmpleadoImpl implements RepositoryMantEmpleado {
         }
     }
 
-        for(int i = 0; i < auxListaEmpleado.size(); i++){
-            Usuario auxUsuario = findUsuariobyName(auxNombreUsuario.get(i));
-            TipoEmpleado auxTipoEmepleado = getTipoEmpleadoPorDescripcion(auxNombreTipoEmpleado.get(i));
-
-            String sql = "INSERT INTO empleado(idempleado, idusuario, numDoc, nombre, apellidos, email, idtipoempleado) " +
-                    "VALUES(default,?,?,?,?,?,?)";
-            jdbcTemplate.update(sql,
-                    new Object[] { this.findIdUsuario(auxUsuario), auxListaEmpleado.get(i).getNumDoc(), auxListaEmpleado.get(i).getNombre(),
-                            auxListaEmpleado.get(i).getApellidos(), auxListaEmpleado.get(i).getEmail(), auxTipoEmepleado.getIdtipoempleado()});
+    private TipoEmpleado getTipoEmpleadoPorDescripcion(String auxDescripcion){
+        String sql= "SELECT idtipoempleado, descripcion FROM tipoempleado WHERE descripcion = '" +
+                auxDescripcion +
+                "' and activo = true";
+        try{
+            List<TipoEmpleado> auxTipoEmpleado = jdbcTemplate.query(sql, new TipoEmpleadoRowMapper() );
+            return auxTipoEmpleado.get(0);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
     }
 
-    private TipoEmpleado getTipoEmpleadoPorDescripcion(String auxDescripcion){
-        String sql= "SELECT idtipoempleado, descripcion FROM tipoempleado WHERE descripcion = '"+ auxDescripcion +"' and activo = true";
-        List<TipoEmpleado> auxTipoEmpleado = jdbcTemplate.query(sql, new TipoEmpleadoRowMapper() );
 
-        return auxTipoEmpleado.get(0);
-    }
 
 }
