@@ -54,16 +54,20 @@ public class IngresoProductoController implements FxmlController {
 
     private Lote loteEscogido=null;
 
+    private  MainController mainController;
+
+
     private final StageManager stageManager;
 
     @Autowired    @Lazy
-    public IngresoProductoController(StageManager stageManager){
-                this.stageManager = stageManager;
+    public IngresoProductoController(StageManager stageManager, MainController mainController){
+        this.stageManager = stageManager;
+        this.mainController = mainController;
     }
 
     public void buscarProducto(ActionEvent event){
         System.out.println("Buscar Producto");
-        this.stageManager.mostrarModal(MainView.BUSQUEDA_PRODUCTO);
+        this.stageManager.mostrarModal(MainView.BUSQUEDA_PRODUCTO_LOTE);
     }
 
 
@@ -90,7 +94,7 @@ public class IngresoProductoController implements FxmlController {
             //obtener id motivo
             int idMotivoMovimiento;
             if((this.loteEscogido != null)){
-                System.out.println("idMov"+ cb_motivo.getValue().getIdTipoMovimiento());
+                System.out.println("idTipoMoviviento"+ cb_motivo.getValue().getIdTipoMovimiento());
                 int totalProductos = 1;
                 //repositoryMantMov.registrarMovimiento(totalProductos,this.txa_observaciones.toString(),this.dp_fecha.toString(),tipoMovimiento.getIdTipoMovimiento(),loteEscogido.getIdProducto(),loteEscogido.getIdLote(),Integer.parseInt(this.txb_cantidad.toString()));
                 Timestamp fecha = null;
@@ -109,8 +113,8 @@ public class IngresoProductoController implements FxmlController {
                     System.out.println("Error al ingresar la cantidad descrita");
                     return;
                 }
-
-                repositoryMantMov.registrarMovimiento(totalProductos,this.txa_observaciones.getText(),fecha,tipoMovimiento.getIdTipoMovimiento(),loteEscogido.getIdProducto(),loteEscogido.getIdLote(),cantidad);
+                Long idEmpleadoAuditado = mainController.getEmpleado().getIdempleado();
+                repositoryMantMov.registrarMovimiento(totalProductos,this.txa_observaciones.getText(),fecha,tipoMovimiento.getIdTipoMovimiento(),loteEscogido.getIdProducto(),loteEscogido.getIdLote(),cantidad,idEmpleadoAuditado);
             }
         }else{
             System.out.println("Motivo Movimiento Vacio");

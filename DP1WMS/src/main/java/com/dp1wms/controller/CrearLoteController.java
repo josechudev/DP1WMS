@@ -41,6 +41,7 @@ public class CrearLoteController implements FxmlController{
 
     private Integer idProducto=null;
 
+    private  MainController mainController;
 
     private final StageManager stageManager;
 
@@ -49,8 +50,9 @@ public class CrearLoteController implements FxmlController{
 
     @Autowired
     @Lazy
-    public CrearLoteController(StageManager stageManager){
+    public CrearLoteController(StageManager stageManager,MainController mainController){
         this.stageManager = stageManager;
+        this.mainController = mainController;
     }
 
 
@@ -92,7 +94,8 @@ public class CrearLoteController implements FxmlController{
            }
            System.out.println("Cantidad parseo->"+cantidad);
 
-           repositoryMantMov.registrarLote(this.idProducto,fechaLote,fechaEntrada,cantidad);
+           Long idEmpleadoAuditado = this.mainController.getEmpleado().getIdempleado();
+           repositoryMantMov.registrarLote(this.idProducto,fechaLote,fechaEntrada,cantidad,idEmpleadoAuditado);
            crearLoteAnchorPane.getScene().getWindow().hide();
        }
 

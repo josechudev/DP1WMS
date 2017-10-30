@@ -152,7 +152,7 @@ public enum MainView implements FxmlView{
     }, MANTENIMIENTO_DESCUENTO{
         @Override
         public String getTitle() {
-            return getStringFromResourceBundle("mantenimiento.descuento.title");
+            return getStringFromResourceBundle("mantenimiento.condicion.title");
         }
 
         @Override
@@ -167,7 +167,7 @@ public enum MainView implements FxmlView{
     },DATOS_DESCUENTO{
         @Override
         public String getTitle() {
-            return getStringFromResourceBundle("datos.descuento.title");
+            return getStringFromResourceBundle("datos.condicion.title");
         }
 
         @Override
@@ -239,6 +239,19 @@ public enum MainView implements FxmlView{
 
         @Override
         public boolean isResizable() {
+            return false;
+        }
+    },BUSQUEDA_PRODUCTO_LOTE{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("busquedaproducto.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/BusquedaProductoLote.fxml";
+        }
+        @Override
+        public boolean isResizable(){
             return false;
         }
     };

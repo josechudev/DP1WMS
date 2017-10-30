@@ -15329,7 +15329,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFejqjephwKr90="
 							},
-							"name": "stockParical",
+							"name": "stockParcial",
 							"type": "INTEGER",
 							"length": 0,
 							"primaryKey": false,
