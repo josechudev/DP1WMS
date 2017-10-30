@@ -24,74 +24,44 @@ public class RespositoryMantTipoEmpleadoImpl implements RepositoryMantTipoEmplea
     private JdbcTemplate jdbcTemplate;
 
     public List<TipoEmpleado> selectAllTipoEmpleado(){
-        String sql = "SELECT idtipoempleado, descripcion " +
-                "FROM tipoempleado WHERE activo = true ORDER BY idtipoempleado";
-        try{
-            return jdbcTemplate.query(sql,
-                    new TipoEmpleadoRowMapper());
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
+        String sql = "SELECT idtipoempleado, descripcion FROM tipoempleado WHERE activo = true ORDER BY idtipoempleado";
+        return jdbcTemplate.query(sql,
+                new TipoEmpleadoRowMapper());
     }
 
     public void createTipoEmpleado(TipoEmpleado auxTipoEmpleado){
         String sql = "INSERT INTO tipoempleado(idtipoempleado, descripcion) VALUES(default,?)";
-        try{
-            jdbcTemplate.update(sql,
-                    new Object[] { auxTipoEmpleado.getDescripcion()});
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        jdbcTemplate.update(sql,
+                new Object[] { auxTipoEmpleado.getDescripcion()});
     }
 
     public void updateTipoEmpleado(TipoEmpleado auxTipoEmpleado){
         String sql = "UPDATE tipoempleado SET descripcion = ? WHERE idtipoempleado = ?";
-        try{
-            jdbcTemplate.update(sql,
-                    new Object[] { auxTipoEmpleado.getDescripcion(), auxTipoEmpleado.getIdtipoempleado() });
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        jdbcTemplate.update(sql,
+                new Object[] { auxTipoEmpleado.getDescripcion(), auxTipoEmpleado.getIdtipoempleado() });
     }
 
     public void deleteTipoEmpleado(TipoEmpleado auxTipoEmpleado){
         String sql = "UPDATE tipoempleado SET activo = false WHERE idtipoempleado= ?";
-        try{
-            jdbcTemplate.update(sql,
-                    new Object[] { auxTipoEmpleado.getIdtipoempleado() });
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        //String sql = "DELETE FROM tipoempleado WHERE idtipoempleado= ?";
+        jdbcTemplate.update(sql,
+                new Object[] { auxTipoEmpleado.getIdtipoempleado() });
     }
 
     public TipoEmpleado obtenerTipoEmpleadoPorIdTipo(Long auxIdTipo){
         String sql= "SELECT idtipoempleado, descripcion FROM tipoempleado WHERE idtipoempleado = '"+ Long.toString(auxIdTipo) +"' and activo = true";
-        try {
-            List<TipoEmpleado> auxTipoEmpleado = jdbcTemplate.query(sql, new TipoEmpleadoRowMapper());
-            return auxTipoEmpleado.get(0);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
+        List<TipoEmpleado> auxTipoEmpleado = jdbcTemplate.query(sql, new TipoEmpleadoRowMapper() );
+
+        return auxTipoEmpleado.get(0);
     }
 
-    public TipoEmpleado obtenerTipoEmpleadoPorDescripcion(String auxDescripcion) {
-        String sql = "SELECT idtipoempleado, descripcion FROM tipoempleado WHERE descripcion = '" + auxDescripcion + "' and activo = true";
-        try{
-            List<TipoEmpleado> auxTipoEmpleado = jdbcTemplate.query(sql, new TipoEmpleadoRowMapper());
-            return auxTipoEmpleado.get(0);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
+    public TipoEmpleado obtenerTipoEmpleadoPorDescripcion(String auxDescripcion){
+        String sql= "SELECT idtipoempleado, descripcion FROM tipoempleado WHERE descripcion = '"+ auxDescripcion +"' and activo = true";
+        List<TipoEmpleado> auxTipoEmpleado = jdbcTemplate.query(sql, new TipoEmpleadoRowMapper() );
+
+        return auxTipoEmpleado.get(0);
     }
+
 
 
     //Para Mantenimiento de Roles
