@@ -8,7 +8,6 @@ import com.dp1wms.model.TipoEmpleado;
 import com.dp1wms.model.UsuarioModel.Usuario;
 import com.dp1wms.model.UsuarioModel.UsuarioXEmpleado;
 import com.dp1wms.view.StageManager;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,7 +41,6 @@ public class UsuarioCtrl implements FxmlController{
     @FXML private TableColumn<UsuarioXEmpleado, String> e_nombre;
     @FXML private TableColumn<UsuarioXEmpleado, String> e_apellido;
     @FXML private TableColumn<UsuarioXEmpleado, String> e_descripcion;
-    @FXML private TableColumn<UsuarioXEmpleado, Boolean> e_activo;
 
     @Autowired
     private RepositoryMantUsuario repositoryMantUsuario;
@@ -125,17 +123,8 @@ public class UsuarioCtrl implements FxmlController{
         UsuarioXEmpleado auxUsuarioXEmpleado = e_table.getSelectionModel().getSelectedItem();
         Usuario auxUsuario = repositoryMantUsuario.findUsuariobyId(auxUsuarioXEmpleado.getV_id_user());
         repositoryMantEmpleado.deleteEmpleado(auxUsuario, repositoryMantEmpleado.obtenerEmpleadoPorIdUsuario(auxUsuario.getV_id()), this.usuario.getIdusuario() );
-        //repositoryMantUsuario.deleteUsuario(auxUsuario);
-        this._llenarGrilla();
-    }
+        repositoryMantUsuario.deleteUsuario(auxUsuario);
 
-    public void btnClickActivarUsuario(ActionEvent event){
-        System.out.println("Activar Usuario");
-        if(e_table.getSelectionModel().getSelectedItem() == null)
-            return;
-        UsuarioXEmpleado auxUsuarioXEmpleado = e_table.getSelectionModel().getSelectedItem();
-        Usuario auxUsuario = repositoryMantUsuario.findUsuariobyId(auxUsuarioXEmpleado.getV_id_user());
-        repositoryMantEmpleado.activeEmpleado(auxUsuario, repositoryMantEmpleado.obtenerEmpleadoPorIdUsuario(auxUsuario.getV_id()), this.usuario.getIdusuario() );
         this._llenarGrilla();
     }
 
@@ -147,7 +136,7 @@ public class UsuarioCtrl implements FxmlController{
         e_nombre.setCellValueFactory(new PropertyValueFactory<UsuarioXEmpleado, String>("v_nombre"));
         e_apellido.setCellValueFactory(new PropertyValueFactory<UsuarioXEmpleado, String>("v_apellido"));
         e_descripcion.setCellValueFactory(new PropertyValueFactory<UsuarioXEmpleado, String>("v_descripcion"));
-        e_activo.setCellValueFactory(new PropertyValueFactory<UsuarioXEmpleado, Boolean>("v_activo"));
+
         this._llenarGrilla();
     }
 
@@ -155,14 +144,11 @@ public class UsuarioCtrl implements FxmlController{
 
         e_table.getItems().clear();
         List<UsuarioXEmpleado> auxListaUsuarioXEmpleado = repositoryMantEmpleado.obtenerUsuarioXEmpleadoPorIdUsuario();
-        try {
-            for (int i = 0; i < auxListaUsuarioXEmpleado.size(); i++) {
-                e_table.getItems().add(new UsuarioXEmpleado(auxListaUsuarioXEmpleado.get(i).getV_id_user(),
-                        auxListaUsuarioXEmpleado.get(i).getV_user(), auxListaUsuarioXEmpleado.get(i).getV_numDoc(),
-                        auxListaUsuarioXEmpleado.get(i).getV_nombre(), auxListaUsuarioXEmpleado.get(i).getV_apellido(),
-                        auxListaUsuarioXEmpleado.get(i).getV_descripcion(),
-                        auxListaUsuarioXEmpleado.get(i).getV_activo() ));
-            }
+        for(int i = 0; i < auxListaUsuarioXEmpleado.size(); i++){
+            e_table.getItems().add(new UsuarioXEmpleado( auxListaUsuarioXEmpleado.get(i).getV_id_user(),
+                    auxListaUsuarioXEmpleado.get(i).getV_user(), auxListaUsuarioXEmpleado.get(i).getV_numDoc(),
+                    auxListaUsuarioXEmpleado.get(i).getV_nombre(), auxListaUsuarioXEmpleado.get(i).getV_apellido(),
+                    auxListaUsuarioXEmpleado.get(i).getV_descripcion() ));
         }
     }
 
