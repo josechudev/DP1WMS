@@ -32,7 +32,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         return listaProductos;
     }
 
-    public Producto mapParam(ResultSet rs, int i) throws SQLException {
+    private Producto mapParam(ResultSet rs, int i) throws SQLException {
         Producto producto = new Producto();
         producto.setIdProducto(rs.getInt("idproducto"));
         producto.setNombreProducto(rs.getString("nombreproducto"));
@@ -55,7 +55,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         return listaCategorias;
     }
 
-    public CategoriaProducto mapParam2(ResultSet rs, int i) throws SQLException {
+    private CategoriaProducto mapParam2(ResultSet rs, int i) throws SQLException {
         CategoriaProducto categoria = new CategoriaProducto();
         categoria.setIdCategoria(rs.getInt("idcategoria"));
         categoria.setDescripcion(rs.getString("descripcion"));
@@ -75,7 +75,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         return listaLotes;
     }
 
-    public Lote mapParam3(ResultSet rs, int i) throws SQLException {
+    private Lote mapParam3(ResultSet rs, int i) throws SQLException {
         Lote lote = new Lote();
         lote.setIdProducto(rs.getInt("idproducto"));
         lote.setNombreProducto(rs.getString("nombreproducto"));
@@ -98,7 +98,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         return listaTipoMovimiento;
     }
 
-    public TipoMovimiento mapParam4(ResultSet rs, int i) throws SQLException {
+    private TipoMovimiento mapParam4(ResultSet rs, int i) throws SQLException {
         TipoMovimiento tipoMovimiento = new TipoMovimiento();
         tipoMovimiento.setIdTipoMovimiento(rs.getInt("idtipomovimiento"));
         tipoMovimiento.setDescripcion(rs.getString("descripcion"));
@@ -168,5 +168,43 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
 
         return 0;
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public int registrarMovimiento(Movimiento movimiento){
+
+        String SQL = "INSERT INTO public.movimiento (totalproductos,observaciones,fechamovimiento,idtipomovimiento,idempleadoauditado) VALUES (?,?,?,?,?) RETURNING idmovimiento";
+
+        int idMovimiento = 0;
+        int idTipoMovSalida = 6;
+        try {
+            Movimiento movimientoInsertado = (Movimiento) this.jdbcTemplate.queryForObject(SQL, new Object[]{movimiento.getTotalProductos(),movimiento.getObservaciones(),movimiento.getFechaMovimiento(),idTipoMovSalida,movimiento.getIdEmpleadoAuditado()},
+                    (rs, i)->{
+                        Movimiento movimientoTemporal = new Movimiento();
+                        movimientoTemporal.setIdMovimiento(rs.getInt("idmovimiento"));
+                        return movimientoTemporal;
+                    });
+            idMovimiento = movimientoInsertado.getIdMovimiento();
+        } catch(Exception e){
+            e.printStackTrace();
+            throw e;
+        }
+
+        System.out.println("IdMovimiento Insertado -> "+idMovimiento);
+        List<DetalleMovimiento> listaDetalleMovimiento = movimiento.getListaDetalleMovimiento();
+        for(DetalleMovimiento detalle : listaDetalleMovimiento){
+            if(idMovimiento != 0){
+                SQL = "INSERT INTO public.detallemovimiento (idmovimiento,idproducto,idlote,cantidad) VALUES (?,?,?,?)";
+                try{
+                    jdbcTemplate.update(SQL,new Object[] {idMovimiento,detalle.getIdProducto(),detalle.getIdLote(),detalle.getCantidad()});
+                    System.out.println("Se ha insertado en la tabla detalle movimiento");
+                }catch (EmptyResultDataAccessException e) {
+                    e.printStackTrace();
+                    throw e;
+                }
+            }
+        }
+        return idMovimiento;
+    }
+
 
 }

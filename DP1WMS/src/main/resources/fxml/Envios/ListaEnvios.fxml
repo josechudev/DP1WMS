@@ -7,19 +7,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Envios.ListaEnviosController">
    <children>
-      <TableView layoutX="46.0" layoutY="128.0" prefHeight="200.0" prefWidth="514.0">
+      <TableView fx:id="tablaEnviosPendientes" layoutX="46.0" layoutY="128.0" prefHeight="200.0" prefWidth="514.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="N°" />
-          <TableColumn prefWidth="112.0" text="Cliente" />
-            <TableColumn prefWidth="200.0" text="Fecha Envio" />
-            <TableColumn prefWidth="126.0" text="Destino" />
+          <TableColumn fx:id="c_indice" prefWidth="75.0" text="N°" />
+          <TableColumn fx:id="c_cliente" prefWidth="112.0" text="Cliente" />
+            <TableColumn fx:id="c_fechaenvio" prefWidth="200.0" text="Fecha Envio" />
+            <TableColumn fx:id="c_destino" prefWidth="126.0" text="Destino" />
         </columns>
       </TableView>
-      <Button layoutX="46.0" layoutY="76.0" mnemonicParsing="false" text="Retirar productos envio" />
-      <Button layoutX="267.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Cancelar" />
+      <Button layoutX="46.0" layoutY="76.0" mnemonicParsing="false" onAction="#retirarProductosEnvio" text="Retirar productos envio" />
+      <Button layoutX="267.0" layoutY="349.0" mnemonicParsing="false" onAction="#cancelarListaEnvios" prefHeight="25.0" prefWidth="88.0" text="Cancelar" />
       <Label layoutX="46.0" layoutY="28.0" text="Lista Envios Pendientes">
          <font>
             <Font size="18.0" />

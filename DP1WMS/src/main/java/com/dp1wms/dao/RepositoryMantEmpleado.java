@@ -21,8 +21,7 @@ public interface RepositoryMantEmpleado {
 
     void deleteEmpleado(Usuario auxUsuario, Empleado auxEmpleado, Long auxIdEmpleadoAuditado);
 
-    void activeEmpleado(Usuario auxUsuario, Empleado auxEmpleado, Long auxIdEmpleadoAuditado);
-
     Usuario findUsuariobyName(String auxName);
 
+    void cargaMasivaDatos(List<Empleado> auxListaEmpleado, List<String> auxNombreUsuario, List<String> auxNombreTipoEmpleado);
 }
