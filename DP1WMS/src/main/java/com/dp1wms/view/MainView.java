@@ -254,6 +254,19 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
+    },LISTAR_ENVIOS{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("listaenvios.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Envios/ListaEnvios.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
     };
 
     public String getStringFromResourceBundle(String key) {

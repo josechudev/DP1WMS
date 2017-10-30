@@ -130,6 +130,10 @@ public class MainController implements FxmlController {
         this.stageManager.mostrarModal(VentasView.GEN_PROFORMA);
     }
 
+    @FXML
+    private void cargarListaEnviosPendientes(){
+        this.stageManager.mostrarModal(MainView.LISTAR_ENVIOS);
+    }
 
 
     public void setUsuario(Usuario usuario){
