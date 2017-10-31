@@ -114,10 +114,11 @@
                                     <Button layoutX="86.0" layoutY="10.0" mnemonicParsing="false" onAction="#buscarProforma" prefHeight="26.0" text="Completar con Proforma" />
                                     <Button mnemonicParsing="false" onAction="#mostrarBusquedaProducto" prefHeight="26.0" text="Buscar Producto" />
                                     <Button mnemonicParsing="false" onAction="#modificarCantidadDetalle" text="Modificar Cantidad" />
-                                    <Button mnemonicParsing="false" onAction="#eliminarDetalle" prefHeight="26.0" text="Eliminar" />
+                                    <Button mnemonicParsing="false" onAction="#eliminarProducto" prefHeight="26.0" text="Eliminar Producto" />
+                                    <Button layoutX="514.0" layoutY="10.0" mnemonicParsing="false" onAction="#eliminarTodoProducto" prefHeight="26.0" text="Eliminar Todo" />
                                  </children>
                               </HBox>
-                              <TableView fx:id="pedidoTable" maxHeight="480.0" minHeight="240.0" prefHeight="240.0" prefWidth="1149.0" VBox.vgrow="ALWAYS">
+                              <TableView fx:id="pedidoTable" maxHeight="480.0" minHeight="-Infinity" prefHeight="160.0" prefWidth="1149.0" VBox.vgrow="ALWAYS">
                                 <columns>
                                   <TableColumn fx:id="codigoTC" editable="false" prefWidth="44.0" text="Codigo" />
                                   <TableColumn fx:id="productoTC" editable="false" prefWidth="42.0" text="Producto" />
@@ -130,7 +131,66 @@
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
                               </TableView>
-                              <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="353.0" prefWidth="1152.0" spacing="10.0">
+                              <HBox layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="470.0" spacing="20.0" VBox.vgrow="NEVER">
+                                 <children>
+                                    <Label prefHeight="26.0" text="Envios">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Button layoutX="86.0" layoutY="10.0" mnemonicParsing="false" onAction="#agregarEnvio" prefHeight="26.0" text="Agregar Envio" />
+                                    <Button layoutX="81.0" layoutY="30.0" mnemonicParsing="false" onAction="#modificarEnvio" prefHeight="26.0" text="Modificar Envio" />
+                                    <Button mnemonicParsing="false" onAction="#verificarEnvios" text="Verificar Envios" />
+                                    <Button mnemonicParsing="false" onAction="#eliminarEnvio" prefHeight="26.0" text="Eliminar Envio" />
+                                    <Button layoutX="192.0" layoutY="10.0" mnemonicParsing="false" onAction="#eliminarTodoEnvios" prefHeight="26.0" text="Eliminar Todo" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" top="20.0" />
+                                 </padding>
+                              </HBox>
+                              <TableView fx:id="enviosTable" layoutX="10.0" layoutY="47.0" minHeight="103.0" prefHeight="160.0" prefWidth="1155.0" VBox.vgrow="ALWAYS">
+                                 <columns>
+                                    <TableColumn fx:id="destinoTC" editable="false" prefWidth="44.0" text="Destino" />
+                                    <TableColumn fx:id="fechaEnvioTC" editable="false" prefWidth="42.0" text="Fecha Envio" />
+                                    <TableColumn fx:id="costoFleteTC" prefWidth="75.0" text="Costo Flete (S/.)" />
+                                 </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                              <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="476.0" prefWidth="1152.0" spacing="10.0" VBox.vgrow="NEVER">
+                                 <children>
+                                    <Label text="SubTotal (S/.) :">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="subtotalLabel" text="0" />
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="447.0" prefWidth="1152.0" spacing="10.0" VBox.vgrow="NEVER">
+                                 <children>
+                                    <Label text="Total Flete (S/.) :">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="totalFleteLabel" text="0" />
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="TOP_RIGHT" prefWidth="1152.0" spacing="10.0" VBox.vgrow="NEVER">
                                  <children>
                                     <Label text="Total (S/.) :">
                                        <font>

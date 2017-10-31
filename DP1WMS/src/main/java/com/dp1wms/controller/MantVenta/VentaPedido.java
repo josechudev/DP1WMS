@@ -6,6 +6,7 @@ import com.dp1wms.controller.MantCliente.ClienteInfoController;
 import com.dp1wms.dao.RepositoryCondicion;
 import com.dp1wms.dao.RepositoryMantPedido;
 import com.dp1wms.model.*;
+import com.dp1wms.util.DateParser;
 import com.dp1wms.util.DescuentoAlgoritmo;
 import com.dp1wms.view.ClientesView;
 import com.dp1wms.view.StageManager;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,12 +42,20 @@ public class VentaPedido implements FxmlController {
     @FXML private TableColumn<DetallePedido, Float> descuentoTC;
     @FXML private TableColumn<DetallePedido, Float> subtotalTC;
 
+    @FXML private TableView<Envio> enviosTable;
+    @FXML private TableColumn<Envio, String> destinoTC;
+    @FXML private TableColumn<Envio, String> fechaEnvioTC;
+    @FXML private TableColumn<Envio, Float> costoFleteTC;
+
+
     @FXML private TextArea observacionTA;
+    @FXML private Label subtotalLabel;
+    @FXML private Label totalFleteLabel;
     @FXML private Label totalLabel;
 
     private Cliente cliente;
     private Pedido pedido;
-    private Pedido pedidoFinal;
+    private ArrayList<Envio> envios;
 
     private StageManager stageManager;
     private MainController mainController;
@@ -61,8 +71,9 @@ public class VentaPedido implements FxmlController {
     public void initialize(){
         this.cliente = null;
         this.pedido = new Pedido();
-        this.pedidoFinal = null;
+        this.envios = new ArrayList<>();
         this.limpiarTablaPedido();
+        this.limpiarTablaEnvios();
     }
 
     @FXML
@@ -148,7 +159,7 @@ public class VentaPedido implements FxmlController {
     }
 
     @FXML
-    private void eliminarDetalle(){
+    private void eliminarProducto(){
         DetallePedido dp = this.pedidoTable.getSelectionModel().getSelectedItem();
         if(dp == null){
             this.stageManager.mostrarErrorDialog("Error", null,
@@ -159,7 +170,13 @@ public class VentaPedido implements FxmlController {
         }
     }
 
-    @FXML private void limpiarTablaPedido(){
+    @FXML
+    private void eliminarTodoProducto(){
+        this.pedido.setDetalles(new ArrayList<>());
+        this.llenarTablaPedido();
+    }
+
+    private void limpiarTablaPedido(){
         this.pedidoTable.getItems().clear();
         this.codigoTC.setCellValueFactory(value -> {
             return new SimpleStringProperty(value.getValue().getCodigoProducto());
@@ -223,7 +240,6 @@ public class VentaPedido implements FxmlController {
         } else {
             this.stageManager.mostrarInfoDialog("Pedido", null,
                     "Se registró satisfactoriamente. Continue seleccionado los envios.");
-            this.pedidoFinal = this.pedido;
             this.cerrarVentana(event);
         }
     }
@@ -247,6 +263,49 @@ public class VentaPedido implements FxmlController {
         this.completarCamposClientes();
     }
 
+    private void limpiarTablaEnvios(){
+        this.enviosTable.getItems().clear();
+        this.destinoTC.setCellValueFactory(value->{
+            return new SimpleStringProperty(value.getValue().getDestino());
+        });
+        this.fechaEnvioTC.setCellValueFactory(value->{
+            Timestamp time = value.getValue().getFechaEnvio();
+            return new SimpleStringProperty(DateParser.timestampToString(time));
+        });
+        this.costoFleteTC.setCellValueFactory(value->{
+            return new SimpleObjectProperty<Float>(value.getValue().getCostoFlete());
+        });
+    }
+    private void llenarTablaEnvios(){
+        this.limpiarTablaPedido();
+        this.enviosTable.getItems().addAll(this.envios);
+    }
+
+    @FXML
+    private void agregarEnvio(){
+        this.stageManager.mostrarModal(VentasView.INFO_ENVIO);
+    }
+
+    @FXML
+    private void modificarEnvio(){
+
+    }
+
+    @FXML
+    private void verificarEnvios(){
+
+    }
+
+    @FXML
+    private void eliminarEnvio(){
+
+    }
+
+    @FXML
+    private void eliminarTodoEnvios(){
+
+    }
+
     @Autowired @Lazy
     public VentaPedido(StageManager stageManager, MainController mainController,
                        ClienteInfoController clienteInfoController,
@@ -261,7 +320,7 @@ public class VentaPedido implements FxmlController {
         this.ventaBuscarProforma = ventaBuscarProforma;
     }
 
-    public Pedido getPedidoFinal(){
-        return this.pedidoFinal;
+    public Pedido getPedido(){
+        return  this.pedido;
     }
 }

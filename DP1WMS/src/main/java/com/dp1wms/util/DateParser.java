@@ -51,6 +51,12 @@ public class DateParser {
         }
     };
 
+    public static String timestampToString(Timestamp time){
+        Date date = new Date();
+        date.setTime(time.getTime());
+        return format.format(date);
+    }
+
     public static Timestamp localdateToTimestamp(LocalDate localDate){
         String fecha = stringConverter.toString(localDate);
         return stringToTimestamp(fecha);

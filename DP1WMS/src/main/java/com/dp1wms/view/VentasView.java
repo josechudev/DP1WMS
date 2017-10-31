@@ -68,8 +68,20 @@ public enum VentasView implements FxmlView {
         public boolean isResizable() {
             return true;
         }
+    }, INFO_ENVIO{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("ventas.informacion_envio.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Ventas/InformacionEnvio.fxml";
+        }
+        @Override
+        public boolean isResizable() {
+            return false;
+        }
     };
-
 
 
     public String getStringFromResourceBundle(String key) {
