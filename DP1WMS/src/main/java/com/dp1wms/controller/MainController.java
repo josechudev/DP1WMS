@@ -144,6 +144,10 @@ public class MainController implements FxmlController {
     private void cargarListaGuias(){
         this.stageManager.mostrarModal(MainView.LISTAR_GUIA);
     }
+    @FXML
+    private void cargarKardex(){
+        this.stageManager.mostrarModal(MainView.CARGAR_KARDEX);
+    }
 
     @FXML
     private void cargarDevolucionFactura(){
