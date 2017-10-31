@@ -60,4 +60,20 @@ public class Area {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
+
+    public Point2D getVertSupIzq(){
+        return this.posicionInicial;
+    }
+
+    public Point2D getVertSupDer(){
+        return new Point2D(this.posicionFinal.getX(), this.posicionInicial.getY());
+    }
+
+    public Point2D getVertInfIzq(){
+        return new Point2D(this.posicionInicial.getX(), this.posicionFinal.getY());
+    }
+
+    public Point2D getVertInfDer(){
+        return this.getPosicionFinal();
+    }
 }
