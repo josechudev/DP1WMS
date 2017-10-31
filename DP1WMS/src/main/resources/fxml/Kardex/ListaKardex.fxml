@@ -9,33 +9,34 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="515.0" prefWidth="1091.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Kardex.KardexController">
-   <children>
-      <TableView layoutX="24.0" layoutY="172.0" prefHeight="200.0" prefWidth="1007.0">
-        <columns>
-          <TableColumn prefWidth="78.0" text="Codigo" />
-          <TableColumn prefWidth="154.0" text="Fecha Movimiento" />
-            <TableColumn prefWidth="154.0" text="Producto" />
-            <TableColumn prefWidth="154.0" text="Cantidad" />
-            <TableColumn prefWidth="154.0" text="Descripcion" />
-            <TableColumn prefWidth="154.0" text="Entradas" />
-            <TableColumn prefWidth="154.0" text="Salidas" />
-        </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-      </TableView>
-      <Button layoutX="971.0" layoutY="449.0" mnemonicParsing="false" text="Cerrar" />
-      <Label layoutX="24.0" layoutY="25.0" text="Reporte Kardex">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <DatePicker disable="true" layoutX="24.0" layoutY="99.0" promptText="20/10/2017" />
-      <Label layoutX="24.0" layoutY="70.0" text="Desde" />
-      <TextField disable="true" layoutX="266.0" layoutY="99.0" text="31/10/2017" />
-      <Label layoutX="266.0" layoutY="70.0" text="Hasta" />
-      <TextField disable="true" layoutX="860.0" layoutY="388.0" />
-      <Label layoutX="701.0" layoutY="393.0" text="Balance Total" />
-   </children>
+<AnchorPane prefHeight="515.0" prefWidth="1091.0" xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Kardex.KardexController">
+    <children>
+        <TableView fx:id="tableViewKardex" layoutX="24.0" layoutY="172.0" prefHeight="200.0" prefWidth="1007.0">
+            <columns>
+                <TableColumn fx:id="c_Codigo" prefWidth="78.0" text="Codigo"/>
+                <TableColumn fx:id="c_fechaMov" prefWidth="154.0" text="Fecha Movimiento"/>
+                <TableColumn fx:id="c_descProd" prefWidth="154.0" text="Producto"/>
+                <TableColumn fx:id="c_cantidad" prefWidth="154.0" text="Cantidad"/>
+                <TableColumn fx:id="c_decMov" prefWidth="154.0" text="Descripcion"/>
+                <TableColumn fx:id="c_entradas" prefWidth="154.0" text="Entradas"/>
+                <TableColumn fx:id="c_salidas" prefWidth="154.0" text="Salidas"/>
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+        </TableView>
+        <Button fx:id="btn_cerrar" layoutX="971.0" layoutY="449.0" mnemonicParsing="false" text="Cerrar"/>
+        <Label layoutX="24.0" layoutY="25.0" text="Reporte Kardex">
+            <font>
+                <Font size="23.0"/>
+            </font>
+        </Label>
+        <DatePicker disable="true" layoutX="24.0" layoutY="99.0" promptText="20/10/2017"/>
+        <Label layoutX="24.0" layoutY="70.0" text="Desde"/>
+        <TextField disable="true" layoutX="266.0" layoutY="99.0" text="31/10/2017"/>
+        <Label layoutX="266.0" layoutY="70.0" text="Hasta"/>
+        <TextField fx:id="txt_balance" disable="true" layoutX="860.0" layoutY="388.0"/>
+        <Label layoutX="757.0" layoutY="388.0" prefHeight="26.0" prefWidth="89.0" text="Balance Total"/>
+    </children>
 </AnchorPane>
