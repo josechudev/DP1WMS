@@ -131,6 +131,11 @@ public class MainController implements FxmlController {
     }
 
     @FXML
+    private void cargarGenerarPedido(){
+        this.stageManager.mostrarModal(VentasView.GEN_PEDIDO);
+    }
+
+    @FXML
     private void cargarListaEnviosPendientes(){
         this.stageManager.mostrarModal(MainView.LISTAR_ENVIOS);
     }

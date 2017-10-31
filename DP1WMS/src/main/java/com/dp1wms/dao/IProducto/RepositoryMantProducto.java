@@ -12,4 +12,5 @@ public interface RepositoryMantProducto {
     void createProducto(Producto producto) throws ParseException;
     void updateProducto(Producto producto);
     void deleteProducto(Producto producto);
+    List<Producto> buscarProductos(String campo, String dato);
 }

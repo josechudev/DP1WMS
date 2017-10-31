@@ -1,9 +1,11 @@
 package com.dp1wms.controller.MantVenta;
 
 import com.dp1wms.controller.FxmlController;
+import com.dp1wms.dao.IProducto.RepositoryMantProducto;
 import com.dp1wms.dao.RepositoryProforma;
 import com.dp1wms.model.Producto;
 import com.dp1wms.view.StageManager;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -15,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class VentaBusquedaProductoController implements FxmlController{
+public class VentaBuscarProducto implements FxmlController{
 
     //error en no seleccionar producto
     private static final String ERR_PROD_TITLE = "Error";
@@ -34,12 +36,15 @@ public class VentaBusquedaProductoController implements FxmlController{
     @FXML private TableColumn<Producto, String> nombreTC;
     @FXML private TableColumn<Producto, Float> precioTC;
     @FXML private TableColumn<Producto, String> categoriaTC;
+    @FXML private TableColumn<Producto, Integer> stockTC;
 
     @Autowired
-    private RepositoryProforma repositoryProforma;
+    private RepositoryMantProducto repositoryMantProducto;
 
     private StageManager stageManager;
-    private VentaProformaController ventaProformaController;
+
+    private Producto producto;
+    private int cantidad;
 
     @FXML
     private void buscarProducto(){
@@ -59,7 +64,7 @@ public class VentaBusquedaProductoController implements FxmlController{
             }
         }
         String dato = this.busquedaField.getText();
-        List<Producto> productos = this.repositoryProforma.buscarProductosParaVenta(campo, dato);
+        List<Producto> productos = this.repositoryMantProducto.buscarProductos(campo, dato);
         if(productos == null){
             System.exit(1);
         }
@@ -89,7 +94,8 @@ public class VentaBusquedaProductoController implements FxmlController{
                 }
             }
             if(cantidad > 0){
-                this.ventaProformaController.agregarProducto(p, cantidad);
+                this.producto = p;
+                this.cantidad = cantidad;
                 this.cerrarVentana(event);
             } else {//show error
                 this.stageManager.mostrarErrorDialog(ERR_CANT_TITLE, ERR_CANT_HEADER, ERR_CANT_CONTENT);
@@ -109,6 +115,9 @@ public class VentaBusquedaProductoController implements FxmlController{
         this.nombreTC.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombreProducto"));
         this.precioTC.setCellValueFactory(new PropertyValueFactory<Producto, Float>("precio"));
         this.categoriaTC.setCellValueFactory(new PropertyValueFactory<Producto, String>("Categoria"));
+        this.stockTC.setCellValueFactory(value->{
+            return new SimpleObjectProperty<Integer>(value.getValue().getStock());
+        });
         this.productoTable.setEditable(false);
     }
 
@@ -117,12 +126,20 @@ public class VentaBusquedaProductoController implements FxmlController{
         this.productoTable.getItems().clear();
         this.campoCB.getItems().addAll("Codigo", "Nombre", "Categoria");
         this.campoCB.getSelectionModel().select(0);
+        this.producto = null;
+        this.cantidad = 0;
     }
 
     @Autowired @Lazy
-    public VentaBusquedaProductoController(StageManager stageManager, VentaProformaController ventaProformaController){
+    public VentaBuscarProducto(StageManager stageManager){
         this.stageManager = stageManager;
-        this.ventaProformaController = ventaProformaController;
     }
 
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
 }

@@ -15,6 +15,36 @@ public class DetalleEnvio {
     private int idLote;
     private Double peso;
 
+    public DetalleEnvio(){
+
+    }
+
+    public DetalleEnvio(DetalleEnvio de){
+        this.idDetalleEnvio = de.idDetalleEnvio;
+        this.idEnvio = de.idEnvio;
+        this.idProducto = de.idProducto;
+        this.cantidad = de.cantidad;
+        this.producto = de.producto;
+        this.indiceTabla = de.indiceTabla;
+        this.codigoProducto = de.codigoProducto;
+        this.nombreProducto = de.nombreProducto;
+        this.loteAsociado = de.loteAsociado;
+        this.idLote = de.idLote;
+    }
+
+    public void copiar(DetalleEnvio de){
+        this.idDetalleEnvio = de.idDetalleEnvio;
+        this.idEnvio = de.idEnvio;
+        this.idProducto = de.idProducto;
+        this.cantidad = de.cantidad;
+        this.producto = de.producto;
+        this.indiceTabla = de.indiceTabla;
+        this.codigoProducto = de.codigoProducto;
+        this.nombreProducto = de.nombreProducto;
+        this.loteAsociado = de.loteAsociado;
+        this.idLote = de.idLote;
+    }
+
     public int getCantidad() {
         return cantidad;
     }
