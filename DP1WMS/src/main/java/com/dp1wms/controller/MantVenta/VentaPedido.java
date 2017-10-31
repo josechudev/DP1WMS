@@ -107,7 +107,12 @@ public class VentaPedido implements FxmlController {
         Producto p = this.ventaBuscarProducto.getProducto();
         int cantidad = this.ventaBuscarProducto.getCantidad();
         if(p != null && cantidad > 0){
-            this.agregarProducto(p, cantidad);
+            if(cantidad > p.getStock()){
+                this.stageManager.mostrarErrorDialog("Error Pedido", null,
+                        "El valor ingresado es mayor al stock disponible");
+            } else {
+                this.agregarProducto(p, cantidad);
+            }
         }
 
     }
@@ -140,7 +145,7 @@ public class VentaPedido implements FxmlController {
                     cantidad = 0;
                 }
             }
-            if(cantidad > 0 ){
+            if(cantidad > 0 && cantidad <= dp.getProducto().getStock()){
                 dp.setCantidad(cantidad);
             } else {//show error
                 this.stageManager.mostrarErrorDialog("Error cantidad de producto",null,

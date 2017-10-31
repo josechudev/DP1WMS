@@ -55,7 +55,12 @@ public class VentaInformacionEnvio implements FxmlController{
 
     @FXML
     private void agregarUnProducto(){
+        DetallePedido dp = this.prodDisponiblesTable.getSelectionModel().getSelectedItem();
+        if(dp == null){
 
+        } else {
+            
+        }
     }
 
     @FXML
