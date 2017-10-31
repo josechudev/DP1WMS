@@ -28,6 +28,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoDescuentos" text="Descuentos" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarListaEnviosPendientes" text="Despacho Envios" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarListaGuias" text="Guias Remision" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarDevolucionFactura" text="Devolucion" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Administracion">
