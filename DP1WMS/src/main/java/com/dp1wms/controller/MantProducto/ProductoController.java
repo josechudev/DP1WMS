@@ -59,6 +59,8 @@ public class ProductoController  implements FxmlController {
     @FXML private  TableColumn<Producto,String>c_prodCod;
     @FXML private  TableColumn<Producto,String>c_prodFechaC;
     @FXML private TableColumn<Producto, String> c_prodAct;
+    @FXML private TableColumn<Producto,Float>c_prodPrecioC;
+    @FXML private TableColumn<Producto,String>c_prodUnidades;
     @Autowired
     private RepositoryMantProducto repositoryMantProducto;
     @Autowired
@@ -153,7 +155,8 @@ public class ProductoController  implements FxmlController {
         c_prodPeso.setCellValueFactory(new PropertyValueFactory<Producto,Float>("Peso"));
         c_prodPrecio.setCellValueFactory(new PropertyValueFactory<Producto,Float>("Precio"));
         c_prodStock.setCellValueFactory(new PropertyValueFactory<Producto,Integer>("Stock"));
-
+        c_prodUnidades.setCellValueFactory(new PropertyValueFactory<Producto,String>("Unidades"));
+        c_prodPrecioC.setCellValueFactory(new PropertyValueFactory<Producto,Float>("PrecioCompra"));
 
         this._llenarGrilla();
     }
