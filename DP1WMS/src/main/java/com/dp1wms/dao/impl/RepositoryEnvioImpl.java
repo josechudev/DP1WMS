@@ -17,12 +17,12 @@ public class RepositoryEnvioImpl implements RepositoryEnvio{
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<Envio> obtenerEnviosNoDespachados(){
+    public List<Envio> obtenerEnviosRealizados(Boolean realizado){
 
-        String SQL = "SELECT e.idenvio,e.fechaenvio,e.destino,e.realizado,e.idpedido, p.idcliente,c.razonsocial FROM public.envio e ,public.pedido p,public.cliente c WHERE not realizado and e.idpedido = p.idpedido and (not p.esdevolucion) and (c.idcliente = p.idcliente) ";
+        String SQL = "SELECT e.idenvio,e.fechaenvio,e.destino,e.realizado,e.idpedido, p.idcliente,c.razonsocial FROM public.envio e ,public.pedido p,public.cliente c WHERE (realizado = ?) and e.idpedido = p.idpedido and (not p.esdevolucion) and (c.idcliente = p.idcliente) ";
         List<Envio> listaEnvios = null;
         try{
-            listaEnvios = jdbcTemplate.query(SQL,new Object[] {}, this::mapParam);
+            listaEnvios = jdbcTemplate.query(SQL,new Object[] {realizado}, this::mapParam);
         }catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
         }

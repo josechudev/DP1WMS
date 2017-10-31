@@ -1,13 +1,9 @@
-package com.dp1wms.controller.Envios;
+package com.dp1wms.controller.Guia;
 
 import com.dp1wms.controller.FxmlController;
 import com.dp1wms.controller.MainController;
 import com.dp1wms.dao.RepositoryEnvio;
-import com.dp1wms.dao.impl.RepositoryMantMovImpl;
-import com.dp1wms.model.DetalleEnvio;
-import com.dp1wms.model.DetalleMovimiento;
 import com.dp1wms.model.Envio;
-import com.dp1wms.model.Movimiento;
 import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
@@ -23,8 +19,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Component
-public class ListaEnviosController implements FxmlController {
-
+public class ListaEnviosRealizadosController implements FxmlController {
 
     @FXML
     private TableView<Envio> tablaEnviosPendientes = new TableView<Envio>();
@@ -37,25 +32,22 @@ public class ListaEnviosController implements FxmlController {
     @FXML
     private TableColumn<Envio,String> c_destino;
 
-    private MainController mainController;
+    @Autowired
+    private RepositoryEnvio repositoryEnvio;
+
+    private  ListaGuiasController listaGuiasController;
 
     List<Envio> listaEnvios;
 
     Long idEmpleadoAuditado = null;
 
-    @Autowired
-    private RepositoryEnvio repositoryEnvio;
-
-    @Autowired
-    private RepositoryMantMovImpl repositoryMantMovImpl;
-
     private final StageManager stageManager;
 
     @Autowired
     @Lazy
-    public ListaEnviosController(StageManager stageManager,MainController mainController) {
+    public ListaEnviosRealizadosController(StageManager stageManager, ListaGuiasController listaGuiasController) {
         this.stageManager = stageManager;
-        this.mainController = mainController;
+        this.listaGuiasController = listaGuiasController;
     }
 
     public void limpiarTabla(){
@@ -71,8 +63,11 @@ public class ListaEnviosController implements FxmlController {
         this.stageManager.cerrarVentana(event);
     }
 
-    public void retirarProductosEnvio(ActionEvent event){
-        this.stageManager.mostrarModal(MainView.RETIRO_ENVIO);
+    public void crearGuiaRemision(ActionEvent event){
+
+        if(tablaEnviosPendientes.getSelectionModel().getSelectedItem() != null){
+            this.stageManager.mostrarModal(MainView.CREAR_GUIA);
+        }
 
     }
 
@@ -80,11 +75,18 @@ public class ListaEnviosController implements FxmlController {
         return tablaEnviosPendientes.getSelectionModel().getSelectedItem();
     }
 
+    public Long obtenerIdEmpleadoAuditado(){
+        return this.idEmpleadoAuditado;
+    }
 
     public void actualizarTabla(){
         this.limpiarTabla();
-        this.listaEnvios = this.repositoryEnvio.obtenerEnviosRealizados(false);
+        this.listaEnvios = this.repositoryEnvio.obtenerEnviosRealizados(true);
         this.llenarTabla(this.listaEnvios);
+    }
+
+    public void actualizarListaGuia(){
+        this.listaGuiasController.actualizarListaGuias();
     }
 
     public void llenarTabla(List<Envio> lista){
@@ -98,16 +100,12 @@ public class ListaEnviosController implements FxmlController {
 
     @Override
     public void initialize() {
-        this.listaEnvios = this.repositoryEnvio.obtenerEnviosRealizados(false);
+        this.listaEnvios = this.repositoryEnvio.obtenerEnviosRealizados(true);
         System.out.println("Tamñao de lista envios recibida de repository->" + this.listaEnvios.size());
-        //this.limpiarTabla();
-        c_indice.setCellValueFactory(new PropertyValueFactory<Envio,Integer>("indiceTabla"));
-        c_cliente.setCellValueFactory(new PropertyValueFactory<Envio,String>("razonSocial"));
-        c_fechaenvio.setCellValueFactory(new PropertyValueFactory<Envio,Timestamp>("fechaEnvio"));
-        c_destino.setCellValueFactory(new PropertyValueFactory<Envio,String>("destino"));
-        tablaEnviosPendientes.setEditable(true);
-        this.llenarTabla(this.listaEnvios );
+        this.limpiarTabla();
+        this.llenarTabla(this.listaEnvios);
 
-        this.idEmpleadoAuditado = this.mainController.getEmpleado().getIdempleado();
+        this.idEmpleadoAuditado = this.listaGuiasController.obtenerIdEmpleadoAuditado();
+
     }
 }

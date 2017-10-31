@@ -2,10 +2,11 @@ package com.dp1wms.dao;
 
 import com.dp1wms.model.Envio;
 
+import javax.swing.text.StyledEditorKit;
 import java.util.List;
 
 public interface RepositoryEnvio {
 
-    List<Envio> obtenerEnviosNoDespachados();
+    List<Envio> obtenerEnviosRealizados(Boolean realizado);
     void actualizarEstadoEnvio(Long idPedido);
 }

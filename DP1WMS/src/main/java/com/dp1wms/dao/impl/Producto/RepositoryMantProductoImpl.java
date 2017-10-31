@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -24,7 +23,7 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
 
     @Override
     public List<Producto> selectAllProducto() {
-        String sql = "select idproducto, nombreproducto, peso, fechavencimiento, p.descripcion, precio, stock, p.idcategoria,cp.descripcion, codigo, fechacreacion, activo, idempleadoauditado\n" +
+        String sql = "select idproducto, nombreproducto, peso, fechavencimiento, p.descripcion, precio, stock, p.idcategoria,cp.descripcion, codigo, fechacreacion, activo,preciocompra,unidades\n" +
                 "from producto p\n" +
                 "left join categoriaproducto as cp on cp.idcategoria = p.idcategoria\n" +
                 "order by idproducto;";
@@ -38,7 +37,7 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
     }
 
     @Override
-    public void createProducto(Producto producto)  {
+    public void createProducto(Producto producto) {
 
         String sql = "INSERT INTO producto (idproducto," +
                 "nombreproducto," +
@@ -50,7 +49,7 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
                 "idcategoria," +
                 "codigo," +
                 "fechacreacion," +
-                "activo) VALUES(default, ?,?,?,?,?,?,?,?,?,?)";
+                "activo,preciocompra,unidades) VALUES(default, ?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
             jdbcTemplate.update(sql,
                     new Object[]{producto.getNombreProducto(),
@@ -62,7 +61,9 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
                             producto.getIdCategoria(),
                             producto.getCodigo(),
                             datetimeFormatter1.parse(producto.getFechaCreacion()),
-                            producto.esActivo()});
+                            producto.esActivo(),
+                            producto.getPrecioCompra(),
+                            producto.getUnidades()});
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -71,7 +72,7 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
     @Override
     public void updateProducto(Producto producto) {
         String sql = "UPDATE producto SET nombreproducto = ?,peso=?,fechavencimiento=?," +
-                "descripcion=?,precio=?,stock=?,idcategoria=?,fechacreacion=?,activo=? WHERE idproducto=?";
+                "descripcion=?,precio=?,stock=?,idcategoria=?,fechacreacion=?,activo=?,preciocompra=?,unidades=? WHERE idproducto=?";
         jdbcTemplate.update(sql, new Object[]{producto.getNombreProducto(), producto.getPeso(),
                 Timestamp.valueOf(producto.getFechaVencimiento()), producto.getDescripcion(),
                 producto.getPrecio(),
@@ -79,6 +80,8 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
                 producto.getIdCategoria(),
                 Timestamp.valueOf(producto.getFechaCreacion()),
                 producto.esActivo(),
+                producto.getPrecioCompra(),
+                producto.getUnidades(),
                 producto.getIdProducto()
         });
     }

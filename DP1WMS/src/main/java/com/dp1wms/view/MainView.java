@@ -293,6 +293,58 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
+    },LISTAR_ENVIOS_GUIA{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("listaenviosguia.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Guia/ListaEnviosRealizados.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },LISTAR_GUIA{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("listaguia.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Guia/ListaGuias.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },CREAR_GUIA{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("crearguia.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Guia/CrearGuia.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    }, DEVOLVER_PEDIDO{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("devolucionPedido.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/DevolucionPedido/DevolucionPedido.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
     };
 
     public String getStringFromResourceBundle(String key) {

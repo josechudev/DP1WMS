@@ -18,6 +18,8 @@ public class Movimiento {
 
     private Long idEmpleadoAuditado;
 
+    private Long idEnvio;
+
     private List<DetalleMovimiento> listaDetalleMovimiento = new ArrayList<DetalleMovimiento>();
 
     public int getIdMovimiento() {
@@ -75,5 +77,14 @@ public class Movimiento {
 
     public void setListaDetalleMovimiento(List<DetalleMovimiento> listaDetalleMovimiento) {
         this.listaDetalleMovimiento = listaDetalleMovimiento;
+    }
+
+
+    public Long getIdEnvio() {
+        return idEnvio;
+    }
+
+    public void setIdEnvio(Long idEnvio) {
+        this.idEnvio = idEnvio;
     }
 }

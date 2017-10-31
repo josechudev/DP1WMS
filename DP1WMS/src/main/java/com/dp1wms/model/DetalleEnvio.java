@@ -13,6 +13,7 @@ public class DetalleEnvio {
     private String nombreProducto;
     private String loteAsociado; // para la vista de retiro de un envio
     private int idLote;
+    private Double peso;
 
     public DetalleEnvio(){
 
@@ -125,5 +126,14 @@ public class DetalleEnvio {
 
     public void setIdLote(int idLote) {
         this.idLote = idLote;
+    }
+
+
+    public Double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(Double peso) {
+        this.peso = peso;
     }
 }

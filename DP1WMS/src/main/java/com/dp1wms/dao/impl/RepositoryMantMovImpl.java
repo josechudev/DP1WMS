@@ -172,12 +172,12 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
     @Transactional(rollbackFor = Exception.class)
     public int registrarMovimiento(Movimiento movimiento){
 
-        String SQL = "INSERT INTO public.movimiento (totalproductos,observaciones,fechamovimiento,idtipomovimiento,idempleadoauditado) VALUES (?,?,?,?,?) RETURNING idmovimiento";
+        String SQL = "INSERT INTO public.movimiento (totalproductos,observaciones,fechamovimiento,idtipomovimiento,idempleadoauditado,idenvio) VALUES (?,?,?,?,?,?) RETURNING idmovimiento";
 
         int idMovimiento = 0;
         int idTipoMovSalida = 6;
         try {
-            Movimiento movimientoInsertado = (Movimiento) this.jdbcTemplate.queryForObject(SQL, new Object[]{movimiento.getTotalProductos(),movimiento.getObservaciones(),movimiento.getFechaMovimiento(),idTipoMovSalida,movimiento.getIdEmpleadoAuditado()},
+            Movimiento movimientoInsertado = (Movimiento) this.jdbcTemplate.queryForObject(SQL, new Object[]{movimiento.getTotalProductos(),movimiento.getObservaciones(),movimiento.getFechaMovimiento(),idTipoMovSalida,movimiento.getIdEmpleadoAuditado(),movimiento.getIdEnvio()},
                     (rs, i)->{
                         Movimiento movimientoTemporal = new Movimiento();
                         movimientoTemporal.setIdMovimiento(rs.getInt("idmovimiento"));
