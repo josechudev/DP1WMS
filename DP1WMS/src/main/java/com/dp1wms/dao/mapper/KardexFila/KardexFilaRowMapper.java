@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class KardexFilaRowMapper implements RowMapper {
     @Override
     public Object mapRow(ResultSet resultSet, int i) throws SQLException {
-        ProductoResultSetExtractor extractor = new ProductoResultSetExtractor();
+        KardexFilaResultSetExtractor extractor = new KardexFilaResultSetExtractor();
         return extractor.extractData(resultSet);
 
     }

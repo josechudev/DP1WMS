@@ -40,6 +40,7 @@ public class KardexController implements FxmlController {
     @FXML private TableColumn<KardexFila,String> c_entradas;
     @FXML private TableColumn<KardexFila,String> c_salidas;
     @FXML private TextField txt_balance;
+    @Autowired
     private RepositoryKardexFila repositoryKardexFila;
 
 
@@ -61,19 +62,7 @@ public class KardexController implements FxmlController {
         this.esIngreso = esIngreso;
          */
         this.stageManager = stageManager;
-        c_Codigo.setCellValueFactory(new PropertyValueFactory<KardexFila,Integer>("idMovimiento"));
-        c_fechaMov.setCellValueFactory(new PropertyValueFactory<KardexFila,String>("fechaMovimiento"));
-        c_descProd.setCellValueFactory(new PropertyValueFactory<KardexFila,String>("nombreProducto"));
-        c_cantidad.setCellValueFactory(new PropertyValueFactory<KardexFila,Integer>("cantidad"));
-        c_decMov.setCellValueFactory(new PropertyValueFactory<KardexFila,String>("descripcion"));
-        c_entradas.setCellValueFactory(value -> {
-            return new SimpleStringProperty(value.getValue().isEsIngreso()?String.valueOf(value.getValue().getCantidad()*value.getValue().getPrecioCompra()):"-");
-        });
-        c_salidas.setCellValueFactory(value -> {
-            return new SimpleStringProperty(!value.getValue().isEsIngreso()?String.valueOf(value.getValue().getCantidad()*value.getValue().getPrecioVenta()):"-");
-        });
 
-        llenarGrilla();
     }
 
     private void llenarGrilla() {
@@ -94,6 +83,18 @@ public class KardexController implements FxmlController {
 
     @Override
     public void initialize() {
+        c_Codigo.setCellValueFactory(new PropertyValueFactory<KardexFila,Integer>("idMovimiento"));
+        c_fechaMov.setCellValueFactory(new PropertyValueFactory<KardexFila,String>("fechaMovimiento"));
+        c_descProd.setCellValueFactory(new PropertyValueFactory<KardexFila,String>("nombreProducto"));
+        c_cantidad.setCellValueFactory(new PropertyValueFactory<KardexFila,Integer>("cantidad"));
+        c_decMov.setCellValueFactory(new PropertyValueFactory<KardexFila,String>("descripcion"));
+        c_entradas.setCellValueFactory(value -> {
+            return new SimpleStringProperty(value.getValue().isEsIngreso()?String.valueOf(value.getValue().getCantidad()*value.getValue().getPrecioCompra()):"-");
+        });
+        c_salidas.setCellValueFactory(value -> {
+            return new SimpleStringProperty(!value.getValue().isEsIngreso()?String.valueOf(value.getValue().getCantidad()*value.getValue().getPrecioVenta()):"-");
+        });
 
+        llenarGrilla();
     }
 }
