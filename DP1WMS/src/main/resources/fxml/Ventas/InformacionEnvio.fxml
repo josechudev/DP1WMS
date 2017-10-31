@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="881.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantVenta.VentaInformacionEnvio">
    <children>
       <VBox layoutX="20.0" layoutY="20.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -35,13 +34,13 @@
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <Label text="Fech Envio" GridPane.columnIndex="1">
+                  <Label text="Fecha Envio" GridPane.columnIndex="1">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <DatePicker prefHeight="25.0" prefWidth="210.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField GridPane.rowIndex="1" />
+                  <DatePicker fx:id="fechaEnvioDP" prefHeight="25.0" prefWidth="210.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="destinoTF" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="ALWAYS">
@@ -53,11 +52,11 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="prodDisponiblesTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="Codigo" />
-                            <TableColumn prefWidth="75.0" text="Nombre" />
-                              <TableColumn prefWidth="75.0" text="Disponible" />
+                            <TableColumn fx:id="codigoDispTC" prefWidth="75.0" text="Codigo" />
+                            <TableColumn fx:id="nombreDispTC" prefWidth="75.0" text="Nombre" />
+                              <TableColumn fx:id="disponibleTC" prefWidth="75.0" text="Disponible" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -67,10 +66,10 @@
                   </VBox>
                   <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" spacing="20.0" HBox.hgrow="NEVER">
                      <children>
-                        <Button mnemonicParsing="false" text="Agregar Todos" textOverrun="CENTER_WORD_ELLIPSIS" />
-                        <Button mnemonicParsing="false" text="&gt;&gt;" />
-                        <Button mnemonicParsing="false" text="&lt;&lt;" />
-                        <Button mnemonicParsing="false" text="Remover Todos" />
+                        <Button mnemonicParsing="false" onAction="#agregarTodosProductos" text="Agregar Todos" textOverrun="CENTER_WORD_ELLIPSIS" />
+                        <Button mnemonicParsing="false" onAction="#agregarUnProducto" text="&gt;&gt;" />
+                        <Button mnemonicParsing="false" onAction="#removeUnProducto" text="&lt;&lt;" />
+                        <Button mnemonicParsing="false" onAction="#removerTodosProductos" text="Remover Todos" />
                      </children>
                   </VBox>
                   <VBox layoutX="110.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
@@ -80,11 +79,11 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="envioTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="Codigo" />
-                            <TableColumn prefWidth="75.0" text="Nombre" />
-                              <TableColumn prefWidth="75.0" text="Asignado" />
+                            <TableColumn fx:id="codigoEnvioTC" prefWidth="75.0" text="Codigo" />
+                            <TableColumn fx:id="nombreEnvioTC" prefWidth="75.0" text="Nombre" />
+                              <TableColumn fx:id="asignadoEnvioTC" prefWidth="75.0" text="Asignado" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -101,7 +100,7 @@
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <Label text="0">
+                  <Label fx:id="costoFleteLabel" text="0">
                      <font>
                         <Font size="13.0" />
                      </font>
@@ -110,9 +109,9 @@
             </HBox>
             <HBox alignment="CENTER" prefWidth="200.0" spacing="20.0" VBox.vgrow="NEVER">
                <children>
-                  <Button mnemonicParsing="false" text="Agregar" />
-                  <Button mnemonicParsing="false" text="Guardar" />
-                  <Button mnemonicParsing="false" text="Cancelar" />
+                  <Button fx:id="agregarBtn" mnemonicParsing="false" onAction="#agregarEnvio" text="Agregar" />
+                  <Button fx:id="guardarBtn" mnemonicParsing="false" onAction="#guardarEnvio" text="Guardar" />
+                  <Button mnemonicParsing="false" onAction="#cerrarVentana" text="Cancelar" />
                </children>
             </HBox>
          </children>

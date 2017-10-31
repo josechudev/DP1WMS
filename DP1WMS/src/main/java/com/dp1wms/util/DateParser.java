@@ -62,6 +62,11 @@ public class DateParser {
         return stringToTimestamp(fecha);
     }
 
+    public static LocalDate timestampToLocaldate(Timestamp time){
+        String timeStr = timestampToString(time);
+        return stringConverter.fromString(timeStr);
+    }
+
     public static String currentDateStr(){
         try{
             Date date = new Date();

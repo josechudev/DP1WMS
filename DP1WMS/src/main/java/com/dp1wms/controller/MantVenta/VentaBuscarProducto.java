@@ -1,9 +1,11 @@
 package com.dp1wms.controller.MantVenta;
 
 import com.dp1wms.controller.FxmlController;
+import com.dp1wms.dao.IProducto.RepositoryMantProducto;
 import com.dp1wms.dao.RepositoryProforma;
 import com.dp1wms.model.Producto;
 import com.dp1wms.view.StageManager;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -34,9 +36,10 @@ public class VentaBuscarProducto implements FxmlController{
     @FXML private TableColumn<Producto, String> nombreTC;
     @FXML private TableColumn<Producto, Float> precioTC;
     @FXML private TableColumn<Producto, String> categoriaTC;
+    @FXML private TableColumn<Producto, Integer> stockTC;
 
     @Autowired
-    private RepositoryProforma repositoryProforma;
+    private RepositoryMantProducto repositoryMantProducto;
 
     private StageManager stageManager;
 
@@ -61,7 +64,7 @@ public class VentaBuscarProducto implements FxmlController{
             }
         }
         String dato = this.busquedaField.getText();
-        List<Producto> productos = this.repositoryProforma.buscarProductosParaVenta(campo, dato);
+        List<Producto> productos = this.repositoryMantProducto.buscarProductos(campo, dato);
         if(productos == null){
             System.exit(1);
         }
@@ -112,6 +115,9 @@ public class VentaBuscarProducto implements FxmlController{
         this.nombreTC.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombreProducto"));
         this.precioTC.setCellValueFactory(new PropertyValueFactory<Producto, Float>("precio"));
         this.categoriaTC.setCellValueFactory(new PropertyValueFactory<Producto, String>("Categoria"));
+        this.stockTC.setCellValueFactory(value->{
+            return new SimpleObjectProperty<Integer>(value.getValue().getStock());
+        });
         this.productoTable.setEditable(false);
     }
 

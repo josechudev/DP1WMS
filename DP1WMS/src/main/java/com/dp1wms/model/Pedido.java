@@ -12,6 +12,9 @@ public class Pedido implements Cabecera{
     private String observaciones;
     private int idEmpleadoAuditado;
     private long idCliente;
+
+    private float subtotal;
+    private float costoflete;
     private float total;
 
     private Cliente cliente;
@@ -117,14 +120,18 @@ public class Pedido implements Cabecera{
 
 
 
-    public void calcularTotal(){
-        float total = 0;
+    public void calcularsubTotal(){
+        float subtotal = 0;
         for(DetallePedido dp: this.detalles){
             float desc = dp.getDescuento();
             dp.setSubtotal(dp.getCantidad()*dp.getProducto().getPrecio() - desc);
-            total += dp.getSubtotal();
+            subtotal += dp.getSubtotal();
         }
-        this.total = total;
+        this.subtotal = subtotal;
+    }
+
+    public void calcularTotal(){
+        this.total = this.subtotal + this.costoflete;
     }
 
     public ArrayList<DetallePedido> getDetalles() {
@@ -149,5 +156,21 @@ public class Pedido implements Cabecera{
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public float getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(float subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public float getCostoflete() {
+        return costoflete;
+    }
+
+    public void setCostoflete(float costoflete) {
+        this.costoflete = costoflete;
     }
 }

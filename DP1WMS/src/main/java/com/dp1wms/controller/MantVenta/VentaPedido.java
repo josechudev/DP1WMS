@@ -63,6 +63,7 @@ public class VentaPedido implements FxmlController {
     private VentaBuscarCliente ventaBuscarCliente;
     private VentaBuscarProducto ventaBuscarProducto;
     private VentaBuscarProforma ventaBuscarProforma;
+    private VentaInformacionEnvio ventaInformacionEnvio;
 
     @Autowired private RepositoryCondicion repositoryCondicion;
     @Autowired private RepositoryMantPedido repositoryMantPedido;
@@ -202,8 +203,12 @@ public class VentaPedido implements FxmlController {
         this.limpiarTablaPedido();
         List<Condicion> condiciones = this.repositoryCondicion.obtenerCondicionesActivos();
         DescuentoAlgoritmo.aplicarDescuento(condiciones, this.pedido);
+        this.pedido.calcularsubTotal();
         this.pedido.calcularTotal();
         this.pedidoTable.getItems().addAll(this.pedido.getDetalles());
+
+        this.subtotalLabel.setText(String.valueOf(this.pedido.getSubtotal()));
+        this.costoFleteTC.setText(String.valueOf(this.pedido.getCostoflete()));
         this.totalLabel.setText(String.valueOf(this.pedido.getTotal()));
     }
 
@@ -283,12 +288,25 @@ public class VentaPedido implements FxmlController {
 
     @FXML
     private void agregarEnvio(){
+        this.ventaInformacionEnvio.setEnvio(null);
         this.stageManager.mostrarModal(VentasView.INFO_ENVIO);
     }
 
     @FXML
     private void modificarEnvio(){
-
+        Envio envio = this.enviosTable.getSelectionModel().getSelectedItem();
+        if(envio == null){
+            this.stageManager.mostrarErrorDialog("Error Pedido", null,
+                    "Debe seleccionar un pedido");
+        } else {
+            this.ventaInformacionEnvio.setEnvio(new Envio(envio));
+            this.stageManager.mostrarModal(VentasView.INFO_ENVIO);
+            Envio envioAux = this.ventaInformacionEnvio.getEnvio();
+            if(envioAux != null){
+                envio.copiar(envioAux);
+                this.llenarTablaEnvios();
+            }
+        }
     }
 
     @FXML
@@ -311,16 +329,22 @@ public class VentaPedido implements FxmlController {
                        ClienteInfoController clienteInfoController,
                        VentaBuscarCliente ventaBuscarCliente,
                        VentaBuscarProducto ventaBuscarProducto,
-                       VentaBuscarProforma ventaBuscarProforma){
+                       VentaBuscarProforma ventaBuscarProforma,
+                       VentaInformacionEnvio ventaInformacionEnvio){
         this.stageManager = stageManager;
         this.mainController = mainController;
         this.clienteInfoController = clienteInfoController;
         this.ventaBuscarCliente = ventaBuscarCliente;
         this.ventaBuscarProducto = ventaBuscarProducto;
         this.ventaBuscarProforma = ventaBuscarProforma;
+        this.ventaInformacionEnvio = ventaInformacionEnvio;
     }
 
     public Pedido getPedido(){
         return  this.pedido;
+    }
+
+    public ArrayList<Envio> getEnvios(){
+        return this.envios;
     }
 }

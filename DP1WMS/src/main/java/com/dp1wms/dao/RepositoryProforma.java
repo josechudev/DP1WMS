@@ -11,8 +11,6 @@ import java.util.List;
 
 public interface RepositoryProforma {
 
-    List<Producto> buscarProductosParaVenta(String campo, String dato);
-
     boolean registrarProforma(Proforma profoma);
 
     List<Proforma> buscarProformas(String campoCliente, String datoCliente, String codigoProforma,

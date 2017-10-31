@@ -23,27 +23,8 @@ public class RepositoryProformaImpl implements RepositoryProforma {
     @Autowired
     private MainController mainController;
 
-    @Override
-    public List<Producto> buscarProductosParaVenta(String campo, String dato){
-        List<Producto> productos = null;
 
-        dato = "%" + dato.toLowerCase()  + "%";
-        String sql = "SELECT p.idproducto, p.codigo, p.nombreproducto, p.precio, p.idcategoria, cp.descripcion as categoria "  +
-                    "FROM producto p  INNER JOIN categoriaproducto cp ON p.idcategoria = cp.idcategoria WHERE p.activo AND ";
-        if(campo != null){
-            sql += "lower(p." + campo + ") LIKE ?";
-        } else {
-            sql += "lower(cp.descripcion) LIKE ?";
-        }
 
-        try{
-            productos = this.jdbcTemplate.query(sql, new Object[]{dato}, this::mapProducto);
-            return productos;
-        } catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean registrarProforma(Proforma proforma){
@@ -82,17 +63,6 @@ public class RepositoryProformaImpl implements RepositoryProforma {
         }
 
         return true;
-    }
-
-    private Producto mapProducto(ResultSet rs, int i) throws SQLException{
-        Producto p = new Producto();
-        p.setIdProducto(rs.getInt("idproducto"));
-        p.setCodigo(rs.getString("codigo"));
-        p.setNombreProducto(rs.getString("nombreproducto"));
-        p.setPrecio(rs.getFloat("precio"));
-        p.setIdCategoria(rs.getInt("idcategoria"));
-        p.setCategoria(rs.getString("categoria"));
-        return p;
     }
 
     @Override

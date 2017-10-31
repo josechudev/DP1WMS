@@ -17,8 +17,34 @@ public class Envio {
 
     private List<DetalleEnvio> detalleEnvio;
 
+    public Envio (Envio envio){
+        this.idEnvio = envio.idEnvio;
+        this.idPedido = envio.idPedido;
+        this.fechaEnvio = envio.fechaEnvio;
+        this.destino = envio.destino;
+        this.costoFlete = envio.costoFlete;
+        this.idCliente = envio.idCliente;
+        this.razonSocial = envio.razonSocial;
+        this.indiceTabla = envio.indiceTabla;
+        this.realizado = envio.realizado;
+        this.detalleEnvio = envio.detalleEnvio;
+    }
+
     public Envio(){
         this.detalleEnvio = new ArrayList<DetalleEnvio>();
+    }
+
+    public void copiar(Envio envio){
+        this.idEnvio = envio.idEnvio;
+        this.idPedido = envio.idPedido;
+        this.fechaEnvio = envio.fechaEnvio;
+        this.destino = envio.destino;
+        this.costoFlete = envio.costoFlete;
+        this.idCliente = envio.idCliente;
+        this.razonSocial = envio.razonSocial;
+        this.indiceTabla = envio.indiceTabla;
+        this.realizado = envio.realizado;
+        this.detalleEnvio = envio.detalleEnvio;
     }
 
     public void eliminarDetalleEnvio(DetalleEnvio de){

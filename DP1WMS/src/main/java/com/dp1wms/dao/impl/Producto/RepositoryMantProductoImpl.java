@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -86,5 +88,42 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
         String sql = "UPDATE producto SET activo = false Where idproducto =?";
         jdbcTemplate.update(sql, new Object[]{producto.getIdProducto()});
 
+    }
+
+    @Override
+    public List<Producto> buscarProductos(String campo, String dato){
+        List<Producto> productos = null;
+
+        dato = "%" + dato.toLowerCase()  + "%";
+        String sql = "SELECT p.idproducto, p.codigo, p.nombreproducto, p.precio, p.idcategoria, " +
+                "cp.descripcion as categoria "  +
+                "FROM producto p  INNER JOIN categoriaproducto cp " +
+                "ON p.idcategoria = cp.idcategoria WHERE p.activo AND ";
+        if(campo != null){
+            sql += "lower(p." + campo + ") LIKE ?";
+        } else {
+            sql += "lower(cp.descripcion) LIKE ?";
+        }
+
+        try{
+            productos = this.jdbcTemplate.query(sql, new Object[]{dato}, this::mapProducto);
+            return productos;
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private Producto mapProducto(ResultSet rs, int i) throws SQLException {
+        Producto p = new Producto();
+        p.setIdProducto(rs.getInt("idproducto"));
+        p.setCodigo(rs.getString("codigo"));
+        p.setNombreProducto(rs.getString("nombreproducto"));
+        p.setPrecio(rs.getFloat("precio"));
+        p.setIdCategoria(rs.getInt("idcategoria"));
+        p.setCategoria(rs.getString("categoria"));
+        p.setStock(0);
+        //p.setStock(rs.getInt("stock"));
+        return p;
     }
 }
