@@ -28,30 +28,50 @@ import java.util.Optional;
 @Component
 public class VentaPedido implements FxmlController {
 
-    @FXML private Label nombreLabel;
-    @FXML private Label telefonoLabel;
-    @FXML private Label emailLabel;
-    @FXML private Label rucLabel;
-    @FXML private Label direccionLabel;
+    @FXML
+    private Label nombreLabel;
+    @FXML
+    private Label telefonoLabel;
+    @FXML
+    private Label emailLabel;
+    @FXML
+    private Label rucLabel;
+    @FXML
+    private Label direccionLabel;
 
-    @FXML private TableView<DetallePedido> pedidoTable;
-    @FXML private TableColumn<DetallePedido, String> codigoTC;
-    @FXML private TableColumn<DetallePedido, String> productoTC;
-    @FXML private TableColumn<DetallePedido, Float> precioTC;
-    @FXML private TableColumn<DetallePedido, Integer> cantidadTC;
-    @FXML private TableColumn<DetallePedido, Float> descuentoTC;
-    @FXML private TableColumn<DetallePedido, Float> subtotalTC;
+    @FXML
+    private TableView<DetallePedido> pedidoTable;
+    @FXML
+    private TableColumn<DetallePedido, String> codigoTC;
+    @FXML
+    private TableColumn<DetallePedido, String> productoTC;
+    @FXML
+    private TableColumn<DetallePedido, Float> precioTC;
+    @FXML
+    private TableColumn<DetallePedido, Integer> cantidadTC;
+    @FXML
+    private TableColumn<DetallePedido, Float> descuentoTC;
+    @FXML
+    private TableColumn<DetallePedido, Float> subtotalTC;
 
-    @FXML private TableView<Envio> enviosTable;
-    @FXML private TableColumn<Envio, String> destinoTC;
-    @FXML private TableColumn<Envio, String> fechaEnvioTC;
-    @FXML private TableColumn<Envio, Float> costoFleteTC;
+    @FXML
+    private TableView<Envio> enviosTable;
+    @FXML
+    private TableColumn<Envio, String> destinoTC;
+    @FXML
+    private TableColumn<Envio, String> fechaEnvioTC;
+    @FXML
+    private TableColumn<Envio, Float> costoFleteTC;
 
 
-    @FXML private TextArea observacionTA;
-    @FXML private Label subtotalLabel;
-    @FXML private Label totalFleteLabel;
-    @FXML private Label totalLabel;
+    @FXML
+    private TextArea observacionTA;
+    @FXML
+    private Label subtotalLabel;
+    @FXML
+    private Label totalFleteLabel;
+    @FXML
+    private Label totalLabel;
 
     private Cliente cliente;
     private Pedido pedido;
@@ -65,11 +85,13 @@ public class VentaPedido implements FxmlController {
     private VentaBuscarProforma ventaBuscarProforma;
     private VentaInformacionEnvio ventaInformacionEnvio;
 
-    @Autowired private RepositoryCondicion repositoryCondicion;
-    @Autowired private RepositoryMantPedido repositoryMantPedido;
+    @Autowired
+    private RepositoryCondicion repositoryCondicion;
+    @Autowired
+    private RepositoryMantPedido repositoryMantPedido;
 
     @Override
-    public void initialize(){
+    public void initialize() {
         this.cliente = null;
         this.pedido = new Pedido();
         this.envios = new ArrayList<>();
@@ -78,36 +100,36 @@ public class VentaPedido implements FxmlController {
     }
 
     @FXML
-    private void mostrarBusquedaCliente(){
+    private void mostrarBusquedaCliente() {
         this.stageManager.mostrarModal(VentasView.BUSCAR_CLIENTE);
 
         Cliente c = this.ventaBuscarCliente.getCliente();
-        if(c!=null){
+        if (c != null) {
             this.cliente = new Cliente(c);
             this.completarCamposClientes();
         }
     }
 
     @FXML
-    private void mostrarRegistrarCliente(){
+    private void mostrarRegistrarCliente() {
         this.clienteInfoController.setCliente(null);
 
         this.stageManager.mostrarModal(ClientesView.INFO);
 
         Cliente c = this.clienteInfoController.getCliente();
-        if(c != null){
+        if (c != null) {
             this.cliente = new Cliente(c);
             this.completarCamposClientes();
         }
     }
 
     @FXML
-    private void mostrarBusquedaProducto(){
+    private void mostrarBusquedaProducto() {
         this.stageManager.mostrarModal(VentasView.BUSCAR_PROD);
         Producto p = this.ventaBuscarProducto.getProducto();
         int cantidad = this.ventaBuscarProducto.getCantidad();
-        if(p != null && cantidad > 0){
-            if(cantidad > p.getStock()){
+        if (p != null && cantidad > 0) {
+            if (cantidad > p.getStock()) {
                 this.stageManager.mostrarErrorDialog("Error Pedido", null,
                         "El valor ingresado es mayor al stock disponible");
             } else {
@@ -117,15 +139,17 @@ public class VentaPedido implements FxmlController {
 
     }
 
-    private void agregarProducto(Producto producto, int cantidad){
+    private void agregarProducto(Producto producto, int cantidad) {
         this.pedido.agregarProducto(producto, cantidad);
         this.llenarTablaPedido();
+        this.envios = new ArrayList<>();
+        this.limpiarTablaEnvios();
     }
 
     @FXML
-    private void modificarCantidadDetalle(){
+    private void modificarCantidadDetalle() {
         DetallePedido dp = this.pedidoTable.getSelectionModel().getSelectedItem();
-        if (dp == null){
+        if (dp == null) {
             this.stageManager.mostrarErrorDialog("Error", null, "No ha seleccionado ningún item de la proforma");
         } else {
             Producto p = dp.getProducto();
@@ -138,17 +162,19 @@ public class VentaPedido implements FxmlController {
             dialog.getDialogPane().getButtonTypes().setAll(ok, cancelar);
             Optional<String> result = dialog.showAndWait();
             int cantidad = 0;
-            if(result.isPresent()){
-                try{
+            if (result.isPresent()) {
+                try {
                     cantidad = Integer.parseInt(result.get());
-                } catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     cantidad = 0;
                 }
             }
-            if(cantidad > 0 && cantidad <= dp.getProducto().getStock()){
+            if (cantidad > 0 && cantidad <= dp.getProducto().getStock()) {
                 dp.setCantidad(cantidad);
+                this.envios = new ArrayList<>();
+                this.limpiarTablaEnvios();
             } else {//show error
-                this.stageManager.mostrarErrorDialog("Error cantidad de producto",null,
+                this.stageManager.mostrarErrorDialog("Error cantidad de producto", null,
                         "Debes ingresar un valor válido");
             }
             this.llenarTablaPedido();
@@ -156,7 +182,7 @@ public class VentaPedido implements FxmlController {
     }
 
 
-    private void completarCamposClientes(){
+    private void completarCamposClientes() {
         this.nombreLabel.setText(cliente.getRazonSocial());
         this.rucLabel.setText(cliente.getNumDoc());
         this.telefonoLabel.setText(cliente.getTelefono());
@@ -165,9 +191,9 @@ public class VentaPedido implements FxmlController {
     }
 
     @FXML
-    private void eliminarProducto(){
+    private void eliminarProducto() {
         DetallePedido dp = this.pedidoTable.getSelectionModel().getSelectedItem();
-        if(dp == null){
+        if (dp == null) {
             this.stageManager.mostrarErrorDialog("Error", null,
                     "No ha seleccionado ningún item del pedido");
         } else {
@@ -177,12 +203,14 @@ public class VentaPedido implements FxmlController {
     }
 
     @FXML
-    private void eliminarTodoProducto(){
+    private void eliminarTodoProducto() {
         this.pedido.setDetalles(new ArrayList<>());
         this.llenarTablaPedido();
+        this.envios = new ArrayList<>();
+        this.limpiarTablaEnvios();
     }
 
-    private void limpiarTablaPedido(){
+    private void limpiarTablaPedido() {
         this.pedidoTable.getItems().clear();
         this.codigoTC.setCellValueFactory(value -> {
             return new SimpleStringProperty(value.getValue().getCodigoProducto());
@@ -193,10 +221,10 @@ public class VentaPedido implements FxmlController {
         this.precioTC.setCellValueFactory(value -> {
             return new SimpleObjectProperty<Float>(value.getValue().getPrecioUnitario());
         });
-        this.cantidadTC.setCellValueFactory(value->{
+        this.cantidadTC.setCellValueFactory(value -> {
             return new SimpleObjectProperty<Integer>(value.getValue().getCantidad());
         });
-        this.descuentoTC.setCellValueFactory(value->{
+        this.descuentoTC.setCellValueFactory(value -> {
             return new SimpleObjectProperty<Float>(value.getValue().getDescuento());
         });
         this.subtotalTC.setCellValueFactory(value -> {
@@ -204,7 +232,7 @@ public class VentaPedido implements FxmlController {
         });
     }
 
-    private void llenarTablaPedido(){
+    private void llenarTablaPedido() {
         this.limpiarTablaPedido();
         List<Condicion> condiciones = this.repositoryCondicion.obtenerCondicionesActivos();
         DescuentoAlgoritmo.aplicarDescuento(condiciones, this.pedido);
@@ -213,23 +241,25 @@ public class VentaPedido implements FxmlController {
         this.pedidoTable.getItems().addAll(this.pedido.getDetalles());
 
         this.subtotalLabel.setText(String.valueOf(this.pedido.getSubtotal()));
-        this.costoFleteTC.setText(String.valueOf(this.pedido.getCostoflete()));
+        this.totalFleteLabel.setText(String.valueOf(this.pedido.getCostoflete()));
         this.totalLabel.setText(String.valueOf(this.pedido.getTotal()));
     }
 
-    @FXML private void cerrarVentana(ActionEvent event){
+    @FXML
+    private void cerrarVentana(ActionEvent event) {
         this.stageManager.cerrarVentana(event);
     }
 
-    @FXML private void registrarPedido(ActionEvent event){
+    @FXML
+    private void registrarPedido(ActionEvent event) {
         this.pedido.setObservaciones(this.observacionTA.getText());
 
-        if(this.pedido.getCantidadDetalle() == 0){
+        if (this.pedido.getCantidadDetalle() == 0) {
             this.stageManager.mostrarErrorDialog("Error pedido", null,
                     "Debe registrar al menos un producto");
             return;
         }
-        if(this.cliente == null){
+        if (this.cliente == null) {
             this.stageManager.mostrarErrorDialog("Error pedido", null,
                     "Debe seleccionar un cliente");
             return;
@@ -237,13 +267,25 @@ public class VentaPedido implements FxmlController {
             this.pedido.setIdCliente(this.cliente.getIdCliente());
             this.pedido.setCliente(this.cliente);
         }
+        if (this.envios.size() == 0) {
+            this.stageManager.mostrarErrorDialog("Error pedido", null,
+                    "Debe haber ingresado al menos un envio.");
+            return;
+        }
+
+        if(!this._verificarEnvios()){
+            this.stageManager.mostrarErrorDialog("Error pedido", null,
+                    "Todavía tienes productos sin asignar a ningún envio");
+            return;
+        }
+
         boolean res = false;
-        try{
-            res = this.repositoryMantPedido.registrarPedido(this.pedido);
-        } catch(Exception e){
+        try {
+            res = this.repositoryMantPedido.registrarPedido(this.pedido, this.envios);
+        } catch (Exception e) {
             res = false;
         }
-        if(!res){
+        if (!res) {
             this.stageManager.mostrarErrorDialog("Error registrar pedido", null,
                     "Hubo un error al intentar registrar el pedido. " +
                             "Inténtelo otra vez.");
@@ -255,87 +297,170 @@ public class VentaPedido implements FxmlController {
     }
 
     @FXML
-    private void buscarProforma(){
+    private void buscarProforma() {
         this.stageManager.mostrarModal(VentasView.BUSCAR_PROFORMA);
         Proforma proforma = this.ventaBuscarProforma.getProforma();
-        if(proforma != null){
+        if (proforma != null) {
             convetirProformaAPedido(proforma);
             this.llenarTablaPedido();
+            this.envios = new ArrayList<>();
+            this.limpiarTablaEnvios();
         }
     }
 
-    private void convetirProformaAPedido(Proforma proforma){
+    private void convetirProformaAPedido(Proforma proforma) {
         this.pedido = new Pedido();
-        for(DetalleProforma dp: proforma.getDetallesProforma()){
+        for (DetalleProforma dp : proforma.getDetallesProforma()) {
             pedido.agregarProducto(dp.getProducto(), dp.getCantidad());
         }
         this.cliente = proforma.getCliente();
         this.completarCamposClientes();
     }
 
-    private void limpiarTablaEnvios(){
+    private void limpiarTablaEnvios() {
         this.enviosTable.getItems().clear();
-        this.destinoTC.setCellValueFactory(value->{
+        this.destinoTC.setCellValueFactory(value -> {
             return new SimpleStringProperty(value.getValue().getDestino());
         });
-        this.fechaEnvioTC.setCellValueFactory(value->{
+        this.fechaEnvioTC.setCellValueFactory(value -> {
             Timestamp time = value.getValue().getFechaEnvio();
             return new SimpleStringProperty(DateParser.timestampToString(time));
         });
-        this.costoFleteTC.setCellValueFactory(value->{
+        this.costoFleteTC.setCellValueFactory(value -> {
             return new SimpleObjectProperty<Float>(value.getValue().getCostoFlete());
         });
     }
-    private void llenarTablaEnvios(){
-        this.limpiarTablaPedido();
+
+    private void llenarTablaEnvios() {
+        this.limpiarTablaEnvios();
         this.enviosTable.getItems().addAll(this.envios);
     }
 
     @FXML
-    private void agregarEnvio(){
+    private void agregarEnvio() {
         this.ventaInformacionEnvio.setEnvio(null);
         this.stageManager.mostrarModal(VentasView.INFO_ENVIO);
+        Envio e = this.ventaInformacionEnvio.getEnvio();
+        if(e != null){
+            this.envios.add(e);
+            this.llenarTablaEnvios();
+            //flete
+            this.calcularTotalFlete();
+            this.totalFleteLabel.setText(String.valueOf(this.pedido.getCostoflete()));
+            //total
+            this.pedido.calcularTotal();
+            this.totalLabel.setText(String.valueOf(this.pedido.getTotal()));
+        }
     }
 
     @FXML
-    private void modificarEnvio(){
+    private void modificarEnvio() {
         Envio envio = this.enviosTable.getSelectionModel().getSelectedItem();
-        if(envio == null){
+        if (envio == null) {
             this.stageManager.mostrarErrorDialog("Error Pedido", null,
                     "Debe seleccionar un pedido");
         } else {
             this.ventaInformacionEnvio.setEnvio(new Envio(envio));
             this.stageManager.mostrarModal(VentasView.INFO_ENVIO);
             Envio envioAux = this.ventaInformacionEnvio.getEnvio();
-            if(envioAux != null){
+            if (envioAux != null) {
                 envio.copiar(envioAux);
                 this.llenarTablaEnvios();
+                //flete
+                this.calcularTotalFlete();
+                this.totalFleteLabel.setText(String.valueOf(this.pedido.getCostoflete()));
+                //total
+                this.pedido.calcularTotal();
+                this.totalLabel.setText(String.valueOf(this.pedido.getTotal()));
             }
         }
     }
 
     @FXML
-    private void verificarEnvios(){
+    private void verificarEnvios() {
+        if(_verificarEnvios()){
+            this.stageManager.mostrarInfoDialog("Pedido", null,
+                    "Todos los productos del pedido fueron asignados. Puede registrar el envio");
+        } else {
+            this.stageManager.mostrarErrorDialog("Pedido", null,
+                    "No ha asignado todos los productos del pedido a un envio.");
+        }
+    }
 
+    private boolean _verificarEnvios(){
+        ArrayList <DetallePedido> productosDisponibles = new ArrayList<DetallePedido>();
+
+        //crear nuevos detalles proforma
+        for(DetallePedido dp: pedido.getDetalles()){
+            DetallePedido dpNew = new DetallePedido();
+            int cantidad = dp.getCantidad();
+            Producto producto = dp.getProducto();
+
+            for(Envio e: envios){
+                //buscar el producto
+                for(DetalleEnvio de: e.getDetalleEnvio()){
+                    if(de.getProducto().getIdProducto() == producto.getIdProducto()){
+                        cantidad -= de.getCantidad();
+                        break;
+                    }
+                }
+            }
+            dpNew.setProducto(dp.getProducto());
+            dpNew.setCantidad(cantidad);
+            productosDisponibles.add(dpNew);
+        }
+
+        //remove detalles con cantidad 0
+        productosDisponibles.removeIf(dpAux->dpAux.getCantidad() <= 0);
+        return productosDisponibles.size() == 0;
     }
 
     @FXML
-    private void eliminarEnvio(){
-
+    private void eliminarEnvio() {
+        Envio e = this.enviosTable.getSelectionModel().getSelectedItem();
+        if(e == null){
+            this.stageManager.mostrarErrorDialog("Error Pedido", null,
+                    "Debe seleccinoar un envio");
+        } else {
+            this.envios.remove(e);
+            this.llenarTablaEnvios();
+            //calcular total flete
+            this.calcularTotalFlete();
+            this.totalFleteLabel.setText(String.valueOf(this.pedido.getCostoflete()));
+            //total
+            this.pedido.calcularTotal();
+            this.totalLabel.setText(String.valueOf(this.pedido.getTotal()));
+        }
     }
 
     @FXML
-    private void eliminarTodoEnvios(){
-
+    private void eliminarTodoEnvios() {
+        this.envios = new ArrayList<>();
+        this.limpiarTablaEnvios();
+        //flete
+        this.pedido.setCostoflete(0);
+        this.totalFleteLabel.setText("0.0");
+        //total
+        this.pedido.calcularTotal();
+        this.totalLabel.setText(String.valueOf(this.pedido.getTotal()));
     }
 
-    @Autowired @Lazy
+    private void calcularTotalFlete(){
+        float flete = 0;
+        for(Envio e: this.envios){
+            flete += e.getCostoFlete();
+        }
+        this.pedido.setCostoflete(flete);
+    }
+
+    @Autowired
+    @Lazy
     public VentaPedido(StageManager stageManager, MainController mainController,
                        ClienteInfoController clienteInfoController,
                        VentaBuscarCliente ventaBuscarCliente,
                        VentaBuscarProducto ventaBuscarProducto,
                        VentaBuscarProforma ventaBuscarProforma,
-                       VentaInformacionEnvio ventaInformacionEnvio){
+                       VentaInformacionEnvio ventaInformacionEnvio) {
         this.stageManager = stageManager;
         this.mainController = mainController;
         this.clienteInfoController = clienteInfoController;
@@ -345,11 +470,11 @@ public class VentaPedido implements FxmlController {
         this.ventaInformacionEnvio = ventaInformacionEnvio;
     }
 
-    public Pedido getPedido(){
-        return  this.pedido;
+    public Pedido getPedido() {
+        return this.pedido;
     }
 
-    public ArrayList<Envio> getEnvios(){
+    public ArrayList<Envio> getEnvios() {
         return this.envios;
     }
 }
