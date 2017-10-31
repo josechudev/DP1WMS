@@ -7,12 +7,15 @@ import java.util.List;
 public interface RepositoryMantUsuario {
     List<Usuario> selectAllUsuario();
 
-    int newIdUsuario();
-
     void createUsuario(Usuario auxUsuario);
 
-    void updateUsuario(Usuario auxUsuario);
+    void updateUsuario(Usuario auxUsuario, boolean auxModificarPassword);
 
     void deleteUsuario(Usuario auxUsuario);
 
+    Usuario findUsuariobyId(int auxIdUser);
+
+    boolean existeUsuario(String auxNameUser);
+
+    boolean coincideUsuarioId(String auxNameUser, int auxIdUser);
 }

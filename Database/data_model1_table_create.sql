@@ -6,6 +6,7 @@ CREATE TABLE public.rack (
 	altura integer NOT NULL,
 	longitudcajon integer NOT NULL,
 	codigo varchar(255) NOT NULL,
+	idempleadoauditado integer,
 	PRIMARY KEY (idrack)
 );
 
@@ -29,10 +30,12 @@ CREATE TABLE public.producto (
 	fechavencimiento timestamp without time zone,
 	descripcion varchar(255),
 	precio real NOT NULL,
-	stock integer NOT NULL,
+	stock integer NOT NULL DEFAULT 0,
 	idcategoria integer NOT NULL,
 	codigo varchar(255) NOT NULL,
 	fechacreacion timestamp without time zone NOT NULL default now(),
+	activo boolean NOT NULL,
+	idempleadoauditado integer,
 	PRIMARY KEY (idproducto)
 );
 
@@ -50,7 +53,7 @@ CREATE TABLE public.movimiento (
 	fechamovimiento timestamp without time zone NOT NULL,
 	idtipomovimiento integer NOT NULL,
 	fechacreacion timestamp without time zone NOT NULL default now(),
-	idpedido integer,
+	idempleadoauditado integer,
 	PRIMARY KEY (idmovimiento)
 );
 
@@ -65,6 +68,7 @@ CREATE TABLE public.lote (
 	fechaentrada timestamp without time zone NOT NULL,
 	stockparical integer NOT NULL,
 	fechacreacion timestamp without time zone NOT NULL default now(),
+	idempleadoauditado integer,
 	PRIMARY KEY (idlote, idproducto)
 );
 
@@ -93,6 +97,8 @@ CREATE TABLE public.empleado (
 	email varchar(255),
 	idtipoempleado integer NOT NULL,
 	fechacreacion timestamp without time zone NOT NULL default now(),
+	activo boolean NOT NULL,
+	idempleadoauditado integer,
 	PRIMARY KEY (idempleado, idusuario)
 );
 
@@ -106,6 +112,8 @@ CREATE INDEX ON public.empleado
 CREATE TABLE public.tipoempleado (
 	idtipoempleado serial NOT NULL,
 	descripcion varchar(255) NOT NULL,
+	activo boolean NOT NULL,
+	idempleadoauditado integer,
 	PRIMARY KEY (idtipoempleado)
 );
 
@@ -126,12 +134,14 @@ CREATE TABLE public.comprobantepago (
 	idcomprobante serial NOT NULL,
 	idtipocomprobante integer NOT NULL,
 	idcliente integer NOT NULL,
-	idempleado integer NOT NULL,
-	subtotal real NOT NULL,
+	totalsinigv real NOT NULL,
 	igv real NOT NULL,
 	total real NOT NULL,
 	idestadocomprobante integer NOT NULL,
 	fechacreacion timestamp without time zone NOT NULL default now(),
+	activo boolean NOT NULL,
+	fechamodificacion timestamp without time zone NOT NULL,
+	idempleadoauditado integer,
 	PRIMARY KEY (idcomprobante)
 );
 
@@ -140,13 +150,13 @@ CREATE INDEX ON public.comprobantepago
 CREATE INDEX ON public.comprobantepago
 	(idcliente);
 CREATE INDEX ON public.comprobantepago
-	(idempleado);
-CREATE INDEX ON public.comprobantepago
 	(idestadocomprobante);
+CREATE INDEX ON public.comprobantepago
+	(idempleadoauditado);
 
 
-CREATE TABLE public.descuento (
-	iddescuento serial NOT NULL,
+CREATE TABLE public.condicion (
+	condicion serial NOT NULL,
 	tipodescuento varchar(255) NOT NULL,
 	idproductogenerador integer,
 	idcategoriaprodgen integer,
@@ -158,7 +168,9 @@ CREATE TABLE public.descuento (
 	fechainicio timestamp without time zone NOT NULL,
 	fechafin timestamp without time zone NOT NULL,
 	descripcion varchar(255) NOT NULL,
-	PRIMARY KEY (iddescuento)
+	idempleadoauditado integer,
+	prioridad integer NOT NULL,
+	PRIMARY KEY (idcondicion)
 );
 
 
@@ -170,6 +182,7 @@ CREATE TABLE public.cliente (
 	direccion varchar(255) NOT NULL,
 	email varchar(255) NOT NULL,
 	fechacreacion timestamp without time zone NOT NULL default now(),
+	idempleadoauditado integer,
 	PRIMARY KEY (idcliente)
 );
 
@@ -189,8 +202,9 @@ CREATE TABLE public.guiaremision (
 	idtransportista integer NOT NULL,
 	numeroplaca varchar(255) NOT NULL,
 	pesototal real NOT NULL,
-	idpedido integer NOT NULL,
 	fechacreacion timestamp without time zone NOT NULL default now(),
+	idenvio integer NOT NULL,
+	idempleadoauditado integer,
 	PRIMARY KEY (idguiaremision)
 );
 
@@ -199,7 +213,7 @@ CREATE INDEX ON public.guiaremision
 CREATE INDEX ON public.guiaremision
 	(idtransportista);
 CREATE INDEX ON public.guiaremision
-	(idpedido);
+	(idenvio);
 
 
 CREATE TABLE public.estadocomprobante (
@@ -214,7 +228,7 @@ CREATE TABLE public.detallecomprobante (
 	idcomprobante integer NOT NULL,
 	idproducto integer NOT NULL,
 	cantidad integer NOT NULL,
-	monto real NOT NULL,
+	subtotal  NOT NULL,
 	PRIMARY KEY (iddetallecomprobante, idcomprobante, idproducto)
 );
 
@@ -279,9 +293,10 @@ CREATE TABLE public.proforma (
 	idproforma serial NOT NULL,
 	idempleado integer NOT NULL,
 	idcliente integer NOT NULL,
-	monto real NOT NULL,
+	total real NOT NULL,
 	observaciones varchar(255),
 	fechacreacion timestamp without time zone NOT NULL default now(),
+	idempleadoauditado integer,
 	PRIMARY KEY (idproforma)
 );
 
@@ -298,6 +313,7 @@ CREATE TABLE public.detalleproforma (
 	cantidad integer NOT NULL,
 	preciounitario real NOT NULL,
 	descuento real NOT NULL,
+	subtotal real NOT NULL,
 	PRIMARY KEY (iddetalleproforma)
 );
 
@@ -325,19 +341,22 @@ CREATE INDEX ON public.cajon
 
 CREATE TABLE public.envio (
 	idenvio serial NOT NULL,
-	idproforma integer NOT NULL,
 	fechaenvio timestamp without time zone NOT NULL,
 	destino varchar(255) NOT NULL,
 	costoflete real NOT NULL,
-	PRIMARY KEY (idenvio, idproforma)
+	idpedido integer NOT NULL,
+	realizado boolean NOT NULL,
+	PRIMARY KEY (idenvio)
 );
+
+CREATE INDEX ON public.envio
+	(idpedido);
 
 
 CREATE TABLE public.detalleenvio (
 	iddetalleenvio serial NOT NULL,
 	idenvio integer NOT NULL,
-	idproforma integer NOT NULL,
-	iddetaleproforma integer NOT NULL,
+	idproducto integer NOT NULL,
 	cantidad integer NOT NULL,
 	PRIMARY KEY (iddetalleenvio)
 );
@@ -345,9 +364,7 @@ CREATE TABLE public.detalleenvio (
 CREATE INDEX ON public.detalleenvio
 	(idenvio);
 CREATE INDEX ON public.detalleenvio
-	(idproforma);
-CREATE INDEX ON public.detalleenvio
-	(iddetaleproforma);
+	(idproducto);
 
 
 CREATE TABLE public.categoriaproducto (
@@ -359,17 +376,16 @@ CREATE TABLE public.categoriaproducto (
 
 CREATE TABLE public.pedido (
 	idpedido serial NOT NULL,
-	idproforma integer NOT NULL,
 	fechaenvio timestamp without time zone NOT NULL,
 	destino varchar(255) NOT NULL,
 	idestadopedido integer NOT NULL,
 	esdevolucion boolean NOT NULL,
 	fechacreacion timestamp without time zone NOT NULL default now(),
+	observaciones varchar(255),
+	idempleadoauditado integer,
 	PRIMARY KEY (idpedido)
 );
 
-CREATE INDEX ON public.pedido
-	(idproforma);
 CREATE INDEX ON public.pedido
 	(idestadopedido);
 
@@ -379,7 +395,9 @@ CREATE TABLE public.detallepedido (
 	idproducto integer NOT NULL,
 	idpedido integer NOT NULL,
 	cantidad integer NOT NULL,
-	idlote integer,
+	preciounitario integer NOT NULL,
+	descuento real NOT NULL,
+	subtotal real NOT NULL,
 	PRIMARY KEY (iddetallepedido)
 );
 
@@ -400,7 +418,8 @@ CREATE TABLE public.almacen (
 	idalmacen serial NOT NULL,
 	direccion varchar(255),
 	largo integer NOT NULL,
-	alto integer NOT NULL,
+	ancho integer NOT NULL,
+	idempleadoauditado integer,
 	PRIMARY KEY (idalmacen)
 );
 
@@ -411,11 +430,97 @@ CREATE TABLE public.area (
 	posicioninicial point NOT NULL,
 	posicionfinal point NOT NULL,
 	codigo varchar(10) NOT NULL,
+	idempleadoauditado integer,
 	PRIMARY KEY (idarea)
 );
 
 CREATE INDEX ON public.area
 	(idalmacen);
+
+
+CREATE TABLE public.seccion (
+	idseccion serial NOT NULL,
+	descripcion varchar(255) NOT NULL,
+	PRIMARY KEY (idseccion)
+);
+
+
+CREATE TABLE public.tipoempleadoxseccion (
+	idtipoempleado integer NOT NULL,
+	idseccion integer NOT NULL,
+	idempleadoauditado integer,
+	PRIMARY KEY (idtipoempleado, idseccion)
+);
+
+
+CREATE TABLE public.ruta (
+	idruta serial NOT NULL,
+	idmovimiento integer NOT NULL,
+	camino JSON NOT NULL,
+	idempleadoauditado integer,
+	PRIMARY KEY (idruta)
+);
+
+CREATE INDEX ON public.ruta
+	(idmovimiento);
+
+
+CREATE TABLE public.entity1 (
+);
+
+
+CREATE TABLE public.movimientoxenvio (
+	idmovimiento integer NOT NULL,
+	idenvio integer NOT NULL,
+	PRIMARY KEY (idmovimiento, idenvio)
+);
+
+
+CREATE TABLE public.notacredito (
+	idnotadecredito serial NOT NULL,
+	idcliente integer NOT NULL,
+	idcomprobante integer NOT NULL,
+	idempleadoauditado integer,
+	PRIMARY KEY (idnotadecredito)
+);
+
+CREATE INDEX ON public.notacredito
+	(idcliente);
+CREATE INDEX ON public.notacredito
+	(idcomprobante);
+
+
+CREATE TABLE public.detallenotacredito (
+	iddetallenotacredito integer NOT NULL
+);
+
+
+CREATE TABLE public.auditoria (
+	idauditoria serial NOT NULL,
+	idempleado integer NOT NULL,
+	tabla varchar(255) NOT NULL,
+	accion varchar(255) NOT NULL,
+	fechacreacion timestamp without time zone NOT NULL default now(),
+	idpk integer NOT NULL,
+	PRIMARY KEY (idauditoria)
+);
+
+
+create table auditoria (
+	idauditoria serial not null, 
+	tabla text not null, idempleado integer not null, 
+	fecha timestamp without time zone not null default now(), 
+	accion text not null check (accion in ('I', 'D', 'U')), 
+	dataoriginal text, 
+	datanueva text, 
+	query text) 
+with (fillfactor=100);
+
+CREATE INDEX ON public.auditoria (idempleado);
+
+CREATE INDEX ON public.auditoria (fecha);
+
+CREATE INDEX ON public.auditoria (accion);
 
 
 ALTER TABLE public.rack ADD CONSTRAINT FK_rack__idarea FOREIGN KEY (idarea) REFERENCES public.area(idarea);
@@ -429,11 +534,11 @@ ALTER TABLE public.empleado ADD CONSTRAINT FK_empleado__idusuario FOREIGN KEY (i
 ALTER TABLE public.empleado ADD CONSTRAINT FK_empleado__idtipoempleado FOREIGN KEY (idtipoempleado) REFERENCES public.tipoempleado(idtipoempleado);
 ALTER TABLE public.comprobantepago ADD CONSTRAINT FK_comprobantepago__idtipocomprobante FOREIGN KEY (idtipocomprobante) REFERENCES public.tipocomprobante(idtipocomprobante);
 ALTER TABLE public.comprobantepago ADD CONSTRAINT FK_comprobantepago__idcliente FOREIGN KEY (idcliente) REFERENCES public.cliente(idcliente);
-ALTER TABLE public.comprobantepago ADD CONSTRAINT FK_comprobantepago__idempleado FOREIGN KEY (idempleado) REFERENCES public.empleado(idempleado);
 ALTER TABLE public.comprobantepago ADD CONSTRAINT FK_comprobantepago__idestadocomprobante FOREIGN KEY (idestadocomprobante) REFERENCES public.estadocomprobante(idestadocomprobante);
+ALTER TABLE public.comprobantepago ADD CONSTRAINT FK_comprobantepago__idempleadoauditado FOREIGN KEY (idempleadoauditado) REFERENCES public.empleado(idempleado);
 ALTER TABLE public.guiaremision ADD CONSTRAINT FK_guiaremision__idmotivotraslado FOREIGN KEY (idmotivotraslado) REFERENCES public.motivotraslado(idmotivotraslado);
 ALTER TABLE public.guiaremision ADD CONSTRAINT FK_guiaremision__idtransportista FOREIGN KEY (idtransportista) REFERENCES public.empleado(idempleado);
-ALTER TABLE public.guiaremision ADD CONSTRAINT FK_guiaremision__idpedido FOREIGN KEY (idpedido) REFERENCES public.pedido(idpedido);
+ALTER TABLE public.guiaremision ADD CONSTRAINT FK_guiaremision__idenvio FOREIGN KEY (idenvio) REFERENCES public.envio(idenvio);
 ALTER TABLE public.detalleguia ADD CONSTRAINT FK_detalleguia__idguiaremision FOREIGN KEY (idguiaremision) REFERENCES public.guiaremision(idguiaremision);
 ALTER TABLE public.detalleguia ADD CONSTRAINT FK_detalleguia__idproducto FOREIGN KEY (idproducto) REFERENCES public.producto(idproducto);
 ALTER TABLE public.detalleguia ADD CONSTRAINT FK_detalleguia__idestadodetalleremision FOREIGN KEY (idestadodetalleremision) REFERENCES public.estadodetalleremision(idestadodetalleremision);
@@ -445,12 +550,17 @@ ALTER TABLE public.proforma ADD CONSTRAINT FK_proforma__idcliente FOREIGN KEY (i
 ALTER TABLE public.detalleproforma ADD CONSTRAINT FK_detalleproforma__idproforma FOREIGN KEY (idproforma) REFERENCES public.proforma(idproforma);
 ALTER TABLE public.detalleproforma ADD CONSTRAINT FK_detalleproforma__idproducto FOREIGN KEY (idproducto) REFERENCES public.producto(idproducto);
 ALTER TABLE public.cajon ADD CONSTRAINT FK_cajon__idrack FOREIGN KEY (idrack) REFERENCES public.rack(idrack);
-ALTER TABLE public.envio ADD CONSTRAINT FK_envio__idproforma FOREIGN KEY (idproforma) REFERENCES public.proforma(idproforma);
+ALTER TABLE public.envio ADD CONSTRAINT FK_envio__idpedido FOREIGN KEY (idpedido) REFERENCES public.pedido(idpedido);
 ALTER TABLE public.detalleenvio ADD CONSTRAINT FK_detalleenvio__idenvio FOREIGN KEY (idenvio) REFERENCES public.envio(idenvio);
-ALTER TABLE public.detalleenvio ADD CONSTRAINT FK_detalleenvio__idproforma FOREIGN KEY (idproforma) REFERENCES public.envio(idproforma);
-ALTER TABLE public.detalleenvio ADD CONSTRAINT FK_detalleenvio__iddetaleproforma FOREIGN KEY (iddetaleproforma) REFERENCES public.detalleproforma(iddetalleproforma);
-ALTER TABLE public.pedido ADD CONSTRAINT FK_pedido__idproforma FOREIGN KEY (idproforma) REFERENCES public.proforma(idproforma);
+ALTER TABLE public.detalleenvio ADD CONSTRAINT FK_detalleenvio__idproducto FOREIGN KEY (idproducto) REFERENCES public.producto(idproducto);
 ALTER TABLE public.pedido ADD CONSTRAINT FK_pedido__idestadopedido FOREIGN KEY (idestadopedido) REFERENCES public.estadopedido(idestadopedido);
 ALTER TABLE public.detallepedido ADD CONSTRAINT FK_detallepedido__idproducto FOREIGN KEY (idproducto) REFERENCES public.producto(idproducto);
 ALTER TABLE public.detallepedido ADD CONSTRAINT FK_detallepedido__idpedido FOREIGN KEY (idpedido) REFERENCES public.pedido(idpedido);
 ALTER TABLE public.area ADD CONSTRAINT FK_area__idalmacen FOREIGN KEY (idalmacen) REFERENCES public.almacen(idalmacen);
+ALTER TABLE public.tipoempleadoxseccion ADD CONSTRAINT FK_tipoempleadoxseccion__idtipoempleado FOREIGN KEY (idtipoempleado) REFERENCES public.tipoempleado(idtipoempleado);
+ALTER TABLE public.tipoempleadoxseccion ADD CONSTRAINT FK_tipoempleadoxseccion__idseccion FOREIGN KEY (idseccion) REFERENCES public.seccion(idseccion);
+ALTER TABLE public.ruta ADD CONSTRAINT FK_ruta__idmovimiento FOREIGN KEY (idmovimiento) REFERENCES public.movimiento(idmovimiento);
+ALTER TABLE public.movimientoxenvio ADD CONSTRAINT FK_movimientoxenvio__idmovimiento FOREIGN KEY (idmovimiento) REFERENCES public.movimiento(idmovimiento);
+ALTER TABLE public.movimientoxenvio ADD CONSTRAINT FK_movimientoxenvio__idenvio FOREIGN KEY (idenvio) REFERENCES public.envio(idenvio);
+ALTER TABLE public.notacredito ADD CONSTRAINT FK_notacredito__idcliente FOREIGN KEY (idcliente) REFERENCES public.cliente(idcliente);
+ALTER TABLE public.notacredito ADD CONSTRAINT FK_notacredito__idcomprobante FOREIGN KEY (idcomprobante) REFERENCES public.comprobantepago(idcomprobante);

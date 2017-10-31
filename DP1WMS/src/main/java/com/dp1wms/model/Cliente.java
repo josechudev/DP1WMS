@@ -8,7 +8,7 @@ public class Cliente {
     private String telefono;
     private String direccion;
     private String email;
-
+    private boolean activo;
 
     public long getIdCliente() {
         return idCliente;
@@ -57,4 +57,37 @@ public class Cliente {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    public void copyFrom(Cliente c){
+        this.idCliente = c.idCliente;
+        this.direccion = c.direccion;
+        this.email = c.email;
+        this.numDoc = c.numDoc;
+        this.razonSocial = c.razonSocial;
+        this.telefono = c.telefono;
+        this.activo = c.activo;
+    }
+
+    public Cliente(){
+
+    }
+
+    public Cliente(Cliente c){
+        this.idCliente = c.idCliente;
+        this.direccion = c.direccion;
+        this.email = c.email;
+        this.numDoc = c.numDoc;
+        this.razonSocial = c.razonSocial;
+        this.telefono = c.telefono;
+        this.activo = c.activo;
+    }
+
 }

@@ -1,15 +1,13 @@
 package com.dp1wms.dao.impl;
 
 import com.dp1wms.dao.RepositoryMantMov;
-import com.dp1wms.model.CategoriaProducto;
-import com.dp1wms.model.Lote;
-import com.dp1wms.model.Producto;
+import com.dp1wms.model.*;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.dp1wms.model.TipoMovimiento;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -34,7 +32,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         return listaProductos;
     }
 
-    public Producto mapParam(ResultSet rs, int i) throws SQLException {
+    private Producto mapParam(ResultSet rs, int i) throws SQLException {
         Producto producto = new Producto();
         producto.setIdProducto(rs.getInt("idproducto"));
         producto.setNombreProducto(rs.getString("nombreproducto"));
@@ -57,7 +55,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         return listaCategorias;
     }
 
-    public CategoriaProducto mapParam2(ResultSet rs, int i) throws SQLException {
+    private CategoriaProducto mapParam2(ResultSet rs, int i) throws SQLException {
         CategoriaProducto categoria = new CategoriaProducto();
         categoria.setIdCategoria(rs.getInt("idcategoria"));
         categoria.setDescripcion(rs.getString("descripcion"));
@@ -77,7 +75,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         return listaLotes;
     }
 
-    public Lote mapParam3(ResultSet rs, int i) throws SQLException {
+    private Lote mapParam3(ResultSet rs, int i) throws SQLException {
         Lote lote = new Lote();
         lote.setIdProducto(rs.getInt("idproducto"));
         lote.setNombreProducto(rs.getString("nombreproducto"));
@@ -100,7 +98,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         return listaTipoMovimiento;
     }
 
-    public TipoMovimiento mapParam4(ResultSet rs, int i) throws SQLException {
+    private TipoMovimiento mapParam4(ResultSet rs, int i) throws SQLException {
         TipoMovimiento tipoMovimiento = new TipoMovimiento();
         tipoMovimiento.setIdTipoMovimiento(rs.getInt("idtipomovimiento"));
         tipoMovimiento.setDescripcion(rs.getString("descripcion"));
@@ -109,66 +107,104 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public int registrarMovimiento(Integer totalProductos,String observaciones,Timestamp fecha,int idTipoMovimiento,int idProducto,Integer idLote,Integer cantidad){
+    public int registrarMovimiento(Integer totalProductos,String observaciones,Timestamp fecha,int idTipoMovimiento,int idProducto,Integer idLote,Integer cantidad,Long idEmpleadoAuditado){
 
 
 
-        String SQL = "INSERT INTO public.movimiento (totalproductos,observaciones,fechamovimiento,idtipomovimiento) VALUES (?,?,?,?)";
-        try{
-            jdbcTemplate.update(SQL,new Object[] {totalProductos,observaciones,fecha,idTipoMovimiento});
-            System.out.println("Se ha insertado en la tabla movimiento");
-        }catch (EmptyResultDataAccessException e) {
+        String SQL = "INSERT INTO public.movimiento (totalproductos,observaciones,fechamovimiento,idtipomovimiento,idempleadoauditado) VALUES (?,?,?,?,?) RETURNING idmovimiento";
+
+       int idMovimiento = 0;
+        try {
+            Movimiento movimientoInsertado = (Movimiento) this.jdbcTemplate.queryForObject(SQL, new Object[]{totalProductos,observaciones,fecha,idTipoMovimiento,idEmpleadoAuditado},
+                    (rs, i)->{
+                        Movimiento movimientoTemporal = new Movimiento();
+                        movimientoTemporal.setIdMovimiento(rs.getInt("idmovimiento"));
+                        return movimientoTemporal;
+                    });
+            idMovimiento = movimientoInsertado.getIdMovimiento();
+        } catch(Exception e){
             e.printStackTrace();
             throw e;
         }
 
-        SQL= "SELECT last_value from movimiento_idmovimiento_seq";
-        Integer idMovimiento = null;
-        try{
-            idMovimiento = jdbcTemplate.queryForObject(SQL,Integer.class);
-        }catch (EmptyResultDataAccessException e) {
-            e.printStackTrace();
-            throw e;
-        }
-
-        System.out.println("IdMov -> "+idMovimiento);
-
-        SQL = "INSERT INTO public.detallemovimiento (idmovimiento,idproducto,idlote,cantidad) VALUES (?,?,?,?)";
-        try{
-            jdbcTemplate.update(SQL,new Object[] {idMovimiento,idProducto,idLote,cantidad});
-            System.out.println("Se ha insertado en la tabla detalle movimiento");
-        }catch (EmptyResultDataAccessException e) {
-            e.printStackTrace();
-            throw e;
+        System.out.println("IdMovimiento Insertado -> "+idMovimiento);
+        if(idMovimiento != 0){
+            SQL = "INSERT INTO public.detallemovimiento (idmovimiento,idproducto,idlote,cantidad) VALUES (?,?,?,?)";
+            try{
+                jdbcTemplate.update(SQL,new Object[] {idMovimiento,idProducto,idLote,cantidad});
+                System.out.println("Se ha insertado en la tabla detalle movimiento");
+            }catch (EmptyResultDataAccessException e) {
+                e.printStackTrace();
+                throw e;
+            }
         }
         return idMovimiento;
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public int registrarLote(int idProducto,Timestamp fechalote,Timestamp fechaEntrada,int stockParcial){
+    public int registrarLote(int idProducto,Timestamp fechalote,Timestamp fechaEntrada,int stockParcial,Long idEmpleadoAuditado){
         // el stock parcial no se debe insertar directamente en lote, es trabajo del trigger por eso se pone de valor cero
-        String SQL = "INSERT INTO public.lote (idproducto,fechalote,fechaentrada,stockparcial) VALUES (?,?,?,0)";
-        try{
-            jdbcTemplate.update(SQL,new Object[] {idProducto,fechalote,fechaEntrada});
-            System.out.println("Se ha insertado en la tabla lote");
-        }catch (EmptyResultDataAccessException e) {
+        String SQL = "INSERT INTO public.lote (idproducto,fechalote,fechaentrada,idempleadoauditado,stockparcial) VALUES (?,?,?,?,0) RETURNING idlote";
+        int idLote = 0;
+        try {
+            Lote loteInsertado = (Lote) this.jdbcTemplate.queryForObject(SQL, new Object[]{idProducto,fechalote,fechaEntrada,idEmpleadoAuditado},
+                    (rs, i)->{
+                        Lote loteTemporal = new Lote();
+                        loteTemporal.setIdLote(rs.getInt("idlote"));
+                        return loteTemporal;
+                    });
+            idLote = loteInsertado.getIdLote();
+        } catch(Exception e){
             e.printStackTrace();
             throw e;
         }
 
-        SQL= "SELECT last_value from lote_idlote_seq";
-        Integer idLote = null;
-        try{
-            idLote = jdbcTemplate.queryForObject(SQL,Integer.class);
-        }catch (EmptyResultDataAccessException e) {
-            e.printStackTrace();
-            throw e;
-        }
-        int idTipoMovimiento =13; // para ingreso de lote
+        int idTipoMovimiento =1; // para ingreso de lote
         int totalProductos = 1;
-        registrarMovimiento(totalProductos,"",fechaEntrada,idTipoMovimiento,idProducto,idLote,stockParcial);
+        System.out.println("IdLoteInsertado -> "+idLote);
+        if(idLote != 0){
+            registrarMovimiento(totalProductos,"",fechaEntrada,idTipoMovimiento,idProducto,idLote,stockParcial,idEmpleadoAuditado);
+        }
 
         return 0;
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public int registrarMovimiento(Movimiento movimiento){
+
+        String SQL = "INSERT INTO public.movimiento (totalproductos,observaciones,fechamovimiento,idtipomovimiento,idempleadoauditado,idenvio) VALUES (?,?,?,?,?,?) RETURNING idmovimiento";
+
+        int idMovimiento = 0;
+        int idTipoMovSalida = 6;
+        try {
+            Movimiento movimientoInsertado = (Movimiento) this.jdbcTemplate.queryForObject(SQL, new Object[]{movimiento.getTotalProductos(),movimiento.getObservaciones(),movimiento.getFechaMovimiento(),idTipoMovSalida,movimiento.getIdEmpleadoAuditado(),movimiento.getIdEnvio()},
+                    (rs, i)->{
+                        Movimiento movimientoTemporal = new Movimiento();
+                        movimientoTemporal.setIdMovimiento(rs.getInt("idmovimiento"));
+                        return movimientoTemporal;
+                    });
+            idMovimiento = movimientoInsertado.getIdMovimiento();
+        } catch(Exception e){
+            e.printStackTrace();
+            throw e;
+        }
+
+        System.out.println("IdMovimiento Insertado -> "+idMovimiento);
+        List<DetalleMovimiento> listaDetalleMovimiento = movimiento.getListaDetalleMovimiento();
+        for(DetalleMovimiento detalle : listaDetalleMovimiento){
+            if(idMovimiento != 0){
+                SQL = "INSERT INTO public.detallemovimiento (idmovimiento,idproducto,idlote,cantidad) VALUES (?,?,?,?)";
+                try{
+                    jdbcTemplate.update(SQL,new Object[] {idMovimiento,detalle.getIdProducto(),detalle.getIdLote(),detalle.getCantidad()});
+                    System.out.println("Se ha insertado en la tabla detalle movimiento");
+                }catch (EmptyResultDataAccessException e) {
+                    e.printStackTrace();
+                    throw e;
+                }
+            }
+        }
+        return idMovimiento;
+    }
+
 
 }

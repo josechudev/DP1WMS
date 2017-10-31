@@ -4,13 +4,17 @@ import com.dp1wms.controller.Descuentos.DatosDescuentoController;
 import com.dp1wms.spring.config.SpringFXMLLoader;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
+import java.io.IOException;
 
 public class StageManager {
 
@@ -29,6 +33,7 @@ public class StageManager {
 
     public void mostrarModal(final FxmlView view){
         Parent viewRootNode = loadFromFxmlFilePath(view.getFxmlFile());
+    
         Scene scene = new Scene(viewRootNode);
 
         Stage stage = new Stage();
@@ -36,7 +41,7 @@ public class StageManager {
         stage.setScene(scene);
         stage.setTitle(view.getTitle());
         stage.setResizable(view.isResizable());
-        stage.show();
+        stage.showAndWait();
     }
 
     private void show(final Parent rootnode, String title, boolean resizable) {
@@ -94,7 +99,7 @@ public class StageManager {
         alert.showAndWait();
     }
 
-    public void mostrarInfonDialog(String title, String header, String content){
+    public void mostrarInfoDialog(String title, String header, String content){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);
