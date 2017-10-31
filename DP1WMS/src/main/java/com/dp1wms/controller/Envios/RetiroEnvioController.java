@@ -118,6 +118,7 @@ public class RetiroEnvioController implements FxmlController {
         System.out.println("Tamaño lista movimiento->"+listaDetalleMovimiento.size());
         movimiento.setTotalProductos(totalProductos);
         movimiento.setListaDetalleMovimiento(listaDetalleMovimiento);
+        movimiento.setIdEnvio(this.envio.getIdEnvio());
         int resultado = this.repositoryMantMovImpl.registrarMovimiento(movimiento);
         if(resultado > 0){
             this.repositoryEnvio.actualizarEstadoEnvio(this.envio.getIdEnvio());

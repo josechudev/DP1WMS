@@ -26,7 +26,8 @@
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#cargarGenerarProforma" text="Proforma" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoDescuentos" text="Descuentos" />
-                        <MenuItem mnemonicParsing="false" onAction="#cargarListaEnviosPendientes" text="Envios Pendientes" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarListaEnviosPendientes" text="Despacho Envios" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarListaGuias" text="Guias Remision" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Administracion">
