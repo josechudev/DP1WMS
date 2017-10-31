@@ -34,8 +34,8 @@ public class RepositoryMantCategoriaImpl implements RepositoryMantCategoria{
 
     @Override
     public void updateCategoria(CategoriaProducto categoriaProducto) {
-        String sql = "UPDATE categoriaproducto SET descripcion = ?";
-        jdbcTemplate.update(sql,new Object[]{categoriaProducto.getDescripcion()});
+        String sql = "UPDATE categoriaproducto SET descripcion = ? WHERE idcategoria = ?";
+        jdbcTemplate.update(sql,new Object[]{categoriaProducto.getDescripcion(),categoriaProducto.getIdCategoria()});
     }
 
     @Override
