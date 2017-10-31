@@ -140,6 +140,11 @@ public class MainController implements FxmlController {
         this.stageManager.mostrarModal(MainView.LISTAR_GUIA);
     }
 
+    @FXML
+    private void cargarDevolucionFactura(){
+        System.out.println("cargarDevolucionPedido");
+        this.stageManager.mostrarModal(MainView.DEVOLVER_PEDIDO);
+    }
 
     public void setUsuario(Usuario usuario){
         this.usuario = usuario;
