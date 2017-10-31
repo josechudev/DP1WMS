@@ -31,6 +31,8 @@ public class ProductoDatosController  implements FxmlController {
     @FXML private ComboBox cb_prodActivo;
     @FXML private Button btn_aceptar, btn_cancelar;
     @FXML private TextField txt_prodDescripcion;
+    @FXML private TextField txt_prodPrecioC;
+    @FXML private TextField txt_prodUnidades;
     @Override
     public void initialize() {
         cb_prodActivo.getItems().removeAll(cb_prodActivo.getItems());
@@ -56,6 +58,8 @@ public class ProductoDatosController  implements FxmlController {
             txt_prodFechaC.setText(producto.getFechaCreacion());
             txt_prodStock.setText(Integer.toString(producto.getStock()));
             cb_prodActivo.getSelectionModel().select(producto.isActivo());
+            txt_prodPrecioC.setText(Float.toString(producto.getPrecioCompra()));
+            txt_prodUnidades.setText(producto.getUnidades());
             btn_aceptar.setText("Modificar Producto");
         }
     }
@@ -74,6 +78,8 @@ public class ProductoDatosController  implements FxmlController {
         producto.setPrecio(Float.parseFloat(txt_prodPrecio.getText()));
         producto.setFechaCreacion(txt_prodFechaC.getText());
         producto.setStock(v_accion==0?0:Integer.parseInt(txt_prodStock.getText()));
+        producto.setUnidades(txt_prodUnidades.getText());
+        producto.setPrecioCompra(Float.parseFloat(txt_prodPrecioC.getText()));
         if(cb_prodActivo.getValue().equals("Activo"))
             System.out.println(cb_prodActivo.getValue());
         producto.setActivo(cb_prodActivo.getValue().equals("Activo")?true:false);

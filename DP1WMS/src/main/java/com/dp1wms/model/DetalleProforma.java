@@ -1,6 +1,6 @@
 package com.dp1wms.model;
 
-public class DetalleProforma {
+public class DetalleProforma implements Detalle {
     private int idDetalleProforma;
     private int idProforma;
     private int cantidad;

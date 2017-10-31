@@ -58,6 +58,8 @@ public class ProductoResultSetExtractor implements ResultSetExtractor{
         producto.setCodigo(resultSet.getString(10));
         producto.setFechaCreacion(resultSet.getString(11));
         producto.setActivo(resultSet.getBoolean(12));
+        producto.setPrecioCompra(resultSet.getFloat(13));
+        producto.setUnidades(resultSet.getString(14));
 
         return producto;
 

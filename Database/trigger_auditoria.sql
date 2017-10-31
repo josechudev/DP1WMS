@@ -12,17 +12,17 @@ BEGIN
         v_old_data := ROW(OLD.*);
         v_new_data := ROW(NEW.*);
         INSERT INTO public.auditoria (idempleado,tabla,accion,dataoriginal,datanueva,query) 
-        VALUES (NEW.idempleado,TG_TABLE_NAME::TEXT,substring(TG_OP,1,1),v_old_data,v_new_data, current_query());
+        VALUES (NEW.idempleadoauditado,TG_TABLE_NAME::TEXT,substring(TG_OP,1,1),v_old_data,v_new_data, current_query());
         RETURN NEW;
     ELSIF (TG_OP = 'DELETE') THEN
         v_old_data := ROW(OLD.*);
         INSERT INTO public.auditoria (idempleado,tabla,accion,dataoriginal,query) 
-        VALUES (OLD.idempleado,TG_TABLE_NAME::TEXT,substring(TG_OP,1,1),v_old_data, current_query());
+        VALUES (OLD.idempleadoauditado,TG_TABLE_NAME::TEXT,substring(TG_OP,1,1),v_old_data, current_query());
         RETURN OLD;
     ELSIF (TG_OP = 'INSERT') THEN
         v_new_data := ROW(NEW.*);
         INSERT INTO public.auditoria (idempleado,tabla,accion,datanueva,query) 
-        VALUES (NEW.idempleado,TG_TABLE_NAME::TEXT,substring(TG_OP,1,1),v_new_data, current_query());
+        VALUES (NEW.idempleadoauditado,TG_TABLE_NAME::TEXT,substring(TG_OP,1,1),v_new_data, current_query());
         RETURN NEW;
     ELSE
         RAISE WARNING '[AUDIT.IF_MODIFIED_FUNC] - Other action occurred: %, at %',TG_OP,now();

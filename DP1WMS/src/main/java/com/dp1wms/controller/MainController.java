@@ -131,6 +131,11 @@ public class MainController implements FxmlController {
     }
 
     @FXML
+    private void cargarGenerarPedido(){
+        this.stageManager.mostrarModal(VentasView.GEN_PEDIDO);
+    }
+
+    @FXML
     private void cargarListaEnviosPendientes(){
         this.stageManager.mostrarModal(MainView.LISTAR_ENVIOS);
     }
@@ -140,6 +145,11 @@ public class MainController implements FxmlController {
         this.stageManager.mostrarModal(MainView.LISTAR_GUIA);
     }
 
+    @FXML
+    private void cargarDevolucionFactura(){
+        System.out.println("cargarDevolucionPedido");
+        this.stageManager.mostrarModal(MainView.DEVOLVER_PEDIDO);
+    }
 
     public void setUsuario(Usuario usuario){
         this.usuario = usuario;

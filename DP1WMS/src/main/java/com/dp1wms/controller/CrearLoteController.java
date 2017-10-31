@@ -113,7 +113,9 @@ public class CrearLoteController implements FxmlController{
     private Timestamp convertirFecha(String fecha) throws ParseException  {
 
         Date utiltime = null;
+
         utiltime = ISO8601Utils.parse(fecha, new ParsePosition(0));
+
         return new Timestamp(utiltime.getTime());
 
     }
