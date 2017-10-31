@@ -4,6 +4,7 @@ import com.dp1wms.controller.FxmlController;
 import com.dp1wms.controller.MainController;
 import com.dp1wms.dao.RepositoryMantCliente;
 import com.dp1wms.model.Cliente;
+import com.dp1wms.util.ClienteCampo;
 import com.dp1wms.view.ClientesView;
 import com.dp1wms.view.StageManager;
 import javafx.beans.property.SimpleStringProperty;
@@ -186,13 +187,5 @@ public class ClienteMainController implements FxmlController{
         this.clienteInfoController = clienteInfoController;
     }
 
-    private class ClienteCampo{
-        public String descripcion;
-        public String campo;
 
-        public ClienteCampo(String descripcion, String campo){
-            this.descripcion = descripcion;
-            this.campo = campo;
-        }
-    }
 }

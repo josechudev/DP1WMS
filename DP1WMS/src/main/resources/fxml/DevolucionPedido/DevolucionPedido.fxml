@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="357.0" prefWidth="926.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.DevolucionPedido.DevolucionPedidoController">
+  <children>
+    <Label layoutX="29.0" layoutY="58.0" prefHeight="27.0" prefWidth="117.0" text="Acciones">
+      <font>
+        <Font size="14.0" />
+      </font>
+    </Label>
+    <Label layoutX="29.0" layoutY="25.0" text="Devolucion de Producto">
+      <font>
+        <Font size="18.0" />
+      </font>
+    </Label>
+    <Button fx:id="btn_CrearUsuario" layoutX="27.0" layoutY="94.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="92.0" text="Agregar" />
+    <Button fx:id="btn_ModificarUsuario" layoutX="141.0" layoutY="94.0" mnemonicParsing="false" prefHeight="1.0" prefWidth="92.0" text="Modificar" />
+    <Button fx:id="btn_eliminarUsuario" layoutX="253.0" layoutY="94.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="92.0" text="Desactivar" />
+    <Button fx:id="btn_activarrUsuario" layoutX="371.0" layoutY="94.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="92.0" text="Activar" />
+    <TableView fx:id="e_table" layoutX="27.0" layoutY="132.0" prefHeight="201.0" prefWidth="875.0">
+      <columns>
+        <TableColumn fx:id="e_id" prefWidth="48.0" text="Id" />
+        <TableColumn fx:id="e_tipoComprobante" prefWidth="134.0" text="Tipo Comprobante" />
+        <TableColumn fx:id="e_cliente" prefWidth="103.0" text="Cliente" />
+        <TableColumn fx:id="e_empleado" prefWidth="103.0" text="Empleado" />
+        <TableColumn fx:id="e_subtotal" prefWidth="139.0" text="Subtotal" />
+        <TableColumn fx:id="e_igv" maxWidth="5000.0" minWidth="10.0" prefWidth="82.0" text="IGV" />
+        <TableColumn fx:id="e_total" maxWidth="5000.0" minWidth="10.0" prefWidth="114.0" text="Total" />
+        <TableColumn fx:id="e_estadoComprobante" prefWidth="153.0" text="Estado Comprobante" />
+      </columns>
+    </TableView>
+  </children>
+</AnchorPane>
