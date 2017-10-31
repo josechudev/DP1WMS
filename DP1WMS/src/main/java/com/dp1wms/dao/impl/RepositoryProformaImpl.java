@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class RepositoryProformaImpl implements RepositoryProforma {
         try{
             int idProforma = jdbcTemplate.queryForObject(sqlProforma, new Object[]{
                     proforma.getIdEmpleado(),
-                    proforma.getIdCliente(),
+                    proforma.getCliente().getIdCliente(),
                     proforma.getObservaciones(),
                     proforma.getTotal(),
                     mainController.getEmpleado().getIdempleado()}, (rs, i)->{
@@ -92,5 +93,67 @@ public class RepositoryProformaImpl implements RepositoryProforma {
         p.setIdCategoria(rs.getInt("idcategoria"));
         p.setCategoria(rs.getString("categoria"));
         return p;
+    }
+
+    @Override
+    public List<Proforma> buscarProformas(String campoCliente, String datoCliente, String codigoProforma,
+                                   Timestamp fechaDesde, Timestamp fechaHasta){
+        String sql = "SELECT p.idproforma, p.idcliente, c.razonsocial, c.numdoc, c.telefono, c.direccion, c.email, " +
+                "to_char(p.fechacreacion, 'DD/MM/YYYY') as fechacreacion, p.total " +
+                "FROM proforma as p INNER JOIN cliente as c ON p.idcliente = c.idcliente " +
+                "WHERE c." + campoCliente + " LIKE  ? AND p.idproforma::varchar LIKE ? " +
+                "AND date_trunc('day',p.fechacreacion) >= ? AND date_trunc('day',p.fechacreacion) <= ?";
+        datoCliente = "%" + datoCliente + "%";
+        codigoProforma = "%" + codigoProforma + "%";
+
+        try{
+            List<Proforma> proformas = jdbcTemplate.query(sql,
+                    new Object[]{datoCliente, codigoProforma,
+                    fechaDesde, fechaHasta}, (res, i)->{
+                Proforma p = new Proforma();
+                p.setIdCliente(res.getLong("idcliente"));
+                p.setIdProforma(res.getInt("idproforma"));
+                Cliente c = new Cliente();
+                c.setIdCliente(res.getLong("idcliente"));
+                c.setRazonSocial(res.getString("razonsocial"));
+                c.setNumDoc(res.getString("numdoc"));
+                c.setTelefono(res.getString("telefono"));
+                c.setDireccion(res.getString("direccion"));
+                c.setEmail(res.getString("email"));
+                p.setCliente(c);
+                p.setFechaCreacion(res.getString("fechacreacion"));
+                p.setTotal(res.getFloat("total"));
+                return p;
+                    });
+            return proformas;
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<DetalleProforma> obtenerDetallesDeProforma(int idProforma){
+        String sql = "SELECT dp.iddetalleproforma, dp.idproducto, dp.cantidad, p.codigo, p.nombreproducto, p.precio " +
+                "FROM detalleproforma as dp INNER JOIN producto as p ON dp.idproducto = p.idproducto " +
+                "WHERE dp.idproforma = ?";
+        try{
+            List<DetalleProforma> detalles = this.jdbcTemplate.query(sql, new Object[]{idProforma},
+                    (res, i)->{
+                DetalleProforma dp =  new DetalleProforma();
+                dp.setIdDetalleProforma(res.getInt("iddetalleproforma"));
+                Producto p = new Producto();
+                p.setCodigo(res.getString("codigo"));
+                p.setPrecio(res.getFloat("precio"));
+                p.setIdProducto(res.getInt("idproducto"));
+                p.setNombreProducto(res.getString("nombreproducto"));
+                dp.setProducto(p);
+                dp.setCantidad(res.getInt("cantidad"));
+                return dp;
+                    });
+            return new ArrayList<DetalleProforma>(detalles);
+        }catch(Exception e){
+            e.printStackTrace();
+            return  null;
+        }
     }
 }

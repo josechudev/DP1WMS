@@ -8,20 +8,24 @@ public class Proforma implements Cabecera{
     private long idCliente;
     private float total;
     private String observaciones;
+    private String fechaCreacion;
 
     private ArrayList<DetalleProforma> detallesProforma;
+
+    //objects
+    private Cliente cliente;
 
     public Proforma(){
         this.detallesProforma = new ArrayList<DetalleProforma>();
     }
 
-    public DetalleProforma agregarProducto(Producto p, int cantidad){
+    public void agregarProducto(Producto p, int cantidad){
         for(DetalleProforma dp: this.detallesProforma){
             if(dp.getProducto().getIdProducto() == p.getIdProducto()){
                 dp.setDescuento(0);
                 int c = dp.getCantidad();
                 dp.setCantidad(c + cantidad);
-                return null;
+                return;
             }
         }
         DetalleProforma dp = new DetalleProforma();
@@ -29,7 +33,6 @@ public class Proforma implements Cabecera{
         dp.setDescuento(0);
         dp.setProducto(p);
         this.detallesProforma.add(dp);
-        return dp;
     }
 
     public void eliminarDetalleProforma(DetalleProforma dp){
@@ -100,5 +103,21 @@ public class Proforma implements Cabecera{
 
     public int getCantidadDetalle(){
         return this.detallesProforma.size();
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public String getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(String fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 }

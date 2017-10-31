@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class Descuento {
+public class DescuentoAlgoritmo {
 
     public static void aplicarDescuento(List<Condicion> condiciones, Cabecera cabecera){
         for(int i = 0; i < cabecera.getCantidadDetalle(); i++){
@@ -119,7 +119,7 @@ public class Descuento {
     private static  void orderDescuentos(ArrayList<Condicion> condiciones){
         //asignar prioridades
         for(Condicion desc: condiciones){
-            switch (desc.getDescripcion()){
+            switch (desc.getTipoCondicion()){
                 case Condicion.DESC_P:{//por porcentaje
                     desc.setPrioridad(7);
                     break;
@@ -158,7 +158,7 @@ public class Descuento {
     private static void aplicarDescuentosPorPorcentaje(ArrayList<Condicion> condiciones, Cabecera cabecera){
         for(int i = 0; i < cabecera.getCantidadDetalle(); i++){
             Detalle d = cabecera.getDetalle(i);
-            ArrayList<Float> complementoDesc = new ArrayList<>();
+
             Producto p = d.getProducto();
             float comDescTotal = 1;
             for(Condicion desc: condiciones){
@@ -166,7 +166,6 @@ public class Descuento {
                     break;
                 }
                 if(desc.getIdProductoGenerador() == p.getIdProducto() || desc.getIdCategoriaProdGen() == p.getIdProducto()){
-                    complementoDesc.add(new Float(1.0 - desc.getValorDescuento()));
                     comDescTotal *= (1 - desc.getValorDescuento());
                 }
             }

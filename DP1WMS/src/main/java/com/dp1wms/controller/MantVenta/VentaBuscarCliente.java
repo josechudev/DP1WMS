@@ -15,7 +15,7 @@ import javafx.event.ActionEvent;
 import java.util.List;
 
 @Component
-public class VentaBusquedaCliente implements FxmlController{
+public class VentaBuscarCliente implements FxmlController{
 
     @FXML private ComboBox campoClienteCB;
     @FXML private TextField busquedaField;
@@ -38,10 +38,11 @@ public class VentaBusquedaCliente implements FxmlController{
     public void initialize(){
         this.campoClienteCB.getItems().addAll("RUC", "Razon Social", "Telefono", "Email");
         this.campoClienteCB.getSelectionModel().select(0);
+        this.cliente = null;
     }
 
     @Autowired @Lazy
-    public VentaBusquedaCliente(StageManager stageManager){
+    public VentaBuscarCliente(StageManager stageManager){
         this.stageManager = stageManager;
     }
 

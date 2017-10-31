@@ -6,7 +6,7 @@ public enum VentasView implements FxmlView {
     GEN_PROFORMA{
         @Override
         public String getTitle() {
-            return getStringFromResourceBundle("generarproforma.title");
+            return getStringFromResourceBundle("ventas.proforma.title");
         }
         @Override
         public String getFxmlFile() {
@@ -16,7 +16,7 @@ public enum VentasView implements FxmlView {
         public boolean isResizable(){
             return true;
         }
-    }, VENTA_BUSCAR_PROD {
+    }, BUSCAR_PROD {
         @Override
         public String getTitle() {
             return getStringFromResourceBundle("ventas.buscar_producto.title");
@@ -32,7 +32,7 @@ public enum VentasView implements FxmlView {
     }, BUSCAR_CLIENTE{
         @Override
         public String getTitle() {
-            return getStringFromResourceBundle("buscarcliente.title");
+            return getStringFromResourceBundle("ventas.buscar_cliente.title");
         }
         @Override
         public String getFxmlFile() {
@@ -42,7 +42,35 @@ public enum VentasView implements FxmlView {
         public boolean isResizable(){
             return true;
         }
+    }, GEN_PEDIDO{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("ventas.pedido.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Ventas/Pedido.fxml";
+        }
+        @Override
+        public boolean isResizable() {
+            return true;
+        }
+    }, BUSCAR_PROFORMA{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("ventas.buscar_proforma.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Ventas/BuscarProforma.fxml";
+        }
+        @Override
+        public boolean isResizable() {
+            return true;
+        }
     };
+
+
 
     public String getStringFromResourceBundle(String key) {
         return ResourceBundle.getBundle("Bundle").getString(key);

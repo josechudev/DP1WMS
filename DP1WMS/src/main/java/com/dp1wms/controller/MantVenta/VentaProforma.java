@@ -6,7 +6,7 @@ import com.dp1wms.controller.MantCliente.ClienteInfoController;
 import com.dp1wms.dao.RepositoryCondicion;
 import com.dp1wms.dao.RepositoryProforma;
 import com.dp1wms.model.*;
-import com.dp1wms.util.Descuento;
+import com.dp1wms.util.DescuentoAlgoritmo;
 import com.dp1wms.view.ClientesView;
 import com.dp1wms.view.StageManager;
 import com.dp1wms.view.VentasView;
@@ -26,7 +26,6 @@ import java.util.*;
 @Component
 public class VentaProforma implements FxmlController{
 
-    @FXML private Label codigoLabel;
     @FXML private Label nombreLabel;
     @FXML private Label telefonoLabel;
     @FXML private Label emailLabel;
@@ -51,7 +50,8 @@ public class VentaProforma implements FxmlController{
     private StageManager stageManager;
     private MainController mainController;
     private ClienteInfoController clienteInfoController;
-    private VentaBusquedaCliente ventaBusquedaCliente;
+    private VentaBuscarCliente ventaBuscarCliente;
+    private VentaBuscarProducto ventaBuscarProducto;
 
     @Autowired private RepositoryProforma repositoryProforma;
     @Autowired private RepositoryCondicion repositoryCondicion;
@@ -67,19 +67,20 @@ public class VentaProforma implements FxmlController{
     @Autowired @Lazy
     public VentaProforma(StageManager stageManager, MainController mainController,
                          ClienteInfoController clienteInfoController,
-                         VentaBusquedaCliente ventaBusquedaCliente){
+                         VentaBuscarCliente ventaBuscarCliente,
+                         VentaBuscarProducto ventaBuscarProducto){
         this.stageManager = stageManager;
         this.mainController = mainController;
         this.clienteInfoController = clienteInfoController;
-        this.ventaBusquedaCliente = ventaBusquedaCliente;
+        this.ventaBuscarCliente = ventaBuscarCliente;
+        this.ventaBuscarProducto = ventaBuscarProducto;
     }
 
     @FXML
     private void mostrarBusquedaCliente(){
-        this.ventaBusquedaCliente.setCliente(null);
         this.stageManager.mostrarModal(VentasView.BUSCAR_CLIENTE);
 
-        Cliente c = this.ventaBusquedaCliente.getCliente();
+        Cliente c = this.ventaBuscarCliente.getCliente();
         if(c!=null){
             this.cliente = new Cliente(c);
             this.completarCamposClientes();
@@ -101,11 +102,16 @@ public class VentaProforma implements FxmlController{
 
     @FXML
     private void mostrarBusquedaProducto(){
-        this.stageManager.mostrarModal(VentasView.VENTA_BUSCAR_PROD);
+        this.stageManager.mostrarModal(VentasView.BUSCAR_PROD);
+        Producto p = this.ventaBuscarProducto.getProducto();
+        int cantidad = this.ventaBuscarProducto.getCantidad();
+        if(p != null && cantidad > 0){
+            this.agregarProducto(p, cantidad);
+        }
+
     }
 
     private void completarCamposClientes(){
-        this.codigoLabel.setText(String.valueOf(cliente.getIdCliente()));
         this.nombreLabel.setText(cliente.getRazonSocial());
         this.rucLabel.setText(cliente.getNumDoc());
         this.telefonoLabel.setText(cliente.getTelefono());
@@ -113,7 +119,7 @@ public class VentaProforma implements FxmlController{
         this.direccionLabel.setText(cliente.getDireccion());
     }
 
-    public void agregarProducto(Producto producto, int cantidad){
+    private void agregarProducto(Producto producto, int cantidad){
         this.proforma.agregarProducto(producto, cantidad);
         this.llenarTablaProforma();
     }
@@ -145,7 +151,7 @@ public class VentaProforma implements FxmlController{
                 dp.setCantidad(cantidad);
             } else {//show error
                 this.stageManager.mostrarErrorDialog("Error cantidad de producto",null,
-                        "Debes ingreasr un valor válido");
+                        "Debes ingresar un valor válido");
             }
             this.llenarTablaProforma();
         }
@@ -186,9 +192,8 @@ public class VentaProforma implements FxmlController{
     private void llenarTablaProforma(){
         this.limpiarTablaProforma();
         List<Condicion> condiciones = this.repositoryCondicion.obtenerCondicionesActivos();
-        Descuento.aplicarDescuento(condiciones, this.proforma);
+        DescuentoAlgoritmo.aplicarDescuento(condiciones, this.proforma);
         this.proforma.calcularTotal();
-
         this.proformaTable.getItems().addAll(this.proforma.getDetallesProforma());
         this.totalLabel.setText(String.valueOf(this.proforma.getTotal()));
     }

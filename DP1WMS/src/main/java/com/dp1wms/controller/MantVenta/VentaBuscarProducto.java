@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class VentaBusquedaProducto implements FxmlController{
+public class VentaBuscarProducto implements FxmlController{
 
     //error en no seleccionar producto
     private static final String ERR_PROD_TITLE = "Error";
@@ -39,7 +39,9 @@ public class VentaBusquedaProducto implements FxmlController{
     private RepositoryProforma repositoryProforma;
 
     private StageManager stageManager;
-    private VentaProforma ventaProforma;
+
+    private Producto producto;
+    private int cantidad;
 
     @FXML
     private void buscarProducto(){
@@ -89,7 +91,8 @@ public class VentaBusquedaProducto implements FxmlController{
                 }
             }
             if(cantidad > 0){
-                this.ventaProforma.agregarProducto(p, cantidad);
+                this.producto = p;
+                this.cantidad = cantidad;
                 this.cerrarVentana(event);
             } else {//show error
                 this.stageManager.mostrarErrorDialog(ERR_CANT_TITLE, ERR_CANT_HEADER, ERR_CANT_CONTENT);
@@ -117,12 +120,20 @@ public class VentaBusquedaProducto implements FxmlController{
         this.productoTable.getItems().clear();
         this.campoCB.getItems().addAll("Codigo", "Nombre", "Categoria");
         this.campoCB.getSelectionModel().select(0);
+        this.producto = null;
+        this.cantidad = 0;
     }
 
     @Autowired @Lazy
-    public VentaBusquedaProducto(StageManager stageManager, VentaProforma ventaProforma){
+    public VentaBuscarProducto(StageManager stageManager){
         this.stageManager = stageManager;
-        this.ventaProforma = ventaProforma;
     }
 
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
 }

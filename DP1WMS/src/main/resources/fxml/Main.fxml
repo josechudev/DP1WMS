@@ -19,36 +19,36 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Usuario">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
+                    <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" style="-fx-padding: 0 10;" text="Cerrar Sesión" />
                   </items>
                 </Menu>
                   <Menu mnemonicParsing="false" text="Productos">
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoProducto" text="Mantenimiento productos" />
+                      <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoProducto" style="-fx-padding: 0 10;" text="Mantenimiento productos" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Administracion">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoUsuario" text="Usuarios" />
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoCliente" text="Clientes" />
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoCategoria" text="Categorias" />
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoAlmacenes" text="Almacenes" />
-                        <Menu mnemonicParsing="false" text="Mantenimiento Movimiento">
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoUsuario" style="-fx-padding: 0 10;" text="Usuarios" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoCliente" style="-fx-padding: 0 10;" text="Clientes" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoCategoria" style="-fx-padding: 0 10;" text="Categorias" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoAlmacenes" style="-fx-padding: 0 10;" text="Almacenes" />
+                        <Menu mnemonicParsing="false" style="-fx-padding: 0 10;" text="Mantenimiento Movimiento">
                           <items>
-                              <MenuItem mnemonicParsing="false" onAction="#cargarIngresoProducto" text="Ingreso/Salida Producto" />
-                            <MenuItem mnemonicParsing="false" onAction="#cargarCrearLote" text="Crear Lote" />
+                              <MenuItem mnemonicParsing="false" onAction="#cargarIngresoProducto" style="-fx-padding: 0 10;" text="Ingreso/Salida Producto" />
+                            <MenuItem mnemonicParsing="false" onAction="#cargarCrearLote" style="-fx-padding: 0 10;" text="Crear Lote" />
                           </items>
                         </Menu>
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoRol" text="Mantenimiento Roles" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoRol" style="-fx-padding: 0 10;" text="Mantenimiento Roles" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Ventas">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoDescuentos" text="Descuentos" />
-                        <MenuItem mnemonicParsing="false" text="Consultar Proforma" />
-                      <MenuItem mnemonicParsing="false" onAction="#cargarGenerarProforma" text="Generar Proforma" />
-                        <MenuItem mnemonicParsing="false" text="Generar Pedido" />
-                        <MenuItem mnemonicParsing="false" onAction="#cargarListaEnviosPendientes" text="Envios Pendientes" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoDescuentos" style="-fx-padding: 0 10;" text="Descuentos" />
+                        <MenuItem mnemonicParsing="false" style="-fx-padding: 0 10;" text="Consultar Proforma" />
+                      <MenuItem mnemonicParsing="false" onAction="#cargarGenerarProforma" style="-fx-padding: 0 10;" text="Generar Proforma" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarGenerarPedido" style="-fx-padding: 0 10;" text="Generar Pedido" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarListaEnviosPendientes" style="-fx-padding: 0 10;" text="Envios Pendientes" />
                     </items>
                   </Menu>
               </menus>

@@ -11,15 +11,36 @@ public class Pedido implements Cabecera{
     private String fechaCreacion;
     private String observaciones;
     private int idEmpleadoAuditado;
-    private int idCliente;
+    private long idCliente;
     private float total;
 
-    //Cabecera
+    private Cliente cliente;
 
+    //Cabecera
     private ArrayList<DetallePedido> detalles;
 
     public Pedido(){
         this.setDetalles(new ArrayList<>());
+    }
+
+    public void agregarProducto(Producto p, int cantidad){
+        for(DetallePedido dp: this.detalles){
+            if(dp.getProducto().getIdProducto() == p.getIdProducto()){
+                dp.setDescuento(0);
+                int c = dp.getCantidad();
+                dp.setCantidad(c + cantidad);
+                return;
+            }
+        }
+        DetallePedido dp = new DetallePedido();
+        dp.setCantidad(cantidad);
+        dp.setDescuento(0);
+        dp.setProducto(p);
+        this.detalles.add(dp);
+    }
+
+    public void eliminarDetalle(DetallePedido dp){
+        this.detalles.remove(dp);
     }
 
     public int getIdPedido() {
@@ -78,11 +99,11 @@ public class Pedido implements Cabecera{
         this.idEmpleadoAuditado = idEmpleadoAuditado;
     }
 
-    public int getIdCliente() {
+    public long getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(int idCliente) {
+    public void setIdCliente(long idCliente) {
         this.idCliente = idCliente;
     }
 
@@ -97,7 +118,13 @@ public class Pedido implements Cabecera{
 
 
     public void calcularTotal(){
-
+        float total = 0;
+        for(DetallePedido dp: this.detalles){
+            float desc = dp.getDescuento();
+            dp.setSubtotal(dp.getCantidad()*dp.getProducto().getPrecio() - desc);
+            total += dp.getSubtotal();
+        }
+        this.total = total;
     }
 
     public ArrayList<DetallePedido> getDetalles() {
@@ -114,5 +141,13 @@ public class Pedido implements Cabecera{
 
     public int getCantidadDetalle(){
         return this.detalles.size();
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }
