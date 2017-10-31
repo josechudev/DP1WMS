@@ -2,7 +2,9 @@ package com.dp1wms.controller;
 
 import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.model.Lote;
+import com.dp1wms.util.DateParser;
 import com.dp1wms.view.StageManager;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,6 +92,11 @@ public class BusquedaProductoLoteController implements FxmlController {
         c_nombre.setCellValueFactory(new PropertyValueFactory<Lote, String>("nombreProducto"));
         c_cantidadDisponible.setCellValueFactory(new PropertyValueFactory<Lote, Integer>("stockParcial"));
         c_fechaEntrada.setCellValueFactory(new PropertyValueFactory<Lote, String>("fechaEntrada"));
+        /*this.c_fechaEntrada.setCellValueFactory(value->{
+            Timestamp fecha= DateParser.stringToTimestamp(value.getValue().getFechaEntrada());
+            String fechaEntrada = DateParser.timestampToString(fecha);
+            return new SimpleStringProperty(fechaEntrada);
+        });*/
         c_indice.setCellValueFactory(new PropertyValueFactory<Lote, Integer>("indiceTableView"));
         tableViewProductos.setEditable(true);
     }
@@ -120,7 +128,7 @@ public class BusquedaProductoLoteController implements FxmlController {
         c_fechaEntrada.setCellValueFactory(new PropertyValueFactory<Lote, String>("fechaEntrada"));
         c_indice.setCellValueFactory(new PropertyValueFactory<Lote, Integer>("indiceTableView"));
         tableViewProductos.setEditable(true);
-
+        this.limpiarTabla();
         llenarTabla(this.listaLotes);
     }
 }
