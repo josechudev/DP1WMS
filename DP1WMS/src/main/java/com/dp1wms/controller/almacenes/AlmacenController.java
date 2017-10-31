@@ -124,7 +124,7 @@ public class AlmacenController implements FxmlController{
         Rectangle rectAlmacen = new Rectangle();
         rectAlmacen.setWidth(gLargo);
         rectAlmacen.setHeight(gAncho);
-        rectAlmacen.setFill(Color.web("#95989A", 0.4));
+        rectAlmacen.setFill(Color.web("#95989A", 0.2));
         rectAlmacen.setStroke(Color.BLACK);
 
         AnchorPane.setTopAnchor(rectAlmacen, 0.0);
@@ -166,13 +166,16 @@ public class AlmacenController implements FxmlController{
             Rectangle rectArea = new Rectangle();
             rectArea.setWidth(aLargo*PIXELS_WIDTH_M2);
             rectArea.setHeight(aAncho*PIXELS_WIDTH_M2);
-            rectArea.setFill(Color.web("#46ACC2", 0.4));
+            rectArea.setFill(Color.web("#46ACC2", 0.2));
             rectArea.setStroke(Color.GRAY);
 
             rectArea.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    rectArea.setFill(Color.web("#46ACC2", 0.7));
+                    for (Rectangle r: (List<Rectangle>) apItems) {
+                        r.setFill(Color.web("#46ACC2", 0.2));
+                    }
+                    rectArea.setFill(Color.web("#46ACC2", 0.8));
                     mostrarDetallesArea(area);
                 }
             });
