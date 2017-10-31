@@ -19,6 +19,9 @@ public class Producto {
     private float precioCompra;
     private String unidades;
 
+    private int indiceTableView;
+
+
     public Producto(int idProducto, String nombreProducto, int idCategoria, String categoria, float peso, String fechaVencimiento, String descripcion, int stock, String codigo, float precio, boolean activo, String fechaCreacion, float precioCompra, String unidades) {
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;
@@ -194,5 +197,13 @@ public class Producto {
 
     public void setPrecio(float precio) {
         this.precio = precio;
+    }
+
+    public int getIndiceTableView() {
+        return indiceTableView;
+    }
+
+    public void setIndiceTableView(int indiceTableView) {
+        this.indiceTableView = indiceTableView;
     }
 }

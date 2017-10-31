@@ -70,7 +70,7 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
     @Override
     public void updateProducto(Producto producto) {
         String sql = "UPDATE producto SET nombreproducto = ?,peso=?,fechavencimiento=?," +
-                "descripcion=?,precio=?,stock=?,idcategoria=?,fechacreacion=?,activo=?,preciocommpra=?,unidades=? WHERE idproducto=?";
+                "descripcion=?,precio=?,stock=?,idcategoria=?,fechacreacion=?,activo=?,preciocompra=?,unidades=? WHERE idproducto=?";
         jdbcTemplate.update(sql, new Object[]{producto.getNombreProducto(), producto.getPeso(),
                 Timestamp.valueOf(producto.getFechaVencimiento()), producto.getDescripcion(),
                 producto.getPrecio(),
