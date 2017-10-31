@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 
@@ -31,6 +32,14 @@ public class AlmacenItemController extends GridPane {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+
+        this.setOnMouseEntered(event -> {
+            this.setStyle("-fx-background-color: #EBEBEB");
+        });
+
+        this.setOnMouseExited(event -> {
+            this.setStyle(null);
+        });
 
         this.mantenimientoAlmacenesController = mantenimientoAlmacenesController;
         this.almacen = almacen;

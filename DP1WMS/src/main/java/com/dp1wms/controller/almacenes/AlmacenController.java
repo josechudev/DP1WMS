@@ -54,6 +54,7 @@ public class AlmacenController implements FxmlController{
     private MantenimientoAlmacenesController mantenimientoAlmacenesController;
     private Almacen almacen;
     private List<Area> areas;
+    private Area areaSeleccionada;
     private final int PIXELS_WIDTH_M2 = 5;
 
     @Autowired @Lazy
@@ -107,6 +108,8 @@ public class AlmacenController implements FxmlController{
 
     public void refrescarAreas(){
         areas = repositoryMantArea.getAreasByIdAlmacen(almacen.getIdAlmacen());
+        apAlmacen.getChildren().clear();
+        dibujarAlmacen();
         dibujarAreas();
     }
 
@@ -124,7 +127,7 @@ public class AlmacenController implements FxmlController{
         Rectangle rectAlmacen = new Rectangle();
         rectAlmacen.setWidth(gLargo);
         rectAlmacen.setHeight(gAncho);
-        rectAlmacen.setFill(Color.web("#95989A", 0.2));
+        rectAlmacen.setFill(Color.web("#46ACC2", 0.1));
         rectAlmacen.setStroke(Color.BLACK);
 
         AnchorPane.setTopAnchor(rectAlmacen, 0.0);
@@ -136,8 +139,6 @@ public class AlmacenController implements FxmlController{
 
     private void dibujarAreas(){
         ObservableList apItems = apAlmacen.getChildren();
-
-        apItems.clear();
 
         Point2D pIni, pFin;
         double x1, y1, x2, y2;
@@ -166,16 +167,19 @@ public class AlmacenController implements FxmlController{
             Rectangle rectArea = new Rectangle();
             rectArea.setWidth(aLargo*PIXELS_WIDTH_M2);
             rectArea.setHeight(aAncho*PIXELS_WIDTH_M2);
-            rectArea.setFill(Color.web("#46ACC2", 0.2));
+            rectArea.setFill(Color.web("#46ACC2", 0.3));
             rectArea.setStroke(Color.GRAY);
 
             rectArea.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
                     for (Rectangle r: (List<Rectangle>) apItems) {
-                        r.setFill(Color.web("#46ACC2", 0.2));
+                        if (apItems.indexOf(r) == 0)
+                            continue;
+                        r.setFill(Color.web("#46ACC2", 0.3));
                     }
                     rectArea.setFill(Color.web("#46ACC2", 0.8));
+                    areaSeleccionada = area;
                     mostrarDetallesArea(area);
                 }
             });
@@ -202,6 +206,11 @@ public class AlmacenController implements FxmlController{
     @FXML
     private void editarAreas(ActionEvent event){
         stageManager.mostrarModal(AlmacenView.VISTA_AREAS);
+    }
+
+    @FXML
+    private void verRacks(ActionEvent event){
+        
     }
 
     public Almacen getAlmacen(){

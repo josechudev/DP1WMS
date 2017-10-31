@@ -105,7 +105,7 @@
         </rowConstraints>
          <children>
             <Label text="Racks" GridPane.valignment="TOP" />
-            <Button mnemonicParsing="false" text="Modificar distribución de racks" GridPane.rowIndex="1" />
+            <Button onAction="#verRacks" mnemonicParsing="false" text="Modificar distribución de racks" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
