@@ -33,7 +33,9 @@ public class DescuentoAlgoritmo {
                         Producto p = detalle.getProducto();
                         if(desc.getIdProductoDescuento() == p.getIdProducto() ||
                                 desc.getIdCategoriaProdDesc() == p.getIdCategoria()){
-                            detalle.setDescuento((float) (detalle.getCantidad() * p.getPrecio() * desc.getValorDescuento()));
+                            int cant = (int) Math.floor(detalle.getCantidad() / desc.getCantProdDesc());
+                            float descuento = (float) (cant * desc.getCantProdDesc() * p.getPrecio() * desc.getValorDescuento());
+                            detalle.setDescuento(descuento);
                         }
                     }
                 }
@@ -45,7 +47,7 @@ public class DescuentoAlgoritmo {
         ArrayList<Condicion> descValidos = new ArrayList<>();
         for(Condicion desc: condiciones){
             boolean valido = false;
-            switch(desc.getDescripcion()){
+            switch(desc.getTipoCondicion()){
                 case Condicion.DESC_P:{//por porcentaje
                     if(desc.getIdProductoDescuento() > 0){ //por producto
                         Detalle detalle = null;
@@ -56,7 +58,8 @@ public class DescuentoAlgoritmo {
                                 break;
                             }
                         }
-                        valido = (detalle != null);                    }
+                        valido = (detalle != null);
+                    }
                     else if(desc.getIdCategoriaProdDesc() > 0){
                         ArrayList<Detalle> variosDet = new ArrayList<>();
                         for(int i = 0; i < cabecera.getCantidadDetalle(); i++){
