@@ -207,7 +207,7 @@ public enum MainView implements FxmlView{
 
         @Override
         public boolean isResizable() {
-            return true;
+            return false;
         }
     },
     ALMACEN {
@@ -218,7 +218,7 @@ public enum MainView implements FxmlView{
 
         @Override
         public String getFxmlFile() {
-            return "/fxml/Almacen/Almacen.fxml";
+            return "/fxml/Almacen/AlmacenInfo.fxml";
         }
 
         @Override

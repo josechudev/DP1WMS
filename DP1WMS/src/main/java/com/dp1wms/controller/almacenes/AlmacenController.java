@@ -210,7 +210,7 @@ public class AlmacenController implements FxmlController{
 
     @FXML
     private void verRacks(ActionEvent event){
-        
+
     }
 
     public Almacen getAlmacen(){
