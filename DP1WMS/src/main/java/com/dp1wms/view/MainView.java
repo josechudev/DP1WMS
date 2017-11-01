@@ -345,7 +345,22 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
-    };
+    }, CARGAR_KARDEX{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("cargarKardex.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Kardex/ListaKardex.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    }
+
+    ;
 
     public String getStringFromResourceBundle(String key) {
         return ResourceBundle.getBundle("Bundle").getString(key);

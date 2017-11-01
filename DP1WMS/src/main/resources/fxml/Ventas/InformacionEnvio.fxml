@@ -66,10 +66,8 @@
                   </VBox>
                   <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="200.0" spacing="20.0" HBox.hgrow="NEVER">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#agregarTodosProductos" text="Agregar Todos" textOverrun="CENTER_WORD_ELLIPSIS" />
                         <Button mnemonicParsing="false" onAction="#agregarUnProducto" text="&gt;&gt;" />
-                        <Button mnemonicParsing="false" onAction="#removeUnProducto" text="&lt;&lt;" />
-                        <Button mnemonicParsing="false" onAction="#removerTodosProductos" text="Remover Todos" />
+                        <Button mnemonicParsing="false" onAction="#removerUnProducto" text="&lt;&lt;" />
                      </children>
                   </VBox>
                   <VBox layoutX="110.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">

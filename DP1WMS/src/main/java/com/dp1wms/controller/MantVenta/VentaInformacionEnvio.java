@@ -13,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 
 
 @Component
@@ -48,38 +51,177 @@ public class VentaInformacionEnvio implements FxmlController{
     private VentaPedido ventaPedido;
 
 
-    @FXML
-    private void agregarTodosProductos(){
-
-    }
 
     @FXML
     private void agregarUnProducto(){
         DetallePedido dp = this.prodDisponiblesTable.getSelectionModel().getSelectedItem();
         if(dp == null){
-
+            this.stageManager.mostrarErrorDialog("Error Envio", null,
+                    "Debe seleccionar un producto que desea agregar");
         } else {
-            
+            //buscar producto si existe en detalle envios
+            int cantidad = 0;
+            Producto p = dp.getProducto();
+
+            //ingresar cantidad
+            TextInputDialog dialog = new TextInputDialog(String.valueOf(dp.getCantidad()));
+            dialog.setTitle("Confirmación");
+            dialog.setHeaderText("Producto: " + p.getNombreProducto());
+            dialog.setContentText("Ingrese la cantidad (MAX. " + dp.getCantidad() + ") :");
+            ButtonType ok = new ButtonType("Confirmar", ButtonBar.ButtonData.OK_DONE);
+            ButtonType cancelar = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+            dialog.getDialogPane().getButtonTypes().setAll(ok, cancelar);
+            Optional<String> result = dialog.showAndWait();
+            if(result.isPresent()){
+                try{
+                    cantidad = Integer.parseInt(result.get());
+                } catch (NumberFormatException e){
+                    cantidad = 0;
+                }
+            }
+            if(cantidad <= 0 || cantidad > dp.getCantidad()){
+                this.stageManager.mostrarErrorDialog("Error cantidad de producto",null,
+                        "Debes ingresar un valor válido");
+                return;
+            }
+
+            DetalleEnvio de = null;
+            for(DetalleEnvio deAux: this.detalleEnvios){
+                if(deAux.getProducto().getIdProducto() == p.getIdProducto()){
+                    de = deAux;
+                    break;
+                }
+            }
+            if(de == null){
+                de = new DetalleEnvio();
+                de.setProducto(p);
+                de.setCantidad(cantidad);
+                this.detalleEnvios.add(de);
+            } else {
+                de.setCantidad(de.getCantidad() + cantidad);
+            }
+            //disminuir cantidad
+            dp.setCantidad(dp.getCantidad() - cantidad);
+            this.llenarTablaDisponibles();
+            this.llenarTablaAsignados();
         }
     }
 
     @FXML
-    private void removeUnProducto(){
+    private void removerUnProducto(){
+        DetalleEnvio de = this.envioTable.getSelectionModel().getSelectedItem();
+        if(de == null){
+            this.stageManager.mostrarErrorDialog("Error Envio", null,
+                    "Debe seleccionar un producto del envio que desea remover");
+        } else {
+            Producto p = de.getProducto();
+            int cantidad = 0;
+            //ingresar cantidad
+            TextInputDialog dialog = new TextInputDialog(String.valueOf(de.getCantidad()));
+            dialog.setTitle("Confirmación");
+            dialog.setHeaderText("Producto: " + p.getNombreProducto());
+            dialog.setContentText("Ingrese la cantidad (MAX. " + de.getCantidad() + ") :");
+            ButtonType ok = new ButtonType("Confirmar", ButtonBar.ButtonData.OK_DONE);
+            ButtonType cancelar = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+            dialog.getDialogPane().getButtonTypes().setAll(ok, cancelar);
+            Optional<String> result = dialog.showAndWait();
+            if(result.isPresent()){
+                try{
+                    cantidad = Integer.parseInt(result.get());
+                } catch (NumberFormatException e){
+                    cantidad = 0;
+                }
+            }
+            if(cantidad <= 0 || cantidad > de.getCantidad()){
+                this.stageManager.mostrarErrorDialog("Error cantidad de producto",null,
+                        "Debes ingresar un valor válido");
+                return;
+            }
 
-    }
+            DetallePedido dp = null;
+            for(DetallePedido dpAux: this.productosDisponibles){
+                if(dpAux.getProducto().getIdProducto() == p.getIdProducto()){
+                    dp = dpAux;
+                    break;
+                }
+            }
+            if(dp == null){
+                dp = new DetallePedido();
+                dp.setProducto(p);
+                dp.setCantidad(cantidad);
+                this.productosDisponibles.add(dp);
+            } else {
+                dp.setCantidad(dp.getCantidad() + cantidad);
+            };
+            de.setCantidad(de.getCantidad() - cantidad);
+            this.detalleEnvios.removeIf(deAux-> deAux.getCantidad() == 0);
+            this.llenarTablaDisponibles();
+            this.llenarTablaAsignados();
 
-    @FXML
-    private void removerTodosProductos(){
-
+        }
     }
 
     @FXML
     private void agregarEnvio(ActionEvent event){
+        String destino = this.destinoTF.getText();
+        LocalDate localdate = this.fechaEnvioDP.getValue();
+        Timestamp fecha = DateParser.localdateToTimestamp(localdate);
+
+        if(destino.isEmpty()){
+            this.stageManager.mostrarErrorDialog("Error Envio", null,
+                    "Debe agregar un destino");
+            return;
+        }
+        if(fecha == null){
+            this.stageManager.mostrarErrorDialog("Error Envio", null,
+                    "Debe seleccionar una fecha valida");
+            return;
+        }
+        if(this.detalleEnvios.size() == 0){
+            this.stageManager.mostrarErrorDialog("Error Envio", null,
+                    "El envio debe contener un producto al menos");
+            return;
+        }
+        this.envio = new Envio();
+        this.envio.setDestino(destino);
+        this.envio.setFechaEnvio(fecha);
+        this.envio.setCostoFlete(0);//TODO
+        this.envio.setDetalleEnvio(this.detalleEnvios);
+
+        this.stageManager.mostrarInfoDialog("Envio", null,
+                "Se agregó un envío");
+        this.cerrarVentana(event);
     }
 
     @FXML
     private void guardarEnvio(ActionEvent event){
+        String destino = this.destinoTF.getText();
+        LocalDate localdate = this.fechaEnvioDP.getValue();
+        Timestamp fecha = DateParser.localdateToTimestamp(localdate);
 
+        if(destino.isEmpty()){
+            this.stageManager.mostrarErrorDialog("Error Envio", null,
+                    "Debe agregar un destino");
+            return;
+        }
+        if(fecha == null){
+            this.stageManager.mostrarErrorDialog("Error Envio", null,
+                    "Debe seleccionar una fecha valida");
+            return;
+        }
+        if(this.detalleEnvios.size() == 0){
+            this.stageManager.mostrarErrorDialog("Error Envio", null,
+                    "El envio debe contener un producto al menos");
+            return;
+        }
+
+        this.envio.setDestino(destino);
+        this.envio.setFechaEnvio(fecha);
+        this.envio.setCostoFlete(0);//TODO
+        this.envio.setDetalleEnvio(this.detalleEnvios);
+        this.stageManager.mostrarInfoDialog("Envio", null,
+                "Se modificó un envío");
+        this.cerrarVentana(event);
     }
 
     @FXML
@@ -93,9 +235,11 @@ public class VentaInformacionEnvio implements FxmlController{
         this.limpiarTablaDisponibles();
         this.limpiarTablaAsignados();
 
+        this.fechaEnvioDP.setConverter(DateParser.getConverter());
+
         //buttons
         this.agregarBtn.managedProperty().bind(agregarBtn.visibleProperty());
-        this.guardarBtn.managedProperty().bind(agregarBtn.visibleProperty());
+        this.guardarBtn.managedProperty().bind(guardarBtn.visibleProperty());
 
         if(this.envio == null){ //nuevo envio
             //buttons
@@ -104,6 +248,9 @@ public class VentaInformacionEnvio implements FxmlController{
 
             this.guardarBtn.setDisable(true);
             this.guardarBtn.setVisible(false);
+
+            //fecha
+            this.fechaEnvioDP.setValue(DateParser.currentDateLocalDate());
         } else {
             //buttons
             this.agregarBtn.setDisable(true);
@@ -158,7 +305,6 @@ public class VentaInformacionEnvio implements FxmlController{
         }
 
         //remove detalles con cantidad 0
-        this.productosDisponibles.removeIf(dp -> dp.getCantidad() <= 0);
         this.prodDisponiblesTable.getItems().addAll(this.productosDisponibles);
     }
 
@@ -186,6 +332,16 @@ public class VentaInformacionEnvio implements FxmlController{
         this.asignadoEnvioTC.setCellValueFactory(value->{
             return new SimpleObjectProperty<Integer>(value.getValue().getCantidad());
         });
+    }
+
+    private void llenarTablaDisponibles(){
+        this.limpiarTablaDisponibles();
+        this.prodDisponiblesTable.getItems().addAll(this.productosDisponibles);
+    }
+
+    private void llenarTablaAsignados(){
+        this.limpiarTablaAsignados();
+        this.envioTable.getItems().addAll(this.detalleEnvios);
     }
 
     @Autowired @Lazy
