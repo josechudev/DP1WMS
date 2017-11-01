@@ -216,6 +216,7 @@ public class VentaProforma implements FxmlController{
                     "Debe seleccionar un cliente");
             return;
         } else {
+            this.proforma.setCliente(this.cliente);
             this.proforma.setIdCliente(this.cliente.getIdCliente());
         }
 

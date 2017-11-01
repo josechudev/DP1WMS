@@ -18,6 +18,8 @@ public class DescuentoAlgoritmo {
         //Eliminar condicions no válidos
         ArrayList<Condicion> descValidos = descuentosValidos(condiciones, cabecera);
 
+        System.err.println(descValidos.size());
+
         //aplicar prioridades a los condicions
         orderDescuentos(descValidos);
 
