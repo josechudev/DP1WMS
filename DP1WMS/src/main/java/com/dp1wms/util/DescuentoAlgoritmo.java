@@ -163,20 +163,20 @@ public class DescuentoAlgoritmo {
             Detalle d = cabecera.getDetalle(i);
 
             Producto p = d.getProducto();
-            float comDescTotal = 1;
+            float descuento = 0;
             for(Condicion desc: condiciones){
                 if(desc.getPrioridad() < 7){
                     break;
                 }
                 if(desc.getIdProductoGenerador() == p.getIdProducto() || desc.getIdCategoriaProdGen() == p.getIdProducto()){
-                    comDescTotal *= (1 - desc.getValorDescuento());
+                    descuento += d.getCantidad() * p.getPrecio() * desc.getValorDescuento();
                 }
             }
-
-            float descTotal = 1 - comDescTotal;
-            d.setDescuento(d.getCantidad() * p.getPrecio() * descTotal);
+            if(descuento >= d.getCantidad() * p.getPrecio()){
+                d.setDescuento(d.getCantidad() * p.getPrecio());
+            } else {
+                d.setDescuento(descuento);
+            }
         }
     }
 }
-
-
