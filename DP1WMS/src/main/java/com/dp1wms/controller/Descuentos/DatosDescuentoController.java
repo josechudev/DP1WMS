@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class DatosDescuentoController implements FxmlController{
+public class DatosDescuentoController implements FxmlController {
 
 
     @FXML
@@ -113,13 +113,13 @@ public class DatosDescuentoController implements FxmlController{
 
     @Autowired
     @Lazy
-    public DatosDescuentoController(StageManager stageManager,MantenimientoDescuentoController mantenimientoDescuentoController) {
+    public DatosDescuentoController(StageManager stageManager, MantenimientoDescuentoController mantenimientoDescuentoController) {
         this.stageManager = stageManager;
         this.mantenimientoDescuentoController = mantenimientoDescuentoController;
     }
 
 
-    private void configurarComboBox(ComboBox<CategoriaProducto> combobox){
+    private void configurarComboBox(ComboBox<CategoriaProducto> combobox) {
 
         Callback<ListView<CategoriaProducto>, ListCell<CategoriaProducto>> factory = lv -> new ListCell<CategoriaProducto>() {
 
@@ -136,14 +136,14 @@ public class DatosDescuentoController implements FxmlController{
     }
 
     private Timestamp obtenerFecha(String fecha) throws ParseException {
-        if(fecha != null)
+        if (fecha != null)
             return convertirFecha(fecha);
         else
             return null;
 
     }
 
-    private Timestamp convertirFecha(String fecha) throws ParseException  {
+    private Timestamp convertirFecha(String fecha) throws ParseException {
 
         Date utiltime = null;
         utiltime = ISO8601Utils.parse(fecha, new ParsePosition(0));
@@ -151,31 +151,31 @@ public class DatosDescuentoController implements FxmlController{
 
     }
 
-    public void guardarFormulario(ActionEvent event){
+    public void guardarFormulario(ActionEvent event) {
 
         Condicion condicion = new Condicion();
 
         condicion.setTipoCondicion(this.cb_tipoDescuento.getValue().toString());
 
 
-        if(this.txb_productoGenerador.getText().equalsIgnoreCase("")){
+        if (this.txb_productoGenerador.getText().equalsIgnoreCase("")) {
             condicion.setIdProductoGenerador(-1);
-        }else{
+        } else {
             condicion.setIdProductoGenerador(this.idproductoGenerador);
         }
 
 
-        if(this.cb_categoriaGenerador.getValue() == null){
+        if (this.cb_categoriaGenerador.getValue() == null) {
             condicion.setIdCategoriaProdGen(-1);
-        }else{
+        } else {
             condicion.setIdCategoriaProdGen(this.cb_categoriaGenerador.getValue().getIdCategoria());
         }
 
         int cantidadProdGen = 1;
-        if(!this.txb_cantidadGenerador.getText().equalsIgnoreCase("")){
-            try{
+        if (!this.txb_cantidadGenerador.getText().equalsIgnoreCase("")) {
+            try {
                 cantidadProdGen = Integer.parseInt(this.txb_cantidadGenerador.getText());
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Error al ingresar la cantidad generador descrita");
                 return;
             }
@@ -184,25 +184,25 @@ public class DatosDescuentoController implements FxmlController{
         condicion.setCantProdGen(cantidadProdGen);
 
 
-        if(this.txb_productoDescuento.getText().equalsIgnoreCase("")){
+        if (this.txb_productoDescuento.getText().equalsIgnoreCase("")) {
             condicion.setIdProductoDescuento(-1);
-        }else{
+        } else {
             condicion.setIdProductoDescuento(this.idproductoDescuento);
         }
 
-        if(this.cb_categoriaDescuento.getValue() == null){
+        if (this.cb_categoriaDescuento.getValue() == null) {
             condicion.setIdCategoriaProdDesc(-1);
-        }else{
+        } else {
             condicion.setIdCategoriaProdDesc(this.cb_categoriaDescuento.getValue().getIdCategoria());
         }
 
 
         int cantidadProdDesc = 1;
 
-        if(!this.txb_cantidadDescuento.getText().equalsIgnoreCase("")){
-            try{
+        if (!this.txb_cantidadDescuento.getText().equalsIgnoreCase("")) {
+            try {
                 cantidadProdDesc = Integer.parseInt(this.txb_cantidadDescuento.getText());
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Error al ingresar la cantidad descuento descrita");
                 return;
             }
@@ -210,13 +210,13 @@ public class DatosDescuentoController implements FxmlController{
 
         condicion.setCantProdDesc(cantidadProdDesc);
         Double valorDescuento;
-        try{
+        try {
             valorDescuento = Double.parseDouble(this.txb_valorDescuento.getText());
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Error al ingresar valor descuento");
             return;
         }
-        condicion.setValorDescuento(valorDescuento);
+        condicion.setValorDescuento(valorDescuento / 100);
 
         Timestamp fechaInicio = null;
         try {
@@ -239,28 +239,33 @@ public class DatosDescuentoController implements FxmlController{
         condicion.setFechaFin(fechaFin);
         condicion.setDescripcion(this.txb_descripcion.getText());
 
-        if(this.rb_prodGen.isSelected()){
+        if (this.rb_prodGen.isSelected()) {
             condicion.setIdCategoriaProdGen(-1);
-        }else{
+        } else {
             condicion.setIdProductoGenerador(-1);
         }
 
-        if(this.rb_prodDesc.isSelected()){
+        if (this.rb_prodDesc.isSelected()) {
             condicion.setIdCategoriaProdDesc(-1);
-        }else{
+        } else {
             condicion.setIdProductoDescuento(-1);
         }
 
-        if(condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_P)){
+        if (condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_P)) {
             condicion.setIdProductoGenerador(condicion.getIdProductoDescuento());
             condicion.setIdCategoriaProdGen(condicion.getIdCategoriaProdDesc());
             condicion.setCantProdGen(1);
+            condicion.setCantProdDesc(1);
+        }
+        if(condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_C)){
+            condicion.setIdProductoGenerador(condicion.getIdProductoDescuento());
+            condicion.setIdCategoriaProdGen(condicion.getIdCategoriaProdDesc());
         }
 
         condicion.setIdEmpleadoAuditado(this.idEmpleadoAuditado);
-        if(this.esCreacion){
+        if (this.esCreacion) {
             repositoryCondicion.registrarDescuento(condicion);
-        }else{
+        } else {
             //update
             condicion.setIdCondicion(this.iddescuento);
             repositoryCondicion.actualizarDescuento(condicion);
@@ -270,37 +275,47 @@ public class DatosDescuentoController implements FxmlController{
         this.datosDescuentoAnchorPane.getScene().getWindow().hide();
     }
 
-    public void cancelarFormulario(ActionEvent event){
+    public void cancelarFormulario(ActionEvent event) {
         this.datosDescuentoAnchorPane.getScene().getWindow().hide();
     }
 
-    public void buscarProductoGen(ActionEvent event){
+    public void buscarProductoGen(ActionEvent event) {
         productoDescuento = false;
         this.stageManager.mostrarModal(MainView.BUSQUEDA_PRODUCTO_DESC);
     }
 
-    public void buscarProductoDesc(ActionEvent event){
+    public void buscarProductoDesc(ActionEvent event) {
         productoDescuento = true;
         this.stageManager.mostrarModal(MainView.BUSQUEDA_PRODUCTO_DESC);
+
+        if(this.cb_tipoDescuento.getValue() != null){
+            String valorComboCondicion = this.cb_tipoDescuento.getValue().toString();
+            if(!valorComboCondicion.equalsIgnoreCase("")){
+                if(Condicion.DESC_C.equalsIgnoreCase(valorComboCondicion)){
+                    this.txb_productoGenerador.setText(this.txb_productoDescuento.getText());
+                }
+            }
+        }
+
     }
 
-    public Boolean busquedaParaGenerador(){
+    public Boolean busquedaParaGenerador() {
         return productoDescuento == false;
     }
 
-    public void actualizarProducto(Producto producto,Boolean productoGenerador){
-        if(productoGenerador == true){
+    public void actualizarProducto(Producto producto, Boolean productoGenerador) {
+        if (productoGenerador == true) {
             System.out.println("Actualizar producto generador");
             this.txb_productoGenerador.setText(producto.getNombreProducto());
             this.idproductoGenerador = producto.getIdProducto();
-        }else{
+        } else {
             System.out.println("Actualizar producto descuento");
             this.txb_productoDescuento.setText(producto.getNombreProducto());
             this.idproductoDescuento = producto.getIdProducto();
         }
     }
 
-    private void llenarFormulario(Condicion condicion){
+    private void llenarFormulario(Condicion condicion) {
 
         System.out.println("Se va a llenar el formulario...");
         this.reestructurarFormulario(condicion.getTipoCondicion());
@@ -308,42 +323,65 @@ public class DatosDescuentoController implements FxmlController{
         this.cb_tipoDescuento.setValue(condicion.getTipoCondicion());
         this.txb_productoGenerador.setText(condicion.getNombreProductoGenerador());
         this.idproductoGenerador = condicion.getIdProductoGenerador();
-        this.txb_cantidadGenerador.setText(""+ condicion.getCantProdGen());
+        this.txb_cantidadGenerador.setText("" + condicion.getCantProdGen());
         this.txb_productoDescuento.setText(condicion.getNombreProductoDescuento());
         this.idproductoDescuento = condicion.getIdProductoDescuento();
-        this.txb_cantidadDescuento.setText(""+ condicion.getCantProdDesc());
+        this.txb_cantidadDescuento.setText("" + condicion.getCantProdDesc());
         //this.dp_fechaInicio.setValue(condicion.getFechaInicio());
         //this.dp_fechaFin
         this.txb_descripcion.setText(condicion.getDescripcion());
-        this.txb_valorDescuento.setText(""+ condicion.getValorDescuento());
+        this.txb_valorDescuento.setText("" + (condicion.getValorDescuento() * 100));
         this.iddescuento = condicion.getIdCondicion();
     }
 
-    public void ocultarDatosGenerador(){
-        this.titledPaneGen.setVisible(false);
-        this.rb_prodGen.setVisible(false);
-        this.rb_catGen.setVisible(false);
-        this.txb_productoGenerador.setVisible(false);
-        this.cb_categoriaGenerador.setVisible(false);
-        this.txb_cantidadGenerador.setVisible(false);
-        this.label_ProductoGen.setVisible(false);
-        this.labelCantidadGen.setVisible(false);
-        this.labelCategoriaGen.setVisible(false);
-        this.btn_buscarGen.setVisible(false);
-    }
+    // false ocultar , true mostar
+    public void ocultarDatosGenerador(Boolean ocultar) {
+        this.titledPaneGen.setVisible(ocultar);
+        this.rb_prodGen.setVisible(ocultar);
+        this.rb_catGen.setVisible(ocultar);
+        this.txb_productoGenerador.setVisible(ocultar);
+        this.cb_categoriaGenerador.setVisible(ocultar);
+        this.txb_cantidadGenerador.setVisible(ocultar);
+        this.label_ProductoGen.setVisible(ocultar);
+        this.labelCantidadGen.setVisible(ocultar);
+        this.labelCategoriaGen.setVisible(ocultar);
+        this.btn_buscarGen.setVisible(ocultar);
 
-    private void reestructurarFormulario(String valorCondicion){
-        if(Condicion.DESC_P.equalsIgnoreCase(valorCondicion)){
-            this.ocultarDatosGenerador();
+        if(!ocultar){ // si se debe ocultar, limpiar los datos para futuras consultas a otros tipos
+            this.txb_productoGenerador.setText("");
+            this.cb_categoriaGenerador.setValue(null);
+            this.txb_cantidadGenerador.setText("");
         }
     }
 
-    public void cambiarTipoDescuento(ActionEvent event){
-        String valorComboCondicion = this.cb_tipoDescuento.getValue().toString();
-       this.reestructurarFormulario(valorComboCondicion);
+    private void reestructurarFormulario(String valorCondicion) {
+        this.rb_prodGen.setDisable(false);
+        this.txb_productoGenerador.setDisable(false);
+        this.btn_buscarGen.setDisable(false);
+        this.rb_catGen.setDisable(false);
+        if (Condicion.DESC_P.equalsIgnoreCase(valorCondicion)) {
+            this.ocultarDatosGenerador(false);
+        } else {
+            this.ocultarDatosGenerador(true);
+            // si es descuento por cantidad , cargar datos producto o categoria descuento
+            if(Condicion.DESC_C.equalsIgnoreCase(valorCondicion)){
+                this.txb_productoGenerador.setText(this.txb_productoDescuento.getText());
+                this.rb_prodGen.setDisable(true);
+                this.txb_productoGenerador.setDisable(true);
+                this.btn_buscarGen.setDisable(true);
+                this.cb_categoriaGenerador.setValue(this.cb_categoriaDescuento.getValue());
+                this.rb_catGen.setDisable(true);
+            }
+        }
     }
+
+    public void cambiarTipoDescuento(ActionEvent event) {
+        String valorComboCondicion = this.cb_tipoDescuento.getValue().toString();
+        this.reestructurarFormulario(valorComboCondicion);
+    }
+
     // true activa los datos de producto generador, false los datos de la categoria
-    public void activarDatosProdGen(Boolean accion){
+    public void activarDatosProdGen(Boolean accion) {
         this.rb_prodGen.setSelected(accion);
         this.label_ProductoGen.setDisable(!accion);
         this.txb_productoGenerador.setDisable(!accion);
@@ -354,15 +392,27 @@ public class DatosDescuentoController implements FxmlController{
         this.cb_categoriaGenerador.setDisable(accion);
     }
 
-    public void radioButtonProdGenAccion(ActionEvent event){
-           this.activarDatosProdGen(true);
+    public void actualizarCategoria(ActionEvent event){
+        if(this.cb_tipoDescuento.getValue() != null){
+            String valorComboCondicion = this.cb_tipoDescuento.getValue().toString();
+            if(!valorComboCondicion.equalsIgnoreCase("")){
+                if(Condicion.DESC_C.equalsIgnoreCase(valorComboCondicion)){
+                    this.cb_categoriaGenerador.setValue(this.cb_categoriaDescuento.getValue());
+                }
+            }
+        }
     }
-    public void radioButtonCatGenAccion(ActionEvent event){
+
+    public void radioButtonProdGenAccion(ActionEvent event) {
+        this.activarDatosProdGen(true);
+    }
+
+    public void radioButtonCatGenAccion(ActionEvent event) {
         this.activarDatosProdGen(false);
     }
 
     // true activa los datos de producto descuento, false los datos de la categoria
-    public void activarDatosProdDesc(Boolean accion){
+    public void activarDatosProdDesc(Boolean accion) {
         this.rb_prodDesc.setSelected(accion);
         this.labelProductoDesc.setDisable(!accion);
         this.txb_productoDescuento.setDisable(!accion);
@@ -374,10 +424,11 @@ public class DatosDescuentoController implements FxmlController{
     }
 
 
-    public void radioButtonProdDescAccion(ActionEvent event){
+    public void radioButtonProdDescAccion(ActionEvent event) {
         this.activarDatosProdDesc(true);
     }
-    public void radioButtonCatDescAccion(ActionEvent event){
+
+    public void radioButtonCatDescAccion(ActionEvent event) {
         this.activarDatosProdDesc(false);
     }
 
@@ -394,7 +445,6 @@ public class DatosDescuentoController implements FxmlController{
         cb_tipoDescuento.getItems().add(Condicion.DESC_P);
 
 
-
         this.txb_productoGenerador.setDisable(true);
 
         this.txb_productoDescuento.setDisable(true);
@@ -405,30 +455,30 @@ public class DatosDescuentoController implements FxmlController{
 
         this.esCreacion = this.mantenimientoDescuentoController.esCreacion();
 
-        if(this.esCreacion){
+        if (this.esCreacion) {
             l_nombreFormulario.setText("Crear Condicion");
             this.idEmpleadoAuditado = this.mantenimientoDescuentoController.getIdEmpleadoAuditado();
-            for(CategoriaProducto categoria : listaCategorias){
+            for (CategoriaProducto categoria : listaCategorias) {
                 this.cb_categoriaDescuento.getItems().add(categoria);
                 this.cb_categoriaGenerador.getItems().add(categoria);
             }
 
-        }else{
+        } else {
             l_nombreFormulario.setText("Modificar Condicion");
 
-            System.out.println("controller == null ? " +this.mantenimientoDescuentoController == null );
+            System.out.println("controller == null ? " + this.mantenimientoDescuentoController == null);
             Condicion condicion = this.mantenimientoDescuentoController.getDescuento();
             this.idEmpleadoAuditado = condicion.getIdEmpleadoAuditado();
             System.out.println("id condicion -> " + condicion.getIdCondicion());
-            for(CategoriaProducto categoria : listaCategorias){
+            for (CategoriaProducto categoria : listaCategorias) {
                 this.cb_categoriaDescuento.getItems().add(categoria);
                 this.cb_categoriaGenerador.getItems().add(categoria);
-                if(categoria.getIdCategoria() == condicion.getIdCategoriaProdGen()){
+                if (categoria.getIdCategoria() == condicion.getIdCategoriaProdGen()) {
                     this.cb_categoriaGenerador.getSelectionModel().select(categoria);
                     this.rb_catGen.setSelected(true);
                     this.rb_prodGen.setSelected(false);
                 }
-                if(categoria.getIdCategoria() == condicion.getIdCategoriaProdDesc()){
+                if (categoria.getIdCategoria() == condicion.getIdCategoriaProdDesc()) {
                     this.cb_categoriaDescuento.getSelectionModel().select(categoria);
                     this.rb_catDesc.setSelected(true);
                     this.rb_prodDesc.setSelected(false);

@@ -6,6 +6,7 @@ import com.dp1wms.dao.RepositoryCondicion;
 import com.dp1wms.model.Condicion;
 import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -55,7 +56,7 @@ public class MantenimientoDescuentoController implements FxmlController {
     @FXML
     private TableColumn<Condicion,Integer> c_cantidadDesc;
     @FXML
-    private TableColumn<Condicion,Double> c_porcentajeDesc;
+    private TableColumn<Condicion,String> c_porcentajeDesc;
     @FXML
     private TableColumn<Condicion,Timestamp> c_fechaInicio;
     @FXML
@@ -127,9 +128,12 @@ public class MantenimientoDescuentoController implements FxmlController {
         c_ProdDesc.setCellValueFactory(new PropertyValueFactory<Condicion, String>("nombreProductoDescuento"));
         c_categoriaDesc.setCellValueFactory(new PropertyValueFactory<Condicion, String>("categoriaDescuento"));
         c_cantidadDesc.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("cantProdDesc"));
-        c_porcentajeDesc.setCellValueFactory(new PropertyValueFactory<Condicion, Double>("valorDescuento"));
+        //c_porcentajeDesc.setCellValueFactory(new PropertyValueFactory<Condicion, Double>("valorDescuento"));
         c_fechaInicio.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaInicio"));
         c_fechaFin.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaFin"));
+        this.c_porcentajeDesc.setCellValueFactory(value->{
+            return new SimpleStringProperty("" + (value.getValue().getValorDescuento() *100));
+        });
         tableViewDescuentos.setEditable(true);
     }
 
@@ -155,9 +159,13 @@ public class MantenimientoDescuentoController implements FxmlController {
         c_ProdDesc.setCellValueFactory(new PropertyValueFactory<Condicion, String>("nombreProductoDescuento"));
         c_categoriaDesc.setCellValueFactory(new PropertyValueFactory<Condicion, String>("categoriaDescuento"));
         c_cantidadDesc.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("cantProdDesc"));
-        c_porcentajeDesc.setCellValueFactory(new PropertyValueFactory<Condicion, Double>("valorDescuento"));
+        //c_porcentajeDesc.setCellValueFactory(new PropertyValueFactory<Condicion, Double>("valorDescuento"));
         c_fechaInicio.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaInicio"));
         c_fechaFin.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaFin"));
+        this.c_porcentajeDesc.setCellValueFactory(value->{
+            return new SimpleStringProperty("" + (value.getValue().getValorDescuento() *100));
+        });
+
         tableViewDescuentos.setEditable(true);
 
 
