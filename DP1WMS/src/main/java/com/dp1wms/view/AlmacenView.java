@@ -28,6 +28,22 @@ public enum AlmacenView implements FxmlView{
         public boolean isResizable() {
             return true;
         }
+    },
+    VISTA_RACKS {
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("mantenimiento.racks.title");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Racks/VistaRacks.fxml";
+        }
+
+        @Override
+        public boolean isResizable() {
+            return true;
+        }
     };
 
     public String getStringFromResourceBundle(String key){

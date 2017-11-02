@@ -210,11 +210,19 @@ public class AlmacenController implements FxmlController{
 
     @FXML
     private void verRacks(ActionEvent event){
-
+        stageManager.mostrarModal(AlmacenView.VISTA_RACKS);
     }
 
     public Almacen getAlmacen(){
         return this.almacen;
+    }
+
+    public Area getAreaSeleccionada(){
+        return this.areaSeleccionada;
+    }
+
+    public List<Area> getAreas(){
+        return this.areas;
     }
 
 }
