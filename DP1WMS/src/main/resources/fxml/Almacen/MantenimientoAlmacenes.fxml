@@ -34,7 +34,7 @@
         </rowConstraints>
          <children>
             <Button fx:id="btnAlmacen" mnemonicParsing="false" onAction="#btnClickNuevoAlmacen" text="Nuevo Almacen" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM" />
-            <Button fx:id="btnAceptar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Aceptar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM" />
+            <Button fx:id="btnAceptar" onAction="#btnAceptarClick" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Aceptar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM" />
          </children>
       </GridPane>
       <Label text="Almacenes" GridPane.valignment="TOP">
@@ -44,7 +44,7 @@
       </Label>
       <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
          <content>
-            <VBox fx:id="vbAlmacenes" />
+            <VBox fx:id="vbAlmacenes" style="-fx-background-color: #FFFFFF;" />
          </content></ScrollPane>
    </children>
    <padding>

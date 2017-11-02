@@ -4,6 +4,7 @@ import com.dp1wms.controller.FxmlController;
 import com.dp1wms.controller.MainController;
 import com.dp1wms.dao.RepositoryCondicion;
 import com.dp1wms.model.Condicion;
+import com.dp1wms.util.DateParser;
 import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import javafx.beans.property.SimpleStringProperty;
@@ -58,9 +59,9 @@ public class MantenimientoDescuentoController implements FxmlController {
     @FXML
     private TableColumn<Condicion,String> c_porcentajeDesc;
     @FXML
-    private TableColumn<Condicion,Timestamp> c_fechaInicio;
+    private TableColumn<Condicion,String> c_fechaInicio;
     @FXML
-    private TableColumn<Condicion,Timestamp> c_fechaFin;
+    private TableColumn<Condicion,String> c_fechaFin;
 
     private MainController mainController;
 
@@ -129,8 +130,16 @@ public class MantenimientoDescuentoController implements FxmlController {
         c_categoriaDesc.setCellValueFactory(new PropertyValueFactory<Condicion, String>("categoriaDescuento"));
         c_cantidadDesc.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("cantProdDesc"));
         //c_porcentajeDesc.setCellValueFactory(new PropertyValueFactory<Condicion, Double>("valorDescuento"));
-        c_fechaInicio.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaInicio"));
-        c_fechaFin.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaFin"));
+        //c_fechaInicio.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaInicio"));
+        this.c_fechaInicio.setCellValueFactory(value->{
+            String fechaInicio = DateParser.timestampToString(value.getValue().getFechaInicio());
+            return new SimpleStringProperty(fechaInicio);
+        });
+        this.c_fechaFin.setCellValueFactory(value->{
+            String fechaFin= DateParser.timestampToString(value.getValue().getFechaFin());
+            return new SimpleStringProperty(fechaFin);
+        });
+        //c_fechaFin.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaFin"));
         this.c_porcentajeDesc.setCellValueFactory(value->{
             return new SimpleStringProperty("" + (value.getValue().getValorDescuento() *100));
         });
@@ -151,7 +160,7 @@ public class MantenimientoDescuentoController implements FxmlController {
     @Override
     public void initialize() {
         this.listaCondicions = repositoryCondicion.obtenerDescuentos();
-        c_indice.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("indiceTabla"));
+        /*c_indice.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("indiceTabla"));
         c_tipoDescuento.setCellValueFactory(new PropertyValueFactory<Condicion, String>("tipoCondicion"));
         c_productoGen.setCellValueFactory(new PropertyValueFactory<Condicion, String>("nombreProductoGenerador"));
         c_categoriaGen.setCellValueFactory(new PropertyValueFactory<Condicion, String>("categoriaGenerador"));
@@ -166,9 +175,9 @@ public class MantenimientoDescuentoController implements FxmlController {
             return new SimpleStringProperty("" + (value.getValue().getValorDescuento() *100));
         });
 
-        tableViewDescuentos.setEditable(true);
+        tableViewDescuentos.setEditable(true);*/
 
-
+        this.limpiarTabla();
         this.llenarTabla(this.listaCondicions);
         System.out.println("Cantidad Descuentos -> "+ listaCondicions.size());
 
