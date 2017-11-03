@@ -84,7 +84,7 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
         condicion.setIdProductoDescuento(rs.getInt("idproductodescuento"));
         condicion.setIdCategoriaProdDesc(rs.getInt("idcategoriaproddesc"));
         condicion.setCantProdDesc(rs.getInt("cantproddesc"));
-        condicion.setValorDescuento(rs.getDouble("valordescuento"));
+        condicion.setValorDescuento(rs.getFloat("valordescuento"));
         condicion.setFechaInicio(rs.getTimestamp("fechainicio"));
         condicion.setFechaFin(rs.getTimestamp("fechafin"));
         condicion.setDescripcion(rs.getString("descripcion"));
@@ -128,6 +128,7 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
         return 1;
     }
 
+
     @Transactional(rollbackFor = Exception.class)
     public int actualizarDescuento(Condicion condicion) {
         // el stock parcial no se debe insertar directamente en lote, es trabajo del trigger por eso se pone de valor cero
@@ -161,7 +162,6 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
         return 1;
     }
 
-
     @Transactional(rollbackFor = Exception.class)
     public int eliminarDescuento(int id,Long idEmpleadoAuditado) {
         //String SQL = "DELETE FROM public.condicion WHERE idcondicion = ?";
@@ -177,15 +177,70 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
         return 1;
     }
 
-    public List<Condicion> obtenerCondicionesActivos(){
-        String sql = "SELECT * from public.condicion where fechainicio <= now() " +
-                    "AND fechafin >= now() AND activo";
+    @Override
+    public List<Condicion> obtenerDescuentosActivos(){
+        String sql = "SELECT * FROM public.condicion " +
+                "WHERE date_trunc('day',fechainicio) <= date_trunc('day',now()) " +
+                "AND date_trunc('day',fechafin) >= date_trunc('day',now()) AND activo AND " +
+                "tipocondicion != 'Flete por Peso' AND tipocondicion != 'Flete por Distancia'";
         try{
-            List<Condicion> condicions = jdbcTemplate.query(sql, new Object[]{}, this::mapParam);
-            return condicions;
+            List<Condicion> condiciones = jdbcTemplate.query(sql, new Object[]{}, this::mapParam);
+            return condiciones;
         } catch (Exception e){
             e.printStackTrace();
             return null;
         }
     }
+
+    @Override
+    public Condicion obtenerFletePorPeso() {
+        String sql = "SELECT idcondicion, tipocondicion, valordescuento, factorflete " +
+                "FROM public.condicion " +
+                "WHERE date_trunc('day',fechainicio) <= date_trunc('day',now()) " +
+                "AND date_trunc('day',fechafin) >= date_trunc('day',now()) " +
+                "AND activo AND tipocondicion = 'Flete por Peso' " +
+                "ORDER BY fechainicio DESC LIMIT 1";
+        try{
+            Condicion condicion = jdbcTemplate.queryForObject(sql, new Object[]{},
+                    (res, i)->{
+                        Condicion condAux = new Condicion();
+                        condAux.setIdCondicion(res.getInt("idcondicion"));
+                        condAux.setTipoCondicion(res.getString("tipocondicion"));
+                        condAux.setValorDescuento(res.getFloat("valordescuento"));
+                        condAux.setFactorFlete(res.getFloat("factorflete"));
+                        return condAux;
+                    });
+            return condicion;
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Condicion obtenerFletePorDistancia() {
+        String sql = "SELECT idcondicion, tipocondicion, valordescuento, factorflete " +
+                "FROM public.condicion " +
+                "WHERE date_trunc('day',fechainicio) <= date_trunc('day',now()) " +
+                "AND date_trunc('day',fechafin) >= date_trunc('day',now()) " +
+                "AND activo AND tipocondicion = 'Flete por Distancia' " +
+                "ORDER BY fechainicio DESC LIMIT 1";
+        try{
+            Condicion condicion = jdbcTemplate.queryForObject(sql, new Object[]{},
+                    (res, i)->{
+                        Condicion condAux = new Condicion();
+                        condAux.setIdCondicion(res.getInt("idcondicion"));
+                        condAux.setTipoCondicion(res.getString("tipocondicion"));
+                        condAux.setValorDescuento(res.getFloat("valordescuento"));
+                        condAux.setFactorFlete(res.getFloat("factorflete"));
+                        return condAux;
+                    });
+            return condicion;
+        } catch (Exception e){
+            //e.printStackTrace();
+            return null;
+        }
+    }
+
+
 }

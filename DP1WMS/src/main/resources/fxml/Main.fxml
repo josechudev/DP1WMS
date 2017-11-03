@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="634.0" prefWidth="1038.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MainController">
+<AnchorPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="634.0" prefWidth="1038.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MainController">
    <children>
       <VBox layoutX="65.0" layoutY="104.0" prefHeight="164.0" prefWidth="285.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -45,8 +45,8 @@
                   <Menu mnemonicParsing="false" text="Ventas">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoDescuentos" style="-fx-padding: 0 10;" text="Descuentos" />
-                        <MenuItem mnemonicParsing="false" style="-fx-padding: 0 10;" text="Consultar Proforma" />
                       <MenuItem mnemonicParsing="false" onAction="#cargarGenerarProforma" style="-fx-padding: 0 10;" text="Generar Proforma" />
+                        <MenuItem mnemonicParsing="false" style="-fx-padding: 0 10;" text="Consultar Pedido" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarGenerarPedido" style="-fx-padding: 0 10;" text="Generar Pedido" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarListaEnviosPendientes" style="-fx-padding: 0 10;" text="Envios Pendientes" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarKardex" style="-fx-padding: 0 10;" text="Reporte Kardex" />
@@ -57,7 +57,7 @@
             </MenuBar>
             <AnchorPane prefHeight="381.0" prefWidth="600.0" style="-fx-background-color: #95999C;" VBox.vgrow="ALWAYS">
                <children>
-                  <BorderPane layoutX="63.0" layoutY="193.0" prefHeight="605.0" prefWidth="1038.0" style="-fx-background-color: rgba(0,0,0,0);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <BorderPane layoutX="63.0" layoutY="193.0" prefHeight="609.0" prefWidth="1038.0" style="-fx-background-color: rgba(0,0,0,0);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <center>
                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="736.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
                            <children>

@@ -106,6 +106,9 @@ public class ClienteMainController implements FxmlController{
         this.stageManager.mostrarModal(ClientesView.INFO);
         Cliente c = this.clienteInfoController.getCliente();
         if(c != null){
+            if(this.clientes ==  null){
+                this.clientes = new ArrayList<>();
+            }
             this.clientes.add(c);
             this.clienteTable.getItems().add(c);
         }
@@ -131,10 +134,11 @@ public class ClienteMainController implements FxmlController{
     @Override
     public void initialize(){
         this.initCampoCB();
+        this.limpiarClienteTable();
     }
     private void initCampoCB(){
         ArrayList<ClienteCampo> campos = new ArrayList<>();
-        campos.add(new ClienteCampo("RUC", "numdoc"));
+        campos.add(new ClienteCampo("RUC / DNI", "numdoc"));
         campos.add(new ClienteCampo("Razon Social", "razonsocial"));
         campos.add(new ClienteCampo("Telefono", "telefono"));
         campos.add(new ClienteCampo("Email", "email"));

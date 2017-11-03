@@ -98,7 +98,7 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
         List<Producto> productos = null;
 
         dato = "%" + dato.toLowerCase()  + "%";
-        String sql = "SELECT p.idproducto, p.codigo, p.nombreproducto, p.precio, p.idcategoria, " +
+        String sql = "SELECT p.idproducto, p.codigo, p.peso, p.nombreproducto, p.precio, p.idcategoria, " +
                 "cp.descripcion as categoria, (p.stock - COALESCE (ped.cantidad,0)) as stock "  +
                 "FROM producto p  INNER JOIN categoriaproducto cp " +
                 "ON p.idcategoria = cp.idcategoria " +
@@ -130,6 +130,7 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
         p.setIdCategoria(rs.getInt("idcategoria"));
         p.setCategoria(rs.getString("categoria"));
         p.setStock(rs.getInt("stock"));
+        p.setPeso(rs.getFloat("peso"));
         return p;
     }
 }

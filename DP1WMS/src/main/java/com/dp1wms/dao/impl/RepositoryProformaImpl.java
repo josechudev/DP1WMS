@@ -103,7 +103,8 @@ public class RepositoryProformaImpl implements RepositoryProforma {
     }
 
     public ArrayList<DetalleProforma> obtenerDetallesDeProforma(int idProforma){
-        String sql = "SELECT dp.iddetalleproforma, dp.idproducto, dp.cantidad, p.codigo, p.nombreproducto, p.precio " +
+        String sql = "SELECT dp.iddetalleproforma, dp.idproducto, dp.cantidad, p.codigo, p.nombreproducto," +
+                " p.precio, p.peso " +
                 "FROM detalleproforma as dp INNER JOIN producto as p ON dp.idproducto = p.idproducto " +
                 "WHERE dp.idproforma = ?";
         try{
@@ -116,6 +117,7 @@ public class RepositoryProformaImpl implements RepositoryProforma {
                 p.setPrecio(res.getFloat("precio"));
                 p.setIdProducto(res.getInt("idproducto"));
                 p.setNombreProducto(res.getString("nombreproducto"));
+                p.setPeso(res.getFloat("peso"));
                 dp.setProducto(p);
                 dp.setCantidad(res.getInt("cantidad"));
                 return dp;
