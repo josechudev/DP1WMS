@@ -1,16 +1,12 @@
 package com.dp1wms.controller.almacenes;
 
-import com.dp1wms.controller.FxmlController;
 import com.dp1wms.model.Almacen;
-import com.dp1wms.spring.config.SpringFXMLLoader;
-import com.dp1wms.view.AlmacenView;
-import com.dp1wms.view.StageManager;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 
@@ -28,7 +24,7 @@ public class AlmacenItemController extends GridPane {
     public AlmacenItemController(MantenimientoAlmacenesController mantenimientoAlmacenesController, Almacen almacen){
         super();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AlmacenFxml/AlmacenListItem.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Almacen/AlmacenListItem.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -36,6 +32,14 @@ public class AlmacenItemController extends GridPane {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+
+        this.setOnMouseEntered(event -> {
+            this.setStyle("-fx-background-color: #EBEBEB");
+        });
+
+        this.setOnMouseExited(event -> {
+            this.setStyle(null);
+        });
 
         this.mantenimientoAlmacenesController = mantenimientoAlmacenesController;
         this.almacen = almacen;

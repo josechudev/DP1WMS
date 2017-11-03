@@ -7,6 +7,7 @@ public class Condicion {
     public static final String DESC_C = "Cantidad";
     public static final String DESC_B = "Bonificacion Por Especie";
     public static final String DESC_P = "Porcentaje";
+    public static final String DESC_F = "Flete por Peso";
 
     private int idCondicion;
 

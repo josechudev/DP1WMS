@@ -16,7 +16,7 @@ public class AlmacenResultSetExtractor implements ResultSetExtractor{
         almacen.setDireccion(resultSet.getString(2));
         almacen.setLargo(resultSet.getInt(3));
         almacen.setAncho(resultSet.getInt(4));
-        almacen.setNombre(resultSet.getString(5));
+        almacen.setNombre(resultSet.getString(7));
         return almacen;
     }
 }

@@ -72,6 +72,11 @@ public class MantenimientoAlmacenesController implements FxmlController {
         obtenerAlmacenes();
     }
 
+    @FXML
+    private void btnAceptarClick(ActionEvent event){
+        stageManager.cerrarVentana(event);
+    }
+
     private void limpiarLista(){
         vbAlmacenes.getChildren().clear();
     }

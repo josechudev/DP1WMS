@@ -202,7 +202,7 @@ public enum MainView implements FxmlView{
 
         @Override
         public String getFxmlFile() {
-            return "/fxml/AlmacenFxml/MantenimientoAlmacenes.fxml";
+            return "/fxml/Almacen/MantenimientoAlmacenes.fxml";
         }
 
         @Override
@@ -218,7 +218,7 @@ public enum MainView implements FxmlView{
 
         @Override
         public String getFxmlFile() {
-            return "/fxml/AlmacenFxml/Almacen.fxml";
+            return "/fxml/Almacen/Almacen.fxml";
         }
 
         @Override
@@ -234,7 +234,7 @@ public enum MainView implements FxmlView{
 
         @Override
         public String getFxmlFile() {
-            return "/fxml/AlmacenFxml/NuevoAlmacen.fxml";
+            return "/fxml/Almacen/NuevoAlmacen.fxml";
         }
 
         @Override
