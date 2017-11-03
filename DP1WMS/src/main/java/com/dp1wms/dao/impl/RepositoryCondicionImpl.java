@@ -177,11 +177,25 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
         return 1;
     }
 
-    public List<Condicion> obtenerCondicionesActivos(){
+    public List<Condicion> obtenerDescuentosActivos(){
         String sql = "SELECT * from public.condicion where date_trunc('day',fechainicio) <= " +
                 "date_trunc('day',now()) " +
                 "AND date_trunc('day',fechafin) >= " +
-                "date_trunc('day',now()) AND activo";
+                "date_trunc('day',now()) AND activo AND tipocondicion != 'Flete por Peso'";
+        try{
+            List<Condicion> condicions = jdbcTemplate.query(sql, new Object[]{}, this::mapParam);
+            return condicions;
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Condicion> obtenerCondioionesFleteActivos(){
+        String sql = "SELECT * from public.condicion where date_trunc('day',fechainicio) <= " +
+                "date_trunc('day',now()) " +
+                "AND date_trunc('day',fechafin) >= " +
+                "date_trunc('day',now()) AND activo AND tipocondicion == 'Flete por Peso'";
         try{
             List<Condicion> condicions = jdbcTemplate.query(sql, new Object[]{}, this::mapParam);
             return condicions;

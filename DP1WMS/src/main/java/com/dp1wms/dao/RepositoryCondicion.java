@@ -11,5 +11,5 @@ public interface RepositoryCondicion {
     int registrarDescuento(Condicion condicion);
     int eliminarDescuento(int id,Long idEmpleadoAuditado);
     int actualizarDescuento(Condicion condicion);
-    List<Condicion> obtenerCondicionesActivos();
+    List<Condicion> obtenerDescuentosActivos();
 }

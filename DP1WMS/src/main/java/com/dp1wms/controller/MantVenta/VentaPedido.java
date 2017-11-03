@@ -234,7 +234,7 @@ public class VentaPedido implements FxmlController {
 
     private void llenarTablaPedido() {
         this.limpiarTablaPedido();
-        List<Condicion> condiciones = this.repositoryCondicion.obtenerCondicionesActivos();
+        List<Condicion> condiciones = this.repositoryCondicion.obtenerDescuentosActivos();
         DescuentoAlgoritmo.aplicarDescuento(condiciones, this.pedido);
         this.pedido.calcularsubTotal();
         this.pedido.calcularTotal();
