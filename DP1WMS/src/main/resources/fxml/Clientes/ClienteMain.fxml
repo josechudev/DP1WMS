@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantCliente.ClienteMainController">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -48,7 +47,7 @@
                         </HBox>
                         <TableView fx:id="clienteTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                           <columns>
-                            <TableColumn fx:id="rucCol" prefWidth="75.0" text="RUC" />
+                            <TableColumn fx:id="rucCol" prefWidth="75.0" text="RUC / DNI" />
                             <TableColumn fx:id="razonSocialCol" prefWidth="75.0" text="Razon Social" />
                               <TableColumn fx:id="dirCol" prefWidth="75.0" text="Direccion" />
                               <TableColumn fx:id="telfCol" prefWidth="75.0" text="Telefono" />

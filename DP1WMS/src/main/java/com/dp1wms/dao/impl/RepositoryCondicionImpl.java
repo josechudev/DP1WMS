@@ -178,8 +178,10 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
     }
 
     public List<Condicion> obtenerCondicionesActivos(){
-        String sql = "SELECT * from public.condicion where fechainicio <= now() " +
-                    "AND fechafin >= now() AND activo";
+        String sql = "SELECT * from public.condicion where date_trunc('day',fechainicio) <= " +
+                "date_trunc('day',now()) " +
+                "AND date_trunc('day',fechafin) >= " +
+                "date_trunc('day',now()) AND activo";
         try{
             List<Condicion> condicions = jdbcTemplate.query(sql, new Object[]{}, this::mapParam);
             return condicions;

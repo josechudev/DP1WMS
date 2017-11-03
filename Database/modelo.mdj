@@ -15597,7 +15597,7 @@
 							"primaryKey": false,
 							"foreignKey": false,
 							"nullable": false,
-							"unique": true
+							"unique": false
 						},
 						{
 							"_type": "ERDColumn",
@@ -16710,7 +16710,7 @@
 							"primaryKey": false,
 							"foreignKey": false,
 							"nullable": false,
-							"unique": true
+							"unique": false
 						},
 						{
 							"_type": "ERDColumn",
