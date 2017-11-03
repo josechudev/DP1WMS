@@ -1,11 +1,14 @@
 package com.dp1wms.controller.MantVenta;
 
 import com.dp1wms.controller.FxmlController;
+import com.dp1wms.dao.RepositoryCondicion;
 import com.dp1wms.model.*;
 import com.dp1wms.util.DateParser;
 import com.dp1wms.view.StageManager;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -26,6 +29,7 @@ public class VentaInformacionEnvio implements FxmlController{
     private Envio envio;
 
     @FXML private TextField destinoTF;
+    @FXML private TextField distanciaTF;
     @FXML private DatePicker fechaEnvioDP;
 
     @FXML private TableView<DetallePedido> prodDisponiblesTable;
@@ -37,20 +41,27 @@ public class VentaInformacionEnvio implements FxmlController{
     @FXML private TableColumn<DetalleEnvio, String>  codigoEnvioTC;
     @FXML private TableColumn<DetalleEnvio, String>  nombreEnvioTC;
     @FXML private TableColumn<DetalleEnvio, Integer>  asignadoEnvioTC;
+    @FXML private TableColumn<DetalleEnvio, Float> asignadoPesoTotalTC;
 
-    @FXML private Label costoFleteLabel;
+    @FXML private Label fletePesoLabel  ;
+    @FXML private Label fleteDistanciaLabel;
+    @FXML private Label fleteTotalLabel;
 
     @FXML private Button guardarBtn;
     @FXML private Button agregarBtn;
 
     private ArrayList<DetallePedido> productosDisponibles;
     private ArrayList<DetalleEnvio> detalleEnvios;
+    private Condicion fletePorPeso;
+    private Condicion fletePorDistancia;
+    private float costoFletePorDistancia;
 
 
     private StageManager stageManager;
     private VentaPedido ventaPedido;
 
-
+    @Autowired
+    private RepositoryCondicion repositoryCondicion;
 
     @FXML
     private void agregarUnProducto(){
@@ -102,6 +113,12 @@ public class VentaInformacionEnvio implements FxmlController{
             }
             //disminuir cantidad
             dp.setCantidad(dp.getCantidad() - cantidad);
+
+            //labels flete
+            float fletePorPeso = this.calcularFletePorPeso();
+            this.fletePesoLabel.setText(String.valueOf(fletePorPeso));
+            this.fleteTotalLabel.setText(String.valueOf(fletePorPeso + this.costoFletePorDistancia));
+
             this.llenarTablaDisponibles();
             this.llenarTablaAsignados();
         }
@@ -155,6 +172,12 @@ public class VentaInformacionEnvio implements FxmlController{
             };
             de.setCantidad(de.getCantidad() - cantidad);
             this.detalleEnvios.removeIf(deAux-> deAux.getCantidad() == 0);
+
+            //labels flete
+            float fletePorPeso = this.calcularFletePorPeso();
+            this.fletePesoLabel.setText(String.valueOf(fletePorPeso));
+            this.fleteTotalLabel.setText(String.valueOf(fletePorPeso + this.costoFletePorDistancia));
+
             this.llenarTablaDisponibles();
             this.llenarTablaAsignados();
 
@@ -182,10 +205,19 @@ public class VentaInformacionEnvio implements FxmlController{
                     "El envio debe contener un producto al menos");
             return;
         }
+
         this.envio = new Envio();
         this.envio.setDestino(destino);
         this.envio.setFechaEnvio(fecha);
-        this.envio.setCostoFlete(0);//TODO
+        try{
+            float dist = Float.parseFloat(this.distanciaTF.getText());
+            this.envio.setDistancia(dist);
+        }catch(Exception e){
+            this.envio.setDistancia(0);
+        }
+        float costoXPeso = this.calcularFletePorPeso();
+        this.envio.setCostoFlete(costoXPeso + this.costoFletePorDistancia);
+
         this.envio.setDetalleEnvio(this.detalleEnvios);
 
         this.stageManager.mostrarInfoDialog("Envio", null,
@@ -217,11 +249,72 @@ public class VentaInformacionEnvio implements FxmlController{
 
         this.envio.setDestino(destino);
         this.envio.setFechaEnvio(fecha);
-        this.envio.setCostoFlete(0);//TODO
+
+        try{
+            this.envio.setDistancia(Float.parseFloat(this.distanciaTF.getText()));
+        }catch(Exception e){
+            this.envio.setDistancia(0);
+        }
+        float costoXPeso = this.calcularFletePorPeso();
+        this.envio.setCostoFlete(costoXPeso + this.costoFletePorDistancia);
+
         this.envio.setDetalleEnvio(this.detalleEnvios);
         this.stageManager.mostrarInfoDialog("Envio", null,
                 "Se modificó un envío");
         this.cerrarVentana(event);
+    }
+
+     private float calcularFletePorPeso(){
+        float pesoTotal = 0;
+        for(DetalleEnvio de: this.detalleEnvios){
+            float peso  = de.getProducto().getPeso() * de.getCantidad();
+            de.setPeso(peso);
+            pesoTotal += peso;
+        }
+
+        if(this.fletePorPeso != null){
+            return pesoTotal * this.fletePorPeso.getValorDescuento() / this.fletePorPeso.getFactorFlete();
+        } else {
+            return 0;
+        }
+    }
+
+    @FXML
+    private void calcularFletePorDistancia(){
+        try{
+            String distancia  = this.distanciaTF.getText();
+            this.costoFletePorDistancia = Float.parseFloat(distancia);
+            if(this.fletePorDistancia == null){
+                this.costoFletePorDistancia = 0;
+            } else {
+                this.costoFletePorDistancia = this.costoFletePorDistancia * this.fletePorDistancia.getValorDescuento() / this.fletePorDistancia.getFactorFlete();
+            }
+        } catch (Exception e){
+            this.costoFletePorDistancia = 0;
+        }
+        this.fleteDistanciaLabel.setText(String.valueOf(this.costoFletePorDistancia));
+
+        float fletePorPeso = this.calcularFletePorPeso();
+        this.fletePesoLabel.setText(String.valueOf(fletePorPeso));
+        this.fleteTotalLabel.setText(String.valueOf(fletePorPeso + this.costoFletePorDistancia));
+    }
+
+    private void _calcularFletePorDistancia(String distancia){
+        try{
+            this.costoFletePorDistancia = Float.parseFloat(distancia);
+            if(this.fletePorDistancia == null){
+                this.costoFletePorDistancia = 0;
+            } else {
+                this.costoFletePorDistancia = this.costoFletePorDistancia * this.fletePorDistancia.getValorDescuento() / this.fletePorDistancia.getFactorFlete();
+            }
+        } catch (Exception e){
+            this.costoFletePorDistancia = 0;
+        }
+        this.fleteDistanciaLabel.setText(String.valueOf(this.costoFletePorDistancia));
+
+        float fletePorPeso = this.calcularFletePorPeso();
+        this.fletePesoLabel.setText(String.valueOf(fletePorPeso));
+        this.fleteTotalLabel.setText(String.valueOf(fletePorPeso + this.costoFletePorDistancia));
     }
 
     @FXML
@@ -232,6 +325,10 @@ public class VentaInformacionEnvio implements FxmlController{
     @Override
     public void initialize(){
         this.detalleEnvios = new ArrayList<>();
+
+        this.fletePorPeso = this.repositoryCondicion.obtenerFletePorPeso();
+        this.fletePorDistancia = this.repositoryCondicion.obtenerFletePorDistancia();
+
         this.limpiarTablaDisponibles();
         this.limpiarTablaAsignados();
 
@@ -241,6 +338,13 @@ public class VentaInformacionEnvio implements FxmlController{
         this.agregarBtn.managedProperty().bind(agregarBtn.visibleProperty());
         this.guardarBtn.managedProperty().bind(guardarBtn.visibleProperty());
 
+        this.distanciaTF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                _calcularFletePorDistancia(newValue);
+            }
+        });
+
         if(this.envio == null){ //nuevo envio
             //buttons
             this.agregarBtn.setDisable(false);
@@ -248,6 +352,12 @@ public class VentaInformacionEnvio implements FxmlController{
 
             this.guardarBtn.setDisable(true);
             this.guardarBtn.setVisible(false);
+
+            this.fletePesoLabel.setText("0");
+            this.fleteDistanciaLabel.setText("0");
+            this.fleteTotalLabel.setText("0");
+            this.costoFletePorDistancia = 0;
+            this.distanciaTF.setText("0");
 
             //fecha
             this.fechaEnvioDP.setValue(DateParser.currentDateLocalDate());
@@ -269,8 +379,17 @@ public class VentaInformacionEnvio implements FxmlController{
             }
             this.envioTable.getItems().addAll(this.detalleEnvios);
 
+            //distancia
+            this.distanciaTF.setText(String.valueOf(this.envio.getDistancia()));
+            this.calcularFletePorDistancia();
+
+            //labels flete
+            float fletePorPeso = this.calcularFletePorPeso();
+            this.fletePesoLabel.setText(String.valueOf(fletePorPeso));
+            this.fleteTotalLabel.setText(String.valueOf(this.envio.getCostoFlete()));
+
             //init costo flete
-            this.costoFleteLabel.setText(String.valueOf(this.envio.getCostoFlete()));
+            this.fleteTotalLabel.setText(String.valueOf(this.envio.getCostoFlete()));
         }
 
         this.initProductosDisponibles();
@@ -331,6 +450,9 @@ public class VentaInformacionEnvio implements FxmlController{
         });
         this.asignadoEnvioTC.setCellValueFactory(value->{
             return new SimpleObjectProperty<Integer>(value.getValue().getCantidad());
+        });
+        this.asignadoPesoTotalTC.setCellValueFactory(value->{
+            return new SimpleObjectProperty<Float>(value.getValue().getPeso());
         });
     }
 

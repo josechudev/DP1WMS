@@ -12,4 +12,6 @@ public interface RepositoryCondicion {
     int eliminarDescuento(int id,Long idEmpleadoAuditado);
     int actualizarDescuento(Condicion condicion);
     List<Condicion> obtenerDescuentosActivos();
+    Condicion obtenerFletePorPeso();
+    Condicion obtenerFletePorDistancia();
 }

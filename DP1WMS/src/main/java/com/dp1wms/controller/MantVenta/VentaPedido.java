@@ -291,7 +291,7 @@ public class VentaPedido implements FxmlController {
                             "Inténtelo otra vez.");
         } else {
             this.stageManager.mostrarInfoDialog("Pedido", null,
-                    "Se registró satisfactoriamente. Continue seleccionado los envios.");
+                    "Se registró satisfactoriamente.");
             this.cerrarVentana(event);
         }
     }

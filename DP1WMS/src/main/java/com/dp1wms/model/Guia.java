@@ -16,7 +16,7 @@ public class Guia {
     private String puntoLlegada;
     private String nombreTransportista;
     private String numeroPlaca;
-    private Double pesoTotal;
+    private Float pesoTotal;
     private Long idEnvio;
     private Long idEmpleadoAuditado;
     private String numeroGuia;
@@ -98,11 +98,11 @@ public class Guia {
         this.numeroPlaca = numeroPlaca;
     }
 
-    public Double getPesoTotal() {
+    public Float getPesoTotal() {
         return pesoTotal;
     }
 
-    public void setPesoTotal(Double pesoTotal) {
+    public void setPesoTotal(Float pesoTotal) {
         this.pesoTotal = pesoTotal;
     }
 

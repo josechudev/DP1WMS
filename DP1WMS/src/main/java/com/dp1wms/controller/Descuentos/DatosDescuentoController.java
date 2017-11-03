@@ -209,9 +209,9 @@ public class DatosDescuentoController implements FxmlController {
         }
 
         condicion.setCantProdDesc(cantidadProdDesc);
-        Double valorDescuento;
+        float valorDescuento;
         try {
-            valorDescuento = Double.parseDouble(this.txb_valorDescuento.getText());
+            valorDescuento = Float.parseFloat(this.txb_valorDescuento.getText());
         } catch (Exception e) {
             System.out.println("Error al ingresar valor descuento");
             return;

@@ -14,6 +14,7 @@ public class Envio {
     private String razonSocial;
     private int indiceTabla;
     private Boolean realizado;
+    private float distancia;
 
     private List<DetalleEnvio> detalleEnvio;
 
@@ -28,6 +29,7 @@ public class Envio {
         this.indiceTabla = envio.indiceTabla;
         this.realizado = envio.realizado;
         this.detalleEnvio = envio.detalleEnvio;
+        this.distancia = envio.distancia;
     }
 
     public Envio(){
@@ -45,6 +47,7 @@ public class Envio {
         this.indiceTabla = envio.indiceTabla;
         this.realizado = envio.realizado;
         this.detalleEnvio = envio.detalleEnvio;
+        this.distancia = envio.distancia;
     }
 
     public void eliminarDetalleEnvio(DetalleEnvio de){
@@ -159,5 +162,13 @@ public class Envio {
 
     public void setRealizado(Boolean realizado) {
         this.realizado = realizado;
+    }
+
+    public float getDistancia() {
+        return distancia;
+    }
+
+    public void setDistancia(float distancia) {
+        this.distancia = distancia;
     }
 }
