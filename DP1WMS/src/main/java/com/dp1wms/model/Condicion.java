@@ -50,6 +50,8 @@ public class Condicion {
 
     private float factorFlete;
 
+    private Boolean activo;
+
     public int getPrioridad(){
         return this.prioridad;
     }
@@ -209,5 +211,13 @@ public class Condicion {
 
     public void setFactorFlete(float factorFlete) {
         this.factorFlete = factorFlete;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 }
