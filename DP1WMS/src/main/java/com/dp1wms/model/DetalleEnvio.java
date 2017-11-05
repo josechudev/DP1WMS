@@ -13,7 +13,7 @@ public class DetalleEnvio {
     private String nombreProducto;
     private String loteAsociado; // para la vista de retiro de un envio
     private int idLote;
-    private Double peso;
+    private float peso;
 
     public DetalleEnvio(){
 
@@ -30,6 +30,7 @@ public class DetalleEnvio {
         this.nombreProducto = de.nombreProducto;
         this.loteAsociado = de.loteAsociado;
         this.idLote = de.idLote;
+        this.peso = de.peso;
     }
 
     public void copiar(DetalleEnvio de){
@@ -43,6 +44,7 @@ public class DetalleEnvio {
         this.nombreProducto = de.nombreProducto;
         this.loteAsociado = de.loteAsociado;
         this.idLote = de.idLote;
+        this.peso = de.peso;
     }
 
     public int getCantidad() {
@@ -129,11 +131,11 @@ public class DetalleEnvio {
     }
 
 
-    public Double getPeso() {
+    public float getPeso() {
         return peso;
     }
 
-    public void setPeso(Double peso) {
+    public void setPeso(float peso) {
         this.peso = peso;
     }
 }

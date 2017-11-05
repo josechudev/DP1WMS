@@ -7,7 +7,7 @@ import java.util.List;
 public interface RepositoryGuia {
 
     int registrarGuia(Guia guia);
-    Double obtenerPesoProducto(int idProducto);
+    Float obtenerPesoProducto(int idProducto);
     String obtenerNombreCliente(Long idCliente);
     List<Guia> obtenerGuias();
 }

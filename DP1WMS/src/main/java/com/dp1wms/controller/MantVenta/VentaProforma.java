@@ -191,7 +191,7 @@ public class VentaProforma implements FxmlController{
 
     private void llenarTablaProforma(){
         this.limpiarTablaProforma();
-        List<Condicion> condiciones = this.repositoryCondicion.obtenerCondicionesActivos();
+        List<Condicion> condiciones = this.repositoryCondicion.obtenerDescuentosActivos();
         DescuentoAlgoritmo.aplicarDescuento(condiciones, this.proforma);
         this.proforma.calcularTotal();
         this.proformaTable.getItems().addAll(this.proforma.getDetallesProforma());
@@ -216,6 +216,7 @@ public class VentaProforma implements FxmlController{
                     "Debe seleccionar un cliente");
             return;
         } else {
+            this.proforma.setCliente(this.cliente);
             this.proforma.setIdCliente(this.cliente.getIdCliente());
         }
 

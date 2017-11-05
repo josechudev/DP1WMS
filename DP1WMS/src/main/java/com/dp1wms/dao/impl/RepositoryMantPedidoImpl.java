@@ -21,7 +21,8 @@ public class RepositoryMantPedidoImpl implements RepositoryMantPedido{
     @Transactional (rollbackFor = Exception.class)
     public boolean registrarPedido(Pedido pedido, ArrayList<Envio> envios){
 
-        String sql = "INSERT INTO pedido (idestadopedido, esdevolucion, observaciones, idempleadoauditado, idcliente," +
+        String sql = "INSERT INTO pedido (idestadopedido, esdevolucion, observaciones, " +
+                " idempleadoauditado, idcliente," +
                 " total, subtotal, costoflete) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING idpedido";
         try{
@@ -57,15 +58,15 @@ public class RepositoryMantPedidoImpl implements RepositoryMantPedido{
             throw  e;
         }
 
-        String sql3 = "INSERT INTO envio (fechaenvio, destino, costoflete, idpedido, realizado) " +
-                "VALUES (?,?,?,?,?) RETURNING idenvio";
+        String sql3 = "INSERT INTO envio (fechaenvio, destino, costoflete, idpedido, realizado, distancia) " +
+                "VALUES (?,?,?,?,?, ?) RETURNING idenvio";
         String sql4 = "INSERT INTO detalleenvio (idenvio, idproducto, cantidad) " +
                 "VALUES (?,?,?) RETURNING iddetalleenvio";
         try{
             for(Envio envio: envios){
                 Envio e = this.jdbcTemplate.queryForObject(sql3, new Object[]{
                         envio.getFechaEnvio(), envio.getDestino(), envio.getCostoFlete(), pedido.getIdPedido(),
-                        false
+                        false, envio.getDistancia()
                 }, (res, i)->{
                    Envio eAux = new Envio();
                    eAux.setIdEnvio(res.getLong("idenvio"));
