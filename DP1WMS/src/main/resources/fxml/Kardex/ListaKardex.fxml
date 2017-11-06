@@ -32,10 +32,10 @@
         </Label>
         <DatePicker fx:id="dp_fecInicio" editable="false" layoutX="24.0" layoutY="99.0" />
         <Label layoutX="24.0" layoutY="70.0" text="Desde" />
-        <TextField disable="true" layoutX="266.0" layoutY="99.0" text="07/11/2017" />
         <Label layoutX="266.0" layoutY="70.0" text="Hasta" />
         <TextField fx:id="txt_balance" disable="true" layoutX="860.0" layoutY="388.0" />
         <Label layoutX="757.0" layoutY="388.0" prefHeight="26.0" prefWidth="89.0" text="Balance Total" />
-      <Button fx:id="btn_Consulta" focusTraversable="false" layoutX="466.0" layoutY="99.0" mnemonicParsing="false" onAction="#consultarKardex" text="Consultar" />
+      <Button fx:id="btn_Consulta" focusTraversable="false" layoutX="528.0" layoutY="99.0" mnemonicParsing="false" onAction="#consultarKardex" text="Consultar" />
+      <DatePicker fx:id="dp_fecFin" editable="false" layoutX="266.0" layoutY="99.0" prefWidth="187.0" />
     </children>
 </AnchorPane>

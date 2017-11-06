@@ -46,6 +46,7 @@ public class KardexController implements FxmlController {
     @FXML private TableColumn<KardexFila,String> c_entradas;
     @FXML private TableColumn<KardexFila,String> c_salidas;
     @FXML private DatePicker dp_fecInicio;
+    @FXML private DatePicker dp_fecFin;
     @FXML private Button btn_Consulta;
 
     @FXML private TextField txt_balance;
@@ -88,9 +89,9 @@ public class KardexController implements FxmlController {
         }
         txt_balance.setText(String.valueOf(valTotal));
     }
-    private void llenarGrilla(String fecInicio) {
+    private void llenarGrilla(String fecInicio,String fecFin) {
         tableViewKardex.getItems().clear();
-        List<KardexFila> kardexFilaList = repositoryKardexFila.selectAllKardexFila(fecInicio);
+        List<KardexFila> kardexFilaList = repositoryKardexFila.selectAllKardexFila(fecInicio,fecFin);
         float valTotal = 0;
         for (KardexFila k : kardexFilaList) {
             tableViewKardex.getItems().add(k);
@@ -106,7 +107,8 @@ public class KardexController implements FxmlController {
 
     @Override
     public void initialize() {
-        dp_fecInicio.setValue(LOCAL_DATE("01-05-2016"));
+        dp_fecInicio.setValue(LOCAL_DATE("01-09-2017"));
+        dp_fecFin.setValue(LOCAL_DATE("22-11-2017"));
         c_Codigo.setCellValueFactory(new PropertyValueFactory<KardexFila,Integer>("idMovimiento"));
         c_fechaMov.setCellValueFactory(new PropertyValueFactory<KardexFila,String>("fechaMovimiento"));
         c_descProd.setCellValueFactory(new PropertyValueFactory<KardexFila,String>("nombreProducto"));
@@ -125,7 +127,7 @@ public class KardexController implements FxmlController {
     @FXML
     private void consultarKardex(){
         System.out.println(dp_fecInicio.getValue().toString());
-        llenarGrilla(dp_fecInicio.getValue().toString());
+        llenarGrilla(dp_fecInicio.getValue().toString(),dp_fecFin.getValue().toString());
     }
 
     private Timestamp obtenerFecha(String fecha) throws ParseException {

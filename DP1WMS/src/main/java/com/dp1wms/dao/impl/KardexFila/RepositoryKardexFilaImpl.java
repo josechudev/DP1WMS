@@ -35,7 +35,7 @@ public class RepositoryKardexFilaImpl implements RepositoryKardexFila {
     }
 
     @Override
-    public List<KardexFila> selectAllKardexFila(String fecInicio) {
+    public List<KardexFila> selectAllKardexFila(String fecInicio,String fecFin) {
         String sql = "select \n" +
                 "m.idmovimiento,\n" +
                 "m.idtipomovimiento,\n" +
@@ -52,8 +52,8 @@ public class RepositoryKardexFilaImpl implements RepositoryKardexFila {
                 "left join detallemovimiento as dm on dm.idmovimiento = m.idmovimiento\n" +
                 "left join tipomovimiento as tm on tm.idtipomovimiento = m.idtipomovimiento\n" +
                 "left join producto as p on p.idproducto = dm.idproducto\n" +
-                "where m.fechamovimiento>= ?::date\n" +
+                "where m.fechamovimiento>= ?::date and m.fechamovimiento<=?::date\n" +
                 "order by idmovimiento\n";
-        return jdbcTemplate.query(sql, new Object[]{fecInicio},new KardexFilaRowMapper());
+        return jdbcTemplate.query(sql, new Object[]{fecInicio,fecFin},new KardexFilaRowMapper());
     }
 }
