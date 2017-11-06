@@ -12,4 +12,7 @@ public interface RepositoryMantPedido {
 
     boolean registrarPedido(Pedido pedido, ArrayList<Envio> envios);
 
+    List<Pedido> buscarPedidos(String campoCliente, String datoCliente, String codigoPedido,
+                               Timestamp fechaDesde, Timestamp fechaHasta);
+
 }
