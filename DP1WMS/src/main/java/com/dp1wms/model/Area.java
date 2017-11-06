@@ -1,7 +1,11 @@
 package com.dp1wms.model;
 
+import com.sun.org.apache.xml.internal.utils.RawCharacterHandler;
 import javafx.geometry.Point2D;
 import org.postgresql.geometric.PGpoint;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Area {
 
@@ -10,6 +14,7 @@ public class Area {
     private Point2D posicionInicial;
     private Point2D posicionFinal;
     private String codigo;
+    private List<Rack> listaRack = new ArrayList<Rack>();
 
     public Area() {}
 
@@ -75,5 +80,14 @@ public class Area {
 
     public Point2D getVertInfDer(){
         return this.getPosicionFinal();
+    }
+
+
+    public List<Rack> getListaRack() {
+        return listaRack;
+    }
+
+    public void setListaRack(List<Rack> listaRack) {
+        this.listaRack = listaRack;
     }
 }
