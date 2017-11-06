@@ -114,7 +114,7 @@ public class IngresoProductoController implements FxmlController {
                     return;
                 }
                 Long idEmpleadoAuditado = mainController.getEmpleado().getIdempleado();
-                repositoryMantMov.registrarMovimiento(totalProductos,this.txa_observaciones.getText(),fecha,tipoMovimiento.getIdTipoMovimiento(),loteEscogido.getIdProducto(),loteEscogido.getIdLote(),cantidad,idEmpleadoAuditado);
+                repositoryMantMov.registrarMovimiento(totalProductos,this.txa_observaciones.getText(),fecha,tipoMovimiento.getIdTipoMovimiento(),loteEscogido.getIdProducto(),loteEscogido.getIdLote(),cantidad,idEmpleadoAuditado,-1);
             }
         }else{
             System.out.println("Motivo Movimiento Vacio");

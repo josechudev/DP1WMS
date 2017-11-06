@@ -55,6 +55,9 @@ public class VentaBuscarProforma implements FxmlController {
         if(desdeLD == null || hastaLD == null){
             this.stageManager.mostrarErrorDialog("Error Buscar Proforma", null,
                     "Debe seleccionar un rango de fecha adecuado");
+        } else if (desdeLD.isAfter(hastaLD)){
+            this.stageManager.mostrarErrorDialog("Error Buscar Proforma", null,
+                    "Debe seleccionar un rango de fecha adecuado");
         } else {
             String campoCliente = this.campoClienteCB.getValue().campo;
             String datoCliente = this.busquedaField.getText();
@@ -130,8 +133,8 @@ public class VentaBuscarProforma implements FxmlController {
 
     private void initCampoCB(){
         ArrayList<ClienteCampo> campos = new ArrayList<>();
-        campos.add(new ClienteCampo("RUC", "numdoc"));
-        campos.add(new ClienteCampo("Razon Social", "razonsocial"));
+        campos.add(new ClienteCampo("DNI / RUC", "numdoc"));
+        campos.add(new ClienteCampo("Nombre / Razon Social", "razonsocial"));
         campos.add(new ClienteCampo("Telefono", "telefono"));
         campos.add(new ClienteCampo("Email", "email"));
         this.campoClienteCB.getItems().addAll(campos);

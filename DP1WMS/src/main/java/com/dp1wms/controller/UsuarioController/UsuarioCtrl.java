@@ -1,4 +1,4 @@
-package com.dp1wms.controller.usuarioController;
+package com.dp1wms.controller.UsuarioController;
 
 import com.dp1wms.controller.FxmlController;
 import com.dp1wms.dao.RepositoryMantEmpleado;

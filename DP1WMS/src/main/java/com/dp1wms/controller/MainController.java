@@ -1,6 +1,6 @@
 package com.dp1wms.controller;
 
-import com.dp1wms.controller.usuarioController.UsuarioCtrl;
+import com.dp1wms.controller.UsuarioController.UsuarioCtrl;
 import com.dp1wms.model.Empleado;
 import com.dp1wms.model.Usuario;
 import com.dp1wms.view.ClientesView;
@@ -113,6 +113,7 @@ public class MainController implements FxmlController {
         this.stageManager.mostrarModal(MainView.INGRESO_PRODUCTO);
     }
 
+
     @FXML
     private void cerrarSesion(){
         this.usuario = null;
@@ -153,6 +154,11 @@ public class MainController implements FxmlController {
     private void cargarDevolucionFactura(){
         System.out.println("cargarDevolucionPedido");
         this.stageManager.mostrarModal(MainView.DEVOLVER_PEDIDO);
+    }
+
+    @FXML
+    private void cargarConsultarPedido(){
+        this.stageManager.mostrarModal(VentasView.CONSULTAR_PEDIDO);
     }
 
     public void setUsuario(Usuario usuario){
