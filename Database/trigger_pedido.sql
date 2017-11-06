@@ -7,13 +7,13 @@ BEGIN
 	SELECT COUNT(envio.idenvio)::integer INTO num_envios FROM envio WHERE envio.idpedido = NEW.idpedido;
     IF envios_realizados = 0 THEN
     	--Pedido en espera por ser atendido
-    	INSERT INTO pedido (idestadopedido) VALUES (1) WHERE pedido.idpedido = NEW.idpedido;
+    	UPDATE pedido SET pedido.idestadopedido = 1 WHERE pedido.idpedido = NEW.idpedido;
     ELSIF (envios_realizados = num_envios) THEN
     	--Pedido atendido con exito
-    	INSERT INTO pedido (idestadopedido) VALUES (2) WHERE pedido.idpedido = NEW.idpedido;
+    	UPDATE pedido SET pedido.idestadopedido = 2 WHERE pedido.idpedido = NEW.idpedido;
     ELSE
     	--Pedido despachando los envios
-    	INSERT INTO pedido (idestadopedido) VALUES (5) WHERE pedido.idpedido = NEW.idpedido;
+    	UPDATE pedido SET pedido.idestadopedido = 5 WHERE pedido.idpedido = NEW.idpedido;
     END IF;
 END;
 $body$
