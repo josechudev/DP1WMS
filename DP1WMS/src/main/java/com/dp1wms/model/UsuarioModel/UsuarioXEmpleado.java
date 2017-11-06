@@ -7,8 +7,8 @@ public class UsuarioXEmpleado {
     private String v_nombre;
     private String v_apellido;
     private String v_descripcion;
-
     private boolean v_activo;
+    private String v_mostrarActivo;
 
     public UsuarioXEmpleado(){
         this.setV_id_user(0);
@@ -93,5 +93,19 @@ public class UsuarioXEmpleado {
 
     public void setV_activo(boolean v_activo) {
         this.v_activo = v_activo;
+        if(this.v_activo)
+            setV_mostrarActivo("Habilitado");
+        else
+            setV_mostrarActivo("Deshabilitado");
+    }
+
+    public String getV_mostrarActivo(){
+        return v_mostrarActivo;
+    }
+
+    public void setV_mostrarActivo(String v_mostrarActivo) {
+        if( v_mostrarActivo == null )
+            v_mostrarActivo = "";
+        this.v_mostrarActivo = v_mostrarActivo;
     }
 }
