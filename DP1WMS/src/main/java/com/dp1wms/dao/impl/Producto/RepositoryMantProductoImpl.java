@@ -23,7 +23,7 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
 
     @Override
     public List<Producto> selectAllProducto() {
-        String sql = "select idproducto, nombreproducto, peso, to_char(fechavencimiento,'DD/MM/YYYY')fechavencimiento, p.descripcion, precio, stock, p.idcategoria,cp.descripcion, codigo,to_char(fechacreacion,'DD/MM/YYYY') fechacreacion, activo,preciocompra,unidades\n" +
+        String sql = "select idproducto, nombreproducto, peso, fechavencimiento, p.descripcion, precio, stock, p.idcategoria,cp.descripcion, codigo, fechacreacion, activo,preciocompra,unidades\n" +
                 "from producto p\n" +
                 "left join categoriaproducto as cp on cp.idcategoria = p.idcategoria\n" +
                 "order by idproducto;";

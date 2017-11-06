@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="125.0" prefWidth="282.0" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.PopUpController">
+    <children>
+        <Label fx:id="labelPopUp" layoutX="31.0" layoutY="32.0" prefHeight="61.0" prefWidth="221.0" text="Texto" />
+    </children>
+</AnchorPane>

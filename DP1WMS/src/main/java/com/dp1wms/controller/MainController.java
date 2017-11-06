@@ -1,6 +1,5 @@
 package com.dp1wms.controller;
 
-import com.dp1wms.controller.usuarioController.UsuarioCtrl;
 import com.dp1wms.model.Empleado;
 import com.dp1wms.model.Usuario;
 import com.dp1wms.view.ClientesView;
@@ -112,6 +111,7 @@ public class MainController implements FxmlController {
         System.out.println("cargarIngreso/SalidaProducto");
         this.stageManager.mostrarModal(MainView.INGRESO_PRODUCTO);
     }
+
 
     @FXML
     private void cerrarSesion(){

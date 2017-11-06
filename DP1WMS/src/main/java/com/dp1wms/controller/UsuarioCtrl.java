@@ -1,6 +1,5 @@
-package com.dp1wms.controller.usuarioController;
+package com.dp1wms.controller;
 
-import com.dp1wms.controller.FxmlController;
 import com.dp1wms.dao.RepositoryMantEmpleado;
 import com.dp1wms.dao.RepositoryMantTipoEmpleado;
 import com.dp1wms.dao.RepositoryMantUsuario;
@@ -9,6 +8,7 @@ import com.dp1wms.model.TipoEmpleado;
 import com.dp1wms.model.UsuarioModel.Usuario;
 import com.dp1wms.model.UsuarioModel.UsuarioXEmpleado;
 import com.dp1wms.view.StageManager;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
-public class UsuarioCtrl implements FxmlController {
+public class UsuarioCtrl implements FxmlController{
 
     private final StageManager stageManager;
 
@@ -43,7 +43,6 @@ public class UsuarioCtrl implements FxmlController {
     @FXML private TableColumn<UsuarioXEmpleado, String> e_apellido;
     @FXML private TableColumn<UsuarioXEmpleado, String> e_descripcion;
     @FXML private TableColumn<UsuarioXEmpleado, Boolean> e_activo;
-    @FXML private TableColumn<UsuarioXEmpleado, String> e_mostrarActivo;
 
     @Autowired
     private RepositoryMantUsuario repositoryMantUsuario;
@@ -62,8 +61,7 @@ public class UsuarioCtrl implements FxmlController {
         System.out.println("Agrear Usuario");
         if( (repositoryMantTipoEmpleado.selectAllTipoEmpleado() == null)
                 || (repositoryMantTipoEmpleado.selectAllTipoEmpleado().size() == 0) ){
-            mostrarErrorDialog("No hay ningun tipo de empleado",
-                    "Ningun tipo de empleado registrado. Registrar al menos uno para continuar");
+            showPopUp("No se ha registrado ningun tipo de empleado", event);
             return;
         }
         Parent root = null;
@@ -78,7 +76,7 @@ public class UsuarioCtrl implements FxmlController {
             UsuarioDatosController controller = loader.getController();
             //0 es crear
             controller.setV_parentController(this);
-            controller._setData(auxUsuario,auxEmpleado,auxTipoEmpleado,true);
+            controller._setData(auxUsuario,auxEmpleado,auxTipoEmpleado,0);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,15 +90,11 @@ public class UsuarioCtrl implements FxmlController {
 
     public void btnClickModificarUsuario(ActionEvent event){
         System.out.println("Modificar Usuario");
-        if(e_table.getSelectionModel().getSelectedItem() == null){
-            mostrarErrorDialog("Error Usuario",
-                    "No se selecciono ningun usuario.");
+        if(e_table.getSelectionModel().getSelectedItem() == null)
             return;
-        }
         if( (repositoryMantTipoEmpleado.selectAllTipoEmpleado() == null)
                 || (repositoryMantTipoEmpleado.selectAllTipoEmpleado().size() == 0) ){
-            mostrarErrorDialog("No hay ningun tipo de empleado",
-                    "Ningun tipo de empleado registrado. Registrar al menos uno para continuar");
+            showPopUp("No se ha registrado ningun tipo de empleado", event);
             return;
         }
         UsuarioXEmpleado auxUsuarioXEmpleado = e_table.getSelectionModel().getSelectedItem();
@@ -115,7 +109,7 @@ public class UsuarioCtrl implements FxmlController {
             UsuarioDatosController controller = loader.getController();
             //1 es modificar
             controller.setV_parentController(this);
-            controller._setData(auxUsuario, auxEmpleado, auxTipoEmpleado,false);
+            controller._setData(auxUsuario, auxEmpleado, auxTipoEmpleado,1);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -129,49 +123,22 @@ public class UsuarioCtrl implements FxmlController {
 
     public void btnClickEliminarUsuario(ActionEvent event){
         System.out.println("Eliminar Usuario");
-        if(e_table.getSelectionModel().getSelectedItem() == null) {
-            mostrarErrorDialog("Error Usuario",
-                    "No se selecciono ningun usuario.");
+        if(e_table.getSelectionModel().getSelectedItem() == null)
             return;
-        }
-
         UsuarioXEmpleado auxUsuarioXEmpleado = e_table.getSelectionModel().getSelectedItem();
         Usuario auxUsuario = repositoryMantUsuario.findUsuariobyId(auxUsuarioXEmpleado.getV_id_user());
-
-        if(!auxUsuarioXEmpleado.getV_activo()){
-            mostrarErrorDialog("Error Usuario",
-                    "El usuario ya se encuentra deshabilitado.");
-            return;
-        }
-
         repositoryMantEmpleado.deleteEmpleado(auxUsuario, repositoryMantEmpleado.obtenerEmpleadoPorIdUsuario(auxUsuario.getV_id()), this.usuario.getIdusuario() );
         //repositoryMantUsuario.deleteUsuario(auxUsuario);
-        mostrarInfoDialog("Deshabilitar Usuario",
-                "Se deshabilito el usuario " + auxUsuario.getV_nombre() + " con exito.");
-
         this._llenarGrilla();
     }
 
     public void btnClickActivarUsuario(ActionEvent event){
         System.out.println("Activar Usuario");
-        if(e_table.getSelectionModel().getSelectedItem() == null){
-            mostrarErrorDialog("Error Usuario",
-                    "No se selecciono ningun usuario.");
+        if(e_table.getSelectionModel().getSelectedItem() == null)
             return;
-        }
         UsuarioXEmpleado auxUsuarioXEmpleado = e_table.getSelectionModel().getSelectedItem();
         Usuario auxUsuario = repositoryMantUsuario.findUsuariobyId(auxUsuarioXEmpleado.getV_id_user());
-
-        if(auxUsuarioXEmpleado.getV_activo()){
-            mostrarErrorDialog("Error Usuario",
-                    "El usuario ya se encuentra habilitado.");
-            return;
-        }
-
         repositoryMantEmpleado.activeEmpleado(auxUsuario, repositoryMantEmpleado.obtenerEmpleadoPorIdUsuario(auxUsuario.getV_id()), this.usuario.getIdusuario() );
-        mostrarInfoDialog("Habilitar Usuario",
-                "Se habilito el usuario " + auxUsuario.getV_nombre() + " con exito.");
-
         this._llenarGrilla();
     }
 
@@ -184,14 +151,24 @@ public class UsuarioCtrl implements FxmlController {
         e_apellido.setCellValueFactory(new PropertyValueFactory<UsuarioXEmpleado, String>("v_apellido"));
         e_descripcion.setCellValueFactory(new PropertyValueFactory<UsuarioXEmpleado, String>("v_descripcion"));
         e_activo.setCellValueFactory(new PropertyValueFactory<UsuarioXEmpleado, Boolean>("v_activo"));
-        e_mostrarActivo.setCellValueFactory(new PropertyValueFactory<UsuarioXEmpleado, String>("v_mostrarActivo"));
         this._llenarGrilla();
     }
 
     private void _llenarGrilla(){
         e_table.getItems().clear();
         List<UsuarioXEmpleado> auxListaUsuarioXEmpleado = repositoryMantEmpleado.obtenerUsuarioXEmpleadoPorIdUsuario();
-        this.e_table.getItems().addAll(auxListaUsuarioXEmpleado);
+        try {
+            for (int i = 0; i < auxListaUsuarioXEmpleado.size(); i++) {
+                e_table.getItems().add(new UsuarioXEmpleado(auxListaUsuarioXEmpleado.get(i).getV_id_user(),
+                        auxListaUsuarioXEmpleado.get(i).getV_user(), auxListaUsuarioXEmpleado.get(i).getV_numDoc(),
+                        auxListaUsuarioXEmpleado.get(i).getV_nombre(), auxListaUsuarioXEmpleado.get(i).getV_apellido(),
+                        auxListaUsuarioXEmpleado.get(i).getV_descripcion(),
+                        auxListaUsuarioXEmpleado.get(i).getV_activo() ));
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void crearUsuarioDB(Usuario auxUsuario){
@@ -208,7 +185,19 @@ public class UsuarioCtrl implements FxmlController {
     public void modificarEmpleadoDB(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpelado){
         repositoryMantEmpleado.updateEmpleado(auxUsuario, auxEmpleado, auxTipoEmpelado, this.usuario.getIdusuario());
     }
+    public void eliminarEmpleadoDB(Usuario auxUsuario, Empleado auxEmpleado){
+        repositoryMantEmpleado.deleteEmpleado(auxUsuario, auxEmpleado, this.usuario.getIdusuario());
+    }
 
+    public void crearTipoEmpleadoDB(TipoEmpleado auxTipoEmpelado){
+        repositoryMantTipoEmpleado.createTipoEmpleado(auxTipoEmpelado);
+    }
+    public void modificarTipoEmpleadoDB(TipoEmpleado auxTipoEmpelado){
+        repositoryMantTipoEmpleado.updateTipoEmpleado(auxTipoEmpelado);
+    }
+    public void eliminarTipoEmpleadoDB(TipoEmpleado auxTipoEmpelado){
+        repositoryMantTipoEmpleado.deleteTipoEmpleado(auxTipoEmpelado);
+    }
     public TipoEmpleado obtenerTipoEmpleadoPorDescripcion(String auxDescripcion){
         return repositoryMantTipoEmpleado.obtenerTipoEmpleadoPorDescripcion(auxDescripcion);
     }
@@ -229,14 +218,22 @@ public class UsuarioCtrl implements FxmlController {
         this.usuario = usuario;
     }
 
-    public void mostrarErrorDialog(String auxTitulo, String auxTexto){
-        this.stageManager.mostrarErrorDialog(auxTitulo, null,
-                auxTexto);
+    public void showPopUp(String auxText, ActionEvent event){
+        Parent root = null;
+        FXMLLoader loader;
+        try {
+            loader =new FXMLLoader(getClass().getResource("/fxml/PopUp.fxml"));
+            root = (Parent) loader.load();
+            PopUpController controller = loader.getController();
+            controller.setLabelPopUp(auxText);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene scene = new Scene(root);
+        Window existingWindow = ((Node) event.getSource()).getScene().getWindow();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.show();
     }
-
-    public void mostrarInfoDialog(String auxTitulo, String auxTexto){
-        this.stageManager.mostrarInfoDialog(auxTitulo, null,
-                auxTexto);
-    }
-
 }
