@@ -27,7 +27,7 @@
       <TextField fx:id="txb_productoGenerador" layoutX="121.0" layoutY="159.0" prefHeight="25.0" prefWidth="150.0" />
       <Button fx:id="btn_buscarGen" layoutX="288.0" layoutY="160.0" mnemonicParsing="false" onAction="#buscarProductoGen" text="Buscar" />
       <Label fx:id="labelCantidadGen" layoutX="58.0" layoutY="241.0" text="Cantidad:" />
-      <TextField fx:id="txb_cantidadGenerador" layoutX="120.0" layoutY="238.0" />
+      <TextField fx:id="txb_cantidadGenerador" layoutX="120.0" layoutY="238.0" prefHeight="25.0" prefWidth="72.0" />
       <Label fx:id="label_ProductoGen" layoutX="57.0" layoutY="163.0" text="Producto:" />
       <Label fx:id="labelProductoDesc" layoutX="351.0" layoutY="156.0" text="Producto Descuento" />
       <Label fx:id="labelCategoriaDesc" layoutX="352.0" layoutY="194.0" text="Categoria" />
@@ -35,7 +35,7 @@
       <TextField fx:id="txb_productoDescuento" layoutX="470.0" layoutY="146.0" />
       <ComboBox fx:id="cb_categoriaDescuento" layoutX="470.0" layoutY="187.0" onAction="#actualizarCategoria" prefWidth="150.0" />
       <Button fx:id="btn_buscarDesc" layoutX="633.0" layoutY="146.0" mnemonicParsing="false" onAction="#buscarProductoDesc" text="Buscar" />
-      <TextField fx:id="txb_cantidadDescuento" layoutX="469.0" layoutY="229.0" />
+      <TextField fx:id="txb_cantidadDescuento" layoutX="469.0" layoutY="229.0" prefHeight="25.0" prefWidth="65.0" />
       <TextField fx:id="txb_valorDescuento" layoutX="463.0" layoutY="267.0" prefHeight="25.0" prefWidth="54.0" />
       <Label layoutX="14.0" layoutY="338.0" text="Fecha Inicio:" />
       <Label layoutX="13.0" layoutY="371.0" text="Fecha Fin:" />
@@ -60,8 +60,8 @@
       <Label fx:id="labelCantidad4" layoutX="386.0" layoutY="28.0" text="A un % descuento de su valor del: " />
       <Label fx:id="labelCantidad5" layoutX="152.0" layoutY="50.0" text="En:" />
       <Label fx:id="labelCantidad6" layoutX="199.0" layoutY="50.0" text="Por cada " />
-      <Label fx:id="labelCantidad7" layoutX="270.0" layoutY="50.0" text="en peso se le añadirá un costo de" />
-      <Label fx:id="labelCantidad8" layoutX="477.0" layoutY="50.0" text="en distancia (Km) se le añadirá un costo de" />
+      <Label fx:id="labelCantidad7" layoutX="270.0" layoutY="50.0" text="Kilogramos(Kg) se le añadirá un costo de" />
+      <Label fx:id="labelCantidad8" layoutX="477.0" layoutY="60.0" text="Kilómetros(Km) se le añadirá un costo de" />
       <Label fx:id="labelCantidad9" layoutX="616.0" layoutY="73.0" text="Soles" />
    </children>
 </AnchorPane>
