@@ -1,5 +1,8 @@
 package com.dp1wms.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Almacen {
 
     private int idAlmacen;
@@ -7,6 +10,7 @@ public class Almacen {
     private int largo;
     private int ancho;
     private String nombre;
+    private List<Area> listaArea = new ArrayList<Area>();
 
     public Almacen() { }
 
@@ -55,5 +59,14 @@ public class Almacen {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+
+    public List<Area> getListaArea() {
+        return listaArea;
+    }
+
+    public void setListaArea(List<Area> listaArea) {
+        this.listaArea = listaArea;
     }
 }

@@ -5,9 +5,10 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="1283.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Descuentos.MantenimientoDescuentoController">
+<AnchorPane prefHeight="400.0" prefWidth="1330.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Descuentos.MantenimientoDescuentoController">
    <children>
       <Label layoutX="36.0" layoutY="53.0" text="Acciones">
          <font>
@@ -22,20 +23,27 @@
       <Button fx:id="btn_agregar" layoutX="36.0" layoutY="93.0" mnemonicParsing="false" onAction="#agregarDescuento" prefHeight="25.0" prefWidth="81.0" text="Agregar" />
       <Button fx:id="btn_modificar" layoutX="144.0" layoutY="93.0" mnemonicParsing="false" onAction="#modificarDescuento" prefHeight="25.0" prefWidth="87.0" text="Modificar" />
       <Button fx:id="btn_eliminar" layoutX="265.0" layoutY="93.0" mnemonicParsing="false" onAction="#eliminarDescuento" prefHeight="25.0" prefWidth="97.0" text="Eliminar" />
-      <TableView fx:id="tableViewDescuentos" layoutX="27.0" layoutY="145.0" prefHeight="200.0" prefWidth="1234.0">
-        <columns>
-            <TableColumn fx:id="c_indice" prefWidth="39.0" text="N°" />
-          <TableColumn fx:id="c_tipoDescuento" prefWidth="143.0" text="Tipo Descuento" />
-            <TableColumn fx:id="c_productoGen" prefWidth="144.0" text="Producto Generador" />
-          <TableColumn fx:id="c_categoriaGen" prefWidth="158.0" text="Categoria" />
-            <TableColumn fx:id="c_cantidadGen" prefWidth="107.0" text="Cantidad" />
-            <TableColumn fx:id="c_ProdDesc" prefWidth="130.0" text="Producto Descuento" />
-            <TableColumn fx:id="c_categoriaDesc" prefWidth="107.0" text="Categoria " />
-            <TableColumn fx:id="c_cantidadDesc" prefWidth="75.0" text="Cantidad" />
-            <TableColumn fx:id="c_porcentajeDesc" prefWidth="142.0" text="Porcentaje Descuento" />
-            <TableColumn fx:id="c_fechaInicio" minWidth="8.0" prefWidth="128.0" text="Fecha Inicio" />
-            <TableColumn fx:id="c_fechaFin" minWidth="0.0" prefWidth="136.0" text="Fecha Fin" />
-        </columns>
-      </TableView>
+      <StackPane layoutX="36.0" layoutY="184.0" prefHeight="119.0" prefWidth="1286.0">
+         <children>
+            <TableView fx:id="tableViewDescuentos" prefHeight="119.0" prefWidth="1492.0">
+              <columns>
+                  <TableColumn fx:id="c_indice" prefWidth="39.0" text="N°" />
+                <TableColumn fx:id="c_tipoDescuento" prefWidth="143.0" text="Tipo Descuento" />
+                  <TableColumn fx:id="c_productoGen" prefWidth="144.0" text="Producto Generador" />
+                <TableColumn fx:id="c_categoriaGen" prefWidth="158.0" text="Categoria" />
+                  <TableColumn fx:id="c_cantidadGen" prefWidth="107.0" text="Cantidad " />
+                  <TableColumn fx:id="c_ProdDesc" prefWidth="130.0" text="Producto Descuento" />
+                  <TableColumn fx:id="c_categoriaDesc" prefWidth="107.0" text="Categoria " />
+                  <TableColumn fx:id="c_cantidadDesc" prefWidth="75.0" text="Cantidad" />
+                  <TableColumn fx:id="c_porcentajeDesc" prefWidth="136.0" text="Porcentaje Descuento" />
+                  <TableColumn fx:id="c_cantidadFlete" prefWidth="147.0" text="Cantidad Flete (Kg / Km)" />
+                  <TableColumn fx:id="c_costoFlete" minWidth="0.0" prefWidth="100.0" text="Costo Flete (S/)" />
+                  <TableColumn fx:id="c_fechaInicio" minWidth="8.0" prefWidth="121.0" text="Fecha Inicio" />
+                  <TableColumn fx:id="c_fechaFin" minWidth="0.0" prefWidth="127.0" text="Fecha Fin" />
+                  <TableColumn fx:id="c_habilitado" prefWidth="75.0" text="Habilitado" />
+              </columns>
+            </TableView>
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>

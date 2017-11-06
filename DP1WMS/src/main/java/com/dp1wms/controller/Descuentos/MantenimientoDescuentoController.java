@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -62,6 +63,14 @@ public class MantenimientoDescuentoController implements FxmlController {
     private TableColumn<Condicion,String> c_fechaInicio;
     @FXML
     private TableColumn<Condicion,String> c_fechaFin;
+    @FXML
+    private TableColumn<Condicion,String> c_costoFlete;
+    @FXML
+    private TableColumn<Condicion,String> c_habilitado;
+    @FXML
+    private TableColumn<Condicion,String> c_cantidadFlete;
+    @FXML
+    private Button btn_modificar;
 
     private MainController mainController;
 
@@ -129,8 +138,28 @@ public class MantenimientoDescuentoController implements FxmlController {
         c_ProdDesc.setCellValueFactory(new PropertyValueFactory<Condicion, String>("nombreProductoDescuento"));
         c_categoriaDesc.setCellValueFactory(new PropertyValueFactory<Condicion, String>("categoriaDescuento"));
         c_cantidadDesc.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("cantProdDesc"));
+        //c_costoFlete.setCellValueFactory(new PropertyValueFactory<Condicion, Float>("factorFlete"));
+        c_costoFlete.setCellValueFactory(value->{
+            if(value.getValue().getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FP) ||value.getValue().getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FD)){
+                return new SimpleStringProperty("" + value.getValue().getValorDescuento());
+            }else{
+
+                return new SimpleStringProperty("");
+            }
+
+        });
+        c_cantidadFlete.setCellValueFactory(value->{
+            if(value.getValue().getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FP) ||value.getValue().getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FD)){
+                return new SimpleStringProperty("" + value.getValue().getFactorFlete());
+            }else{
+                return new SimpleStringProperty("");
+            }
+
+        });
+
         //c_porcentajeDesc.setCellValueFactory(new PropertyValueFactory<Condicion, Double>("valorDescuento"));
         //c_fechaInicio.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaInicio"));
+
         this.c_fechaInicio.setCellValueFactory(value->{
             String fechaInicio = DateParser.timestampToString(value.getValue().getFechaInicio());
             return new SimpleStringProperty(fechaInicio);
@@ -141,7 +170,22 @@ public class MantenimientoDescuentoController implements FxmlController {
         });
         //c_fechaFin.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaFin"));
         this.c_porcentajeDesc.setCellValueFactory(value->{
-            return new SimpleStringProperty("" + (value.getValue().getValorDescuento() *100));
+            if(value.getValue().getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FP) ||value.getValue().getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FD)){
+                return new SimpleStringProperty("");
+            }else{
+                return new SimpleStringProperty("" + (value.getValue().getValorDescuento() *100));
+            }
+
+        });
+
+        this.c_habilitado.setCellValueFactory(value->{
+            String habilitado="";
+            if(value.getValue().getActivo()){
+                habilitado="Si";
+            }else{
+                habilitado="No";
+            }
+            return new SimpleStringProperty(habilitado);
         });
         tableViewDescuentos.setEditable(true);
     }
@@ -176,6 +220,8 @@ public class MantenimientoDescuentoController implements FxmlController {
         });
 
         tableViewDescuentos.setEditable(true);*/
+
+        this.btn_modificar.setDisable(true);
 
         this.limpiarTabla();
         this.llenarTabla(this.listaCondicions);

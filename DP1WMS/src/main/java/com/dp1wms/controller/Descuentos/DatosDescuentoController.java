@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -30,6 +31,8 @@ public class DatosDescuentoController implements FxmlController {
 
     @FXML
     private TitledPane titledPaneGen;
+    @FXML
+    private TitledPane titledPaneDesc;
     @FXML
     private AnchorPane datosDescuentoAnchorPane;
     @FXML
@@ -78,6 +81,34 @@ public class DatosDescuentoController implements FxmlController {
     private Label labelProductoDesc;
     @FXML
     private Button btn_buscarDesc;
+
+
+    @FXML
+    private Label labelValorDesc;
+    @FXML
+    private Label labelCantidadDesc;
+
+
+    @FXML
+    private Label labelCantidad1;
+    @FXML
+    private Label labelCantidad2;
+    @FXML
+    private Label labelCantidad3;
+    @FXML
+    private Label labelCantidad4;
+    @FXML
+    private Label labelCantidad5;
+    @FXML
+    private Label labelCantidad6;
+    @FXML
+    private Label labelCantidad7;
+    @FXML
+    private Label labelCantidad8;
+    @FXML
+    private Label labelCantidad9;
+    @FXML
+    private Label labelPorcentaje;
 
     //private Condicion condicion;
 
@@ -151,12 +182,116 @@ public class DatosDescuentoController implements FxmlController {
 
     }
 
+    private void validacionesFormulario(){
+
+    }
+
+
     public void guardarFormulario(ActionEvent event) {
 
         Condicion condicion = new Condicion();
 
-        condicion.setTipoCondicion(this.cb_tipoDescuento.getValue().toString());
 
+        if(this.cb_tipoDescuento.getValue() != null){
+            condicion.setTipoCondicion(this.cb_tipoDescuento.getValue().toString());
+        }else{
+            this.stageManager.mostrarErrorDialog("Error condición comercial", null,
+                    "Debe ingresar un tipo de condición comercial");
+            return;
+        }
+
+        if(condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_P) || condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_B)  || condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_C) ){
+            if(rb_prodGen.isSelected()){
+                if(txb_productoGenerador.getText().equalsIgnoreCase("")){
+                    this.stageManager.mostrarErrorDialog("Error condición comercial", null,
+                            "Debe seleccionar un producto");
+                    return;
+                }
+
+
+            }else if(rb_catGen.isSelected()){
+                if(this.cb_categoriaGenerador.getValue() == null){
+                    this.stageManager.mostrarErrorDialog("Error condición comercial", null,
+                            "Debe seleccionar una categoria");
+                    return;
+                }
+            }
+
+            if(txb_valorDescuento.getText().equalsIgnoreCase("")){
+                this.stageManager.mostrarErrorDialog("Error condición comercial", null,
+                        "Debe ingresar un procentaje de descuento sobre el precio.Si desea que sea gratis ingresar 100%");
+                return;
+            }
+        }
+
+        if( condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_B)  || condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_C)){
+            if(txb_cantidadGenerador.getText().equalsIgnoreCase("")){
+                this.stageManager.mostrarErrorDialog("Error condición comercial", null,
+                        "Debe ingresar una cantidad para la condicion ");
+                return;
+            }
+        }
+
+        if( condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_B)){
+            if(rb_prodDesc.isSelected()){
+                if(txb_productoDescuento.getText().equalsIgnoreCase("")){
+                    this.stageManager.mostrarErrorDialog("Error condición comercial", null,
+                            "Debe seleccionar un producto sobre el que se aplicará la condición comercial");
+                    return;
+                }
+
+
+            }else if(rb_catDesc.isSelected()){
+                if(this.cb_categoriaDescuento.getValue() == null){
+                    this.stageManager.mostrarErrorDialog("Error condición comercial", null,
+                            "Debe seleccionar una categoria sobre la que se aplicará la condición comercial");
+                    return;
+                }
+            }
+
+
+            if(txb_cantidadDescuento.getText().equalsIgnoreCase("")){
+                this.stageManager.mostrarErrorDialog("Error condición comercial", null,
+                        "Debe ingresar una cantidad sobre la que aplicará la condicion ");
+                return;
+            }
+        }
+
+        if( condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FP)){
+            if(txb_cantidadGenerador.getText().equalsIgnoreCase("")){
+                this.stageManager.mostrarErrorDialog("Error condición comercial", null,
+                        "Debe ingresar el peso sobre el que se aplicará el costo del flete");
+                return;
+            }
+        }
+
+        if(condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FD)){
+            if(txb_cantidadGenerador.getText().equalsIgnoreCase("")){
+                this.stageManager.mostrarErrorDialog("Error condición comercial", null,
+                        "Debe ingresar la distancia sobre la que se aplicará el costo del flete");
+                return;
+            }
+        }
+
+        if( condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FP)  || condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FD)){
+            if(txb_valorDescuento.getText().equalsIgnoreCase("")){
+                this.stageManager.mostrarErrorDialog("Error condición comercial", null,
+                        "Debe ingresar el costo del flete");
+                return;
+            }
+        }
+
+        if(this.dp_fechaInicio.getValue() == null){
+            this.stageManager.mostrarErrorDialog("Error condición comercial", null,
+                    "Debe ingresar una fecha de inicio para la condición comercial");
+            return;
+        }
+
+        if(this.dp_fechaFin.getValue() == null){
+            this.stageManager.mostrarErrorDialog("Error condición comercial", null,
+                    "Debe ingresar una fecha de final para la condición comercial");
+            return;
+        }
 
         if (this.txb_productoGenerador.getText().equalsIgnoreCase("")) {
             condicion.setIdProductoGenerador(-1);
@@ -172,16 +307,29 @@ public class DatosDescuentoController implements FxmlController {
         }
 
         int cantidadProdGen = 1;
+        Float valorMedidaFlete = null; // para peso o distancia
         if (!this.txb_cantidadGenerador.getText().equalsIgnoreCase("")) {
-            try {
-                cantidadProdGen = Integer.parseInt(this.txb_cantidadGenerador.getText());
-            } catch (Exception e) {
-                System.out.println("Error al ingresar la cantidad generador descrita");
-                return;
+            if(condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FD) || condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FP)){
+                condicion.setCantProdGen(0);
+                try {
+                    valorMedidaFlete = Float.parseFloat(this.txb_cantidadGenerador.getText());
+                } catch (Exception e) {
+                    System.out.println("Error al ingresar el valor (peso/distancia) para el flete");
+                    return;
+                }
+            }else{
+                try {
+                    cantidadProdGen = Integer.parseInt(this.txb_cantidadGenerador.getText());
+                } catch (Exception e) {
+                    System.out.println("Error al ingresar la cantidad generador descrita");
+                    return;
+                }
+                condicion.setCantProdGen(cantidadProdGen);
             }
+
         }
 
-        condicion.setCantProdGen(cantidadProdGen);
+
 
 
         if (this.txb_productoDescuento.getText().equalsIgnoreCase("")) {
@@ -196,19 +344,23 @@ public class DatosDescuentoController implements FxmlController {
             condicion.setIdCategoriaProdDesc(this.cb_categoriaDescuento.getValue().getIdCategoria());
         }
 
-
         int cantidadProdDesc = 1;
+        if(condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FD) || condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FP)){
+            condicion.setCantProdDesc(0);
+        }else{
 
-        if (!this.txb_cantidadDescuento.getText().equalsIgnoreCase("")) {
-            try {
-                cantidadProdDesc = Integer.parseInt(this.txb_cantidadDescuento.getText());
-            } catch (Exception e) {
-                System.out.println("Error al ingresar la cantidad descuento descrita");
-                return;
+            if (!this.txb_cantidadDescuento.getText().equalsIgnoreCase("")) {
+                try {
+                    cantidadProdDesc = Integer.parseInt(this.txb_cantidadDescuento.getText());
+                } catch (Exception e) {
+                    System.out.println("Error al ingresar la cantidad descuento descrita");
+                    return;
+                }
+                condicion.setCantProdDesc(cantidadProdDesc);
             }
         }
 
-        condicion.setCantProdDesc(cantidadProdDesc);
+
         float valorDescuento;
         try {
             valorDescuento = Float.parseFloat(this.txb_valorDescuento.getText());
@@ -237,7 +389,15 @@ public class DatosDescuentoController implements FxmlController {
 
         condicion.setFechaInicio(fechaInicio);
         condicion.setFechaFin(fechaFin);
-        condicion.setDescripcion(this.txb_descripcion.getText());
+
+
+        if(txb_descripcion.getText().equalsIgnoreCase("")){
+            condicion.setDescripcion("");
+        }else{
+            condicion.setDescripcion(this.txb_descripcion.getText());
+        }
+
+
 
         if (this.rb_prodGen.isSelected()) {
             condicion.setIdCategoriaProdGen(-1);
@@ -252,14 +412,23 @@ public class DatosDescuentoController implements FxmlController {
         }
 
         if (condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_P)) {
-            condicion.setIdProductoGenerador(condicion.getIdProductoDescuento());
-            condicion.setIdCategoriaProdGen(condicion.getIdCategoriaProdDesc());
+            condicion.setIdProductoDescuento(condicion.getIdProductoGenerador());
+            condicion.setIdCategoriaProdDesc(condicion.getIdCategoriaProdGen());
+            //condicion.setIdProductoGenerador(condicion.getIdProductoDescuento());
+            //condicion.setIdCategoriaProdGen(condicion.getIdCategoriaProdDesc());
             condicion.setCantProdGen(1);
             condicion.setCantProdDesc(1);
         }
-        if(condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_C)){
-            condicion.setIdProductoGenerador(condicion.getIdProductoDescuento());
-            condicion.setIdCategoriaProdGen(condicion.getIdCategoriaProdDesc());
+        if (condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_C)) {
+            //condicion.setIdProductoGenerador(condicion.getIdProductoDescuento());
+            //condicion.setIdCategoriaProdGen(condicion.getIdCategoriaProdDesc());
+            condicion.setIdProductoDescuento(condicion.getIdProductoGenerador());
+            condicion.setIdCategoriaProdDesc(condicion.getIdCategoriaProdGen());
+        }
+        if(condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FD) || condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FP)){
+            condicion.setFactorFlete(valorMedidaFlete);
+            condicion.setValorDescuento(condicion.getValorDescuento()*100);
+            condicion.setCantProdDesc(condicion.getCantProdGen());
         }
 
         condicion.setIdEmpleadoAuditado(this.idEmpleadoAuditado);
@@ -288,10 +457,10 @@ public class DatosDescuentoController implements FxmlController {
         productoDescuento = true;
         this.stageManager.mostrarModal(MainView.BUSQUEDA_PRODUCTO_DESC);
 
-        if(this.cb_tipoDescuento.getValue() != null){
+        if (this.cb_tipoDescuento.getValue() != null) {
             String valorComboCondicion = this.cb_tipoDescuento.getValue().toString();
-            if(!valorComboCondicion.equalsIgnoreCase("")){
-                if(Condicion.DESC_C.equalsIgnoreCase(valorComboCondicion)){
+            if (!valorComboCondicion.equalsIgnoreCase("")) {
+                if (Condicion.DESC_C.equalsIgnoreCase(valorComboCondicion)) {
                     this.txb_productoGenerador.setText(this.txb_productoDescuento.getText());
                 }
             }
@@ -347,30 +516,321 @@ public class DatosDescuentoController implements FxmlController {
         this.labelCategoriaGen.setVisible(ocultar);
         this.btn_buscarGen.setVisible(ocultar);
 
-        if(!ocultar){ // si se debe ocultar, limpiar los datos para futuras consultas a otros tipos
+        if (!ocultar) { // si se debe ocultar, limpiar los datos para futuras consultas a otros tipos
             this.txb_productoGenerador.setText("");
             this.cb_categoriaGenerador.setValue(null);
             this.txb_cantidadGenerador.setText("");
         }
     }
 
+
+    private void mostrarTodosElementos(Boolean mostrar) {
+        labelCantidad4.setVisible(mostrar);
+        txb_valorDescuento.setVisible(mostrar);
+        labelPorcentaje.setVisible(mostrar);
+        rb_prodGen.setVisible(mostrar);
+        label_ProductoGen.setVisible(mostrar);
+        txb_productoGenerador.setVisible(mostrar);
+        btn_buscarGen.setVisible(mostrar);
+        this.labelCantidad1.setVisible(mostrar);
+        this.txb_cantidadGenerador.setVisible(mostrar);
+        this.labelCantidad2.setVisible(mostrar);
+        this.rb_catGen.setVisible(mostrar);
+        this.labelCategoriaGen.setVisible(mostrar);
+        this.cb_categoriaGenerador.setVisible(mostrar);
+        this.labelCantidad3.setVisible(mostrar);
+        this.txb_cantidadDescuento.setVisible(mostrar);
+        this.labelCantidad5.setVisible(mostrar);
+        this.rb_prodDesc.setVisible(mostrar);
+        this.labelProductoDesc.setVisible(mostrar);
+        this.txb_productoDescuento.setVisible(mostrar);
+        this.btn_buscarDesc.setVisible(mostrar);
+        this.rb_catDesc.setVisible(mostrar);
+        this.labelCategoriaDesc.setVisible(mostrar);
+        this.cb_categoriaDescuento.setVisible(mostrar);
+
+        this.labelCantidad6.setVisible(mostrar);
+        this.txb_cantidadGenerador.setVisible(mostrar);
+        this.labelCantidad7.setVisible(mostrar);
+        this.txb_valorDescuento.setVisible(mostrar);
+        this.labelCantidad8.setVisible(mostrar);
+        this.labelCantidad9.setVisible(mostrar);
+
+        this.titledPaneDesc.setVisible(false);
+        this.titledPaneGen.setVisible(false);
+        this.labelValorDesc.setVisible(false);
+        this.labelCantidadGen.setVisible(false);
+        this.labelCantidadDesc.setVisible(false);
+    }
+
+    private void mostrarFletePorDistancia(){
+        mostrarTodosElementos(true);
+        this.labelCantidad6.relocate(27, 146);
+        this.txb_cantidadGenerador.relocate(labelCantidad6.getLayoutX()+labelCantidad6.getWidth()+10,146);
+        this.labelCantidad8.relocate(txb_cantidadGenerador.getLayoutX()+txb_cantidadGenerador.getWidth()+10,146);
+        this.txb_valorDescuento.relocate(labelCantidad8.getLayoutX()+labelCantidad8.getWidth()+10,146);
+        this.labelCantidad9.relocate(txb_valorDescuento.getLayoutX()+txb_valorDescuento.getWidth()+10,146);
+
+        labelCantidad4.setVisible(false);
+        labelPorcentaje.setVisible(false);
+        rb_prodGen.setVisible(false);
+        label_ProductoGen.setVisible(false);
+        txb_productoGenerador.setVisible(false);
+        btn_buscarGen.setVisible(false);
+        this.labelCantidad1.setVisible(false);
+        this.labelCantidad2.setVisible(false);
+        this.rb_catGen.setVisible(false);
+        this.labelCategoriaGen.setVisible(false);
+        this.cb_categoriaGenerador.setVisible(false);
+        this.labelCantidad3.setVisible(false);
+        this.txb_cantidadDescuento.setVisible(false);
+        this.labelCantidad5.setVisible(false);
+        this.rb_prodDesc.setVisible(false);
+        this.labelProductoDesc.setVisible(false);
+        this.txb_productoDescuento.setVisible(false);
+        this.btn_buscarDesc.setVisible(false);
+        this.rb_catDesc.setVisible(false);
+        this.labelCategoriaDesc.setVisible(false);
+        this.cb_categoriaDescuento.setVisible(false);
+
+        txb_productoGenerador.setText("");
+        cb_categoriaGenerador.setValue(null);
+        txb_productoDescuento.setText("");
+        cb_categoriaDescuento.setValue(null);
+
+        this.labelCantidad7.setVisible(false);
+
+    }
+
+
+    private void mostrarFletePorPeso(){
+        mostrarTodosElementos(true);
+        this.labelCantidad6.relocate(27, 146);
+        this.txb_cantidadGenerador.relocate(labelCantidad6.getLayoutX()+labelCantidad6.getWidth()+10,146);
+        this.labelCantidad7.relocate(txb_cantidadGenerador.getLayoutX()+txb_cantidadGenerador.getWidth()+10,146);
+        this.txb_valorDescuento.relocate(labelCantidad7.getLayoutX()+labelCantidad7.getWidth()+10,146);
+        this.labelCantidad9.relocate(txb_valorDescuento.getLayoutX()+txb_valorDescuento.getWidth()+10,146);
+
+        labelCantidad4.setVisible(false);
+        labelPorcentaje.setVisible(false);
+        rb_prodGen.setVisible(false);
+        label_ProductoGen.setVisible(false);
+        txb_productoGenerador.setVisible(false);
+        btn_buscarGen.setVisible(false);
+        this.labelCantidad1.setVisible(false);
+        this.labelCantidad2.setVisible(false);
+        this.rb_catGen.setVisible(false);
+        this.labelCategoriaGen.setVisible(false);
+        this.cb_categoriaGenerador.setVisible(false);
+        this.labelCantidad3.setVisible(false);
+        this.txb_cantidadDescuento.setVisible(false);
+        this.labelCantidad5.setVisible(false);
+        this.rb_prodDesc.setVisible(false);
+        this.labelProductoDesc.setVisible(false);
+        this.txb_productoDescuento.setVisible(false);
+        this.btn_buscarDesc.setVisible(false);
+        this.rb_catDesc.setVisible(false);
+        this.labelCategoriaDesc.setVisible(false);
+        this.cb_categoriaDescuento.setVisible(false);
+
+
+        txb_productoGenerador.setText("");
+        cb_categoriaGenerador.setValue(null);
+        txb_productoDescuento.setText("");
+        cb_categoriaDescuento.setValue(null);
+
+        this.labelCantidad8.setVisible(false);
+
+    }
+
+
+    private void mostrarDescuentoPorPorcentaje() {
+        mostrarTodosElementos(true);
+
+        this.labelCantidad4.relocate(27, 146);
+        this.txb_valorDescuento.relocate(labelCantidad4.getLayoutX() + labelCantidad4.getWidth() + 10, 146);
+        this.labelPorcentaje.relocate(txb_valorDescuento.getLayoutX() + txb_valorDescuento.getWidth() + 10, 146);
+        this.labelCantidad3.relocate(labelPorcentaje.getLayoutX() + labelPorcentaje.getWidth() + 10, 146);
+        this.labelCantidad2.relocate(labelCantidad3.getLayoutX() + labelCantidad3.getWidth() + 10, 146);
+
+        this.rb_prodGen.relocate(labelCantidad2.getLayoutX() + labelCantidad2.getWidth() + 10, 146);
+        this.label_ProductoGen.relocate(rb_prodGen.getLayoutX() + 20, 146);
+        this.txb_productoGenerador.relocate(label_ProductoGen.getLayoutX() + label_ProductoGen.getWidth() + 10, 146);
+        this.btn_buscarGen.relocate(txb_productoGenerador.getLayoutX() + txb_productoGenerador.getWidth() + 10, 146);
+
+        this.rb_catGen.relocate(rb_prodGen.getLayoutX(), 180);
+        this.labelCategoriaGen.relocate(rb_catGen.getLayoutX() + 20, 180);
+        this.cb_categoriaGenerador.relocate(labelCategoriaGen.getLayoutX() + labelCantidadGen.getWidth() + 10, 180);
+
+
+        this.labelCantidad1.setVisible(false);
+        this.txb_cantidadGenerador.setVisible(false);
+        this.txb_cantidadDescuento.setVisible(false);
+        this.labelCantidad5.setVisible(false);
+        this.rb_prodDesc.setVisible(false);
+        this.labelProductoDesc.setVisible(false);
+        this.txb_productoDescuento.setVisible(false);
+        this.btn_buscarDesc.setVisible(false);
+        this.rb_catDesc.setVisible(false);
+        this.labelCategoriaDesc.setVisible(false);
+        this.cb_categoriaDescuento.setVisible(false);
+        this.titledPaneDesc.setVisible(false);
+        this.titledPaneGen.setVisible(false);
+        this.labelValorDesc.setVisible(false);
+        this.labelCantidadGen.setVisible(false);
+        this.labelCantidadDesc.setVisible(false);
+
+        txb_cantidadGenerador.setText("");
+        txb_cantidadDescuento.setText("");
+        txb_productoDescuento.setText("");
+        cb_categoriaDescuento.setValue(null);
+
+
+        this.labelCantidad6.setVisible(false);
+        this.labelCantidad7.setVisible(false);
+        this.labelCantidad8.setVisible(false);
+        this.labelCantidad9.setVisible(false);
+    }
+
+
+    private void mostrarBonificacionXespecie() {
+        mostrarTodosElementos(true);
+
+        this.labelCantidad1.relocate(27, 146);
+        this.txb_cantidadGenerador.relocate(27 + labelCantidad1.getWidth() + 5, 146);
+        this.labelCantidad2.relocate(txb_cantidadGenerador.getLayoutX() + txb_cantidadGenerador.getWidth() + 10, 146);
+        this.rb_prodGen.relocate(labelCantidad2.getLayoutX() + labelCantidad2.getWidth() + 5, 146);
+        this.label_ProductoGen.relocate(rb_prodGen.getLayoutX() + 20, 146);
+        this.txb_productoGenerador.relocate(label_ProductoGen.getLayoutX() + label_ProductoGen.getWidth() + 10, 146);
+        this.btn_buscarGen.relocate(txb_productoGenerador.getLayoutX() + txb_productoGenerador.getWidth() + 10, 146);
+
+
+        this.rb_catGen.relocate(rb_prodGen.getLayoutX(), 180);
+        this.labelCategoriaGen.relocate(rb_catGen.getLayoutX() + 20, 180);
+        this.cb_categoriaGenerador.relocate(labelCategoriaGen.getLayoutX() + labelCantidadGen.getWidth() + 10, 180);
+
+        this.labelCantidad3.relocate(27, 230);
+        this.txb_cantidadDescuento.relocate(labelCantidad3.getLayoutX() + labelCantidad3.getWidth() + 10, 230);
+        this.labelCantidad5.relocate(txb_cantidadDescuento.getLayoutX() + txb_cantidadDescuento.getWidth() + 10, 230);
+        this.rb_prodDesc.relocate(labelCantidad5.getLayoutX() + labelCantidad5.getWidth() + 5, 230);
+        this.labelProductoDesc.relocate(rb_prodDesc.getLayoutX() + 20, 230);
+        this.txb_productoDescuento.relocate(labelProductoDesc.getLayoutX() + labelProductoDesc.getWidth() + 10, 230);
+        this.btn_buscarDesc.relocate(txb_productoDescuento.getLayoutX() + txb_productoDescuento.getWidth() + 10, 230);
+
+
+        this.rb_catDesc.relocate(rb_prodDesc.getLayoutX(), 260);
+        this.labelCategoriaDesc.relocate(rb_catDesc.getLayoutX() + 20, 260);
+        this.cb_categoriaDescuento.relocate(labelCategoriaDesc.getLayoutX() + labelCategoriaDesc.getWidth() + 10, 260);
+
+        this.labelCantidad4.relocate(27, 290);
+        this.txb_valorDescuento.relocate(labelCantidad4.getLayoutX() + labelCantidad4.getWidth() + 10, 290);
+        this.labelPorcentaje.relocate(txb_valorDescuento.getLayoutX() + txb_valorDescuento.getWidth() + 10, 290);
+
+        this.titledPaneDesc.setVisible(false);
+        this.titledPaneGen.setVisible(false);
+        this.labelValorDesc.setVisible(false);
+        this.labelCantidadGen.setVisible(false);
+
+        this.labelCantidad6.setVisible(false);
+        this.labelCantidad7.setVisible(false);
+        this.labelCantidad8.setVisible(false);
+        this.labelCantidad9.setVisible(false);
+    }
+
+
+    private void mostrarDescuentoXcantidad() {
+        mostrarTodosElementos(true);
+
+        this.labelCantidad1.relocate(27, 146);
+        this.txb_cantidadGenerador.relocate(27 + labelCantidad1.getWidth() + 5, 146);
+        this.labelCantidad2.relocate(txb_cantidadGenerador.getLayoutX() + txb_cantidadGenerador.getWidth() + 10, 146);
+        this.rb_prodGen.relocate(labelCantidad2.getLayoutX() + labelCantidad2.getWidth() + 5, 146);
+        this.label_ProductoGen.relocate(rb_prodGen.getLayoutX() + 20, 146);
+        this.txb_productoGenerador.relocate(label_ProductoGen.getLayoutX() + label_ProductoGen.getWidth() + 10, 146);
+        this.btn_buscarGen.relocate(txb_productoGenerador.getLayoutX() + txb_productoGenerador.getWidth() + 10, 146);
+
+
+        this.rb_catGen.relocate(rb_prodGen.getLayoutX(), 180);
+        this.labelCategoriaGen.relocate(rb_catGen.getLayoutX() + 20, 180);
+        this.cb_categoriaGenerador.relocate(labelCategoriaGen.getLayoutX() + labelCantidadGen.getWidth() + 10, 180);
+
+
+        this.labelCantidad3.relocate(27, 210);
+        this.txb_cantidadDescuento.relocate(labelCantidad3.getLayoutX() + labelCantidad3.getWidth() + 10, 210);
+        this.labelCantidad4.relocate(txb_cantidadDescuento.getLayoutX() + txb_cantidadDescuento.getWidth() + 10, 210);
+        this.txb_valorDescuento.relocate(labelCantidad4.getLayoutX() + labelCantidad4.getWidth() + 10, 210);
+        this.labelPorcentaje.relocate(txb_valorDescuento.getLayoutX() + txb_valorDescuento.getWidth() + 10, 210);
+
+        //ocultar resto
+        this.btn_buscarDesc.setVisible(false);
+        this.rb_catDesc.setVisible(false);
+        this.rb_prodDesc.setVisible(false);
+        this.labelProductoDesc.setVisible(false);
+        this.labelCategoriaDesc.setVisible(false);
+        this.txb_productoDescuento.setVisible(false);
+        this.titledPaneDesc.setVisible(false);
+        this.titledPaneGen.setVisible(false);
+        this.labelCantidadGen.setVisible(false);
+        this.cb_categoriaDescuento.setVisible(false);
+        this.labelCantidadDesc.setVisible(false);
+        this.labelValorDesc.setVisible(false);
+        this.labelCantidad5.setVisible(false);
+
+        this.labelCantidad6.setVisible(false);
+        this.labelCantidad7.setVisible(false);
+        this.labelCantidad8.setVisible(false);
+        this.labelCantidad9.setVisible(false);
+
+        txb_productoDescuento.setText("");
+        cb_categoriaDescuento.setValue(null);
+    }
     private void reestructurarFormulario(String valorCondicion) {
         this.rb_prodGen.setDisable(false);
         this.txb_productoGenerador.setDisable(false);
         this.btn_buscarGen.setDisable(false);
         this.rb_catGen.setDisable(false);
+
+        switch(valorCondicion){
+            case Condicion.DESC_P:
+                this.mostrarDescuentoPorPorcentaje();
+                break;
+            case Condicion.DESC_C:
+                this.mostrarDescuentoXcantidad();
+                break;
+            case Condicion.DESC_B:
+                this.mostrarBonificacionXespecie();
+                break;
+            case Condicion.DESC_FP:
+                this.mostrarFletePorPeso();
+                break;
+            case Condicion.DESC_FD:
+                this.mostrarFletePorDistancia();
+                break;
+        }
+    }
+
+    private void reestructurarFormulario2(String valorCondicion) {
+        this.rb_prodGen.setDisable(false);
+        this.txb_productoGenerador.setDisable(false);
+        this.btn_buscarGen.setDisable(false);
+        this.rb_catGen.setDisable(false);
         if (Condicion.DESC_P.equalsIgnoreCase(valorCondicion)) {
-            this.ocultarDatosGenerador(false);
+            //this.ocultarDatosGenerador(false);
+            this.mostrarDescuentoPorPorcentaje();
         } else {
-            this.ocultarDatosGenerador(true);
+            //this.ocultarDatosGenerador(true); //RECIENTE
             // si es descuento por cantidad , cargar datos producto o categoria descuento
-            if(Condicion.DESC_C.equalsIgnoreCase(valorCondicion)){
-                this.txb_productoGenerador.setText(this.txb_productoDescuento.getText());
+            if (Condicion.DESC_C.equalsIgnoreCase(valorCondicion)) {
+                this.mostrarDescuentoXcantidad();
+                //RECIENTE
+                /*this.txb_productoGenerador.setText(this.txb_productoDescuento.getText());
                 this.rb_prodGen.setDisable(true);
                 this.txb_productoGenerador.setDisable(true);
                 this.btn_buscarGen.setDisable(true);
                 this.cb_categoriaGenerador.setValue(this.cb_categoriaDescuento.getValue());
-                this.rb_catGen.setDisable(true);
+                this.rb_catGen.setDisable(true);*/
+            } else {
+                mostrarBonificacionXespecie();
             }
         }
     }
@@ -392,11 +852,11 @@ public class DatosDescuentoController implements FxmlController {
         this.cb_categoriaGenerador.setDisable(accion);
     }
 
-    public void actualizarCategoria(ActionEvent event){
-        if(this.cb_tipoDescuento.getValue() != null){
+    public void actualizarCategoria(ActionEvent event) {
+        if (this.cb_tipoDescuento.getValue() != null) {
             String valorComboCondicion = this.cb_tipoDescuento.getValue().toString();
-            if(!valorComboCondicion.equalsIgnoreCase("")){
-                if(Condicion.DESC_C.equalsIgnoreCase(valorComboCondicion)){
+            if (!valorComboCondicion.equalsIgnoreCase("")) {
+                if (Condicion.DESC_C.equalsIgnoreCase(valorComboCondicion)) {
                     this.cb_categoriaGenerador.setValue(this.cb_categoriaDescuento.getValue());
                 }
             }
@@ -435,6 +895,7 @@ public class DatosDescuentoController implements FxmlController {
     @Override
     public void initialize() {
 
+        System.out.println("SE HIZO INITIALIZE");
         this.listaCategorias = repositoryMantMov.obtenerCategoriasProducto();
 
         this.configurarComboBox(this.cb_categoriaDescuento);
@@ -443,7 +904,8 @@ public class DatosDescuentoController implements FxmlController {
         cb_tipoDescuento.getItems().add(Condicion.DESC_C);
         cb_tipoDescuento.getItems().add(Condicion.DESC_B);
         cb_tipoDescuento.getItems().add(Condicion.DESC_P);
-
+        cb_tipoDescuento.getItems().add(Condicion.DESC_FP);
+        cb_tipoDescuento.getItems().add(Condicion.DESC_FD);
 
         this.txb_productoGenerador.setDisable(true);
 
@@ -455,6 +917,9 @@ public class DatosDescuentoController implements FxmlController {
 
         this.esCreacion = this.mantenimientoDescuentoController.esCreacion();
 
+
+        mostrarTodosElementos(false);
+
         if (this.esCreacion) {
             l_nombreFormulario.setText("Crear Condicion");
             this.idEmpleadoAuditado = this.mantenimientoDescuentoController.getIdEmpleadoAuditado();
@@ -462,6 +927,7 @@ public class DatosDescuentoController implements FxmlController {
                 this.cb_categoriaDescuento.getItems().add(categoria);
                 this.cb_categoriaGenerador.getItems().add(categoria);
             }
+            //cb_tipoDescuento.setValue(cb_tipoDescuento.getItems().get(0));
 
         } else {
             l_nombreFormulario.setText("Modificar Condicion");
@@ -487,5 +953,4 @@ public class DatosDescuentoController implements FxmlController {
             this.llenarFormulario(condicion);
         }
     }
-
 }
