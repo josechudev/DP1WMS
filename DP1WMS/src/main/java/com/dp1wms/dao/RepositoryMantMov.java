@@ -11,7 +11,8 @@ public interface RepositoryMantMov{
     List<CategoriaProducto> obtenerCategoriasProducto();
     List<Lote> obtenerLotes();
     List<TipoMovimiento> obtenerTiposMovimiento();
-    int registrarMovimiento(Integer totalProductos, String observaciones, Timestamp fecha, int idTipoMovimiento, int idProducto, Integer idLote, Integer cantidad,Long idEmpleadoAuditado);
-    int registrarLote(int idProducto,Timestamp fechalote,Timestamp fechaEntrada,int stockParcial,Long idEmpleadoAuditado);
+    int registrarMovimiento(Integer totalProductos, String observaciones, Timestamp fecha, int idTipoMovimiento, int idProducto, Integer idLote, Integer cantidad,Long idEmpleadoAuditado,int idCajon);
+    int registrarLote(int idProducto,Timestamp fechalote,Timestamp fechaEntrada,int stockParcial,Long idEmpleadoAuditado,int idCajon);
     int registrarMovimiento(Movimiento movimiento);
+    List<Almacen> obtenerAlmacenes();
 }

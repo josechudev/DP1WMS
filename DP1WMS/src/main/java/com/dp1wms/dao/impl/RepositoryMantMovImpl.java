@@ -107,7 +107,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public int registrarMovimiento(Integer totalProductos,String observaciones,Timestamp fecha,int idTipoMovimiento,int idProducto,Integer idLote,Integer cantidad,Long idEmpleadoAuditado){
+    public int registrarMovimiento(Integer totalProductos,String observaciones,Timestamp fecha,int idTipoMovimiento,int idProducto,Integer idLote,Integer cantidad,Long idEmpleadoAuditado,int idCajon){
 
 
 
@@ -142,7 +142,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public int registrarLote(int idProducto,Timestamp fechalote,Timestamp fechaEntrada,int stockParcial,Long idEmpleadoAuditado){
+    public int registrarLote(int idProducto,Timestamp fechalote,Timestamp fechaEntrada,int stockParcial,Long idEmpleadoAuditado,int idCajon){
         // el stock parcial no se debe insertar directamente en lote, es trabajo del trigger por eso se pone de valor cero
         String SQL = "INSERT INTO public.lote (idproducto,fechalote,fechaentrada,idempleadoauditado,stockparcial) VALUES (?,?,?,?,0) RETURNING idlote";
         int idLote = 0;
@@ -159,11 +159,22 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
             throw e;
         }
 
+        if(idCajon != -1){
+            SQL = "INSERT INTO public.ubicacion (idlote,idproducto,idcajon,cantidad) VALUES (?,?,?,?)";
+            try{
+                jdbcTemplate.update(SQL,new Object[] {idLote,idProducto,idCajon,stockParcial});
+                System.out.println("Se ha insertado en la tabla ubicacion");
+            }catch (EmptyResultDataAccessException e) {
+                e.printStackTrace();
+                throw e;
+            }
+        }
+
         int idTipoMovimiento =1; // para ingreso de lote
         int totalProductos = 1;
         System.out.println("IdLoteInsertado -> "+idLote);
         if(idLote != 0){
-            registrarMovimiento(totalProductos,"",fechaEntrada,idTipoMovimiento,idProducto,idLote,stockParcial,idEmpleadoAuditado);
+            registrarMovimiento(totalProductos,"",fechaEntrada,idTipoMovimiento,idProducto,idLote,stockParcial,idEmpleadoAuditado,idCajon);
         }
 
         return 0;
@@ -206,5 +217,100 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         return idMovimiento;
     }
 
+    public List<Almacen> obtenerAlmacenes() {
+        String SQL = "SELECT * FROM almacen WHERE activo";
+        List<Almacen> listaAlmacenes = null;
+        try{
+            listaAlmacenes = jdbcTemplate.query(SQL,new Object[] {}, this::mapParamAlmacen);
+        }catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+        }
 
+        for(Almacen almacen: listaAlmacenes){
+            List<Area> listaAreas = this.obtenerAreas(almacen.getIdAlmacen());
+            almacen.setListaArea(listaAreas);
+        }
+
+        return listaAlmacenes;
+    }
+
+    private Almacen mapParamAlmacen(ResultSet rs, int i) throws SQLException {
+        Almacen almacen = new Almacen();
+        almacen.setIdAlmacen(rs.getInt("idalmacen"));
+        almacen.setNombre(rs.getString("nombre"));
+        return almacen;
+    }
+
+
+    private List<Area> obtenerAreas(int idAlmacen){
+        String SQL = "SELECT * FROM area WHERE activo and idalmacen = ?";
+        List<Area> listaAreas = null;
+        try{
+            listaAreas = jdbcTemplate.query(SQL,new Object[] {idAlmacen}, this::mapParamArea);
+        }catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+        }
+
+        for(Area area: listaAreas){
+            List<Rack> listaRacks  =this.obtenerRack(area.getIdArea());
+            area.setListaRack(listaRacks);
+        }
+
+        return listaAreas;
+    }
+
+    private Area mapParamArea(ResultSet rs, int i) throws SQLException {
+        Area area = new Area();
+        area.setCodigo(rs.getString("codigo"));
+        area.setIdArea(rs.getInt("idarea"));
+        area.setIdAlmacen(rs.getInt("idalmacen"));
+        return area;
+    }
+
+
+    private List<Rack> obtenerRack(int idArea){
+        String SQL = "SELECT * FROM rack WHERE activo and idarea = ?";
+        List<Rack> listaRack = null;
+        try{
+            listaRack = jdbcTemplate.query(SQL,new Object[] {idArea}, this::mapParamRack);
+        }catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+        }
+
+        for(Rack rack: listaRack){
+            List<Cajon> listaCajones = this.obtenerCajones(rack.getIdRack());
+            //System.out.println("DAO tam lista cajones: "+listaCajones.size());
+            rack.setListaCajones(listaCajones);
+        }
+
+        return listaRack;
+    }
+
+    private Rack mapParamRack(ResultSet rs, int i) throws SQLException {
+        Rack rack = new Rack();
+        rack.setCodigo(rs.getString("codigo"));
+        rack.setIdRack(rs.getInt("idrack"));
+        rack.setIdArea(rs.getInt("idarea"));
+        return rack;
+    }
+
+    private List<Cajon> obtenerCajones(int idRack){
+        String SQL = "SELECT * FROM cajon WHERE idrack = ?";
+        List<Cajon> listaCajones = null;
+        try{
+            listaCajones = jdbcTemplate.query(SQL,new Object[] {idRack}, this::mapParamCajon);
+        }catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+        }
+
+        return listaCajones;
+    }
+
+
+    private Cajon mapParamCajon(ResultSet rs, int i) throws SQLException {
+        Cajon cajon = new Cajon();
+        cajon.setIdCajon(rs.getInt("idcajon"));
+        cajon.setIdRack(rs.getInt("idrack"));
+        return cajon;
+    }
 }
