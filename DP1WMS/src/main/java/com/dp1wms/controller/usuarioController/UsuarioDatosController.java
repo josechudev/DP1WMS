@@ -1,30 +1,27 @@
-package com.dp1wms.controller;
+package com.dp1wms.controller.usuarioController;
 
+import com.dp1wms.controller.FxmlController;
 import com.dp1wms.model.Empleado;
 import com.dp1wms.model.TipoEmpleado;
 import com.dp1wms.model.UsuarioModel.Usuario;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.List;
 
 @Component
-public class UsuarioDatosController implements FxmlController{
+public class UsuarioDatosController implements FxmlController {
 
-    //private final StageManager stageManager;
+    //private final StageManager stageManager
+    private static final int DNIsize = 8;
 
     @FXML private TextField e_id_datos, e_nombre_datos,e_password_datos;
     @FXML private TextField e_id_empleado, e_numDoc_empleado, e_nombre_empleado, e_apellido_empleado, e_email_empleado;
@@ -35,7 +32,7 @@ public class UsuarioDatosController implements FxmlController{
 
     @FXML private CheckBox e_modPassword;
 
-    private int v_accion;
+    private boolean v_crear;
     private Usuario v_usuario;
 
     private boolean v_ModificarPassword;
@@ -48,7 +45,6 @@ public class UsuarioDatosController implements FxmlController{
         auxUsuario.setV_id( Integer.parseInt(e_id_datos.getText()));
         auxUsuario.setV_nombre( e_nombre_datos.getText());
         auxUsuario.setV_password( e_password_datos.getText());
-
         Empleado auxEmpleado = new Empleado();
         auxEmpleado.setIdempleado(Long.parseLong(e_id_empleado.getText()));
         auxEmpleado.setIdusuario(Integer.parseInt(e_id_datos.getText()));
@@ -61,15 +57,36 @@ public class UsuarioDatosController implements FxmlController{
         auxTipoEmpleado.setIdtipoempleado(Long.parseLong(e_id_tipoEmpleado.getText()));
         auxTipoEmpleado.setDescripcion(e_descripcion_tipoEmpleado.getText());
 
-        System.out.printf("%d - %s\n", auxTipoEmpleado.getIdtipoempleado(), auxTipoEmpleado.getDescripcion());
+        if( auxEmpleado.getNumDoc().length() != DNIsize ){
+            v_parentController.mostrarErrorDialog("Error usuario",
+                    "El dni brindado no es valido.");
+            return;
+        }
 
-        if(this.v_accion == 0){
+        if(this.v_crear){
+            if( v_parentController.existeUsuarioDB(auxUsuario.getV_nombre()) ){
+                v_parentController.mostrarErrorDialog("Error usuario",
+                        "El nombre de usuario " + auxUsuario.getV_nombre() + " ya se encuentra en uso.");
+                return;
+            }
             v_parentController.crearUsuarioDB(auxUsuario);
             v_parentController.crearEmpleadoDB(auxUsuario, auxEmpleado, auxTipoEmpleado);
+
+            v_parentController.mostrarInfoDialog("Creacion Usuario",
+                    "Se creo el usuario " + auxUsuario.getV_nombre() + " con exito.");
         }
         else{
+            if(!v_parentController.coincideUsuarioIdDB(auxUsuario.getV_nombre(), auxUsuario.getV_id()))
+                if( v_parentController.existeUsuarioDB(auxUsuario.getV_nombre()) ){
+                    v_parentController.mostrarErrorDialog("Error usuario",
+                            "El nombre de usuario " + auxUsuario.getV_nombre() + " ya se encuentra en uso.");
+                    return;
+                }
             v_parentController.modificarUsuarioDB(auxUsuario, v_ModificarPassword);
             v_parentController.modificarEmpleadoDB(auxUsuario, auxEmpleado, auxTipoEmpleado);
+
+            v_parentController.mostrarInfoDialog("Modificar Usuario",
+                    "Se modifico el usuario " + auxUsuario.getV_nombre() + " con exito.");
         }
         System.out.println("Accion realizada");
 
@@ -87,25 +104,25 @@ public class UsuarioDatosController implements FxmlController{
 
     @Override
     public void initialize() {
+        e_numDoc_empleado.addEventFilter(KeyEvent.KEY_TYPED , numeric_Validation(DNIsize));
     }
 
     public void setV_parentController(UsuarioCtrl v_parentController){
         this.v_parentController = v_parentController;
     }
 
-    public void _setData(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpleado, int v_accion){
+    public void _setData(Usuario auxUsuario, Empleado auxEmpleado, TipoEmpleado auxTipoEmpleado, boolean v_crear){
 
         e_id_datos.setText("0");
         e_id_empleado.setText("0");
         e_id_tipoEmpleado.setText("0");
-        this.v_accion = v_accion;
+        this.v_crear = v_crear;
         v_ModificarPassword = false;
         List<TipoEmpleado> iniciarTipoEmpleado = v_parentController.llenarGrillaTipoEmpleado();
         for(int i = 0; i < iniciarTipoEmpleado.size(); i++) {
             e_tipoEmpleado.getItems().add(iniciarTipoEmpleado.get(i).getDescripcion());
-            System.out.printf("%d - %s\n", iniciarTipoEmpleado.get(i).getIdtipoempleado(), iniciarTipoEmpleado.get(i).getDescripcion());
         }
-        if(this.v_accion == 0){
+        if(this.v_crear){
             e_modPassword.setVisible(false);
             e_tipoEmpleado.getSelectionModel().select(iniciarTipoEmpleado.get(0).getDescripcion());
             _setTipoEmpleado(iniciarTipoEmpleado.get(0));
@@ -134,28 +151,6 @@ public class UsuarioDatosController implements FxmlController{
     }
 
     public void btnClickSeleccionarTipoEmpleado(ActionEvent event) {
-        System.out.println("Seleccionar Tipo empleado");
-        Parent root = null;
-        FXMLLoader loader;
-        Usuario auxUsuario = new Usuario();
-        auxUsuario.setV_nombre(null);
-        auxUsuario.setV_password(null);
-        //
-        try {
-            loader =new FXMLLoader(getClass().getResource("/fxml/UsuarioFxml/MantenimientoTipoEmpleado.fxml"));
-            root = (Parent) loader.load();
-            MantenimientoTipoEmpleadoController controller = loader.getController();
-            controller.setV_parentController(this);
-            controller.inicializarGrilla();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Scene scene = new Scene(root);
-        Window existingWindow = ((Node) event.getSource()).getScene().getWindow();
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(scene);
-        stage.show();
     }
 
     public void ComboBoxSelectTipoUsuario(ActionEvent event){
@@ -179,13 +174,27 @@ public class UsuarioDatosController implements FxmlController{
         return v_parentController.llenarGrillaTipoEmpleado();
     }
 
-    public void crearTipoEmpleadoDB(TipoEmpleado auxTipoEmpelado){
-        this.v_parentController.crearTipoEmpleadoDB(auxTipoEmpelado);
-    }
-    public void modificarTipoEmpleadoDB(TipoEmpleado auxTipoEmpelado){
-        this.v_parentController.modificarTipoEmpleadoDB(auxTipoEmpelado);
-    }
-    public void eliminarTipoEmpleadoDB(TipoEmpleado auxTipoEmpelado){
-        this.v_parentController.eliminarTipoEmpleadoDB(auxTipoEmpelado);
+
+
+
+    public EventHandler<KeyEvent> numeric_Validation(final Integer max_Lengh) {
+        return new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent e) {
+                TextField txt_TextField = (TextField) e.getSource();
+                if (txt_TextField.getText().length() >= max_Lengh) {
+                    e.consume();
+                }
+                if(e.getCharacter().matches("[0-9.]")){
+                    if(txt_TextField.getText().contains(".") && e.getCharacter().matches("[.]")){
+                        e.consume();
+                    }else if(txt_TextField.getText().length() == 0 && e.getCharacter().matches("[.]")){
+                        e.consume();
+                    }
+                }else{
+                    e.consume();
+                }
+            }
+        };
     }
 }
