@@ -100,6 +100,6 @@ public class VistaRacksController implements FxmlController {
 
     @FXML
     private void btnClickGuardarCambios(ActionEvent event){
-        
+
     }
 }
