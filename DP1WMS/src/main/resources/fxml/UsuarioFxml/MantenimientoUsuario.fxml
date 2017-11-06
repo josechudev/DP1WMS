@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="357.0" prefWidth="926.0" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.UsuarioCtrl">
+<AnchorPane prefHeight="357.0" prefWidth="926.0" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.UsuarioController.UsuarioCtrl">
     <children>
         <Label layoutX="29.0" layoutY="58.0" prefHeight="27.0" prefWidth="117.0" text="Acciones">
             <font>
@@ -19,20 +19,21 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <Button fx:id="btn_CrearUsuario" layoutX="27.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnClickCrearUsuario" prefHeight="0.0" prefWidth="92.0" text="Agregar" />
+        <Button fx:id="btn_CrearUsuario" layoutX="27.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnClickCrearUsuario" prefHeight="0.0" prefWidth="92.0" text="Crear" />
         <Button fx:id="btn_ModificarUsuario" layoutX="141.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnClickModificarUsuario" prefHeight="1.0" prefWidth="92.0" text="Modificar" />
-        <Button fx:id="btn_eliminarUsuario" layoutX="253.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnClickEliminarUsuario" prefHeight="14.0" prefWidth="92.0" text="Desactivar" />
-        <Button fx:id="btn_activarrUsuario" layoutX="371.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnClickActivarUsuario" prefHeight="14.0" prefWidth="92.0" text="Activar" />
+        <Button fx:id="btn_eliminarUsuario" layoutX="253.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnClickEliminarUsuario" prefHeight="14.0" prefWidth="92.0" text="Deshabilitar" />
+        <Button fx:id="btn_activarrUsuario" layoutX="371.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnClickActivarUsuario" prefHeight="14.0" prefWidth="92.0" text="Habilitar" />
 
         <TableView fx:id="e_table" layoutX="27.0" layoutY="132.0" prefHeight="201.0" prefWidth="875.0">
             <columns>
                 <TableColumn fx:id="e_id" prefWidth="48.0" text="Id" />
-                <TableColumn fx:id="e_user" prefWidth="100.00001525878906" text="Usuario" />
-                <TableColumn fx:id="e_numDoc" prefWidth="103.0" text="Numero Doc." />
-                <TableColumn fx:id="e_nombre" prefWidth="139.0" text="Nombre" />
-                <TableColumn fx:id="e_apellido" prefWidth="153.0" text="Apellidos" />
-                <TableColumn fx:id="e_descripcion" prefWidth="196.0" text="Tipo Empleado" />
-                <TableColumn fx:id="e_activo" prefWidth="134.0" text="Activo" />
+                <TableColumn fx:id="e_user" prefWidth="100.0" text="Usuario" />
+                <TableColumn fx:id="e_numDoc" prefWidth="103.0" text="DNI" />
+                <TableColumn fx:id="e_nombre" prefWidth="134.0" text="Nombre" />
+                <TableColumn fx:id="e_apellido" prefWidth="159.0" text="Apellidos" />
+                <TableColumn fx:id="e_descripcion" prefWidth="179.0" text="Tipo Empleado" />
+                <TableColumn fx:id="e_mostrarActivo" prefWidth="150.0" text="Estado" />
+                <TableColumn fx:id="e_activo" prefWidth="0.0" text="Activo" visible="false" />
             </columns>
         </TableView>
 

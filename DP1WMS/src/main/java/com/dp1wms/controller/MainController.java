@@ -1,5 +1,6 @@
 package com.dp1wms.controller;
 
+import com.dp1wms.controller.UsuarioController.UsuarioCtrl;
 import com.dp1wms.model.Empleado;
 import com.dp1wms.model.Usuario;
 import com.dp1wms.view.ClientesView;
