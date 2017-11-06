@@ -1,8 +1,5 @@
 package com.dp1wms.model;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-
 public class KardexFila {
     private int idMovimiento;
     private int idTipoMovimiento;
@@ -59,7 +56,6 @@ public class KardexFila {
     }
 
     public String getFechaMovimiento() {
-
         return fechaMovimiento;
     }
 

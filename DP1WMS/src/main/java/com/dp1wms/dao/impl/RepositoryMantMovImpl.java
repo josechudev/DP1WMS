@@ -127,11 +127,17 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
             throw e;
         }
 
+
+        Integer idCajonInt = new Integer(idCajon);
+        if(idCajon == -1){
+            idCajonInt = null;
+        }
+
         System.out.println("IdMovimiento Insertado -> "+idMovimiento);
         if(idMovimiento != 0){
-            SQL = "INSERT INTO public.detallemovimiento (idmovimiento,idproducto,idlote,cantidad) VALUES (?,?,?,?)";
+            SQL = "INSERT INTO public.detallemovimiento (idmovimiento,idproducto,idlote,cantidad,idcajon) VALUES (?,?,?,?,?)";
             try{
-                jdbcTemplate.update(SQL,new Object[] {idMovimiento,idProducto,idLote,cantidad});
+                jdbcTemplate.update(SQL,new Object[] {idMovimiento,idProducto,idLote,cantidad,idCajonInt});
                 System.out.println("Se ha insertado en la tabla detalle movimiento");
             }catch (EmptyResultDataAccessException e) {
                 e.printStackTrace();
