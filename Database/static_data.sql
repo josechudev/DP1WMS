@@ -10,4 +10,4 @@ INSERT INTO estadopedido (descripcion) VALUES ('En espera');
 INSERT INTO estadopedido (descripcion) VALUES ('Atendido');
 INSERT INTO estadopedido (descripcion) VALUES ('Rechazado');
 INSERT INTO estadopedido (descripcion) VALUES ('Cancelado por cliente');
-
+INSERT INTO estadopedido (descripcion) VALUES ('Despachando envios');
