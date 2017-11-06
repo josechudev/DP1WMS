@@ -307,16 +307,29 @@ public class DatosDescuentoController implements FxmlController {
         }
 
         int cantidadProdGen = 1;
+        Float valorMedidaFlete = null; // para peso o distancia
         if (!this.txb_cantidadGenerador.getText().equalsIgnoreCase("")) {
-            try {
-                cantidadProdGen = Integer.parseInt(this.txb_cantidadGenerador.getText());
-            } catch (Exception e) {
-                System.out.println("Error al ingresar la cantidad generador descrita");
-                return;
+            if(condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FD) || condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FP)){
+                condicion.setCantProdGen(0);
+                try {
+                    valorMedidaFlete = Float.parseFloat(this.txb_cantidadGenerador.getText());
+                } catch (Exception e) {
+                    System.out.println("Error al ingresar el valor (peso/distancia) para el flete");
+                    return;
+                }
+            }else{
+                try {
+                    cantidadProdGen = Integer.parseInt(this.txb_cantidadGenerador.getText());
+                } catch (Exception e) {
+                    System.out.println("Error al ingresar la cantidad generador descrita");
+                    return;
+                }
+                condicion.setCantProdGen(cantidadProdGen);
             }
+
         }
 
-        condicion.setCantProdGen(cantidadProdGen);
+
 
 
         if (this.txb_productoDescuento.getText().equalsIgnoreCase("")) {
@@ -331,19 +344,23 @@ public class DatosDescuentoController implements FxmlController {
             condicion.setIdCategoriaProdDesc(this.cb_categoriaDescuento.getValue().getIdCategoria());
         }
 
-
         int cantidadProdDesc = 1;
+        if(condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FD) || condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FP)){
+            condicion.setCantProdDesc(0);
+        }else{
 
-        if (!this.txb_cantidadDescuento.getText().equalsIgnoreCase("")) {
-            try {
-                cantidadProdDesc = Integer.parseInt(this.txb_cantidadDescuento.getText());
-            } catch (Exception e) {
-                System.out.println("Error al ingresar la cantidad descuento descrita");
-                return;
+            if (!this.txb_cantidadDescuento.getText().equalsIgnoreCase("")) {
+                try {
+                    cantidadProdDesc = Integer.parseInt(this.txb_cantidadDescuento.getText());
+                } catch (Exception e) {
+                    System.out.println("Error al ingresar la cantidad descuento descrita");
+                    return;
+                }
+                condicion.setCantProdDesc(cantidadProdDesc);
             }
         }
 
-        condicion.setCantProdDesc(cantidadProdDesc);
+
         float valorDescuento;
         try {
             valorDescuento = Float.parseFloat(this.txb_valorDescuento.getText());
@@ -375,7 +392,7 @@ public class DatosDescuentoController implements FxmlController {
 
 
         if(txb_descripcion.getText().equalsIgnoreCase("")){
-            condicion.setDescripcion(null);
+            condicion.setDescripcion("");
         }else{
             condicion.setDescripcion(this.txb_descripcion.getText());
         }
@@ -409,8 +426,8 @@ public class DatosDescuentoController implements FxmlController {
             condicion.setIdCategoriaProdDesc(condicion.getIdCategoriaProdGen());
         }
         if(condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FD) || condicion.getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FP)){
-            condicion.setFactorFlete(condicion.getValorDescuento()*100);
-            condicion.setValorDescuento(0);
+            condicion.setFactorFlete(valorMedidaFlete);
+            condicion.setValorDescuento(condicion.getValorDescuento()*100);
             condicion.setCantProdDesc(condicion.getCantProdGen());
         }
 
