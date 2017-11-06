@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.racks.VistaRacksController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -28,8 +28,8 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button mnemonicParsing="false" text="Guardar" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-      <ScrollPane fx:id="Ra" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
+      <Button onAction="#btnClickGuardarCambios" mnemonicParsing="false" text="Guardar" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <ScrollPane fx:id="spRacksView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
       <GridPane vgap="10.0" GridPane.rowIndex="1">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -42,7 +42,7 @@
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
                   <Label text="X:" />
-                  <TextField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="30.0">
+                  <TextField fx:id="tfPosX" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" prefWidth="45.0">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
@@ -52,12 +52,22 @@
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="30.0">
+                  <TextField fx:id="tfPosY" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" prefWidth="45.0">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
                   </TextField>
                   <Button mnemonicParsing="false" text="Ir">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnInsertarRack" mnemonicParsing="false" onAction="#btnClickInsertarRack" text="Insertar rack">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnEliminarRack" mnemonicParsing="false" onAction="#btnClickEliminarRack" text="Eliminar rack">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
