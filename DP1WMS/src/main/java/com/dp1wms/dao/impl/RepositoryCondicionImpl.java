@@ -21,7 +21,7 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
 
     public List<Condicion> obtenerDescuentos() {
         //String SQL = "SELECT d.iddescuento,d.tipodescuento,d.idproductogenerador,d.idcategoriaprodgen,d.cantprodgen,d.idproductodescuento,d.idcategoriaproddesc,d.cantproddesc,d.valordescuento,d.fechainicio,d.fechafin,d.descripcion,c1.descripcion as categoriagenerador,c2.descripcion as categoriadescuento,p1.nombreproducto as productogenerador,p2.nombreproducto as productodescuento FROM public.descuento d,public.producto p1,public.producto p2 ,public.categoriaproducto c1,public.categoriaproducto c2 WHERE p1.idproducto = d.idproductogenerador and p2.idproducto = d.idproductodescuento and c1.idcategoria = d.idcategoriaprodgen and c2.idcategoria = d.idcategoriaproddesc";
-        String SQL = "SELECT idcondicion,tipocondicion,idproductogenerador,idcategoriaprodgen,cantprodgen,idproductodescuento,idcategoriaproddesc,cantproddesc,valordescuento,fechainicio,fechafin,descripcion FROM public.condicion";
+        String SQL = "SELECT idcondicion,tipocondicion,idproductogenerador,idcategoriaprodgen,cantprodgen,idproductodescuento,idcategoriaproddesc,cantproddesc,valordescuento,fechainicio,fechafin,descripcion,factorflete,activo FROM public.condicion";
 
         List<Condicion> listaCondicions = null;
         try {
@@ -84,10 +84,12 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
         condicion.setIdProductoDescuento(rs.getInt("idproductodescuento"));
         condicion.setIdCategoriaProdDesc(rs.getInt("idcategoriaproddesc"));
         condicion.setCantProdDesc(rs.getInt("cantproddesc"));
-        condicion.setValorDescuento(rs.getDouble("valordescuento"));
+        condicion.setValorDescuento(rs.getFloat("valordescuento"));
         condicion.setFechaInicio(rs.getTimestamp("fechainicio"));
         condicion.setFechaFin(rs.getTimestamp("fechafin"));
         condicion.setDescripcion(rs.getString("descripcion"));
+        condicion.setFactorFlete(rs.getFloat("factorflete"));
+        condicion.setActivo(rs.getBoolean("activo"));
         /*condicion.setCategoriaGenerador(rs.getString("categoriagenerador"));
         condicion.setCategoriaDescuento(rs.getString("categoriadescuento"));
         condicion.setNombreProductoGenerador(rs.getString("productogenerador"));
@@ -99,7 +101,7 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
     @Transactional(rollbackFor = Exception.class)
     public int registrarDescuento(Condicion condicion) {
         // el stock parcial no se debe insertar directamente en lote, es trabajo del trigger por eso se pone de valor cero
-        String SQL = "INSERT INTO public.condicion (tipocondicion,idproductogenerador,idcategoriaprodgen,cantprodgen,idproductodescuento,idcategoriaproddesc,cantproddesc,valordescuento,fechainicio,fechafin,descripcion,idempleadoauditado) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+        String SQL = "INSERT INTO public.condicion (tipocondicion,idproductogenerador,idcategoriaprodgen,cantprodgen,idproductodescuento,idcategoriaproddesc,cantproddesc,valordescuento,fechainicio,fechafin,descripcion,idempleadoauditado,factorflete,activo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,true)";
 
         Long idProdDescuento = new Long(condicion.getIdProductoDescuento());
         if(idProdDescuento == -1){
@@ -119,7 +121,7 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
         }
 
         try {
-            jdbcTemplate.update(SQL, new Object[]{ condicion.getTipoCondicion(),idProdGen, idCategoriaGen, condicion.getCantProdGen(), idProdDescuento, idCategoriaDescuento, condicion.getCantProdDesc(), condicion.getValorDescuento(), condicion.getFechaInicio(), condicion.getFechaFin(), condicion.getDescripcion(),condicion.getIdEmpleadoAuditado()});
+            jdbcTemplate.update(SQL, new Object[]{ condicion.getTipoCondicion(),idProdGen, idCategoriaGen, condicion.getCantProdGen(), idProdDescuento, idCategoriaDescuento, condicion.getCantProdDesc(), condicion.getValorDescuento(), condicion.getFechaInicio(), condicion.getFechaFin(), condicion.getDescripcion(),condicion.getIdEmpleadoAuditado(),condicion.getFactorFlete()});
             System.out.println("Se ha insertado en la tabla condicion");
         } catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
@@ -128,10 +130,11 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
         return 1;
     }
 
+
     @Transactional(rollbackFor = Exception.class)
     public int actualizarDescuento(Condicion condicion) {
         // el stock parcial no se debe insertar directamente en lote, es trabajo del trigger por eso se pone de valor cero
-        String SQL = "UPDATE public.condicion SET tipocondicion = ?,idproductogenerador = ?,idcategoriaprodgen = ?,cantprodgen = ?,idproductodescuento = ?,idcategoriaproddesc = ?,cantproddesc = ?,valordescuento = ?,fechainicio = ?,fechafin = ?,descripcion = ?,idempleadoauditado = ? where idcondicion = ?";
+        String SQL = "UPDATE public.condicion SET tipocondicion = ?,idproductogenerador = ?,idcategoriaprodgen = ?,cantprodgen = ?,idproductodescuento = ?,idcategoriaproddesc = ?,cantproddesc = ?,valordescuento = ?,fechainicio = ?,fechafin = ?,descripcion = ?,idempleadoauditado = ?,factorflete = ? where idcondicion = ?";
 
         Long idProdDescuento = new Long(condicion.getIdProductoDescuento());
         if(idProdDescuento == -1){
@@ -151,7 +154,7 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
         }
 
         try {
-            int i = jdbcTemplate.update(SQL, new Object[]{ condicion.getTipoCondicion(),idProdGen, idCategoriaGen, condicion.getCantProdGen(), idProdDescuento, idCategoriaDescuento, condicion.getCantProdDesc(), condicion.getValorDescuento(), condicion.getFechaInicio(), condicion.getFechaFin(), condicion.getDescripcion(),condicion.getIdEmpleadoAuditado(), condicion.getIdCondicion()});
+            int i = jdbcTemplate.update(SQL, new Object[]{ condicion.getTipoCondicion(),idProdGen, idCategoriaGen, condicion.getCantProdGen(), idProdDescuento, idCategoriaDescuento, condicion.getCantProdDesc(), condicion.getValorDescuento(), condicion.getFechaInicio(), condicion.getFechaFin(), condicion.getDescripcion(),condicion.getIdEmpleadoAuditado(),condicion.getFactorFlete(), condicion.getIdCondicion()});
             System.out.println("Filas afectadas -> "+ i);
             System.out.println("Se ha actualizo en la tabla condicion");
         } catch (EmptyResultDataAccessException e) {
@@ -160,7 +163,6 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
         }
         return 1;
     }
-
 
     @Transactional(rollbackFor = Exception.class)
     public int eliminarDescuento(int id,Long idEmpleadoAuditado) {
@@ -177,15 +179,70 @@ public class RepositoryCondicionImpl implements RepositoryCondicion {
         return 1;
     }
 
-    public List<Condicion> obtenerCondicionesActivos(){
-        String sql = "SELECT * from public.condicion where fechainicio <= now() " +
-                    "AND fechafin >= now() AND activo";
+    @Override
+    public List<Condicion> obtenerDescuentosActivos(){
+        String sql = "SELECT * FROM public.condicion " +
+                "WHERE date_trunc('day',fechainicio) <= date_trunc('day',now()) " +
+                "AND date_trunc('day',fechafin) >= date_trunc('day',now()) AND activo AND " +
+                "tipocondicion != 'Flete por Peso' AND tipocondicion != 'Flete por Distancia'";
         try{
-            List<Condicion> condicions = jdbcTemplate.query(sql, new Object[]{}, this::mapParam);
-            return condicions;
+            List<Condicion> condiciones = jdbcTemplate.query(sql, new Object[]{}, this::mapParam);
+            return condiciones;
         } catch (Exception e){
             e.printStackTrace();
             return null;
         }
     }
+
+    @Override
+    public Condicion obtenerFletePorPeso() {
+        String sql = "SELECT idcondicion, tipocondicion, valordescuento, factorflete " +
+                "FROM public.condicion " +
+                "WHERE date_trunc('day',fechainicio) <= date_trunc('day',now()) " +
+                "AND date_trunc('day',fechafin) >= date_trunc('day',now()) " +
+                "AND activo AND tipocondicion = 'Flete por Peso' " +
+                "ORDER BY fechainicio DESC LIMIT 1";
+        try{
+            Condicion condicion = jdbcTemplate.queryForObject(sql, new Object[]{},
+                    (res, i)->{
+                        Condicion condAux = new Condicion();
+                        condAux.setIdCondicion(res.getInt("idcondicion"));
+                        condAux.setTipoCondicion(res.getString("tipocondicion"));
+                        condAux.setValorDescuento(res.getFloat("valordescuento"));
+                        condAux.setFactorFlete(res.getFloat("factorflete"));
+                        return condAux;
+                    });
+            return condicion;
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Condicion obtenerFletePorDistancia() {
+        String sql = "SELECT idcondicion, tipocondicion, valordescuento, factorflete " +
+                "FROM public.condicion " +
+                "WHERE date_trunc('day',fechainicio) <= date_trunc('day',now()) " +
+                "AND date_trunc('day',fechafin) >= date_trunc('day',now()) " +
+                "AND activo AND tipocondicion = 'Flete por Distancia' " +
+                "ORDER BY fechainicio DESC LIMIT 1";
+        try{
+            Condicion condicion = jdbcTemplate.queryForObject(sql, new Object[]{},
+                    (res, i)->{
+                        Condicion condAux = new Condicion();
+                        condAux.setIdCondicion(res.getInt("idcondicion"));
+                        condAux.setTipoCondicion(res.getString("tipocondicion"));
+                        condAux.setValorDescuento(res.getFloat("valordescuento"));
+                        condAux.setFactorFlete(res.getFloat("factorflete"));
+                        return condAux;
+                    });
+            return condicion;
+        } catch (Exception e){
+            //e.printStackTrace();
+            return null;
+        }
+    }
+
+
 }

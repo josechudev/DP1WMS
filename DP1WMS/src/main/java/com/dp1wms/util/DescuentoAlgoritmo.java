@@ -18,8 +18,6 @@ public class DescuentoAlgoritmo {
         //Eliminar condicions no válidos
         ArrayList<Condicion> descValidos = descuentosValidos(condiciones, cabecera);
 
-        System.err.println(descValidos.size());
-
         //aplicar prioridades a los condicions
         orderDescuentos(descValidos);
 
@@ -35,8 +33,25 @@ public class DescuentoAlgoritmo {
                         Producto p = detalle.getProducto();
                         if(desc.getIdProductoDescuento() == p.getIdProducto() ||
                                 desc.getIdCategoriaProdDesc() == p.getIdCategoria()){
-                            int cant = (int) Math.floor(detalle.getCantidad() / desc.getCantProdDesc());
-                            float descuento = (float) (cant * desc.getCantProdDesc() * p.getPrecio() * desc.getValorDescuento());
+                            int cantGen = 0;
+                            if(desc.getIdProductoGenerador() > 0){
+                                cantGen = obtenerCantidadPorIdProd(cabecera, desc.getIdProductoGenerador());
+                            } else {
+                                cantGen = obtenerCantidadPorIdCat(cabecera, desc.getIdCategoriaProdGen());
+                            }
+                            int cantMax = (int) Math.floor(cantGen / desc.getCantProdGen());
+
+                            int cantDesc = 0;
+                            if(desc.getIdProductoDescuento() > 0){
+                                cantDesc = obtenerCantidadPorIdProd(cabecera, p.getIdProducto());
+                            } else {
+                                cantDesc = obtenerCantidadPorIdProd(cabecera, p.getIdCategoria());
+                            }
+                            int vecesDesc = (int) Math.floor(cantDesc / desc.getCantProdDesc());
+                            if(vecesDesc > cantMax){
+                                vecesDesc = cantMax;
+                            }
+                            float descuento = (float) (vecesDesc * desc.getCantProdDesc() * p.getPrecio() * desc.getValorDescuento());
                             detalle.setDescuento(descuento);
                         }
                     }
@@ -130,20 +145,20 @@ public class DescuentoAlgoritmo {
                     break;
                 }
                 case Condicion.DESC_C:{//por cantidad (3x2)
-                    if(desc.getIdCategoriaProdGen() > 0){ //categoria de producto
+                    if(desc.getIdProductoGenerador() > 0){ //categoria de producto
                         desc.setPrioridad(6);
                     } else { //producto
-                        desc.setPrioridad(5);
+                        desc.setPrioridad(2);
                     }
                     break;
                 }
                 case Condicion.DESC_B:{//bonificacion por especie
-                    if(desc.getIdCategoriaProdGen() > 0 && desc.getIdCategoriaProdGen() > 0){
-                        desc.setPrioridad(4);
+                    if(desc.getIdProductoGenerador() > 0 && desc.getIdProductoDescuento() > 0){
+                        desc.setPrioridad(5);
                     } else if (desc.getIdCategoriaProdGen() > 0 && desc.getIdProductoDescuento() > 0){
+                        desc.setPrioridad(4);
+                    } else if (desc.getIdProductoGenerador() > 0 && desc.getIdCategoriaProdDesc() > 0){
                         desc.setPrioridad(3);
-                    } else if (desc.getIdProductoGenerador() > 0 && desc.getIdProductoDescuento() > 0){
-                        desc.setPrioridad(2);
                     } else {
                         desc.setPrioridad(1);
                     }

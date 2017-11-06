@@ -7,7 +7,7 @@ public class DetalleGuia {
     private int idProducto;
     private Integer cantidad;
     private Long idEstado;
-    private Double peso;
+    private Float peso;
 
     public Long getIdDetalleGuia() {
         return idDetalleGuia;
@@ -49,11 +49,11 @@ public class DetalleGuia {
         this.idEstado = idEstado;
     }
 
-    public Double getPeso() {
+    public Float getPeso() {
         return peso;
     }
 
-    public void setPeso(Double peso) {
+    public void setPeso(Float peso) {
         this.peso = peso;
     }
 }

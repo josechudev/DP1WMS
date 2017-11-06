@@ -60,11 +60,11 @@ public class RepositoryGuiaImpl implements RepositoryGuia {
         return 1;
     }
 
-    public Double obtenerPesoProducto(int idProducto){
+    public Float obtenerPesoProducto(int idProducto){
         String SQL = "SELECT peso FROM public.producto WHERE idproducto=?";
-        Double peso=null;
+        Float peso=null;
         try{
-            peso = jdbcTemplate.queryForObject(SQL,new Object[] {idProducto},Double.class);
+            peso = jdbcTemplate.queryForObject(SQL,new Object[] {idProducto},Float.class);
         }catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
         }
@@ -122,7 +122,7 @@ public class RepositoryGuiaImpl implements RepositoryGuia {
         guia.setPuntoLlegada(rs.getString("puntollegada"));
         guia.setNombreTransportista(rs.getString("transportista"));
         guia.setNumeroPlaca(rs.getString("numeroplaca"));
-        guia.setPesoTotal(rs.getDouble("pesototal"));
+        guia.setPesoTotal(rs.getFloat("pesototal"));
         guia.setIdEnvio(rs.getLong("idenvio"));
         guia.setIdEmpleadoAuditado(rs.getLong("idempleadoauditado"));
         guia.setNumeroGuia(rs.getString("numeroguia"));
