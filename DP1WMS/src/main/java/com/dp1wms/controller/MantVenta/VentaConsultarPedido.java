@@ -7,6 +7,7 @@ import com.dp1wms.model.Proforma;
 import com.dp1wms.util.ClienteCampo;
 import com.dp1wms.util.DateParser;
 import com.dp1wms.view.StageManager;
+import com.dp1wms.view.VentasView;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -43,6 +44,7 @@ public class VentaConsultarPedido implements FxmlController {
     RepositoryMantPedido repositoryMantPedido;
 
     private StageManager stageManager;
+    private VentaInformacionPedido ventaInformacionPedido;
 
 
     @FXML
@@ -68,6 +70,19 @@ public class VentaConsultarPedido implements FxmlController {
             } else {
                 this.llenartablaPedidos(pedidos);
             }
+        }
+    }
+
+    @FXML
+    private void mostrarPedidoDetalles(){
+        Pedido p = this.pedidosTable.getSelectionModel().getSelectedItem();
+        if(p == null){
+            this.stageManager.mostrarErrorDialog("Error Consultar Pedido", null,
+                    "Debe seleccionar un pedido para ver su detalle");
+        } else {
+            this.ventaInformacionPedido.setPedido(p);
+            this.stageManager.mostrarModal(VentasView.DETALLE_PEDIDO);
+            this.buscarPedidos();
         }
     }
 
@@ -139,7 +154,9 @@ public class VentaConsultarPedido implements FxmlController {
     }
 
     @Autowired @Lazy
-    public VentaConsultarPedido(StageManager stageManager){
+    public VentaConsultarPedido(StageManager stageManager,
+                                VentaInformacionPedido ventaInformacionPedido){
         this.stageManager = stageManager;
+        this.ventaInformacionPedido = ventaInformacionPedido;
     }
 }

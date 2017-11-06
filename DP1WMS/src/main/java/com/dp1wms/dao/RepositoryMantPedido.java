@@ -1,5 +1,6 @@
 package com.dp1wms.dao;
 
+import com.dp1wms.model.DetallePedido;
 import com.dp1wms.model.Envio;
 import com.dp1wms.model.Pedido;
 import com.dp1wms.model.Proforma;
@@ -14,5 +15,9 @@ public interface RepositoryMantPedido {
 
     List<Pedido> buscarPedidos(String campoCliente, String datoCliente, String codigoPedido,
                                Timestamp fechaDesde, Timestamp fechaHasta);
+
+    List<DetallePedido> obtenerDetallesPedido(int idPedido);
+
+    boolean actualizarEstadoPedido(int idPedido, int idEstadoPedido);
 
 }

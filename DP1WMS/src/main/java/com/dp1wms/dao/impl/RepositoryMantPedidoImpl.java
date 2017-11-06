@@ -106,7 +106,8 @@ public class RepositoryMantPedidoImpl implements RepositoryMantPedido{
                 "LEFT JOIN estadopedido as ep ON p.idestadopedido = ep.idestadopedido " +
                 "WHERE c." + campoCliente + " LIKE  ? AND p.idpedido::varchar LIKE ? " +
                 "AND date_trunc('day',p.fechacreacion) >= ? AND date_trunc('day',p.fechacreacion) <= ? " +
-                "GROUP BY p.idpedido, c.idcliente, ep.idestadopedido";
+                "GROUP BY p.idpedido, c.idcliente, ep.idestadopedido " +
+                "ORDER BY p.idpedido ASC";
         datoCliente = "%" + datoCliente + "%";
         codigoPedido = "%" + codigoPedido + "%";
 
@@ -142,6 +143,51 @@ public class RepositoryMantPedidoImpl implements RepositoryMantPedido{
         } catch (Exception e){
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public List<DetallePedido> obtenerDetallesPedido(int idPedido){
+        String sql = "SELECT dp.*, p.nombreproducto, p.codigo " +
+                "FROM detallepedido dp LEFT JOIN producto p ON dp.idproducto = p.idproducto " +
+                "WHERE dp.idpedido = ? ORDER BY dp.iddetallepedido ASC";
+        try{
+            List<DetallePedido> detalles = this.jdbcTemplate.query(sql,
+                    new Object[]{idPedido},
+                    (res,i)->{
+                        DetallePedido dpAux = new DetallePedido();
+                        dpAux.setIdDetallePedido(res.getInt("iddetallepedido"));
+                        dpAux.setCantidad(res.getInt("cantidad"));
+                        dpAux.setDescuento(res.getFloat("descuento"));
+                        dpAux.setSubtotal(res.getFloat("subtotal"));
+
+                        Producto p = new Producto();
+                        p.setCodigo(res.getString("codigo"));
+                        p.setNombreProducto(res.getString("nombreproducto"));
+                        p.setIdProducto(res.getInt("idproducto"));
+                        p.setPrecio(res.getFloat("preciounitario"));
+
+                        dpAux.setProducto(p);
+                        return dpAux;
+                    });
+            return detalles;
+        } catch (Exception e){
+            e.printStackTrace();
+            return  null;
+        }
+    }
+
+    public boolean actualizarEstadoPedido(int idPedido, int idEstadoPedido){
+        String sql = "UPDATE pedido set idestadopedido = ? , idempleadoauditado = ? " +
+                "WHERE idpedido = ?";
+        try{
+            this.jdbcTemplate.update(sql, new Object[]{
+                    idEstadoPedido, this.mainController.getEmpleado().getIdempleado(),
+                    idPedido
+            });
+            return  true;
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
         }
     }
 
