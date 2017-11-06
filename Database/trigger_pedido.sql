@@ -3,8 +3,8 @@ DECLARE
 	envios_realizados integer;
 	num_envios integer;
 BEGIN
-	SELECT SUM(CASE WHEN envio.realizado THEN 1 else 0 END)::integer INTO envios_realizados,
-	       COUNT(envio.idenvio)::integer INTO num_envios FROM envio WHERE envio.idpedido = NEW.idpedido;
+	SELECT SUM(CASE WHEN envio.realizado THEN 1 else 0 END)::integer INTO envios_realizados FROM envio WHERE envio.idpedido = NEW.idpedido;
+	SELECT COUNT(envio.idenvio)::integer INTO num_envios FROM envio WHERE envio.idpedido = NEW.idpedido;
     IF envios_realizados = 0 THEN
     	--Pedido en espera por ser atendido
     	INSERT INTO pedido (idestadopedido) VALUES (1) WHERE pedido.idpedido = NEW.idpedido;
