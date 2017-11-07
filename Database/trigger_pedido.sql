@@ -15,6 +15,7 @@ BEGIN
     	--Pedido despachando los envios
     	UPDATE pedido SET idestadopedido = 5 WHERE idpedido = NEW.idpedido;
     END IF;
+    RETURN NEW;
 END;
 $body$
 LANGUAGE plpgsql

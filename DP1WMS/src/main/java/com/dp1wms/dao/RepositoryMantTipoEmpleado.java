@@ -1,11 +1,7 @@
 package com.dp1wms.dao;
 
-import com.dp1wms.model.Empleado;
 import com.dp1wms.model.Seccion;
 import com.dp1wms.model.TipoEmpleado;
-import com.dp1wms.model.UsuarioModel.UsuarioXEmpleado;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public interface RepositoryMantTipoEmpleado {
@@ -26,12 +22,12 @@ public interface RepositoryMantTipoEmpleado {
 
     List<Seccion> obtenerTodasLasSecciones();
 
+    int obtenerNumEmpleadosDeTipoEmp(long idTipoEmpleado);
+
     List<Seccion> obtenerSeccionesDeTipoEmpleado(long idTipoEmpleado);
 
-    boolean actualizarPermisos(long idTipoEmpleado,
-                               ArrayList<Seccion> inserts,
-                               ArrayList<Seccion> updates,
-                               ArrayList<Seccion> deletes);
+    boolean actualizarPermisos(TipoEmpleado tipoEmpleado,
+                               List<Seccion> secciones);
 
-    TipoEmpleado crearTipoEmpleado(TipoEmpleado tipoEmpleado);
+    TipoEmpleado crearTipoEmpleado(TipoEmpleado tipoEmpleado, List<Seccion> secciones);
 }

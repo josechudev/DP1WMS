@@ -8,6 +8,7 @@ import com.dp1wms.model.TipoEmpleado;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -40,11 +41,68 @@ public class TipoEmpleadoNuevo implements FxmlController{
 
     @FXML
     private void registrarTipoEmpleado(ActionEvent event){
-
+        String descripcion = this.descripcionTF.getText();
+        for(int i = 0; i < this.seccionsVBox.getChildren().size(); i++){
+            CheckBox checkBox = (CheckBox) this.seccionsVBox.getChildren().get(i);
+            Seccion seccion = this.secciones.get(i);
+            seccion.setSeleccionado(checkBox.isSelected());
+        }
+        if(descripcion.isEmpty()){
+            this.stageManager.mostrarErrorDialog("Error Rol", null,
+                    "Debe ingresar un nombre al rol");
+            return;
+        }
+        TipoEmpleado te = new TipoEmpleado();
+        te.setDescripcion(descripcion);
+        try{
+            te = this.repositoryMantTipoEmpleado.crearTipoEmpleado(te, this.secciones);
+            this.tipoEmpleado = te;
+            this.stageManager.mostrarInfoDialog("Rol", null,
+                    "Se registró un nuevo rol");
+            this.stageManager.cerrarVentana(event);
+        } catch (Exception e){
+            this.stageManager.mostrarErrorDialog("Error Rol", null,
+                    "Hubo un error al registrar el nuevo rol. Inténtelo otra vez.");
+        }
     }
 
     @FXML void guardarCambios(ActionEvent event){
-
+        String descripcion = this.descripcionTF.getText();
+        for(int i = 0; i < this.seccionsVBox.getChildren().size(); i++){
+            CheckBox checkBox = (CheckBox) this.seccionsVBox.getChildren().get(i);
+            Seccion seccion = this.secciones.get(i);
+            seccion.setSeleccionado(checkBox.isSelected());
+        }
+        if(descripcion.isEmpty()){
+            this.stageManager.mostrarErrorDialog("Error Rol", null,
+                    "Debe ingresar un nombre al rol");
+            return;
+        }
+        TipoEmpleado te = new TipoEmpleado();
+        te.setIdtipoempleado(this.tipoEmpleado.getIdtipoempleado());
+        te.setDescripcion(descripcion);
+        te.setActivo(this.estadoCB.isSelected());
+        int numEmpleados = this.repositoryMantTipoEmpleado.obtenerNumEmpleadosDeTipoEmp(te.getIdtipoempleado());
+        if(numEmpleados < 0){
+            this.stageManager.mostrarErrorDialog("Error Rol", null,
+                    "Hubo un error inesperado, inténtelo de nuevo.");
+            return;
+        } else if (numEmpleados > 0 && te.getActivo() == false) {
+            this.stageManager.mostrarErrorDialog("Error Rol", null,
+                    "No puede deshabilitar un rol que se encuentra asociado a " +
+                            "almenos un empleado.");
+            return;
+        }
+        try{
+            this.repositoryMantTipoEmpleado.actualizarPermisos(te, this.secciones);
+            this.tipoEmpleado = te;
+            this.stageManager.mostrarInfoDialog("Rol", null,
+                    "Se actualizaron los datos del rol con éxito.");
+            this.stageManager.cerrarVentana(event);
+        } catch (Exception e){
+            this.stageManager.mostrarErrorDialog("Error Rol", null,
+                    "Hubo un error al actualizar los datos del rol. Inténtelo otra vez");
+        }
     }
 
     @FXML void cancelarCambios(ActionEvent event){
@@ -52,7 +110,6 @@ public class TipoEmpleadoNuevo implements FxmlController{
     }
 
     private void initSecciones(){
-        this.secciones = this.repositoryMantTipoEmpleado.obtenerTodasLasSecciones();
         if(this.secciones == null){
             this.stageManager.mostrarErrorDialog("Error Mantenimiento Roles", null,
                     "Hubo un error al cargar los permisos. Vuelva a cargar la ventana.");

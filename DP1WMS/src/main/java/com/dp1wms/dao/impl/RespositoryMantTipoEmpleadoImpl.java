@@ -1,5 +1,6 @@
 package com.dp1wms.dao.impl;
 
+import com.dp1wms.controller.MainController;
 import com.dp1wms.dao.RepositoryMantEmpleado;
 import com.dp1wms.dao.RepositoryMantTipoEmpleado;
 import com.dp1wms.dao.mapper.EmpleadoRowMapper;
@@ -13,7 +14,10 @@ import com.dp1wms.model.TipoEmpleado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import sun.applet.Main;
 
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +26,9 @@ public class RespositoryMantTipoEmpleadoImpl implements RepositoryMantTipoEmplea
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private MainController mainController;
 
     public List<TipoEmpleado> selectAllTipoEmpleado(){
         String sql = "SELECT idtipoempleado, descripcion FROM tipoempleado WHERE activo = true ORDER BY idtipoempleado";
@@ -103,7 +110,7 @@ public class RespositoryMantTipoEmpleadoImpl implements RepositoryMantTipoEmplea
                     "(tes.idtipoempleado is not null) as seleccionado " +
                     "FROM seccion s LEFT JOIN tipoempleadoxseccion tes " +
                     "ON tes.idseccion = s.idseccion " +
-                    "WHERE tes.idtipoempleado = ? OR tes.idtipoempleado is null " +
+                    "AND tes.idtipoempleado = ? " +
                     "ORDER BY s.idseccion";
             List<Seccion> seccions = jdbcTemplate.query(sql, new Object[]{idTipoEmpleado},
                     (res, i)->{
@@ -120,19 +127,71 @@ public class RespositoryMantTipoEmpleadoImpl implements RepositoryMantTipoEmplea
         }
     }
 
-    public boolean actualizarPermisos(long idTipoEmpleado,
-                               ArrayList<Seccion> inserts,
-                               ArrayList<Seccion> updates,
-                               ArrayList<Seccion> deletes){
-        return false;
+    public int obtenerNumEmpleadosDeTipoEmp(long idTipoEmpleado){
+        try{
+            String sql = "SELECT count(idempleado) FROM empleado WHERE idtipoempleado = ?";
+            Object[] params = {idTipoEmpleado};
+            return jdbcTemplate.queryForObject(sql, params, Integer.class);
+        } catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
     }
 
-    public TipoEmpleado crearTipoEmpleado(TipoEmpleado tipoEmpleado){
+    @Transactional (rollbackFor = Exception.class)
+    public boolean actualizarPermisos(TipoEmpleado tipoEmpleado,
+                               List<Seccion> secciones){
         try{
-            String sql = "INSERT INTO tipoempleado (descripcion) " +
-                    "VALUES (?) RETURNING idtipoempleado";
+            String sql = "UPDATE  tipoempleado set descripcion = ?, activo = ?, idempleadoauditado = ? " +
+                    "WHERE idtipoempleado = ?";
+            Object[] params = {
+                    tipoEmpleado.getDescripcion(),
+                    tipoEmpleado.getActivo(),
+                    this.mainController.getEmpleado().getIdempleado(),
+                    tipoEmpleado.getIdtipoempleado()
+            };
+            jdbcTemplate.update(sql, params);
+
+            String sql2 = "UPDATE tipoempleadoxseccion set idempleadoauditado = ? " +
+                    "WHERE idtipoempleado = ?";
+            Object[] params2 = {this.mainController.getEmpleado().getIdempleado(),
+                                tipoEmpleado.getIdtipoempleado()};
+            jdbcTemplate.update(sql2, params2);
+
+            String sql3 = "DELETE FROM tipoempleadoxseccion WHERE idtipoempleado = ?";
+            Object[] params3 = {tipoEmpleado.getIdtipoempleado()};
+            int[] types = {Types.BIGINT};
+            jdbcTemplate.update(sql3, params3, types);
+
+            String sql4 = "INSERT INTO tipoempleadoxseccion (idtipoempleado, idseccion, " +
+                    "idempleadoauditado) VALUES (?,?,?)";
+            for(Seccion seccion: secciones){
+                if(seccion.isSeleccionado()){
+                    Object[] params4 = {
+                            tipoEmpleado.getIdtipoempleado(),
+                            seccion.getIdSeccion(),
+                            this.mainController.getEmpleado().getIdempleado()
+                    };
+                    jdbcTemplate.update(sql4, params4);
+                }
+            }
+
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Transactional (rollbackFor = Exception.class)
+    public TipoEmpleado crearTipoEmpleado(TipoEmpleado tipoEmpleado, List<Seccion> secciones){
+        try{
+            String sql = "INSERT INTO tipoempleado (descripcion, idempleadoauditado) " +
+                    "VALUES (?, ?) RETURNING idtipoempleado";
             TipoEmpleado te = jdbcTemplate.queryForObject(sql, new Object[]{
-                    tipoEmpleado.getDescripcion()},
+                    tipoEmpleado.getDescripcion(),
+                    this.mainController.getEmpleado().getIdempleado()
+                    },
                     (res, i)->{
                         TipoEmpleado teAux = new TipoEmpleado();
                         teAux.setIdtipoempleado(res.getInt("idtipoempleado"));
@@ -140,10 +199,23 @@ public class RespositoryMantTipoEmpleadoImpl implements RepositoryMantTipoEmplea
                     });
             tipoEmpleado.setIdtipoempleado(te.getIdtipoempleado());
             tipoEmpleado.setActivo(true);
+
+            String sql2 = "INSERT INTO tipoempleadoxseccion (idtipoempleado, idseccion, " +
+                    "idempleadoauditado) VALUES (?,?,?)";
+            for(Seccion seccion: secciones){
+                if(seccion.isSeleccionado()){
+                    jdbcTemplate.update(sql2, new Object[]{
+                        tipoEmpleado.getIdtipoempleado(),
+                        seccion.getIdSeccion(),
+                        this.mainController.getEmpleado().getIdempleado()
+                    });
+                }
+            }
+
             return tipoEmpleado;
         }catch (Exception e){
             e.printStackTrace();
-            return null;
+            throw e;
         }
     }
 }
