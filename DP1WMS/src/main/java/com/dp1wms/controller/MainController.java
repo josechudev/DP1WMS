@@ -149,12 +149,18 @@ public class MainController implements FxmlController {
     @FXML
     private void cargarDevolucionFactura(){
         System.out.println("cargarDevolucionPedido");
-        this.stageManager.mostrarModal(MainView.DEVOLVER_PEDIDO);
+        this.stageManager.mostrarModal(FacturaView.MANTENIMIENTO_FACTURA);
     }
 
     @FXML
     private void cargarConsultarPedido(){
         this.stageManager.mostrarModal(VentasView.CONSULTAR_PEDIDO);
+    }
+
+    @FXML
+    private void cargarMantenimientoComprobantePago(){
+        System.out.println("cargarDevolucionPedido");
+        this.stageManager.mostrarModal(FacturaView.MANTENIMIENTO_FACTURA);
     }
 
     public void setUsuario(Usuario usuario){
