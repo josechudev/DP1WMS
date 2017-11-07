@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="357.0" prefWidth="1241.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.dp1wms.controller.Factura.MantenimientoFacturaController">
+  <children>
+    <Label layoutX="29.0" layoutY="58.0" prefHeight="27.0" prefWidth="117.0" text="Acciones">
+      <font>
+        <Font size="14.0" />
+      </font>
+    </Label>
+    <Label layoutX="29.0" layoutY="25.0" text="Devolucion de Producto">
+      <font>
+        <Font size="18.0" />
+      </font>
+    </Label>
+    <Button fx:id="btn_Crear" layoutX="27.0" layoutY="94.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="90.0" onAction="#btnClickCrear" text="Agregar" />
+    <Button fx:id="btn_Modificar" layoutX="137.0" layoutY="94.0" mnemonicParsing="false" prefHeight="1.0" prefWidth="90.0" onAction="#btnClickModificar" text="Modificar" />
+    <Button fx:id="btn_eliminar" layoutX="247.0" layoutY="94.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="200.0" onAction="#btnClickCancelar" text="Cancelar Comprobante de Pago" />
+    <Button fx:id="btn_activarr" layoutX="467.0" layoutY="94.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="200.0" onAction="#btnClickRenovar" text="Reactivar Comprobante de Pago" />
+    <TableView fx:id="e_table" layoutX="27.0" layoutY="132.0" prefHeight="201.0" prefWidth="1192.0">
+      <columns>
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="40.0" text="Id" fx:id="e_id" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="130.0" text="Tipo Comprobante" fx:id="e_tipoComprobante" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="130.0" text="Cliente" fx:id="e_cliente" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="150.0" text="Fecha Emitida" fx:id="e_fechaCreacion" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="150.0" text="Ultima Fecha Modificada" fx:id="e_fechaMod" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="110.0" text="Subtotal" fx:id="e_subtotal" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="110.0" text="Flete" fx:id="e_flete" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="110.0" text="IGV" fx:id="e_igv" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="110.0" text="Total" fx:id="e_total" />
+        <TableColumn maxWidth="5000.0" minWidth="9.0" prefWidth="150.0" text="Estado Comprobante" fx:id="e_estadoComprobante" />
+      </columns>
+    </TableView>
+  </children>
+</AnchorPane>
