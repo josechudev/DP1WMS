@@ -9,5 +9,4 @@ public interface RepositoryEnvio {
 
     List<Envio> obtenerEnviosRealizados(Boolean realizado);
     void actualizarEstadoEnvio(Long idPedido);
-    List<Envio> obtenerEnvios(int idPedido);
 }

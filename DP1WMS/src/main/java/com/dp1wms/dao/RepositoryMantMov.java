@@ -16,6 +16,6 @@ public interface RepositoryMantMov{
     int registrarMovimiento(Movimiento movimiento);
     List<Almacen> obtenerAlmacenes();
     List<Ubicacion> obtenerUbicaciones(int idLote,int idProducto);
-    void insertarUbicacion(int idLote,int idProducto,int idCajon,int cantidad);
-    void actualizarUbicacion(int idLote,int idProducto,int idCajon,int cantidad,int idCajonAntiguo);
+    void insertarUbicacion(int idLote,int idProducto,int idCajon,int cantidad,Long idEmpleadoAuditado);
+    void actualizarUbicacion(int idLote,int idProducto,int idCajon,int cantidad,int idCajonAntiguo,Long idEmpleadoAuditado);
 }

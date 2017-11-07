@@ -72,6 +72,12 @@ public class ListaEnviosController implements FxmlController {
     }
 
     public void retirarProductosEnvio(ActionEvent event){
+
+        if(tablaEnviosPendientes.getSelectionModel().getSelectedItem() == null){
+            this.stageManager.mostrarErrorDialog("Error Retiro Productos de  un envio", null,
+                    "Debe seleccionar un envio");
+            return;
+        }
         this.stageManager.mostrarModal(MainView.RETIRO_ENVIO);
 
     }

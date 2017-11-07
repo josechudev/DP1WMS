@@ -195,8 +195,7 @@ public class VentaInformacionEnvio implements FxmlController{
                     "Debe agregar un destino");
             return;
         }
-        if(localdate == null || fecha == null ||
-                localdate.isBefore(DateParser.currentDateLocalDate())){
+        if(fecha == null){
             this.stageManager.mostrarErrorDialog("Error Envio", null,
                     "Debe seleccionar una fecha valida");
             return;
@@ -237,8 +236,7 @@ public class VentaInformacionEnvio implements FxmlController{
                     "Debe agregar un destino");
             return;
         }
-        if(localdate == null || fecha == null ||
-                localdate.isBefore(DateParser.currentDateLocalDate())){
+        if(fecha == null){
             this.stageManager.mostrarErrorDialog("Error Envio", null,
                     "Debe seleccionar una fecha valida");
             return;

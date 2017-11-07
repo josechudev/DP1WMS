@@ -43,6 +43,8 @@ public class EscogerUbicacionLoteController implements FxmlController {
 
     private Lote loteEscogido=null;
 
+    private Long idEmpleadoAuditado;
+
     @Autowired
     private RepositoryMantMov repositoryMantMov;
 
@@ -94,9 +96,9 @@ public class EscogerUbicacionLoteController implements FxmlController {
 
         if(cantidad != -1){
             if(esAgregar){
-                this.repositoryMantMov.insertarUbicacion(loteEscogido.getIdLote(),loteEscogido.getIdProducto(),idcajon,cantidad);
+                this.repositoryMantMov.insertarUbicacion(loteEscogido.getIdLote(),loteEscogido.getIdProducto(),idcajon,cantidad,this.idEmpleadoAuditado);
             }else{
-                this.repositoryMantMov.actualizarUbicacion(loteEscogido.getIdLote(),loteEscogido.getIdProducto(),idcajon,cantidad,ubicacionEscogida.getIdCajon());
+                this.repositoryMantMov.actualizarUbicacion(loteEscogido.getIdLote(),loteEscogido.getIdProducto(),idcajon,cantidad,ubicacionEscogida.getIdCajon(),this.idEmpleadoAuditado);
 
             }
             this.ubicacionLoteController.refrescarTabla();
@@ -333,5 +335,7 @@ public class EscogerUbicacionLoteController implements FxmlController {
         this.labelCantidad.setText(labelText);
 
         this.txb_cantidad.setText(""+maxCantidad);
+
+        this.idEmpleadoAuditado = this.ubicacionLoteController.obtenerIdEmpleadoAuditado();
     }
 }
