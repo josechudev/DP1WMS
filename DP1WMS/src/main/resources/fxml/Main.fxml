@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="634.0" prefWidth="1038.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MainController">
+<AnchorPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="634.0" prefWidth="1038.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MainController">
    <children>
       <VBox layoutX="65.0" layoutY="104.0" prefHeight="164.0" prefWidth="285.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -35,6 +35,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoAlmacenes" style="-fx-padding: 0 10;" text="Almacenes" />
                         <Menu mnemonicParsing="false" style="-fx-padding: 0 10;" text="Mantenimiento Movimiento">
                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#cargarListaLotes" text="Lista de Lotes" />
                               <MenuItem mnemonicParsing="false" onAction="#cargarIngresoProducto" style="-fx-padding: 0 10;" text="Ingreso/Salida Producto" />
                             <MenuItem mnemonicParsing="false" onAction="#cargarCrearLote" style="-fx-padding: 0 10;" text="Crear Lote" />
                           </items>
