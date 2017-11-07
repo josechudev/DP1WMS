@@ -1,4 +1,4 @@
-package com.dp1wms.dao.mapper.KardexFila;
+package com.dp1wms.dao.mapper.Kardex;
 
 import com.dp1wms.model.KardexFila;
 import org.springframework.dao.DataAccessException;

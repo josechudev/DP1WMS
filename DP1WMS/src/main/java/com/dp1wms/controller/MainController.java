@@ -158,6 +158,10 @@ public class MainController implements FxmlController {
     private void cargarKardex(){
         this.stageManager.mostrarModal(MainView.CARGAR_KARDEX);
     }
+    @FXML
+    private void cargarReporteAlmacen(){
+        this.stageManager.mostrarModal(MainView.REPORTE_ALMACEN);
+    }
 
     @FXML
     private void cargarDevolucionFactura(){
