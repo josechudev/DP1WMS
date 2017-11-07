@@ -1,7 +1,7 @@
-package com.dp1wms.dao.impl.KardexFila;
+package com.dp1wms.dao.impl.Kardex;
 
-import com.dp1wms.dao.IKardexFila.RepositoryKardexFila;
-import com.dp1wms.dao.mapper.KardexFila.KardexFilaRowMapper;
+import com.dp1wms.dao.IKardex.RepositoryKardexFila;
+import com.dp1wms.dao.mapper.Kardex.KardexFilaRowMapper;
 import com.dp1wms.model.KardexFila;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

@@ -1,4 +1,4 @@
-package com.dp1wms.dao.IKardexFila;
+package com.dp1wms.dao.IKardex;
 
 import com.dp1wms.model.KardexFila;
 

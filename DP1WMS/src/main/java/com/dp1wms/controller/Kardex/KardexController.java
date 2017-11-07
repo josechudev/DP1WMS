@@ -1,7 +1,7 @@
 package com.dp1wms.controller.Kardex;
 
 import com.dp1wms.controller.FxmlController;
-import com.dp1wms.dao.IKardexFila.RepositoryKardexFila;
+import com.dp1wms.dao.IKardex.RepositoryKardexFila;
 import com.dp1wms.model.KardexFila;
 import com.dp1wms.view.StageManager;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
@@ -9,7 +9,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.StringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -29,7 +28,7 @@ public class KardexController implements FxmlController {
     /*
                 <TableColumn fx:id="c_Codigo" prefWidth="78.0" text="Codigo"/>
                 <TableColumn fx:id="c_fechaMov" prefWidth="154.0" text="Fecha Movimiento"/>
-                <TableColumn fx:id="c_descProd" prefWidth="154.0" text="KardexFila"/>
+                <TableColumn fx:id="c_descProd" prefWidth="154.0" text="Kardex"/>
                 <TableColumn fx:id="c_cantidad" prefWidth="154.0" text="Cantidad"/>
                 <TableColumn fx:id="c_decMov" prefWidth="154.0" text="Descripcion"/>
                 <TableColumn fx:id="c_entradas" prefWidth="154.0" text="Entradas"/>
