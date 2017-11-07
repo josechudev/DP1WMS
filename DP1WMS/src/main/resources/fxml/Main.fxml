@@ -45,12 +45,14 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Ventas">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoDescuentos" style="-fx-padding: 0 10;" text="Descuentos" />
-                      <MenuItem mnemonicParsing="false" onAction="#cargarGenerarProforma" style="-fx-padding: 0 10;" text="Generar Proforma" />
-                        <MenuItem mnemonicParsing="false" onAction="#cargarConsultarPedido" style="-fx-padding: 0 10;" text="Consultar Pedido" />
-                        <MenuItem mnemonicParsing="false" onAction="#cargarGenerarPedido" style="-fx-padding: 0 10;" text="Generar Pedido" />
-                        <MenuItem mnemonicParsing="false" onAction="#cargarListaEnviosPendientes" style="-fx-padding: 0 10;" text="Envios Pendientes" />
-                        <MenuItem mnemonicParsing="false" onAction="#cargarKardex" style="-fx-padding: 0 10;" text="Reporte Kardex" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoDescuentos" style="-fx-padding: 0 10;" text="Condiciones Comerciales" />
+                      <MenuItem mnemonicParsing="false" onAction="#cargarGenerarProforma" style="-fx-padding: 0 10;" text="Proforma" />
+                        <Menu mnemonicParsing="false" style="-fx-padding: 0 10;" text="Pedido">
+                          <items>
+                              <MenuItem mnemonicParsing="false" onAction="#cargarConsultarPedido" style="-fx-padding: 0 10;" text="Consultar Pedido" />
+                              <MenuItem mnemonicParsing="false" onAction="#cargarGenerarPedido" style="-fx-padding: 0 10;" text="Generar Pedido" />
+                          </items>
+                        </Menu>
                         <MenuItem mnemonicParsing="false" onAction="#cargarListaGuias" style="-fx-padding: 0 10;" text="Guias de remision" />
                     </items>
                   </Menu>
