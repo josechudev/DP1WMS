@@ -153,8 +153,8 @@ public class MainController implements FxmlController {
     }
 
     @FXML
-    private void cargarListaLotes(){
-        this.stageManager.mostrarModal(MainView.LISTA_LOTES);
+    private void cargarConsultarPedido(){
+        this.stageManager.mostrarModal(VentasView.CONSULTAR_PEDIDO);
     }
 
     public void setUsuario(Usuario usuario){

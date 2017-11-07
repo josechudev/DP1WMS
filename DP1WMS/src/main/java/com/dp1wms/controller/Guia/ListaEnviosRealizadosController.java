@@ -5,8 +5,10 @@ import com.dp1wms.controller.MainController;
 import com.dp1wms.dao.RepositoryEnvio;
 import com.dp1wms.model.Envio;
 import com.dp1wms.model.Guia;
+import com.dp1wms.util.DateParser;
 import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -30,7 +32,7 @@ public class ListaEnviosRealizadosController implements FxmlController {
     @FXML
     private TableColumn<Envio,String> c_cliente;
     @FXML
-    private TableColumn<Envio,Timestamp> c_fechaenvio;
+    private TableColumn<Envio,String> c_fechaenvio;
     @FXML
     private TableColumn<Envio,String> c_destino;
 
@@ -56,7 +58,11 @@ public class ListaEnviosRealizadosController implements FxmlController {
         tablaEnviosPendientes.getItems().clear();
         c_indice.setCellValueFactory(new PropertyValueFactory<Envio,Integer>("indiceTabla"));
         c_cliente.setCellValueFactory(new PropertyValueFactory<Envio,String>("razonSocial"));
-        c_fechaenvio.setCellValueFactory(new PropertyValueFactory<Envio,Timestamp>("fechaEnvio"));
+        //c_fechaenvio.setCellValueFactory(new PropertyValueFactory<Envio,Timestamp>("fechaEnvio"));
+        c_fechaenvio.setCellValueFactory(value->{
+            String fechaEntrada = DateParser.timestampToString(value.getValue().getFechaEnvio());
+            return new SimpleStringProperty(fechaEntrada);
+        });
         c_destino.setCellValueFactory(new PropertyValueFactory<Envio,String>("destino"));
         tablaEnviosPendientes.setEditable(true);
     }
