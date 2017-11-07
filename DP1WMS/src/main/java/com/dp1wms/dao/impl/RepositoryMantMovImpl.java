@@ -6,6 +6,7 @@ import com.dp1wms.model.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -64,7 +65,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
     }
 
     public List<Lote> obtenerLotes(){
-        String SQL= "SELECT p.idproducto,p.nombreproducto,l.stockparcial,l.fechaentrada,l.idlote FROM public.producto p,public.lote l WHERE l.idproducto = p.idproducto ";
+        String SQL= "SELECT p.idproducto,p.nombreproducto,l.stockparcial,l.fechaentrada,l.idlote,p.codigo FROM public.producto p,public.lote l WHERE l.idproducto = p.idproducto ";
 
         List<Lote> listaLotes = null;
         try{
@@ -82,6 +83,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         lote.setStockParcial(rs.getInt("stockparcial"));
         lote.setFechaEntrada(rs.getString("fechaentrada"));
         lote.setIdLote(rs.getInt("idlote"));
+        lote.setCodigoProducto(rs.getString("codigo"));
         // aqui setean todas las columnas que quieran
         return lote;
     }
@@ -234,7 +236,12 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
 
         for(Almacen almacen: listaAlmacenes){
             List<Area> listaAreas = this.obtenerAreas(almacen.getIdAlmacen());
-            almacen.setListaArea(listaAreas);
+            if(listaAreas.isEmpty()){
+                almacen.setListaArea(new ArrayList<Area>());
+            }else{
+                almacen.setListaArea(listaAreas);
+            }
+
         }
 
         return listaAlmacenes;
@@ -259,7 +266,12 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
 
         for(Area area: listaAreas){
             List<Rack> listaRacks  =this.obtenerRack(area.getIdArea());
-            area.setListaRack(listaRacks);
+            if(listaRacks.isEmpty()){
+                area.setListaRack(new ArrayList<Rack>());
+            }else{
+                area.setListaRack(listaRacks);
+            }
+
         }
 
         return listaAreas;
@@ -286,7 +298,12 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         for(Rack rack: listaRack){
             List<Cajon> listaCajones = this.obtenerCajones(rack.getIdRack());
             //System.out.println("DAO tam lista cajones: "+listaCajones.size());
-            rack.setListaCajones(listaCajones);
+            if(listaCajones.isEmpty()){
+                rack.setListaCajones(new ArrayList<Cajon>());
+            }else{
+                rack.setListaCajones(listaCajones);
+            }
+
         }
 
         return listaRack;
@@ -301,7 +318,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
     }
 
     private List<Cajon> obtenerCajones(int idRack){
-        String SQL = "SELECT * FROM cajon WHERE idrack = ?";
+        String SQL = "SELECT idcajon,idrack,posicion[0] as posX,posicion[1] as posY FROM cajon WHERE idrack = ?";
         List<Cajon> listaCajones = null;
         try{
             listaCajones = jdbcTemplate.query(SQL,new Object[] {idRack}, this::mapParamCajon);
@@ -317,6 +334,58 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         Cajon cajon = new Cajon();
         cajon.setIdCajon(rs.getInt("idcajon"));
         cajon.setIdRack(rs.getInt("idrack"));
+        cajon.setPosX(rs.getInt("posX"));
+        cajon.setPosY(rs.getInt("posY"));
         return cajon;
+    }
+
+    public List<Ubicacion> obtenerUbicaciones(int idLote,int idProducto) {
+        String SQL = "SELECT al.idalmacen, al.nombre as nombreAlmacen,ar.idarea,ar.codigo as codigoArea, r.idrack,r.codigo as codigoRack,c.idcajon,c.posicion[0] as cajonX,c.posicion[1] as cajonY, u.cantidad FROM almacen al,area ar,rack r,cajon c,ubicacion u WHERE u.idlote = ? and u.idproducto = ? and u.idcajon = c.idcajon and c.idrack = r.idrack and r.idarea = ar.idarea and ar.idalmacen = al.idalmacen";
+        List<Ubicacion> listaUbicaciones = null;
+        try{
+            listaUbicaciones = jdbcTemplate.query(SQL,new Object[] {idLote,idProducto}, this::mapParamUbicacion);
+        }catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+        }
+        return listaUbicaciones;
+    }
+
+    private Ubicacion mapParamUbicacion(ResultSet rs, int i) throws SQLException {
+        Ubicacion ubicacion = new Ubicacion();
+        ubicacion.setIdAlmacen(rs.getInt("idalmacen"));
+        ubicacion.setNombreAlmacen(rs.getString("nombreAlmacen"));
+        ubicacion.setIdArea(rs.getInt("idarea"));
+        ubicacion.setCodigoArea(rs.getString("codigoArea"));
+        ubicacion.setIdRack(rs.getInt("idrack"));
+        ubicacion.setCodigoRack(rs.getString("codigoRack"));
+        ubicacion.setCajonPosicionX(rs.getInt("cajonX"));
+        ubicacion.setCajonPosicionY(rs.getInt("cajonY"));
+        ubicacion.setIdCajon(rs.getInt("idcajon"));
+        ubicacion.setCantidad(rs.getInt("cantidad"));
+        return ubicacion;
+    }
+
+
+    public void insertarUbicacion(int idLote,int idProducto,int idCajon,int cantidad){
+        String SQL = "INSERT INTO public.ubicacion (idlote,idproducto,idcajon,cantidad) VALUES (?,?,?,?)";
+        try{
+            jdbcTemplate.update(SQL,new Object[] {idLote,idProducto,idCajon,cantidad});
+            System.out.println("Se ha insertado en la tabla ubicacion");
+        }catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public void actualizarUbicacion(int idLote,int idProducto,int idCajon,int cantidad,int idCajonAntiguo){
+        //System.out.println(idLote+"|"+idProducto+"|"+idCajon+"|"+cantidad+"|"+idCajonAntiguo);
+        String SQL = "UPDATE public.ubicacion SET idcajon=?,cantidad=? WHERE idlote = ? and idproducto = ? and idcajon = ?";
+        try{
+            jdbcTemplate.update(SQL,new Object[] {idCajon,cantidad,idLote,idProducto,idCajonAntiguo});
+            System.out.println("Se ha actualizado en la tabla ubicacion");
+        }catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 }
