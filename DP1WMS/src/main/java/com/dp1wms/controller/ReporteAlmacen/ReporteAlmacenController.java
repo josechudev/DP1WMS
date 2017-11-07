@@ -81,7 +81,18 @@ public class ReporteAlmacenController implements FxmlController {
 
     @FXML
     private  void consultarAlmacen(){
-        llenarGrilla(dp_fecInicio.getValue().toString(),dp_fecFin.getValue().toString());
+
+
+        LocalDate desdeLD = this.dp_fecInicio.getValue();
+        LocalDate hastaLD = this.dp_fecFin.getValue();
+
+        //mas validacion
+        if(desdeLD == null || hastaLD == null || desdeLD.isAfter(hastaLD)) {
+            this.stageManager.mostrarErrorDialog("Error Buscar Proforma", null,
+                    "Debe seleccionar un rango de fecha adecuado");
+        } else {
+            llenarGrilla(dp_fecInicio.getValue().toString(), dp_fecFin.getValue().toString());
+        }
     }
     @Override
     public void initialize() {

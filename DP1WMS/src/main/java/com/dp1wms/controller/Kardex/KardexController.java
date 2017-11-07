@@ -126,7 +126,16 @@ public class KardexController implements FxmlController {
     @FXML
     private void consultarKardex(){
         System.out.println(dp_fecInicio.getValue().toString());
-        llenarGrilla(dp_fecInicio.getValue().toString(),dp_fecFin.getValue().toString());
+        LocalDate desdeLD = this.dp_fecInicio.getValue();
+        LocalDate hastaLD = this.dp_fecFin.getValue();
+
+        //mas validacion
+        if(desdeLD == null || hastaLD == null || desdeLD.isAfter(hastaLD)) {
+            this.stageManager.mostrarErrorDialog("Error Buscar Proforma", null,
+                    "Debe seleccionar un rango de fecha adecuado");
+        } else {
+            llenarGrilla(dp_fecInicio.getValue().toString(), dp_fecFin.getValue().toString());
+        }
     }
 
     private Timestamp obtenerFecha(String fecha) throws ParseException {
