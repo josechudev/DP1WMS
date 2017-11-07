@@ -75,8 +75,7 @@ public class MainController implements FxmlController {
 
     @FXML
     private void cargarMantenimientoRol(ActionEvent event) {
-        System.out.println("cargarMantenimientoTipoEmpleado");
-        this.stageManager.mostrarModal(MainView.MANTENIMIENTO_TIPOEMPLEADO);
+        this.stageManager.mostrarModal(TipoEmpleadoView.MAIN);
     }
 
 

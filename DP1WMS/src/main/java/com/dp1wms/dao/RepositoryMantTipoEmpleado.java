@@ -1,9 +1,7 @@
 package com.dp1wms.dao;
 
-import com.dp1wms.model.Empleado;
+import com.dp1wms.model.Seccion;
 import com.dp1wms.model.TipoEmpleado;
-import com.dp1wms.model.UsuarioModel.UsuarioXEmpleado;
-
 import java.util.List;
 
 public interface RepositoryMantTipoEmpleado {
@@ -20,4 +18,16 @@ public interface RepositoryMantTipoEmpleado {
 
     TipoEmpleado obtenerTipoEmpleadoPorDescripcion(String auxDescripcion);
 
+    List<TipoEmpleado> buscarTipoEmpleado(String descripcion);
+
+    List<Seccion> obtenerTodasLasSecciones();
+
+    int obtenerNumEmpleadosDeTipoEmp(long idTipoEmpleado);
+
+    List<Seccion> obtenerSeccionesDeTipoEmpleado(long idTipoEmpleado);
+
+    boolean actualizarPermisos(TipoEmpleado tipoEmpleado,
+                               List<Seccion> secciones);
+
+    TipoEmpleado crearTipoEmpleado(TipoEmpleado tipoEmpleado, List<Seccion> secciones);
 }

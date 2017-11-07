@@ -75,6 +75,11 @@ public class BusquedaProductoController implements FxmlController {
 
     public void escogerProducto(ActionEvent event){
         Producto producto = tableViewProductos.getSelectionModel().getSelectedItem();
+        if(producto == null){
+            this.stageManager.mostrarErrorDialog("Error al escoger producto", null,
+                    "Debe seleccionar un producto");
+            return;
+        }
         System.out.println("Nombre Producto: " + producto.getNombreProducto()+" IdProducto: "+producto.getIdProducto());
 
         crearLoteController.actualizarDataProducto(producto);

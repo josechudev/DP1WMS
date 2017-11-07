@@ -42,29 +42,6 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
-    } , MANTENIMIENTO_TIPOEMPLEADO {
-        @Override
-        public String getTitle() {
-            return getStringFromResourceBundle("mantenimiento.roles.title");
-        }
-        @Override
-        public String getFxmlFile() {
-            return "/fxml/MantenimientoTipoEmpleado.fxml";
-        }
-        @Override
-        public boolean isResizable(){return false;}
-    }, NUEVO_TIPOEMPLEADO {
-        @Override
-        public String getTitle() {
-            return getStringFromResourceBundle("mantenimiento.movimiento.title");
-        }
-        @Override
-        public String getFxmlFile() {
-            return "/fxml/CrearTipoEmpleado.fxml";
-        }
-        @Override
-        public boolean isResizable(){return false;}
-    
     },MANTENIMIENTO_CATEGORIA {
         @Override
         public String getTitle() {
@@ -345,8 +322,33 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
+    }, UBICACION_LOTE{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("ubicacionLote.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Movimientos/UbicacionLote.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },ESCOGER_UBICACION_LOTE{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("escogerUbicacionLote.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Movimientos/EscogerUbicacionLote.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
     }
-
     ;
 
     public String getStringFromResourceBundle(String key) {

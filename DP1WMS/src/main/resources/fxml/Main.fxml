@@ -22,25 +22,26 @@
                     <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" style="-fx-padding: 0 10;" text="Cerrar Sesión" />
                   </items>
                 </Menu>
-                  <Menu mnemonicParsing="false" text="Productos">
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoProducto" style="-fx-padding: 0 10;" text="Mantenimiento productos" />
-                    </items>
-                  </Menu>
                   <Menu mnemonicParsing="false" text="Administracion">
                      <items>
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoRol" style="-fx-padding: 0 10;" text="Roles" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoUsuario" style="-fx-padding: 0 10;" text="Usuarios" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoCliente" style="-fx-padding: 0 10;" text="Clientes" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoCategoria" style="-fx-padding: 0 10;" text="Categorias" />
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoAlmacenes" style="-fx-padding: 0 10;" text="Almacenes" />
-                        <Menu mnemonicParsing="false" style="-fx-padding: 0 10;" text="Mantenimiento Movimiento">
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoProducto" style="-fx-padding: 0 10;" text="Productos" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Almacenes">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoAlmacenes" style="-fx-padding: 0 10;" text="Crear y Modificar" />
+                        <Menu mnemonicParsing="false" style="-fx-padding: 0 10;" text="Movimientos">
                           <items>
                               <MenuItem mnemonicParsing="false" onAction="#cargarIngresoProducto" style="-fx-padding: 0 10;" text="Ingreso/Salida Producto" />
                             <MenuItem mnemonicParsing="false" onAction="#cargarCrearLote" style="-fx-padding: 0 10;" text="Crear Lote" />
                           </items>
                         </Menu>
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoRol" style="-fx-padding: 0 10;" text="Mantenimiento Roles" />
-                     </items>
+                        <MenuItem mnemonicParsing="false" onAction="#cargarListaEnviosPendientes" style="-fx-padding: 0 10;" text="Despacho de Envios" />
+                    </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Ventas">
                     <items>
@@ -52,6 +53,11 @@
                         <MenuItem mnemonicParsing="false" onAction="#cargarKardex" style="-fx-padding: 0 10;" text="Reporte Kardex" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarListaGuias" style="-fx-padding: 0 10;" text="Guias de remision" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoComprobantePago" style="-fx-padding: 0 10;" text="Comprobante de Pago" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Reportes">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#cargarKardex" style="-fx-padding: 0 10;" text="Reporte Kardex" />
                     </items>
                   </Menu>
               </menus>
