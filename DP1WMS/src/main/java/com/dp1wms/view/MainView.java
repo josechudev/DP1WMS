@@ -335,20 +335,7 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
-    },LISTA_LOTES{
-        @Override
-        public String getTitle() {
-            return getStringFromResourceBundle("listaLotes.title");
-        }
-        @Override
-        public String getFxmlFile() {
-            return "/fxml/Movimientos/ListaLotes.fxml";
-        }
-        @Override
-        public boolean isResizable(){
-            return false;
-        }
-    },UBICACION_LOTE{
+    }, UBICACION_LOTE{
         @Override
         public String getTitle() {
             return getStringFromResourceBundle("ubicacionLote.title");
@@ -374,7 +361,8 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
-    };
+    }
+    ;
 
     public String getStringFromResourceBundle(String key) {
         return ResourceBundle.getBundle("Bundle").getString(key);
