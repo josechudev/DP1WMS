@@ -7,8 +7,8 @@ public class TipoEmpleado {
     private long idtipoempleado;
 
     private String descripcion;
-    private List<String> permisos;
-    private Boolean activado;
+    private List<Seccion> permisos;
+    private Boolean activo;
 
     public TipoEmpleado(){}
 
@@ -33,11 +33,19 @@ public class TipoEmpleado {
         this.descripcion = descripcion;
     }
 
-    public List<String> getPermisos() {
+    public List<Seccion> getPermisos() {
         return permisos;
     }
 
-    public void setPermisos(List<String> permisos) {
+    public void setPermisos(List<Seccion> permisos) {
         this.permisos = permisos;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 }
