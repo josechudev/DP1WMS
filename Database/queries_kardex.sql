@@ -43,7 +43,7 @@ select * from detallemovimiento
 select * from producto
 select * from detallecomprobante
 select * from comprobantepago
-
+select * from lote
 
 
 select p.nombreproducto,cp.idcomprobante from producto p
@@ -56,5 +56,4 @@ select p.codigo,p.nombreproducto, p.descripcion,p.stockminimo, p.stock stock_fis
 sum(coalesce(dp.cantidad,0)) cantidad_pedido, (p.stock-sum(coalesce(dp.cantidad,0))) stock_logico
 from producto as p
 left join detallepedido as dp on dp.idproducto = p.idproducto
-where
 group by p.codigo,p.nombreproducto, p.descripcion,p.stockminimo, p.stock, p.preciocompra;
