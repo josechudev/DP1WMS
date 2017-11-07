@@ -81,7 +81,7 @@ public class ReporteAlmacenController implements FxmlController {
 
     @FXML
     private  void consultarAlmacen(){
-
+    
 
         LocalDate desdeLD = this.dp_fecInicio.getValue();
         LocalDate hastaLD = this.dp_fecFin.getValue();
