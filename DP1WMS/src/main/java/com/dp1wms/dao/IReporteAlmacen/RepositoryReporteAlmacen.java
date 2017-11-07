@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface RepositoryReporteAlmacen {
     List<ReporteAlmacen> selectAllKardexFila(String fecInicio, String fecFin);
+    List<ReporteAlmacen> selectAllKardexFila();
 }
