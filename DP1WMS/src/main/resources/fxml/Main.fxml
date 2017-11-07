@@ -60,7 +60,7 @@
                   <Menu mnemonicParsing="false" text="Reportes">
                     <items>
                         <MenuItem fx:id="reportKardexMI" mnemonicParsing="false" onAction="#cargarKardex" style="-fx-padding: 0 10;" text="Reporte Kardex" />
-                        <MenuItem fx:id="reporteAlmacenMI" mnemonicParsing="false" text="Reporte de Almacen" />
+                        <MenuItem fx:id="reporteAlmacenMI" mnemonicParsing="false" onAction="#cargarReporteAlmacen" style="-fx-padding: 0 10;" text="Reporte Almacen" />
                     </items>
                   </Menu>
               </menus>
