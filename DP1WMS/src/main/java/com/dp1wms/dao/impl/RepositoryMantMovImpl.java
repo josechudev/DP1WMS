@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dp1wms.util.DateParser;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -81,7 +82,14 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         lote.setIdProducto(rs.getInt("idproducto"));
         lote.setNombreProducto(rs.getString("nombreproducto"));
         lote.setStockParcial(rs.getInt("stockparcial"));
-        lote.setFechaEntrada(rs.getString("fechaentrada"));
+        Timestamp t_fechaentrada = rs.getTimestamp("fechaentrada");
+        String fecha = DateParser.timestampToString(t_fechaentrada);
+        if(fecha == null){
+            lote.setFechaEntrada("");
+        }else{
+            lote.setFechaEntrada(fecha);
+        }
+        //lote.setFechaEntrada(rs.getString("fechaentrada"));
         lote.setIdLote(rs.getInt("idlote"));
         lote.setCodigoProducto(rs.getString("codigo"));
         // aqui setean todas las columnas que quieran
