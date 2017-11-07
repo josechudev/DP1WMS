@@ -13,4 +13,5 @@ public interface RepositoryMantProducto {
     void updateProducto(Producto producto);
     void deleteProducto(Producto producto);
     List<Producto> buscarProductos(String campo, String dato);
+    List<Producto> obtenerProductosStockLogicoSegunProforma(int idProforma);
 }

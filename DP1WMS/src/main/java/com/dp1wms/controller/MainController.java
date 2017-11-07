@@ -1,11 +1,15 @@
 package com.dp1wms.controller;
 
 import com.dp1wms.controller.UsuarioController.UsuarioCtrl;
+import com.dp1wms.dao.RepositoryMantTipoEmpleado;
 import com.dp1wms.model.Empleado;
+import com.dp1wms.model.Seccion;
+import com.dp1wms.model.TipoEmpleado;
 import com.dp1wms.model.Usuario;
 import com.dp1wms.view.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,11 +17,29 @@ import org.springframework.stereotype.Component;
 import javafx.event.ActionEvent;
 import com.dp1wms.dao.RepositoryMantEmpleado;
 
+import java.util.HashMap;
+import java.util.List;
+
 @Component
 public class MainController implements FxmlController {
 
     private Usuario usuario;
     private Empleado empleado;
+
+    //menu items
+    //Administracion
+    @FXML private MenuItem rolesMI; @FXML private MenuItem usuariosMI;
+    @FXML private MenuItem clientesMI; @FXML private MenuItem categoriasMI;
+    @FXML private MenuItem productosMI;
+    //Almacenes
+    @FXML private MenuItem almacenesCMMI; @FXML private MenuItem almacenesISProdMI;
+    @FXML private MenuItem almacenLoteMI; @FXML private MenuItem almacenDespachoMI;
+    //Ventas
+    @FXML private MenuItem ventaCondComMI; @FXML private MenuItem ventaProformaMI;
+    @FXML private MenuItem ventaConsPedMI; @FXML private MenuItem ventaGenPedMI;
+    @FXML private MenuItem ventaGuiaMI; @FXML private MenuItem ventaCompPago;
+    //Reporte
+    @FXML private MenuItem reportKardexMI; @FXML private MenuItem reporteAlmacenMI;
 
 
     @FXML
@@ -30,7 +52,7 @@ public class MainController implements FxmlController {
     private final UsuarioCtrl usuarioCtrl;
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private RepositoryMantTipoEmpleado repositoryMantTipoEmpleado;
 
     @Autowired
     private RepositoryMantEmpleado repositoryMantEmpleado;
@@ -52,7 +74,40 @@ public class MainController implements FxmlController {
             //Cargar subcontrollador
             this.nombreEmpleadoLabel.setText("Bienvenido, " + this.empleado.getNombre());
             this.tipoEmpleadoLabel.setText(this.empleado.getTipoEmpleado().getDescripcion());
+            this.initMenus();
         }
+    }
+
+    private void initMenus(){
+        //hash menu items
+        HashMap<Integer, MenuItem> menus = new HashMap<>();
+        //administracion
+        menus.put(1, this.rolesMI); menus.put(2, this.usuariosMI);
+        menus.put(3, this.clientesMI); menus.put(4, this.categoriasMI);
+        menus.put(5, this.productosMI);
+        //Almacenes
+        menus.put(6, this.almacenesCMMI); menus.put(7, this.almacenesISProdMI);
+        menus.put(8, this.almacenLoteMI); menus.put(9, this.almacenDespachoMI);
+        //Ventas
+        menus.put(10, this.ventaCondComMI); menus.put(11, this.ventaProformaMI);
+        menus.put(12, this.ventaConsPedMI); menus.put(13, this.ventaGenPedMI);
+        menus.put(14, this.ventaGuiaMI); menus.put(15, this.ventaCompPago);
+        //Reporte
+        menus.put(16, this.reportKardexMI); menus.put(17, this.reporteAlmacenMI);
+
+        TipoEmpleado te = this.empleado.getTipoEmpleado();
+        //cargar secciones
+        List<Seccion> secciones = this.repositoryMantTipoEmpleado.obtenerSeccionesDeTipoEmpleado(te.getIdtipoempleado());
+
+        if(secciones != null){
+            for(Seccion seccion: secciones){
+                MenuItem mi = menus.get(seccion.getIdSeccion());
+                if(mi != null){
+                    mi.setDisable(!seccion.isSeleccionado());
+                }
+            }
+        }
+
     }
 /*
     @FXML
@@ -144,6 +199,10 @@ public class MainController implements FxmlController {
     @FXML
     private void cargarKardex(){
         this.stageManager.mostrarModal(MainView.CARGAR_KARDEX);
+    }
+    @FXML
+    private void cargarReporteAlmacen(){
+        this.stageManager.mostrarModal(MainView.REPORTE_ALMACEN);
     }
 
     @FXML

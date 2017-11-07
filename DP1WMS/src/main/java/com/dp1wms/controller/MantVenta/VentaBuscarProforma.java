@@ -1,8 +1,11 @@
 package com.dp1wms.controller.MantVenta;
 
 import com.dp1wms.controller.FxmlController;
+import com.dp1wms.dao.IProducto.RepositoryMantProducto;
 import com.dp1wms.dao.RepositoryProforma;
+import com.dp1wms.model.Detalle;
 import com.dp1wms.model.DetalleProforma;
+import com.dp1wms.model.Producto;
 import com.dp1wms.model.Proforma;
 import com.dp1wms.util.ClienteCampo;
 import com.dp1wms.util.DateParser;
@@ -41,6 +44,8 @@ public class VentaBuscarProforma implements FxmlController {
 
     @Autowired
     private RepositoryProforma repositoryProforma;
+    @Autowired
+    private RepositoryMantProducto repositoryMantProducto;
 
     private Proforma proforma;
 
@@ -84,6 +89,16 @@ public class VentaBuscarProforma implements FxmlController {
         } else {
             //Obtener los detalles
             ArrayList<DetalleProforma> detalles = this.repositoryProforma.obtenerDetallesDeProforma(p.getIdProforma());
+            List<Producto> productos = this.repositoryMantProducto.obtenerProductosStockLogicoSegunProforma(p.getIdProforma());
+            //Asignar productos que tienen el stock logico correspondiente
+            for(DetalleProforma detalle: detalles){
+                for(Producto prod: productos){
+                    if(detalle.getProducto().getIdProducto() == prod.getIdProducto()){
+                        detalle.setProducto(prod);
+                        break;
+                    }
+                }
+            }
             if(detalles == null){
                 this.stageManager.mostrarErrorDialog("Error Busqueda de Proforma", null,
                         "Hubo un error al seleccionar la proforma. Inténtelo de nuevo.");

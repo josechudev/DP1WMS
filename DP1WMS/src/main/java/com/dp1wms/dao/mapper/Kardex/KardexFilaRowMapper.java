@@ -1,6 +1,5 @@
-package com.dp1wms.dao.mapper.KardexFila;
+package com.dp1wms.dao.mapper.Kardex;
 
-import com.dp1wms.dao.mapper.Producto.ProductoResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

@@ -24,7 +24,7 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
 
     @Override
     public List<Producto> selectAllProducto() {
-        String sql = "select idproducto, nombreproducto, peso, fechavencimiento, p.descripcion, precio, stock, p.idcategoria,cp.descripcion, codigo, fechacreacion, activo,preciocompra,unidades\n" +
+        String sql = "select idproducto, nombreproducto, peso, to_char(fechavencimiento,'DD/MM/YYYY')fechavencimiento, p.descripcion, precio, stock, p.idcategoria,cp.descripcion, codigo,to_char(fechacreacion,'DD/MM/YYYY') fechacreacion, activo,preciocompra,unidades\n" +
                 "from producto p\n" +
                 "left join categoriaproducto as cp on cp.idcategoria = p.idcategoria\n" +
                 "order by idproducto;";
@@ -116,10 +116,12 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
                 "cp.descripcion as categoria, (p.stock - COALESCE (ped.cantidad,0)) as stock "  +
                 "FROM producto p  INNER JOIN categoriaproducto cp " +
                 "ON p.idcategoria = cp.idcategoria " +
-                "LEFT JOIN (SELECT dp.idproducto, SUM(dp.cantidad) as cantidad " +
-                "FROM pedido p INNER JOIN detallepedido dp ON p.idpedido = dp.idpedido " +
-                "WHERE p.idestadopedido = 1 AND  NOT p.esdevolucion " +
-                "GROUP BY dp.idproducto) as ped ON ped.idproducto = p.idproducto WHERE p.activo AND ";
+                "LEFT JOIN (SELECT de.idproducto, SUM(de.cantidad) as cantidad " +
+                "FROM pedido p INNER JOIN envio e ON p.idpedido = e.idpedido " +
+                "INNER JOIN detalleenvio de ON e.idenvio = de.idenvio " +
+                "WHERE NOT e.realizado AND NOT p.esdevolucion AND " +
+                "( p.idestadopedido = 1 OR p.idestadopedido = 5 ) " +
+                "GROUP BY de.idproducto) as ped ON ped.idproducto = p.idproducto WHERE p.activo AND ";
         if(campo != null){
             sql += "lower(p." + campo + ") LIKE ?";
         } else {
@@ -130,6 +132,35 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
             productos = this.jdbcTemplate.query(sql, new Object[]{dato}, this::mapProducto);
             return productos;
         } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public List<Producto> obtenerProductosStockLogicoSegunProforma(int idProforma){
+        try{
+            String sql = "SELECT p.idproducto, p.codigo, p.peso, p.nombreproducto, p.precio, p.idcategoria, " +
+                    "cp.descripcion as categoria, (p.stock - COALESCE (ped.cantidad,0)) as stock "  +
+                    "FROM producto p  INNER JOIN categoriaproducto cp " +
+                    "ON p.idcategoria = cp.idcategoria " +
+                    "LEFT JOIN (SELECT de.idproducto, SUM(de.cantidad) as cantidad " +
+                    "FROM pedido p INNER JOIN envio e ON p.idpedido = e.idpedido " +
+                    "INNER JOIN detalleenvio de ON e.idenvio = de.idenvio " +
+                    "WHERE NOT e.realizado AND NOT p.esdevolucion AND " +
+                    "( p.idestadopedido = 1 OR p.idestadopedido = 5 ) " +
+                    "GROUP BY de.idproducto) as ped ON ped.idproducto = p.idproducto" +
+                    " WHERE p.idproducto in (" +
+                    " SELECT dp.idproducto FROM detalleproforma dp " +
+                    " WHERE dp.idproforma = ? " +
+                    ")";
+
+            List<Producto> productos = this.jdbcTemplate.query(sql,
+                    new Object[]{idProforma},
+                    this::mapProducto);
+
+            return productos;
+        }catch(Exception e){
             e.printStackTrace();
             return null;
         }

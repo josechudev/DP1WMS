@@ -27,6 +27,7 @@ INSERT INTO seccion (descripcion) VALUES ('Generación de Proforma');
 INSERT INTO seccion (descripcion) VALUES ('Consultas de Pedidos');
 INSERT INTO seccion (descripcion) VALUES ('Generación de Pedidos');
 INSERT INTO seccion (descripcion) VALUES ('Administración de Guia de Remisión');
+INSERT INTO seccion (descripcion) VALUES ('Administración de Comprobantes de Pago');
 
 --Reporte
 INSERT INTO seccion (descripcion) VALUES ('Reporte Kardex');
@@ -72,3 +73,5 @@ INSERT INTO tipoempleadoxseccion (idtipoempleado, idseccion, idempleadoauditado)
 VALUES (1,15,1);
 INSERT INTO tipoempleadoxseccion (idtipoempleado, idseccion, idempleadoauditado)
 VALUES (1,16,1);
+INSERT INTO tipoempleadoxseccion (idtipoempleado, idseccion, idempleadoauditado)
+VALUES (1,17,1);

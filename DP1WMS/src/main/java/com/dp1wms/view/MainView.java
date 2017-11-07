@@ -348,6 +348,19 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
+    },REPORTE_ALMACEN{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("cargarReporteAlmacen.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/ReporteAlmacen/ReporteAlmacen.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
     }
     ;
 
