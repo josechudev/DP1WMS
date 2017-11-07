@@ -3,6 +3,7 @@ package com.dp1wms.dao.impl.Producto;
 import com.dp1wms.dao.IProducto.RepositoryMantProducto;
 import com.dp1wms.dao.mapper.Producto.ProductoRowMapper;
 import com.dp1wms.model.Producto;
+import com.dp1wms.util.DateParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -51,7 +52,7 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
                 "fechacreacion," +
                 "activo,preciocompra,unidades) VALUES(default, ?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
-            jdbcTemplate.update(sql,
+           /* jdbcTemplate.update(sql,
                     new Object[]{producto.getNombreProducto(),
                             producto.getPeso(),
                             datetimeFormatter1.parse(producto.getFechaVencimiento()),
@@ -63,8 +64,21 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
                             datetimeFormatter1.parse(producto.getFechaCreacion()),
                             producto.esActivo(),
                             producto.getPrecioCompra(),
+                            producto.getUnidades()});*/
+            jdbcTemplate.update(sql,
+                    new Object[]{producto.getNombreProducto(),
+                            producto.getPeso(),
+                            DateParser.stringToTimestamp(producto.getFechaVencimiento()),
+                            producto.getDescripcion(),
+                            producto.getPrecio(),
+                            producto.getStock(),
+                            producto.getIdCategoria(),
+                            producto.getCodigo(),
+                            DateParser.stringToTimestamp(producto.getFechaCreacion()),
+                            producto.esActivo(),
+                            producto.getPrecioCompra(),
                             producto.getUnidades()});
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
