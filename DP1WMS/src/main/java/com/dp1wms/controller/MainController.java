@@ -1,7 +1,10 @@
 package com.dp1wms.controller;
 
 import com.dp1wms.controller.UsuarioController.UsuarioCtrl;
+import com.dp1wms.dao.RepositoryMantTipoEmpleado;
 import com.dp1wms.model.Empleado;
+import com.dp1wms.model.Seccion;
+import com.dp1wms.model.TipoEmpleado;
 import com.dp1wms.model.Usuario;
 import com.dp1wms.view.*;
 import javafx.fxml.FXML;
@@ -12,6 +15,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import javafx.event.ActionEvent;
 import com.dp1wms.dao.RepositoryMantEmpleado;
+
+import java.util.List;
 
 @Component
 public class MainController implements FxmlController {
@@ -30,7 +35,7 @@ public class MainController implements FxmlController {
     private final UsuarioCtrl usuarioCtrl;
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private RepositoryMantTipoEmpleado repositoryMantTipoEmpleado;
 
     @Autowired
     private RepositoryMantEmpleado repositoryMantEmpleado;
@@ -52,7 +57,15 @@ public class MainController implements FxmlController {
             //Cargar subcontrollador
             this.nombreEmpleadoLabel.setText("Bienvenido, " + this.empleado.getNombre());
             this.tipoEmpleadoLabel.setText(this.empleado.getTipoEmpleado().getDescripcion());
+            this.initMenus();
         }
+    }
+
+    private void initMenus(){
+        TipoEmpleado te = this.empleado.getTipoEmpleado();
+        //cargar secciones
+        List<Seccion> secciones = this.repositoryMantTipoEmpleado.obtenerSeccionesDeTipoEmpleado(te.getIdtipoempleado());
+
     }
 /*
     @FXML
