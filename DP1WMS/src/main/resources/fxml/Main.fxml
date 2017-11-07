@@ -51,6 +51,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#cargarListaEnviosPendientes" style="-fx-padding: 0 10;" text="Envios Pendientes" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarKardex" style="-fx-padding: 0 10;" text="Reporte Kardex" />
                         <MenuItem mnemonicParsing="false" onAction="#cargarListaGuias" style="-fx-padding: 0 10;" text="Guias de remision" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoComprobantePago" style="-fx-padding: 0 10;" text="Comprobante de Pago" />
                     </items>
                   </Menu>
               </menus>

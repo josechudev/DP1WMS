@@ -3,10 +3,7 @@ package com.dp1wms.controller;
 import com.dp1wms.controller.UsuarioController.UsuarioCtrl;
 import com.dp1wms.model.Empleado;
 import com.dp1wms.model.Usuario;
-import com.dp1wms.view.ClientesView;
-import com.dp1wms.view.MainView;
-import com.dp1wms.view.StageManager;
-import com.dp1wms.view.VentasView;
+import com.dp1wms.view.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,12 +150,18 @@ public class MainController implements FxmlController {
     @FXML
     private void cargarDevolucionFactura(){
         System.out.println("cargarDevolucionPedido");
-        this.stageManager.mostrarModal(MainView.DEVOLVER_PEDIDO);
+        this.stageManager.mostrarModal(FacturaView.MANTENIMIENTO_FACTURA);
     }
 
     @FXML
     private void cargarConsultarPedido(){
         this.stageManager.mostrarModal(VentasView.CONSULTAR_PEDIDO);
+    }
+
+    @FXML
+    private void cargarMantenimientoComprobantePago(){
+        System.out.println("cargarDevolucionPedido");
+        this.stageManager.mostrarModal(FacturaView.MANTENIMIENTO_FACTURA);
     }
 
     public void setUsuario(Usuario usuario){
