@@ -309,19 +309,6 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
-    }, DEVOLVER_PEDIDO{
-        @Override
-        public String getTitle() {
-            return getStringFromResourceBundle("devolucionPedido.title");
-        }
-        @Override
-        public String getFxmlFile() {
-            return "/fxml/DevolucionPedido/DevolucionPedido.fxml";
-        }
-        @Override
-        public boolean isResizable(){
-            return false;
-        }
     }, CARGAR_KARDEX{
         @Override
         public String getTitle() {
