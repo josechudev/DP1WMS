@@ -68,6 +68,12 @@ public class RetiroEnvioController implements FxmlController {
 
     public void asignarLoteProducto(ActionEvent event){
         //this.detalleEnvioSeleccionado = tablaDetalleEnvio.getSelectionModel().getSelectedItem();
+
+        if(tablaDetalleEnvio.getSelectionModel().getSelectedItem() == null){
+            this.stageManager.mostrarErrorDialog("Error Retiro de Envio", null,
+                    "Debe seleccionar un producto de la lista");
+            return;
+        }
         this.stageManager.mostrarModal(MainView.SELECCONAR_LOTE);
     }
 
@@ -95,7 +101,23 @@ public class RetiroEnvioController implements FxmlController {
         this.llenarTabla(nuevaLista);
     }
 
+    private Boolean todosEnviosTienenLote(){
+        for(DetalleEnvio detalleEnvio: listaDetalleEnvio){
+               if(!detalleEnvio.getLoteAsociado().equalsIgnoreCase("Si")){
+                   return false;
+               }
+        }
+        return true;
+    }
+
     public void aceptarRetiroEnvio(ActionEvent event){
+
+        if(!this.todosEnviosTienenLote()){
+            this.stageManager.mostrarErrorDialog("Error Retiro Envio", null,
+                    "Debe asignar un lote a todos los productos");
+            return;
+        }
+
         Movimiento movimiento = new Movimiento();
 
         java.util.Date today = new java.util.Date();
