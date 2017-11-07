@@ -55,7 +55,9 @@ public class DevolucionPedidoController implements FxmlController {
         e_table.getItems().clear();
 
         List<ComprobantePago> auxListaComprobantesPago = repositoryComprobantePago.selectAllComprobantes();
+        /*
         try {
+
             for (int i = 0; i < auxListaComprobantesPago.size(); i++) {
                 e_table.getItems().add(new ComprobantePago(auxListaComprobantesPago.get(i).getV_id(),
                         auxListaComprobantesPago.get(i).getV_tipoComprobante(),
@@ -67,10 +69,14 @@ public class DevolucionPedidoController implements FxmlController {
                         auxListaComprobantesPago.get(i).getV_igv(),
                         auxListaComprobantesPago.get(i).getV_total(),
                         auxListaComprobantesPago.get(i).getV_estadoComprobante() ));
+
+
+
             }
         }
         catch(Exception e){
             e.printStackTrace();
         }
-    }
+        */
+        }
 }

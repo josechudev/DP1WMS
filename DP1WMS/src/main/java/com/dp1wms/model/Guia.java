@@ -23,6 +23,7 @@ public class Guia {
     private Integer indiceTabla;
     private String razonSocial;
     private Long idCliente;
+    private Boolean recibido;
 
     private List<DetalleGuia> listaDetalleGuia = new ArrayList<DetalleGuia>();
 
@@ -174,5 +175,13 @@ public class Guia {
 
     public void setIdCliente(Long idCliente) {
         this.idCliente = idCliente;
+    }
+
+    public Boolean getRecibido() {
+        return recibido;
+    }
+
+    public void setRecibido(Boolean recibido) {
+        this.recibido = recibido;
     }
 }

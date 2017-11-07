@@ -43,12 +43,13 @@ public class RepositoryGuiaImpl implements RepositoryGuia {
 
         System.out.println("idGuia Insertado -> "+idGuia);
         List<DetalleGuia> listaDetalleGuia = guia.getListaDetalleGuia();
-        int idEstadoEnviado = 1;// estado enviado
+        //int idEstadoEnviado = 1;// estado enviado
+        Boolean recibido = true;
         for(DetalleGuia detalle : listaDetalleGuia){
             if(idGuia != null){
-                SQL = "INSERT INTO public.detalleguia (idguiaremision,idproducto,cantidad,idestadodetalleremision,peso) VALUES (?,?,?,?,?)";
+                SQL = "INSERT INTO public.detalleguia (idguiaremision,idproducto,cantidad,recibido,peso) VALUES (?,?,?,?,?)";
                 try{
-                    jdbcTemplate.update(SQL,new Object[] {idGuia,detalle.getIdProducto(),detalle.getCantidad(),idEstadoEnviado,detalle.getPeso()});
+                    jdbcTemplate.update(SQL,new Object[] {idGuia,detalle.getIdProducto(),detalle.getCantidad(),recibido,detalle.getPeso()});
                     System.out.println("Se ha insertado en la tabla detalle guia");
                 }catch (EmptyResultDataAccessException e) {
                     e.printStackTrace();
