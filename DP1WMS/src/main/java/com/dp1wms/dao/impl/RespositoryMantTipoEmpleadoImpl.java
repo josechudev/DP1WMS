@@ -65,108 +65,85 @@ public class RespositoryMantTipoEmpleadoImpl implements RepositoryMantTipoEmplea
 
 
     //Para Mantenimiento de Roles
-
-
-    public List<Seccion> selectAllPermisos(){
-        String sql = "SELECT * from Seccion";
-        return jdbcTemplate.query(sql, new SeccionRowMapper());
-    }
-
-    public List<RolxSeccion> selectAllRolesxSeccion(){
-        String sql = "SELECT * from TipoEmpleadoxSeccion";
-        return jdbcTemplate.query(sql, new RolxSeccionMapper());
-    }
-
-    //obtener empleado por nombre
-    public TipoEmpleado getTipoEmpleadoxnombre(String nombre){
-        String sql= "SELECT idtipoempleado, descripcion FROM tipoempleado WHERE descripcion = '"+ nombre +"'";
-        List<TipoEmpleado> tipos_empleado = jdbcTemplate.query(sql, new TipoEmpleadoRowMapper() );
-        try {
-            return tipos_empleado.get(0);
-        }
-        catch(Exception e){
-            TipoEmpleado empleado = new TipoEmpleado();
-            empleado.setDescripcion("Nulo");
-            return empleado;
+    public List<TipoEmpleado> buscarTipoEmpleado(String descripcion){
+        try{
+            String sql = "SELECT idtipoempleado, descripcion, activo FROM tipoempleado " +
+                    "WHERE lower(descripcion) LIKE ? ORDER BY idtipoempleado";
+            descripcion = "%" + descripcion.toLowerCase() + "%";
+            List<TipoEmpleado> tiposEmpleado = jdbcTemplate.query(sql, new Object[]{
+                    descripcion
+            }, (res,i)->{
+                TipoEmpleado te = new TipoEmpleado();
+                te.setIdtipoempleado(res.getLong("idtipoempleado"));
+                te.setDescripcion(res.getString("descripcion"));
+                te.setActivo(res.getBoolean("activo"));
+                return te;
+            });
+            return tiposEmpleado;
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
     }
 
-    //obtener seccion por nombre
-    public Seccion getSeccionpornombre(String nombre){
-        String sql = "SELECT idSeccion, descripcion FROM Seccion WHERE descripcion ='" + nombre + "'";
-        List<Seccion> secciones = jdbcTemplate.query(sql, new SeccionRowMapper());
-        return secciones.get(0);
-    }
-
-    //obtener permisos para tipo de Empleado
-    public List<String> getPermisosTipoEmpleado(String nombre){
-        TipoEmpleado empleado = this.getTipoEmpleadoxnombre(nombre);
-
-        //get lista de ids secciones
-        String sql = "SELECT * FROM TipoEmpleadoXSeccion WHERE idtipoempleado = " + Long.toString(empleado.getIdtipoempleado());
-        List<RolxSeccion> idssecciones = jdbcTemplate.query(sql, new RolxSeccionMapper());
-        List<Integer> ids = new ArrayList<Integer>();
-        for(RolxSeccion r: idssecciones){
-            ids.add(r.getIdSeccion());
-        }
-
-        List<String> secciones = new ArrayList<String>();
-        for(Integer id: ids){
-            String sql2 = "SELECT * FROM Seccion WHERE idSeccion = " + Integer.toString(id);
-            List<Seccion> lista_secciones= jdbcTemplate.query(sql2, new SeccionRowMapper());
-            secciones.add(lista_secciones.get(0).getDescripcion());
-        }
-        return secciones;
-    }
-
-    //insertar en la tabla de secciones (no usar luego de primer insert)
-    public void insertarPermisos(String permiso){
-        String sql = "INSERT INTO Seccion(idSeccion, descripcion) VALUES(default,?)";
-        jdbcTemplate.update(sql,
-                new Object[] {permiso});
-    }
-
-    //insertar tipo de empleado
-    public void insertarTipoEmpleado(String nombre_rol){
-        String sql = "INSERT INTO tipoempleado(idtipoempleado, descripcion) VALUES(default,?) ";
-        jdbcTemplate.update(sql, new Object []{nombre_rol});
-    }
-
-    //asignar permiso a usuario
-    public void asignarPermiso(String nombre_rol, String nombre_permiso){
-        TipoEmpleado empleado = this.getTipoEmpleadoxnombre(nombre_rol);
-        Seccion seccion = this.getSeccionpornombre(nombre_permiso);
-
-        int id_empleado = ((int) empleado.getIdtipoempleado());
-        int id_seccion = seccion.getIdSeccion();
-
-        String sql = "INSERT INTO TipoEmpleadoXSeccion(idTipoEmpleado,idSeccion) VALUES(?,?)";
-        jdbcTemplate.update(sql, new Object[] {id_empleado, id_seccion});
-    }
-
-    //borrar todos los permisos de usuario
-    public void borrarTodosPermisos(String nombre_rol){
-        TipoEmpleado empleado = this.getTipoEmpleadoxnombre(nombre_rol);
-        String sql = "DELETE FROM TipoEmpleadoXSeccion WHERE idTipoEmpleado = " + Long.toString(empleado.getIdtipoempleado()) ;
-        jdbcTemplate.update(sql);
-    }
-
-    //asignar permisos
-    public void asignarTodosPermisos(String nombre_rol, List<String> permisos){
-        TipoEmpleado e = this.getTipoEmpleadoxnombre(nombre_rol);
-        if (e.getDescripcion() == "Nulo"){
-            this.insertarTipoEmpleado(nombre_rol);
-        }
-
-        this.borrarTodosPermisos(nombre_rol);
-
-        for(String permiso: permisos){
-            this.asignarPermiso(nombre_rol,permiso);
+    public List<Seccion> obtenerTodasLasSecciones(){
+        try{
+            String sql = "SELECT * FROM seccion ORDER BY idseccion";
+            List<Seccion> seccions = jdbcTemplate.query(sql, new SeccionRowMapper());
+            return seccions;
+        } catch (Exception e){
+            e.printStackTrace();
+            return  null;
         }
     }
 
-    public void actualizarPermisos(String nombre_rol, List<String> permisos){
-        this.borrarTodosPermisos(nombre_rol);
-        this.asignarTodosPermisos(nombre_rol,permisos);
+    public List<Seccion> obtenerSeccionesDeTipoEmpleado(long idTipoEmpleado){
+        try{
+            String sql = "SELECT s.idseccion, s.descripcion, " +
+                    "(tes.idtipoempleado is not null) as seleccionado " +
+                    "FROM seccion s LEFT JOIN tipoempleadoxseccion tes " +
+                    "ON tes.idseccion = s.idseccion " +
+                    "WHERE tes.idtipoempleado = ? OR tes.idtipoempleado is null " +
+                    "ORDER BY s.idseccion";
+            List<Seccion> seccions = jdbcTemplate.query(sql, new Object[]{idTipoEmpleado},
+                    (res, i)->{
+                        Seccion s = new Seccion();
+                        s.setIdSeccion(res.getInt("idseccion"));
+                        s.setDescripcion(res.getString("descripcion"));
+                        s.setSeleccionado(res.getBoolean("seleccionado"));
+                        return s;
+                    });
+            return seccions;
+        } catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean actualizarPermisos(long idTipoEmpleado,
+                               ArrayList<Seccion> inserts,
+                               ArrayList<Seccion> updates,
+                               ArrayList<Seccion> deletes){
+        return false;
+    }
+
+    public TipoEmpleado crearTipoEmpleado(TipoEmpleado tipoEmpleado){
+        try{
+            String sql = "INSERT INTO tipoempleado (descripcion) " +
+                    "VALUES (?) RETURNING idtipoempleado";
+            TipoEmpleado te = jdbcTemplate.queryForObject(sql, new Object[]{
+                    tipoEmpleado.getDescripcion()},
+                    (res, i)->{
+                        TipoEmpleado teAux = new TipoEmpleado();
+                        teAux.setIdtipoempleado(res.getInt("idtipoempleado"));
+                        return teAux;
+                    });
+            tipoEmpleado.setIdtipoempleado(te.getIdtipoempleado());
+            tipoEmpleado.setActivo(true);
+            return tipoEmpleado;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }
