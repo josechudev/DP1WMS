@@ -1,9 +1,9 @@
 package com.dp1wms;
 
+import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import com.dp1wms.view.FxmlView;
 
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,7 +12,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 
 @SpringBootApplication
-public class MainApp extends Application {
+public class
+MainApp extends Application {
 
     protected ConfigurableApplicationContext springContext;
     protected StageManager stageManager;
@@ -46,7 +47,7 @@ public class MainApp extends Application {
     }
 
     protected void mostrarLogin() {
-        stageManager.cambiarScene(FxmlView.LOGIN);
+        stageManager.cambiarScene(MainView.LOGIN);
     }
 
     private ConfigurableApplicationContext bootstrapSpringApplicationContext(){

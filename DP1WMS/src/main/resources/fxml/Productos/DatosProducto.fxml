@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="323.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantProducto.ProductoDatosController">
+    <children>
+        <TextField fx:id="txt_prodId" editable="true" layoutX="26.0" layoutY="58.0" prefHeight="25.0" prefWidth="25.0" visible="false" />
+        <TextField fx:id="txt_prodPeso" layoutX="403.0" layoutY="71.0" prefHeight="25.0" prefWidth="95.0" />
+        <TextField fx:id="txt_prodCategoria" layoutX="30.0" layoutY="180.0" prefHeight="25.0" prefWidth="95.0" />
+        <Label layoutX="26.0" layoutY="41.0" text="Id:" visible="false" />
+        <Label layoutX="402.0" layoutY="50.0" text="Peso" />
+        <Label layoutX="29.0" layoutY="166.0" text="Categoria" />
+        <TextField fx:id="txt_prodNombre" editable="true" layoutX="29.0" layoutY="71.0" prefHeight="25.0" prefWidth="113.0" />
+        <TextField fx:id="txt_prodFechaV" layoutX="177.0" layoutY="180.0" prefHeight="25.0" prefWidth="95.0" />
+        <TextField fx:id="txt_prodCod" layoutX="177.0" layoutY="118.0" prefHeight="25.0" prefWidth="95.0" />
+        <TextField fx:id="txt_prodPrecio" layoutX="287.0" layoutY="118.0" prefHeight="25.0" prefWidth="95.0" />
+        <TextField fx:id="txt_prodFechaC" layoutX="287.0" layoutY="180.0" prefHeight="25.0" prefWidth="95.0" />
+        <Label layoutX="29.0" layoutY="50.0" text="Nombre producto" />
+        <Label layoutX="175.0" layoutY="166.0" text="Fecha vencimiento" />
+        <Label layoutX="177.0" layoutY="101.0" text="Codigo" />
+        <Label layoutX="286.0" layoutY="102.0" text="Precio de venta" />
+        <Label layoutX="286.0" layoutY="166.0" text="Fecha creacion" />
+        <TextField fx:id="txt_prodStock" editable="true" layoutX="433.0" layoutY="118.0" prefHeight="25.0" prefWidth="25.0" visible="false" />
+        <Label layoutX="433.0" layoutY="102.0" text="Stock" visible="false" />
+        <Label layoutX="433.0" layoutY="166.0" text="Activo" />
+        <Button fx:id="btn_aceptar" layoutX="133.0" layoutY="261.0" mnemonicParsing="false" onAction="#btnClickAceptar" text="Aceptar" />
+        <Button fx:id="btn_cancelar" layoutX="384.0" layoutY="261.0" mnemonicParsing="false" onAction="#btnClickCancelar" text="Cancelar" />
+        <TextField fx:id="txt_prodDescripcion" editable="true" layoutX="177.0" layoutY="71.0" prefHeight="25.0" prefWidth="204.0" />
+        <Label layoutX="177.0" layoutY="50.0" text="Descripcion" />
+        <ComboBox fx:id="cb_prodActivo" layoutX="433.0" layoutY="180.0" prefHeight="25.0" prefWidth="113.0" />
+      <Label layoutX="404.0" layoutY="102.0" text="Precio de compra" />
+      <TextField fx:id="txt_prodPrecioC" layoutX="403.0" layoutY="118.0" prefHeight="25.0" prefWidth="95.0" />
+      <Label layoutX="29.0" layoutY="102.0" text="Unidades" />
+      <TextField fx:id="txt_prodUnidades" layoutX="30.0" layoutY="118.0" prefHeight="25.0" prefWidth="95.0" />
+    </children>
+</AnchorPane>
