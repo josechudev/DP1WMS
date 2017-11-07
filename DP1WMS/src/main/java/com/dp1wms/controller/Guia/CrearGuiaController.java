@@ -87,6 +87,57 @@ public class CrearGuiaController implements FxmlController {
     }
 
     public void registrarGuia(ActionEvent event){
+
+        if(this.txb_numeroguia.getText().equalsIgnoreCase("")){
+            this.stageManager.mostrarErrorDialog("Error creacion Guia de Remision", null,
+                    "Debe ingresar un numero de guia");
+            return;
+        }
+
+        if(dp_fechaEmision.getValue() == null){
+            this.stageManager.mostrarErrorDialog("Error creacion Guia de Remision", null,
+                    "Debe ingresar una fecha de emision");
+            return;
+        }
+
+        if(dp_fechaInicio.getValue() == null){
+            this.stageManager.mostrarErrorDialog("Error creacion Guia de Remision", null,
+                    "Debe ingresar una fecha de inicio de traslado");
+            return;
+        }
+
+        if(dp_fechaFin.getValue() == null){
+            this.stageManager.mostrarErrorDialog("Error creacion Guia de Remision", null,
+                    "Debe ingresar una fecha de fin de traslado");
+            return;
+        }
+
+        if(this.txb_puntoPartida.getText().equalsIgnoreCase("")){
+            this.stageManager.mostrarErrorDialog("Error creacion Guia de Remision", null,
+                    "Debe ingresar un punto de partida");
+            return;
+        }
+
+        if(this.txb_puntoLlegada.getText().equalsIgnoreCase("")){
+            this.stageManager.mostrarErrorDialog("Error creacion Guia de Remision", null,
+                    "Debe ingresar un punto de llegada");
+            return;
+        }
+
+
+        if(this.txb_nombreTransportista.getText().equalsIgnoreCase("")){
+            this.stageManager.mostrarErrorDialog("Error creacion Guia de Remision", null,
+                    "Debe ingresar el nombre del transportista encargado del envio al cliente");
+            return;
+        }
+
+        if(this.txb_numeroPlaca.getText().equalsIgnoreCase("")){
+            this.stageManager.mostrarErrorDialog("Error creacion Guia de Remision", null,
+                    "Debe ingresar el numero de placa");
+            return;
+        }
+
+
         Guia guia = new Guia();
         List<DetalleGuia> listaDetalleGuia = new ArrayList<DetalleGuia>();
         Float pesoTotal = (float)0;

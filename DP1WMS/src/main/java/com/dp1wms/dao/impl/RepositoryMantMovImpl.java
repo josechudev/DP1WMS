@@ -366,7 +366,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
     }
 
 
-    public void insertarUbicacion(int idLote,int idProducto,int idCajon,int cantidad){
+    public void insertarUbicacion(int idLote,int idProducto,int idCajon,int cantidad,Long idEmpleadoAuditado){
         String SQL = "INSERT INTO public.ubicacion (idlote,idproducto,idcajon,cantidad) VALUES (?,?,?,?)";
         try{
             jdbcTemplate.update(SQL,new Object[] {idLote,idProducto,idCajon,cantidad});
@@ -375,9 +375,14 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
             e.printStackTrace();
             throw e;
         }
+
+        java.util.Date today = new java.util.Date();
+        Timestamp fechahoraactual =new java.sql.Timestamp(today.getTime());
+        int idTipoMovimiento = 8;
+        registrarMovimiento(1,"Asignacion de un lote a una ubicacion",fechahoraactual,idTipoMovimiento,idProducto,idLote,cantidad,idEmpleadoAuditado,idCajon);
     }
 
-    public void actualizarUbicacion(int idLote,int idProducto,int idCajon,int cantidad,int idCajonAntiguo){
+    public void actualizarUbicacion(int idLote,int idProducto,int idCajon,int cantidad,int idCajonAntiguo,Long idEmpleadoAuditado){
         //System.out.println(idLote+"|"+idProducto+"|"+idCajon+"|"+cantidad+"|"+idCajonAntiguo);
         String SQL = "UPDATE public.ubicacion SET idcajon=?,cantidad=? WHERE idlote = ? and idproducto = ? and idcajon = ?";
         try{
@@ -387,5 +392,9 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
             e.printStackTrace();
             throw e;
         }
+        java.util.Date today = new java.util.Date();
+        Timestamp fechahoraactual =new java.sql.Timestamp(today.getTime());
+        int idTipoMovimiento = 8;
+        registrarMovimiento(1,"Asignacion de un lote a una ubicacion",fechahoraactual,idTipoMovimiento,idProducto,idLote,cantidad,idEmpleadoAuditado,idCajon);
     }
 }

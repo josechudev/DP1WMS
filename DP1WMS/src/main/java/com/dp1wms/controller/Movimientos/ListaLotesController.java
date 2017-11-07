@@ -38,6 +38,7 @@ public class ListaLotesController implements FxmlController {
     @FXML
     private TableColumn<Lote,String> c_codigo;
 
+    private Long idEmpleadoAuditado;
 
     private List<Lote> listaLotes;
 
@@ -87,6 +88,10 @@ public class ListaLotesController implements FxmlController {
         }
     }
 
+    public Long obtenerIdEmpleadoAuditado(){
+        return this.idEmpleadoAuditado;
+    }
+
     private void limpiarTabla(){
         tablaLotes.getItems().clear();
         c_nombre.setCellValueFactory(new PropertyValueFactory<Lote, String>("nombreProducto"));
@@ -111,5 +116,7 @@ public class ListaLotesController implements FxmlController {
         this.listaLotes = obtenerLotes();
         this.limpiarTabla();
         llenarTabla(this.listaLotes);
+
+        this.idEmpleadoAuditado = this.mainController.getEmpleado().getIdempleado();
     }
 }

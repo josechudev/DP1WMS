@@ -4,6 +4,7 @@ import com.dp1wms.controller.FxmlController;
 import com.dp1wms.controller.MainController;
 import com.dp1wms.dao.RepositoryEnvio;
 import com.dp1wms.model.Envio;
+import com.dp1wms.model.Guia;
 import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -67,6 +69,10 @@ public class ListaEnviosRealizadosController implements FxmlController {
 
         if(tablaEnviosPendientes.getSelectionModel().getSelectedItem() != null){
             this.stageManager.mostrarModal(MainView.CREAR_GUIA);
+        }else{
+            this.stageManager.mostrarErrorDialog("Error Creacion Guia de Remision", null,
+                    "Debe seleccionar un envio para crear la guia");
+            return;
         }
 
     }
@@ -81,12 +87,13 @@ public class ListaEnviosRealizadosController implements FxmlController {
 
     public void actualizarTabla(){
         this.limpiarTabla();
-        this.listaEnvios = this.repositoryEnvio.obtenerEnviosRealizados(true);
+        this.listaEnvios = this.obtenerEnviosRealizadosSinGuias(this.listaGuiasController.obtenerListaGuias());
         this.llenarTabla(this.listaEnvios);
     }
 
     public void actualizarListaGuia(){
         this.listaGuiasController.actualizarListaGuias();
+        this.actualizarTabla();
     }
 
     public void llenarTabla(List<Envio> lista){
@@ -98,14 +105,31 @@ public class ListaEnviosRealizadosController implements FxmlController {
         }
     }
 
+    private List<Envio> obtenerEnviosRealizadosSinGuias(List<Guia> listaGuias){
+        List<Envio> listaEnviosAux = this.repositoryEnvio.obtenerEnviosRealizados(true);
+        List<Envio> listaEnviosRealizados = new ArrayList<Envio>();
+        Boolean añadir = true;
+        for(Envio envio:listaEnviosAux){
+            añadir = true;
+            for(Guia guia : listaGuias){
+                if(envio.getIdEnvio() == guia.getIdEnvio()){
+                    añadir = false;
+                }
+            }
+            if(añadir){
+                listaEnviosRealizados.add(envio);
+            }
+        }
+        return listaEnviosRealizados;
+    }
+
     @Override
     public void initialize() {
-        this.listaEnvios = this.repositoryEnvio.obtenerEnviosRealizados(true);
+        this.listaEnvios = this.obtenerEnviosRealizadosSinGuias(this.listaGuiasController.obtenerListaGuias());
         System.out.println("Tamñao de lista envios recibida de repository->" + this.listaEnvios.size());
         this.limpiarTabla();
         this.llenarTabla(this.listaEnvios);
 
         this.idEmpleadoAuditado = this.listaGuiasController.obtenerIdEmpleadoAuditado();
-
     }
 }
