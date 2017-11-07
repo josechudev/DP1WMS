@@ -60,6 +60,11 @@
                         <MenuItem mnemonicParsing="false" onAction="#cargarKardex" style="-fx-padding: 0 10;" text="Reporte Kardex" />
                     </items>
                   </Menu>
+                  <Menu mnemonicParsing="false" text="Reportes">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#cargarKardex" style="-fx-padding: 0 10;" text="Reporte Kardex" />
+                    </items>
+                  </Menu>
               </menus>
             </MenuBar>
             <AnchorPane prefHeight="381.0" prefWidth="600.0" style="-fx-background-color: #95999C;" VBox.vgrow="ALWAYS">
