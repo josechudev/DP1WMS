@@ -81,7 +81,7 @@ public class ReporteAlmacenController implements FxmlController {
 
     @FXML
     private  void consultarAlmacen(){
-<<<<<<< HEAD
+
 
         LocalDate desdeLD = this.dp_fecInicio.getValue();
         LocalDate hastaLD = this.dp_fecFin.getValue();
@@ -93,9 +93,6 @@ public class ReporteAlmacenController implements FxmlController {
         } else {
             llenarGrilla(dp_fecInicio.getValue().toString(), dp_fecFin.getValue().toString());
         }
-=======
-        llenarGrilla(dp_fecInicio.getValue().toString(),dp_fecFin.getValue().toString());
->>>>>>> 543f23b381864c001ec3349e727717c928e6b9fa
     }
     @Override
     public void initialize() {
