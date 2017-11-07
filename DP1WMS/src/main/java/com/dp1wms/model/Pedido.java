@@ -18,8 +18,6 @@ public class Pedido implements Cabecera{
     private float total;
 
     private Cliente cliente;
-    private EstadoPedido estadoPedido;
-    private int numEnvios;
 
     //Cabecera
     private ArrayList<DetallePedido> detalles;
@@ -174,21 +172,5 @@ public class Pedido implements Cabecera{
 
     public void setCostoflete(float costoflete) {
         this.costoflete = costoflete;
-    }
-
-    public int getNumEnvios() {
-        return numEnvios;
-    }
-
-    public void setNumEnvios(int numEnvios) {
-        this.numEnvios = numEnvios;
-    }
-
-    public EstadoPedido getEstadoPedido() {
-        return estadoPedido;
-    }
-
-    public void setEstadoPedido(EstadoPedido estadoPedido) {
-        this.estadoPedido = estadoPedido;
     }
 }

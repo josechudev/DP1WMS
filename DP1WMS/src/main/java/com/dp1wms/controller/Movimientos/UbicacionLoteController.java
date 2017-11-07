@@ -49,6 +49,8 @@ public class UbicacionLoteController implements FxmlController {
 
     private Boolean esAgregar;
 
+    private Long idEmpleadoAuditado;
+
     private int maxCantidadRestante = 0; // cantidad que se puede ubicar que no este ubicada en ningun lado
 
     @Autowired
@@ -161,9 +163,14 @@ public class UbicacionLoteController implements FxmlController {
         this.llenarTabla(this.listaUbicaciones);
     }
 
+    public Long obtenerIdEmpleadoAuditado(){
+        return this.idEmpleadoAuditado;
+    }
+
     @Override
     public void initialize() {
         this.loteEscogido = listaLotesController.obtenerLoteEscogido();
         this.refrescarTabla();
+        this.idEmpleadoAuditado = this.listaLotesController.obtenerIdEmpleadoAuditado();
     }
 }

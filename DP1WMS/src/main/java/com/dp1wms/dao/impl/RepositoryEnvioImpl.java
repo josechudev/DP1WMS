@@ -91,24 +91,4 @@ public class RepositoryEnvioImpl implements RepositoryEnvio{
         return detalleEnvio;
     }
 
-    public List<Envio> obtenerEnvios(int idPedido){
-        String sql = "SELECT * " +
-                "FROM envio WHERE idpedido = ? ORDER BY idenvio ASC";
-        try{
-            List<Envio> envios = this.jdbcTemplate.query(sql, new Object[]{idPedido},
-                    (res, i)->{
-                        Envio e = new Envio();
-                        e.setIdEnvio(res.getLong("idenvio"));
-                        e.setCostoFlete(res.getFloat("costoflete"));
-                        e.setDestino(res.getString("destino"));
-                        e.setRealizado(res.getBoolean("realizado"));
-                        e.setFechaEnvio(res.getTimestamp("fechaenvio"));
-                        return e;
-                    });
-            return envios;
-        } catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
 }

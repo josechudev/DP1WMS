@@ -76,6 +76,13 @@ public class BusquedaProductoLoteController implements FxmlController {
 
     public void escogerProducto(ActionEvent event){
         Lote lote = tableViewProductos.getSelectionModel().getSelectedItem();
+
+        if(lote == null){
+            this.stageManager.mostrarErrorDialog("Error al escoger lote", null,
+                    "Debe seleccionar un lote");
+            return;
+        }
+
         System.out.println("Nombre Producto: " + lote.getNombreProducto()+" IdLote: "+lote.getIdLote()+" IdProducto: "+lote.getIdProducto());
 
         ingresoProductoController.actualizarDataLote(lote);

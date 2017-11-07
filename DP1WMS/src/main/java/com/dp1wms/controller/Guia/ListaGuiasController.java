@@ -62,6 +62,14 @@ public class ListaGuiasController implements FxmlController {
         tablaGuias.setEditable(true);
     }
 
+    public void cancelarOperacion(ActionEvent event){
+        this.stageManager.cerrarVentana(event);
+    }
+
+    public List<Guia> obtenerListaGuias(){
+        return this.listaGuias;
+    }
+
 
     public void llenarTabla(List<Guia> lista){
         Integer indice = 1;
