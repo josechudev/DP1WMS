@@ -222,6 +222,12 @@ public class MainController implements FxmlController {
         this.stageManager.mostrarModal(FacturaView.MANTENIMIENTO_FACTURA);
     }
 
+
+    @FXML
+    private void cargarListaLotes(){
+        this.stageManager.mostrarModal(MainView.LISTA_LOTES);
+    }
+
     public void setUsuario(Usuario usuario){
         this.usuario = usuario;
     }
