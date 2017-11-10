@@ -56,4 +56,20 @@ select p.codigo,p.nombreproducto, p.descripcion,p.stockminimo, p.stock stock_fis
 sum(coalesce(dp.cantidad,0)) cantidad_pedido, (p.stock-sum(coalesce(dp.cantidad,0))) stock_logico
 from producto as p
 left join detallepedido as dp on dp.idproducto = p.idproducto
+left join pedido as pd on pd.idpedido = dp.idpedido
+where (not pd.esdevolucion) and pd.idestadopedido = 1 and pd.fechacreacion < ? and pd.fechacreacion> ?
+group by p.codigo,p.nombreproducto, p.descripcion,p.stockminimo, p.stock, p.preciocompra;
+
+
+select * from envio
+select * from detalleenvio
+
+select p.codigo,p.nombreproducto, p.descripcion,p.stockminimo, p.stock stock_fisico, coalesce(p.preciocompra,0) preciocompra,
+sum(coalesce(de.cantidad,0)) cantidad_pedido, (p.stock-sum(coalesce(de.cantidad,0))) stock_logico
+from producto as p
+left join detallepedido as dp on dp.idproducto = p.idproducto
+left join pedido as pd on pd.idpedido = dp.idpedido
+left join envio as e on e.idpedido = pd.idpedido
+left join detalleenvio as de on de.idenvio = e.idenvio
+where (not pd.esdevolucion) and pd.idestadopedido in (1,5) and not(e.realizado)
 group by p.codigo,p.nombreproducto, p.descripcion,p.stockminimo, p.stock, p.preciocompra;
