@@ -40,17 +40,28 @@ public class ReporteAlmacenController implements FxmlController {
                 <TableColumn fx:id="c_stockTotal" prefWidth="88.0" text="Stock Total"/>
      */
 
-    @FXML private TableView<ReporteAlmacen> tableViewReporteAlmacen;
-    @FXML private TableColumn<ReporteAlmacen,String> c_codigo;
-    @FXML private TableColumn<ReporteAlmacen,String> c_prod;
-    @FXML private TableColumn<ReporteAlmacen,String>c_descripcion;
-    @FXML private TableColumn<ReporteAlmacen,Integer> c_stockMinimo;
-    @FXML private TableColumn<ReporteAlmacen,Float> c_precioCompra;
-    @FXML private TableColumn<ReporteAlmacen,Integer> c_stockActual;
-    @FXML private TableColumn<ReporteAlmacen,Integer> c_stockPedidos;
-    @FXML private TableColumn<ReporteAlmacen,Integer> c_stockTotal;
-    @FXML private DatePicker dp_fecInicio;
-    @FXML private DatePicker dp_fecFin;
+    @FXML
+    private TableView<ReporteAlmacen> tableViewReporteAlmacen;
+    @FXML
+    private TableColumn<ReporteAlmacen, String> c_codigo;
+    @FXML
+    private TableColumn<ReporteAlmacen, String> c_prod;
+    @FXML
+    private TableColumn<ReporteAlmacen, String> c_descripcion;
+    @FXML
+    private TableColumn<ReporteAlmacen, Integer> c_stockMinimo;
+    @FXML
+    private TableColumn<ReporteAlmacen, Float> c_precioCompra;
+    @FXML
+    private TableColumn<ReporteAlmacen, Integer> c_stockActual;
+    @FXML
+    private TableColumn<ReporteAlmacen, Integer> c_stockPedidos;
+    @FXML
+    private TableColumn<ReporteAlmacen, Integer> c_stockTotal;
+    @FXML
+    private DatePicker dp_fecInicio;
+    @FXML
+    private DatePicker dp_fecFin;
 
     @Autowired
     private RepositoryReporteAlmacen repositoryReporteAlmacen;
@@ -63,50 +74,56 @@ public class ReporteAlmacenController implements FxmlController {
 
     }
 
-    private void llenarGrilla(){
+    private void llenarGrilla() {
         tableViewReporteAlmacen.getItems().clear();
         List<ReporteAlmacen> reporteAlmacenList = repositoryReporteAlmacen.selectAllKardexFila();
-        for (ReporteAlmacen r : reporteAlmacenList){
+        for (ReporteAlmacen r : reporteAlmacenList) {
             tableViewReporteAlmacen.getItems().add(r);
         }
     }
 
-    private void llenarGrilla(String fecInicio,String fecFin){
+    private void llenarGrilla(String fecInicio, String fecFin) {
         tableViewReporteAlmacen.getItems().clear();
-        List<ReporteAlmacen> reporteAlmacenList = repositoryReporteAlmacen.selectAllKardexFila(fecInicio,fecFin);
-        for (ReporteAlmacen r : reporteAlmacenList){
+        List<ReporteAlmacen> reporteAlmacenList = repositoryReporteAlmacen.selectAllKardexFila(fecInicio, fecFin);
+        for (ReporteAlmacen r : reporteAlmacenList) {
             tableViewReporteAlmacen.getItems().add(r);
         }
     }
 
     @FXML
-    private  void consultarAlmacen(){
-    
+    private void consultarAlmacen() {
 
         LocalDate desdeLD = this.dp_fecInicio.getValue();
         LocalDate hastaLD = this.dp_fecFin.getValue();
 
         //mas validacion
-        if(desdeLD == null || hastaLD == null || desdeLD.isAfter(hastaLD)) {
+        if (desdeLD == null || hastaLD == null || desdeLD.isAfter(hastaLD)) {
             this.stageManager.mostrarErrorDialog("Error Buscar Proforma", null,
                     "Debe seleccionar un rango de fecha adecuado");
         } else {
             llenarGrilla(dp_fecInicio.getValue().toString(), dp_fecFin.getValue().toString());
         }
     }
+
+
+    @FXML
+    private void actualizarAlmacen() {
+        llenarGrilla();
+    }
+
     @Override
     public void initialize() {
 
         dp_fecInicio.setValue(LOCAL_DATE("01-09-2017"));
         dp_fecFin.setValue(LOCAL_DATE("22-11-2017"));
-        c_codigo.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen,String>("codigo"));
-        c_prod.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen,String>("nombreproducto"));
-        c_descripcion.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen,String>("descripcion"));
-        c_stockMinimo.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen,Integer>("stockMinimo"));
-        c_precioCompra.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen,Float>("precioCompra"));
-        c_stockActual.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen,Integer>("stockFisico"));
-        c_stockPedidos.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen,Integer>("cantidadPedido"));
-        c_stockTotal.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen,Integer>("stockLogico"));
+        c_codigo.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen, String>("codigo"));
+        c_prod.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen, String>("nombreproducto"));
+        c_descripcion.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen, String>("descripcion"));
+        c_stockMinimo.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen, Integer>("stockMinimo"));
+        c_precioCompra.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen, Float>("precioCompra"));
+        c_stockActual.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen, Integer>("stockFisico"));
+        c_stockPedidos.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen, Integer>("cantidadPedido"));
+        c_stockTotal.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen, Integer>("stockLogico"));
 
         llenarGrilla();
 
@@ -121,7 +138,7 @@ public class ReporteAlmacenController implements FxmlController {
 
     }
 
-    public static final LocalDate LOCAL_DATE (String dateString){
+    public static final LocalDate LOCAL_DATE(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate localDate = LocalDate.parse(dateString, formatter);
         return localDate;

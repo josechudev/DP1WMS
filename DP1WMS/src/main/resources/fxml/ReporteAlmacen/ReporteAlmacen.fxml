@@ -16,7 +16,7 @@
                 <TableColumn fx:id="c_prod" prefWidth="154.0" text="Producto" />
                 <TableColumn fx:id="c_descripcion" prefWidth="154.0" text="Descripcion" />
                 <TableColumn fx:id="c_stockMinimo" prefWidth="154.0" text="Stock Minimo" />
-                <TableColumn fx:id="c_precioCompra" prefWidth="154.0" text="Precio de Compra" />
+                <TableColumn fx:id="c_precioCompra" prefWidth="154.0" text="Precio de Compra" visible="false" />
                 <TableColumn fx:id="c_stockActual" prefWidth="154.0" text="Stock Actual" />
                 <TableColumn fx:id="c_stockPedidos" prefWidth="154.0" text="Nro Prod.Pedidos" />
                 <TableColumn fx:id="c_stockTotal" prefWidth="88.0" text="Stock Logico" />
@@ -35,5 +35,6 @@
         <Label layoutX="266.0" layoutY="70.0" text="Hasta" />
         <Button fx:id="btn_Consulta" focusTraversable="false" layoutX="528.0" layoutY="99.0" mnemonicParsing="false" onAction="#consultarAlmacen" text="Consultar" />
         <DatePicker fx:id="dp_fecFin" editable="false" layoutX="266.0" layoutY="99.0" prefWidth="187.0" />
+      <Button fx:id="btn_Actualizar" focusTraversable="false" layoutX="650.0" layoutY="99.0" mnemonicParsing="false" onAction="#actualizarAlmacen" text="Actualizar" />
     </children>
 </AnchorPane>
