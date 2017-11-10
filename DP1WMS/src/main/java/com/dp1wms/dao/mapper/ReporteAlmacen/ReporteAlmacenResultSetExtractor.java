@@ -12,7 +12,7 @@ public class ReporteAlmacenResultSetExtractor implements ResultSetExtractor {
     public Object extractData(ResultSet resultSet) throws SQLException, DataAccessException {
         ReporteAlmacen reporteAlmacen = new ReporteAlmacen();
         reporteAlmacen.setCodigo(resultSet.getString("codigo"));
-        reporteAlmacen.setNombreproducto(resultSet.getString("cantidad_pedido"));
+        reporteAlmacen.setNombreproducto(resultSet.getString("nombreproducto"));
         reporteAlmacen.setDescripcion(resultSet.getString("descripcion"));
         reporteAlmacen.setStockMinimo(resultSet.getInt("stockminimo"));
         reporteAlmacen.setStockFisico(resultSet.getInt("stock_fisico"));
