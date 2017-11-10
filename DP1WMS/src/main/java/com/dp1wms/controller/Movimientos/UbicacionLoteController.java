@@ -120,8 +120,11 @@ public class UbicacionLoteController implements FxmlController {
 
     public Boolean cajonExiste(int idCajon) {
         for (Ubicacion ubicacion : this.listaUbicaciones) {
-            if(this.ubicacionEscogida.getIdCajon() == idCajon){
-                return false;
+
+            if(this.ubicacionEscogida != null){
+                if(this.ubicacionEscogida.getIdCajon() == idCajon){
+                    return false;
+                }
             }
 
             if (ubicacion.getIdCajon() == idCajon) {
