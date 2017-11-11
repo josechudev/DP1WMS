@@ -44,7 +44,13 @@ public class ListaEnvio implements FxmlController {
     public void _llenarGrila(){
         tablaEnviosPendientes.getItems().clear();
         List<Envio> auxListaEnvio = v_parentController.selectAllEnviosSinComprobantePago();
-        this.tablaEnviosPendientes.getItems().addAll(auxListaEnvio);
+
+        for(int i = 0; i < auxListaEnvio.size(); i++){
+            if( !v_parentController.existeFacturaActiva( auxListaEnvio.get(i).getIdEnvio() ) )
+                this.tablaEnviosPendientes.getItems().add(auxListaEnvio.get(i));
+        }
+        //this.tablaEnviosPendientes.getItems().addAll(auxListaEnvio);
+
     }
 
     public void _setControllerParent(MantenimientoFacturaController v_parentController){
