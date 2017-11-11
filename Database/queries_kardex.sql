@@ -70,6 +70,18 @@ from producto as p
 left join detallepedido as dp on dp.idproducto = p.idproducto
 left join pedido as pd on pd.idpedido = dp.idpedido
 left join envio as e on e.idpedido = pd.idpedido
-left join detalleenvio as de on de.idenvio = e.idenvio
+left join detalleenvio as de on de.idenvio = e.idenvio and de.idproducto = p.idproducto
 where (not pd.esdevolucion) and pd.idestadopedido in (1,5) and not(e.realizado)
 group by p.codigo,p.nombreproducto, p.descripcion,p.stockminimo, p.stock, p.preciocompra;
+
+select * from producto
+
+
+select * from envio fecha
+
+select idproducto,sum(cantidad) from detalleenvio where idproducto=1 group by (idproducto)
+
+
+select e.idenvio,e.realizado,de.idproducto,de.tot_cantidad  from envio e
+left join (select idenvio,idproducto,sum(cantidad) tot_cantidad from detalleenvio where idproducto=1 group by (idenvio,idproducto)) as de on de.idenvio = e.idenvio
+where not(realizado)
