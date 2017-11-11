@@ -157,7 +157,7 @@ public class GestorAlmacen {
             finY += 2*dir.getDy();
             iniY -= 2*dir.getDy();
             while(iniY != finY){
-                if(iniY < 0 || iniY >= ancho){
+                if(iniY < 0 || iniY >= alto){
                     iniY += dir.getDy();
                     continue;
                 }
@@ -388,9 +388,13 @@ public class GestorAlmacen {
         alm.setNodos(nodos);
     }
 
-    public static void llenarConProdYPtoPartida(Almacen alm, ArrayList<Producto> productos){
+    public static void llenarConProdYPtoPartida(Almacen alm, ArrayList<Producto> productos, Point puntoInicio){
         boolean[][] nodos = alm.getNodos();
         boolean[][] prods = alm.getProductos();
+
+        //punto de inicio
+        nodos[puntoInicio.x][puntoInicio.y] = true;
+
         for(Producto prod: productos){
             Point posProd = prod.getPosicion();
             if(prod.getRack().esHorizontal()){

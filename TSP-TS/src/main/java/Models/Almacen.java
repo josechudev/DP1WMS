@@ -46,23 +46,18 @@ public class Almacen {
 
     public void imprimirAlmacen(){
 
-        for (int i = 0; i < alto; i++) {
-            for (int j = 0; j < ancho; j++) {
+        for (int i = 0; i < ancho; i++) {
+            for (int j = 0; j < alto; j++) {
 
-                if(productos[i][j]){
-                    System.out.println("PP");
-                }
-                else{
-                    if(nodos[i][j]){
+                if(almacen[i][j]){
+                    System.out.print("XX");
+                } else {
+                    if(productos[i][j]){
+                        System.out.print("PP");
+                    } else if (nodos[i][j]){
                         System.out.print("NN");
-                    }
-                    else{
-                        if(almacen[i][j]){
-                            System.out.print("XX");
-                        }
-                        else{
-                            System.out.print("  ");
-                        }
+                    } else {
+                        System.out.print("  ");
                     }
                 }
             }

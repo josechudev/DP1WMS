@@ -12,15 +12,12 @@ import static java.lang.Math.abs;
 
 public class GestorProducto {
 
-    public static ArrayList<Producto> generarProductos(Almacen almacen, int numProd, Point puntoPartida){
+    public static ArrayList<Producto> generarProductos(Almacen almacen, int numProd){
 
         Random randomNumRack = new Random();
 
         ArrayList<Producto> productos = new ArrayList<Producto>();
         ArrayList<Rack> racks = almacen.getRacks();
-
-        //Simular punto de partida
-        productos.add(new Producto(0, "Punto de Partida", puntoPartida));
 
         //Generar productos aleatorios
         for(int i = 1; i < numProd+1; i++){

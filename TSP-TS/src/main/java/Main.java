@@ -32,11 +32,11 @@ public class Main {
 
         //Productos aleatorios
         int numProductos = 5;
-        ArrayList<Producto> productos = GestorProducto.generarProductos(alm, numProductos, puntoInicio);
+        ArrayList<Producto> productos = GestorProducto.generarProductos(alm, numProductos);
 
 
         //puntos de interes inicial
-        GestorAlmacen.llenarConProdYPtoPartida(alm, productos);
+        GestorAlmacen.llenarConProdYPtoPartida(alm, productos, puntoInicio);
 
         //Puntos de interés
         GestorAlmacen.generarNodos(alm);

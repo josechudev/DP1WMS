@@ -60,9 +60,9 @@ public class ExpNumerica {
             alm.limpiarNodos();
             int numProductos = random.nextInt(this.productosMax - this.productosMin) + this.productosMin;
             this.numProductos[i] = numProductos;
-            ArrayList<Producto> productos = GestorProducto.generarProductos(alm, numProductos, puntoInicio);
+            ArrayList<Producto> productos = GestorProducto.generarProductos(alm, numProductos);
 
-            GestorAlmacen.llenarConProdYPtoPartida(alm, productos);
+            GestorAlmacen.llenarConProdYPtoPartida(alm, productos, puntoInicio);
             GestorAlmacen.generarNodos(alm);
 
             GestorDistancias dist = new GestorDistancias(alm);
