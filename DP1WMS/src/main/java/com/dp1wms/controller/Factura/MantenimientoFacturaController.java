@@ -5,6 +5,7 @@ import com.dp1wms.dao.RepositoryComprobantePago;
 import com.dp1wms.dao.RepositoryEnvio;
 import com.dp1wms.model.ComprobantePago;
 import com.dp1wms.model.Envio;
+import com.dp1wms.model.TipoComprobantePago;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,6 +29,8 @@ import java.util.List;
 public class MantenimientoFacturaController implements FxmlController {
 
     private final StageManager stageManager;
+
+    private com.dp1wms.model.Usuario usuario;
 
     @FXML private TableView<ComprobantePago> e_table;
     @FXML private TableColumn<ComprobantePago, Long> e_id;
@@ -108,14 +111,37 @@ public class MantenimientoFacturaController implements FxmlController {
 
     }
 
-    public void btnClickModificar(ActionEvent event){
+    public void btnClickDetalle(ActionEvent event){
+        /*
         if( (repositoryComprobantePago.selectAllTipoComprobantePago() == null)
                 || (repositoryComprobantePago.selectAllTipoComprobantePago().size() == 0) ){
             mostrarErrorDialog("No hay ningun tipo de comprobante de pago",
                     "Ningun tipo de comprobante de pago registrado. Registrar al menos uno para continuar");
             return;
+        }*/
+        if(e_table.getSelectionModel().getSelectedItem() == null){
+            mostrarErrorDialog("Error Comprobante de Pago",
+                    "No se selecciono ningun comprobante de pago.");
+            return;
         }
 
+        Parent root = null;
+        FXMLLoader loader;
+        //
+        try {
+            loader =new FXMLLoader(getClass().getResource("/fxml/FacturaFxml/DetalleComprobantePago.fxml"));
+            root = (Parent) loader.load();
+            DetalleComprobantePagoController controller = loader.getController();
+            controller._setData(e_table.getSelectionModel().getSelectedItem(), repositoryComprobantePago.getDetalleComprobantePago( e_table.getSelectionModel().getSelectedItem().getV_id() ) );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene scene = new Scene(root);
+        Window existingWindow = ((Node) event.getSource()).getScene().getWindow();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
@@ -141,4 +167,16 @@ public class MantenimientoFacturaController implements FxmlController {
         return repositoryEnvio.obtenerListaEnvio();
     }
 
+    public List<TipoComprobantePago> selectAllTipoComprobantePago(){ return repositoryComprobantePago.selectAllTipoComprobantePago(); }
+
+    public void crearComprobantePago(Envio auxEnvio, String auxNombreTipoComprobante){
+        TipoComprobantePago auxTipoComprobantePago = repositoryComprobantePago.getIdTipoComprobantePago(auxNombreTipoComprobante);
+        repositoryComprobantePago.crearComprobantePago(auxEnvio, auxTipoComprobantePago, this.usuario);
+    }
+
+
+
+    public void setUsuario(com.dp1wms.model.Usuario usuario){
+        this.usuario = usuario;
+    }
 }
