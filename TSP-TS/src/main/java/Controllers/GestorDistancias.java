@@ -49,6 +49,15 @@ public class GestorDistancias {
         return this.nodos.size();
     }
 
+    public int [] generarCaminoInicial(){
+        int [] camino = new int[this.obtenerNumeroNodos() + 1];
+
+        for(int i = 0; i < this.obtenerNumeroNodos(); i++){
+            camino[i] = i;
+        }
+        camino[camino.length - 1] = 0;
+        return camino;
+    }
 
     public int [][] calcularDistancias(){
         obtenerNodos();
@@ -101,7 +110,7 @@ public class GestorDistancias {
                 if(i==j)
                     matrizDistancia[i][j] =0;
                 else
-                    matrizDistancia[i][j] = almacen.getAlto()*almacen.getAncho();
+                    matrizDistancia[i][j] = almacen.getAlto()*almacen.getAncho()*almacen.getAlto()*almacen.getAncho();
             }
         }
         //System.out.println(posNodos.size());
@@ -117,12 +126,12 @@ public class GestorDistancias {
 
     private void distanciaYneg(Point point, int nodoId) {
         int dis=1;
-        for (int i = point.y-1;  ; i--) {
+        for (int i = point.y-1; i >= 0 ; i--) {
             if(!estaEnAlmacen(point.x,i)) break;
-            if(almacen.getAlmacen()[point.x][i]==true)
+            if(almacen.getAlmacen()[point.x][i])
                 break;
             else{
-                if(almacen.getNodos()[point.x][i]==true){
+                if(almacen.getNodos()[point.x][i]){
                     int pos = posNodos.indexOf(new Point(point.x,i));
                     //debug System.out.println(pos);
                     agregarDistancia(nodoId,pos,abs(dis));
@@ -131,12 +140,11 @@ public class GestorDistancias {
             }
             dis++;
         }
-
     }
 
     private void distanciaYpos(Point point,int nodoId) {
         int dis =1;
-        for (int i = point.y+1;  ; i++) {
+        for (int i = point.y+1; i < this.almacen.getAlto() ; i++) {
             if(!estaEnAlmacen(point.x,i)) break;
             if(almacen.getAlmacen()[point.x][i]==true)
                 break;
@@ -154,7 +162,7 @@ public class GestorDistancias {
 
     private void distanciaXneg(Point point,int nodoId) {
         int dis =1;
-        for (int i = point.x-1; ; i--) {
+        for (int i = point.x-1; i >= 0 ; i--) {
             if(!estaEnAlmacen(i,point.y)) break;
             if(almacen.getAlmacen()[i][point.y]==true)
                 break;
@@ -171,7 +179,7 @@ public class GestorDistancias {
 
     private void distanciaXpos(Point point,int nodoId) {
         int dis = 1;
-        for (int i = point.x+1; ; i++) {
+        for (int i = point.x+1; i < this.almacen.getAncho() ; i++) {
             if(!estaEnAlmacen(i,point.y)) break;
             if(almacen.getAlmacen()[i][point.y]==true)
                 break;
