@@ -146,10 +146,44 @@ public class MantenimientoFacturaController implements FxmlController {
     }
 
     public void btnClickCancelar(){
+        if(e_table.getSelectionModel().getSelectedItem() == null){
+            mostrarErrorDialog("Error Comprobante de Pago",
+                    "No se selecciono ningun comprobante de pago.");
+            return;
+        }
+
+        if(!e_table.getSelectionModel().getSelectedItem().isV_activo()){
+            mostrarErrorDialog("Error Comprobante de Pago",
+                    "El comprobante de pago ya ha sido cancelado.");
+            return;
+        }
+
+        repositoryComprobantePago.cambiarActivo(false, e_table.getSelectionModel().getSelectedItem().getV_id(), this.usuario);
+        this._llenarGrilla();
+
+        mostrarInfoDialog("Deshabilitar Comprobante de Pago",
+                "Se deshabilito el comprobante de pago con exito.");
 
     }
 
     public void btnClickRenovar(){
+        if(e_table.getSelectionModel().getSelectedItem() == null){
+            mostrarErrorDialog("Error Comprobante de Pago",
+                    "No se selecciono ningun comprobante de pago.");
+            return;
+        }
+
+        if(e_table.getSelectionModel().getSelectedItem().isV_activo()){
+            mostrarErrorDialog("Error Comprobante de Pago",
+                    "El comprobante de pago se encuentra activo.");
+            return;
+        }
+
+        repositoryComprobantePago.cambiarActivo(true, e_table.getSelectionModel().getSelectedItem().getV_id(), this.usuario);
+        this._llenarGrilla();
+
+        mostrarInfoDialog("Habilitar Comprobante de Pago",
+                "Se habilito el comprobante de pago con exito.");
 
     }
 
@@ -174,7 +208,9 @@ public class MantenimientoFacturaController implements FxmlController {
         repositoryComprobantePago.crearComprobantePago(auxEnvio, auxTipoComprobantePago, this.usuario);
     }
 
-
+    public boolean existeFacturaActiva(Long auxIdEnvio){
+        return repositoryComprobantePago.existeFacturaActiva(auxIdEnvio);
+    }
 
     public void setUsuario(com.dp1wms.model.Usuario usuario){
         this.usuario = usuario;

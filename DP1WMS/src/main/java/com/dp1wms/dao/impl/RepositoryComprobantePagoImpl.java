@@ -25,6 +25,25 @@ public class RepositoryComprobantePagoImpl implements RepositoryComprobantePago 
                 "Cp.subtotal, Cp.costoFlete, Cp.igv, Cp.total, Cp.idEnvio, Cp.activo " +
                 "FROM ComprobantePago Cp INNER JOIN TipoComprobante Tc ON Cp.idTipoComprobante = Tc.idTipoComprobante " +
                 "INNER JOIN Cliente C ON Cp.idCliente = C.idCliente " +
+                //"WHERE Cp.activo = true " +
+                "ORDER BY Cp.idComprobante";
+
+        try{
+            return jdbcTemplate.query(sql,
+                    new ComprobantePagoRowMapper());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<ComprobantePago> selectAllComprobantesActivos(){
+        String sql = "SELECT Cp.idComprobante, Cp.idTipoComprobante, Tc.descripcion, " +
+                "Cp.idCliente, C.razonSocial, Cp.fechaCreacion, Cp.fechaModificacion, " +
+                "Cp.subtotal, Cp.costoFlete, Cp.igv, Cp.total, Cp.idEnvio, Cp.activo " +
+                "FROM ComprobantePago Cp INNER JOIN TipoComprobante Tc ON Cp.idTipoComprobante = Tc.idTipoComprobante " +
+                "INNER JOIN Cliente C ON Cp.idCliente = C.idCliente " +
                 "WHERE Cp.activo = true " +
                 "ORDER BY Cp.idComprobante";
 
@@ -220,6 +239,38 @@ public class RepositoryComprobantePagoImpl implements RepositoryComprobantePago 
         } catch (Exception e){
             e.printStackTrace();
             return  null;
+        }
+    }
+
+    public void cambiarActivo(boolean auxActivo, Long auxIdComprobante, Usuario auxUsuario){
+        String sql = "UPDATE ComprobantePago SET activo  = ?, fechaModificacion = now(), idEmpleadoAuditado = ?" +
+                "WHERE idComprobante = ?";
+        try {
+            jdbcTemplate.update(sql,
+                    new Object[]{ auxActivo, auxUsuario.getIdusuario(),
+                            auxIdComprobante});
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public boolean existeFacturaActiva(Long auxIdEnvio){
+        String sql = "SELECT idComprobante " +
+                "FROM ComprobantePago " +
+                "WHERE idEnvio = ? and activo = true ";
+
+        try{
+            return ( ( jdbcTemplate.query(sql,
+                    new Object[]{ auxIdEnvio },
+                    (res,i)->{
+                        ComprobantePago dpAux = new ComprobantePago();
+                        dpAux.setV_id (res.getLong(1));
+                        return dpAux;
+                    }) ).size() != 0 );
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return false;
         }
     }
 }
