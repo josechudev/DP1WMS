@@ -115,4 +115,35 @@ public class RepositoryEnvioImpl implements RepositoryEnvio{
             return null;
         }
     }
+
+    public List<Envio> obtenerListaEnvio(){
+
+        String sql = "SELECT e.idenvio, e.fechaenvio, e.destino, " +
+                "e.realizado,e.idpedido, p.idcliente,c.razonsocial " +
+                "FROM public.envio e INNER JOIN public.pedido p ON e.idpedido = p.idpedido " +
+                "INNER JOIN public.cliente c ON  c.idcliente = p.idcliente " +
+                "WHERE (not p.esdevolucion) ";
+        String SQL = "SELECT e.idenvio,e.fechaenvio,e.destino,e.realizado,e.idpedido, p.idcliente,c.razonsocial " +
+                "FROM public.envio e ,public.pedido p,public.cliente c " +
+                "WHERE (e.realizado = ?) and e.idpedido = p.idpedido and (not p.esdevolucion) and (c.idcliente = p.idcliente) ";
+        List<Envio> listaEnvios = null;
+        try{
+            listaEnvios = jdbcTemplate.query(sql,new Object[] {}, this::mapParam);
+        }catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+        }
+
+        for(Envio envio: listaEnvios){
+
+            List<DetalleEnvio> listaDetalle = this.obtenerDetalleEnvio(envio.getIdEnvio());
+
+            if(listaDetalle != null){
+                envio.setDetalleEnvio(listaDetalle);
+            }
+        }
+
+
+        return listaEnvios;
+
+    }
 }

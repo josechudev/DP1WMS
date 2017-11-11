@@ -2,15 +2,26 @@ package com.dp1wms.controller.Factura;
 
 import com.dp1wms.controller.FxmlController;
 import com.dp1wms.dao.RepositoryComprobantePago;
+import com.dp1wms.dao.RepositoryEnvio;
 import com.dp1wms.model.ComprobantePago;
+import com.dp1wms.model.Envio;
 import com.dp1wms.view.StageManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.List;
 
 @Component
@@ -32,6 +43,9 @@ public class MantenimientoFacturaController implements FxmlController {
 
     @Autowired
     private RepositoryComprobantePago repositoryComprobantePago;
+    @Autowired
+    private RepositoryEnvio repositoryEnvio;
+
 
     @Autowired @Lazy
     public MantenimientoFacturaController(StageManager stageManager){
@@ -64,7 +78,7 @@ public class MantenimientoFacturaController implements FxmlController {
         this.e_table.getItems().addAll(auxListaComprobantesPago);
     }
 
-    public void btnClickCrear(){
+    public void btnClickCrear(ActionEvent event){
         if( (repositoryComprobantePago.selectAllTipoComprobantePago() == null)
                 || (repositoryComprobantePago.selectAllTipoComprobantePago().size() == 0) ){
             mostrarErrorDialog("No hay ningun tipo de comprobante de pago",
@@ -72,10 +86,29 @@ public class MantenimientoFacturaController implements FxmlController {
             return;
         }
 
+        Parent root = null;
+        FXMLLoader loader;
+        //
+        try {
+            loader =new FXMLLoader(getClass().getResource("/fxml/FacturaFxml/ListaEnvios.fxml"));
+            root = (Parent) loader.load();
+            ListaEnvio controller = loader.getController();
+            //0 es crear
+            controller._setControllerParent(this);
+            controller._llenarGrila();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene scene = new Scene(root);
+        Window existingWindow = ((Node) event.getSource()).getScene().getWindow();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
-    public void btnClickModificar(){
+    public void btnClickModificar(ActionEvent event){
         if( (repositoryComprobantePago.selectAllTipoComprobantePago() == null)
                 || (repositoryComprobantePago.selectAllTipoComprobantePago().size() == 0) ){
             mostrarErrorDialog("No hay ningun tipo de comprobante de pago",
@@ -103,4 +136,9 @@ public class MantenimientoFacturaController implements FxmlController {
         this.stageManager.mostrarInfoDialog(auxTitulo, null,
                 auxTexto);
     }
+
+    public List<Envio> selectAllEnviosSinComprobantePago(){
+        return repositoryEnvio.obtenerListaEnvio();
+    }
+
 }
