@@ -390,11 +390,31 @@ public class GestorAlmacen {
 
     public static void llenarConProdYPtoPartida(Almacen alm, ArrayList<Producto> productos){
         boolean[][] nodos = alm.getNodos();
+        boolean[][] prods = alm.getProductos();
         for(Producto prod: productos){
             Point posProd = prod.getPosicion();
-            nodos[posProd.x][posProd.y] = true;
+            if(prod.getRack().esHorizontal()){
+                if(posProd.y +1 < alm.getAlto()){
+                    nodos[posProd.x][posProd.y+1] = true;
+                    prods[posProd.x][posProd.y+1] = true;
+                }
+                else{
+                    nodos[posProd.x][posProd.y-1] = true;
+                    prods[posProd.x][posProd.y-1] = true;
+                }
+            } else{
+                if(posProd.x +1 < alm.getAncho()){
+                    nodos[posProd.x+1][posProd.y] = true;
+                    prods[posProd.x+1][posProd.y] = true;
+                }
+                else{
+                    nodos[posProd.x-1][posProd.y] = true;
+                    prods[posProd.x-1][posProd.y] = true;
+                }
+            }
         }
         alm.setNodos(nodos);
+        alm.setProductos(prods);
     }
 
     /**

@@ -108,7 +108,8 @@ public class Tabu {
                 int[] mejorSolActual = new int[mejorSol.length]; //mejor solucion actual
                 System.arraycopy(mejorSol, 0, mejorSolActual, 0, mejorSolActual.length);
 
-                mejorSolActual = this.intercambiarNodos(i, j, solInicial); //Intercambiar nodos i y j
+                mejorSolActual = opt2_swap(i,j,solInicial);
+                //mejorSolActual = this.intercambiarNodos(i, j, solInicial); //Intercambiar nodos i y j
                 // calcular el nuevo mejor costo
                 int mejorCostoActual = this.funcionObjetivo(mejorSolActual);
 
@@ -141,6 +142,30 @@ public class Tabu {
         solucion[nodo1] = solucion[nodo2];
         solucion[nodo2] = temp;
         return solucion;
+    }
+
+    private int[] opt2_swap(int nodo1, int nodo2, int[] solucion){
+        int [] nuevaSol = new int [solucion.length];
+
+        for (int i = 0; i < nodo1 ; i++) {
+            nuevaSol[i] = solucion[i];
+        }
+
+        for (int i = 0; i <= nodo2 - nodo1; i++) {
+            nuevaSol[nodo1 + i] = solucion[nodo2 - i];
+        }
+
+        for(int i = nodo2 +1; i < solucion.length; i++){
+            nuevaSol[i] = solucion[i];
+        }
+
+        return nuevaSol;
+//        2optSwap(route, i, k) {
+//            1. take route[0] to route[i-1] and add them in order to new_route
+//            2. take route[i] to route[k] and add them in reverse order to new_route
+//            3. take route[k+1] to end and add them in order to new_route
+//            return new_route;
+//        }
     }
 
     public long getDuracion(){

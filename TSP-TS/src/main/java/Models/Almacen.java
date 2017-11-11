@@ -1,15 +1,12 @@
 package Models;
 
-import java.awt.*;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Almacen {
 
     private boolean almacen[][];
     private boolean nodos[][];
+    private boolean[][] productos;
     private int ancho;
     private int alto;
     private ArrayList<Rack> racks;
@@ -25,10 +22,14 @@ public class Almacen {
 
         this.almacen = new boolean[ancho][alto];
         this.nodos = new boolean[ancho][alto];
+        this.setProductos(new boolean[ancho][alto]);
+
         for(int i = 0; i < ancho; i++){
             for(int j = 0; j < alto; j++){
                 this.almacen[i][j] = false;
                 this.nodos[i][j] = false;
+                this.getProductos()[i][j] = false;
+
             }
         }
         this.racks = new ArrayList<Rack>();
@@ -48,15 +49,20 @@ public class Almacen {
         for (int i = 0; i < alto; i++) {
             for (int j = 0; j < ancho; j++) {
 
-                if(nodos[i][j] == true){
-                    System.out.print("PP");
+                if(productos[i][j]){
+                    System.out.println("PP");
                 }
                 else{
-                    if(almacen[i][j] == false){
-                        System.out.print("  ");
+                    if(nodos[i][j]){
+                        System.out.print("NN");
                     }
                     else{
-                        System.out.print("XX");
+                        if(almacen[i][j]){
+                            System.out.print("XX");
+                        }
+                        else{
+                            System.out.print("  ");
+                        }
                     }
                 }
             }
@@ -118,5 +124,13 @@ public class Almacen {
                 this.nodos[i][j] = false;
             }
         }
+    }
+
+    public boolean[][] getProductos() {
+        return productos;
+    }
+
+    public void setProductos(boolean[][] productos) {
+        this.productos = productos;
     }
 }

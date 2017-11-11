@@ -28,6 +28,7 @@ public class GestorProducto {
             Rack rack = racks.get(randomNumRack.nextInt(racks.size()));
             Point p = rack.obtenerPosRandAlBorder();
             Producto prod = new Producto(i,"Producto " + String.valueOf(i), p);
+            prod.setRack(rack);
             productos.add(prod);
         }
 
