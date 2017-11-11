@@ -26,7 +26,8 @@ public class DetalleDevolucionController implements FxmlController {
     @FXML
     private TextField txb_cliente;
     @FXML
-    private TextField txb_total;@FXML
+    private TextField txb_total;
+    @FXML
     private TableView<DetalleFactura> tablaDetalleComprobante = new TableView<DetalleFactura>();
     @FXML
     private TableColumn<DetalleFactura,Integer> c_indice;
