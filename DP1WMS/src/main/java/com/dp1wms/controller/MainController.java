@@ -222,6 +222,11 @@ public class MainController implements FxmlController {
         this.stageManager.mostrarModal(FacturaView.MANTENIMIENTO_FACTURA);
     }
 
+    @FXML
+    private void cargarPedidoDevolucion(){
+        System.out.println("cargarPedidoDevolucion");
+        this.stageManager.mostrarModal(MainView.LISTA_FACTURAS_DEVOLUCION);
+    }
 
     @FXML
     private void cargarListaLotes(){

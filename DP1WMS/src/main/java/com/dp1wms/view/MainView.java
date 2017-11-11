@@ -374,6 +374,32 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
+    },LISTA_FACTURAS_DEVOLUCION{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("listaFacturas.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/DevolucionPedido/ListaFacturas.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },DETALLE_DEVOLUCION{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("detalleDevolucion.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/DevolucionPedido/DetalleDevolucion.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
     };
 
     public String getStringFromResourceBundle(String key) {

@@ -56,6 +56,12 @@
                         </Menu>
                         <MenuItem fx:id="ventaGuiaMI" mnemonicParsing="false" onAction="#cargarListaGuias" style="-fx-padding: 0 10;" text="Guias de remision" />
                         <MenuItem fx:id="ventaCompPago" mnemonicParsing="false" onAction="#cargarMantenimientoComprobantePago" style="-fx-padding: 0 10;" text="Comprobante de Pago" />
+                        <Menu mnemonicParsing="false" text="Devoluciones">
+                          <items>
+                            <MenuItem mnemonicParsing="false" onAction="#cargarPedidoDevolucion" text="Pedido Devolucion" />
+                              <MenuItem mnemonicParsing="false" text="Nota de Credito" />
+                          </items>
+                        </Menu>
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Reportes">
