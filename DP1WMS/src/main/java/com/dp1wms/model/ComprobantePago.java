@@ -27,6 +27,9 @@ public class ComprobantePago {
 
     private String v_mostrarActivo;
 
+    private List<DetalleFactura> listaDetalleComprobante;
+    private Integer indiceTabla;
+
     //private List<DetalleComprobantePago> v_listaDetalleComprobante;
 
     public ComprobantePago(){
@@ -188,4 +191,20 @@ public class ComprobantePago {
         this.v_fechaModificacion = v_fechaModificacion;
     }
 
+    public List<DetalleFactura> getListaDetalleComprobante() {
+        return listaDetalleComprobante;
+    }
+
+    public void setListaDetalleComprobante(List<DetalleFactura> listaDetalleComprobante) {
+        this.listaDetalleComprobante = listaDetalleComprobante;
+    }
+
+
+    public Integer getIndiceTabla() {
+        return indiceTabla;
+    }
+
+    public void setIndiceTabla(Integer indiceTabla) {
+        this.indiceTabla = indiceTabla;
+    }
 }
