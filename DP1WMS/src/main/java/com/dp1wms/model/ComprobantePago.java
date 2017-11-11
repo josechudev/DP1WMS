@@ -1,5 +1,7 @@
 package com.dp1wms.model;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ComprobantePago {
@@ -28,8 +30,10 @@ public class ComprobantePago {
     private List<DetalleFactura> listaDetalleComprobante;
     private Integer indiceTabla;
 
-    public ComprobantePago(){
+    //private List<DetalleComprobantePago> v_listaDetalleComprobante;
 
+    public ComprobantePago(){
+        //v_listaDetalleComprobante = new ArrayList<DetalleComprobantePago>();
     }
 
     public ComprobantePago( Long v_id,
@@ -62,6 +66,7 @@ public class ComprobantePago {
         this.setV_idEnvio(v_idEnvio);
         this.setV_activo(v_activo);
 
+        //v_listaDetalleComprobante = new ArrayList<DetalleComprobantePago>();
     }
 
 
