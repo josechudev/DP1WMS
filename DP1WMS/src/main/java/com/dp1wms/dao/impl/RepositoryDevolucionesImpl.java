@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -33,9 +32,9 @@ public class RepositoryDevolucionesImpl implements RepositoryDevoluciones{
         }
 
         for(ComprobantePago comprobantePago: listaComprobantes){
-            List<DetalleComprobantePago> listaDetalle =  this.obtenerDetalleComprobante(comprobantePago.getV_id());
+            List<DetalleFactura> listaDetalle =  this.obtenerDetalleComprobante(comprobantePago.getV_id());
             if((listaDetalle == null) || listaDetalle.isEmpty()){
-                comprobantePago.setListaDetalleComprobante(new ArrayList<DetalleComprobantePago>());
+                comprobantePago.setListaDetalleComprobante(new ArrayList<DetalleFactura>());
             }else{
                 comprobantePago.setListaDetalleComprobante(listaDetalle);
             }
@@ -68,9 +67,9 @@ public class RepositoryDevolucionesImpl implements RepositoryDevoluciones{
         return comprobantePago;
     }
 
-    public List<DetalleComprobantePago> obtenerDetalleComprobante(Long idComprobante){
+    public List<DetalleFactura> obtenerDetalleComprobante(Long idComprobante){
         String SQL = "SELECT d.iddetallecomprobante,d.idcomprobante,d.idproducto,d.cantidad,d.preciounitario,d.descuento,d.subtotal,p.codigo, p.nombreproducto FROM public.detallecomprobante d, public.producto p WHERE d.idproducto = p.idproducto and idcomprobante = ?";
-        List<DetalleComprobantePago> listaDetalleComprobante = null;
+        List<DetalleFactura> listaDetalleComprobante = null;
         try{
             listaDetalleComprobante = jdbcTemplate.query(SQL,new Object[] {idComprobante}, this::mapParam2);
         }catch (EmptyResultDataAccessException e) {
@@ -78,8 +77,8 @@ public class RepositoryDevolucionesImpl implements RepositoryDevoluciones{
         }
         return listaDetalleComprobante;
     }
-    public DetalleComprobantePago mapParam2(ResultSet rs, int i) throws SQLException {
-        DetalleComprobantePago detalleComprobantePago = new DetalleComprobantePago();
+    public DetalleFactura mapParam2(ResultSet rs, int i) throws SQLException {
+        DetalleFactura detalleComprobantePago = new DetalleFactura();
 
         detalleComprobantePago.setIdDetalleComprobante(rs.getLong("iddetallecomprobante"));
         detalleComprobantePago.setIdComprobante(rs.getLong("idcomprobante"));

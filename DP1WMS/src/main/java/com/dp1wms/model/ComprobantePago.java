@@ -1,6 +1,5 @@
 package com.dp1wms.model;
 
-import java.util.Date;
 import java.util.List;
 
 public class ComprobantePago {
@@ -26,7 +25,7 @@ public class ComprobantePago {
 
     private String v_mostrarActivo;
 
-    private List<DetalleComprobantePago> listaDetalleComprobante;
+    private List<DetalleFactura> listaDetalleComprobante;
     private Integer indiceTabla;
 
     public ComprobantePago(){
@@ -187,11 +186,11 @@ public class ComprobantePago {
         this.v_fechaModificacion = v_fechaModificacion;
     }
 
-    public List<DetalleComprobantePago> getListaDetalleComprobante() {
+    public List<DetalleFactura> getListaDetalleComprobante() {
         return listaDetalleComprobante;
     }
 
-    public void setListaDetalleComprobante(List<DetalleComprobantePago> listaDetalleComprobante) {
+    public void setListaDetalleComprobante(List<DetalleFactura> listaDetalleComprobante) {
         this.listaDetalleComprobante = listaDetalleComprobante;
     }
 

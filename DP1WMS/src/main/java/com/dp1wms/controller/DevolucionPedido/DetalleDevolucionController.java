@@ -3,7 +3,7 @@ package com.dp1wms.controller.DevolucionPedido;
 import com.dp1wms.controller.FxmlController;
 import com.dp1wms.dao.RepositoryDevoluciones;
 import com.dp1wms.model.ComprobantePago;
-import com.dp1wms.model.DetalleComprobantePago;
+import com.dp1wms.model.DetalleFactura;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,15 +27,15 @@ public class DetalleDevolucionController implements FxmlController {
     private TextField txb_cliente;
     @FXML
     private TextField txb_total;@FXML
-    private TableView<DetalleComprobantePago> tablaDetalleComprobante = new TableView<DetalleComprobantePago>();
+    private TableView<DetalleFactura> tablaDetalleComprobante = new TableView<DetalleFactura>();
     @FXML
-    private TableColumn<DetalleComprobantePago,Integer> c_indice;
+    private TableColumn<DetalleFactura,Integer> c_indice;
     @FXML
-    private TableColumn<DetalleComprobantePago,String> c_codigoproducto;
+    private TableColumn<DetalleFactura,String> c_codigoproducto;
     @FXML
-    private TableColumn<DetalleComprobantePago,String> c_nombreproducto;
+    private TableColumn<DetalleFactura,String> c_nombreproducto;
     @FXML
-    private TableColumn<DetalleComprobantePago,Integer> c_cantidad;
+    private TableColumn<DetalleFactura,Integer> c_cantidad;
 
     private ComprobantePago facturaEscogida;
 
@@ -67,16 +67,16 @@ public class DetalleDevolucionController implements FxmlController {
 
     public void limpiarTabla(){
         tablaDetalleComprobante.getItems().clear();
-        c_indice.setCellValueFactory(new PropertyValueFactory<DetalleComprobantePago,Integer>("indiceTabla"));
-        c_codigoproducto.setCellValueFactory(new PropertyValueFactory<DetalleComprobantePago,String>("codigoProducto"));
-        c_nombreproducto.setCellValueFactory(new PropertyValueFactory<DetalleComprobantePago,String>("nombreProducto"));
-        c_cantidad.setCellValueFactory(new PropertyValueFactory<DetalleComprobantePago,Integer>("cantidad"));
+        c_indice.setCellValueFactory(new PropertyValueFactory<DetalleFactura,Integer>("indiceTabla"));
+        c_codigoproducto.setCellValueFactory(new PropertyValueFactory<DetalleFactura,String>("codigoProducto"));
+        c_nombreproducto.setCellValueFactory(new PropertyValueFactory<DetalleFactura,String>("nombreProducto"));
+        c_cantidad.setCellValueFactory(new PropertyValueFactory<DetalleFactura,Integer>("cantidad"));
         tablaDetalleComprobante.setEditable(true);
     }
 
-    public void llenarTabla(List<DetalleComprobantePago> lista){
+    public void llenarTabla(List<DetalleFactura> lista){
         Integer indice = 1;
-        for(DetalleComprobantePago detalleComprobantePago : lista){
+        for(DetalleFactura detalleComprobantePago : lista){
             detalleComprobantePago.setIndiceTabla(indice);
             indice++;
             this.tablaDetalleComprobante.getItems().add(detalleComprobantePago);

@@ -1,6 +1,6 @@
 package com.dp1wms.model;
 
-public class DetalleComprobantePago {
+public class DetalleFactura {
     private Long idDetalleComprobante;
     private Long idComprobante;
     private Long idProducto;
