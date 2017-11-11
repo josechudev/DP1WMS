@@ -22,11 +22,11 @@ public class RepositoryDevolucionesImpl implements RepositoryDevoluciones{
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<ComprobantePago> obtenerFacturas(){
-        String SQL = "SELECT c.idcomprobante,c.idtipocomprobante,c.idcliente,c.igv,c.total,c.fechacreacion,c.activo,c.costoflete,c.idenvio,c.subtotal,t.descripcion,e.razonsocial FROM public.comprobantepago c, public.tipocomprobante t,public.cliente e WHERE c.activo and t.idtipocomprobante = c.idtipocomprobante and e.idcliente = c.idcliente";
+    public List<ComprobantePago> obtenerFacturas(Boolean activo){
+        String SQL = "SELECT c.idcomprobante,c.idtipocomprobante,c.idcliente,c.igv,c.total,c.fechacreacion,c.activo,c.costoflete,c.idenvio,c.subtotal,t.descripcion,e.razonsocial,e.direccion,e.numdoc FROM public.comprobantepago c, public.tipocomprobante t,public.cliente e WHERE c.activo = ? and t.idtipocomprobante = c.idtipocomprobante and e.idcliente = c.idcliente";
         List<ComprobantePago> listaComprobantes = null;
         try{
-            listaComprobantes = jdbcTemplate.query(SQL,new Object[] {}, this::mapParam);
+            listaComprobantes = jdbcTemplate.query(SQL,new Object[] {activo}, this::mapParam);
         }catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
         }
@@ -64,6 +64,8 @@ public class RepositoryDevolucionesImpl implements RepositoryDevoluciones{
         comprobantePago.setV_subtotal(rs.getFloat("subtotal"));
         comprobantePago.setV_tipoComprobante(rs.getString("descripcion"));
         comprobantePago.setV_cliente(rs.getString("razonsocial"));
+        comprobantePago.setDireccionCliente(rs.getString("direccion"));
+        comprobantePago.setNumeroDocumentoCliente(rs.getString("numdoc"));
         return comprobantePago;
     }
 
@@ -117,7 +119,7 @@ public class RepositoryDevolucionesImpl implements RepositoryDevoluciones{
         List<DetalleMovimiento> listaDetalleMovimiento = movimiento.getListaDetalleMovimiento();
         for(DetalleMovimiento detalle : listaDetalleMovimiento){
             if(idMovimiento != 0){
-                SQL = "INSERT INTO public.detallemovimiento (idmovimiento,idproducto,idlote,cantidad) VALUES (?,?,?,?,?)";
+                SQL = "INSERT INTO public.detallemovimiento (idmovimiento,idproducto,idlote,cantidad) VALUES (?,?,?,?)";
                 try{
                     jdbcTemplate.update(SQL,new Object[] {idMovimiento,detalle.getIdProducto(),detalle.getIdLote(),detalle.getCantidad()});
                     System.out.println("Se ha insertado en la tabla detalle movimiento");
@@ -201,6 +203,67 @@ public class RepositoryDevolucionesImpl implements RepositoryDevoluciones{
         }catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void registrarNotaCredito(Long idEmpleadoAuditado,Long idComprobantePago, Long idCliente){
+        String SQL = "INSERT INTO public.notacredito (idcomprobante,idcliente,idempleadoauditado) VALUES (?,?,?)";
+        try{
+            jdbcTemplate.update(SQL,new Object[] {idComprobantePago,idCliente,idEmpleadoAuditado});
+            System.out.println("Se ha insertado en la tabla nota credito");
+        }catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public List<ComprobantePago> obtenerFacturasNotasCredito(){
+        String SQL = "SELECT c.idcomprobante,c.idtipocomprobante,c.idcliente,c.igv,c.total,c.fechacreacion,c.activo,c.costoflete,c.idenvio,c.subtotal,t.descripcion,e.razonsocial,e.direccion,e.numdoc,n.idnotadecredito FROM public.comprobantepago c, public.tipocomprobante t,public.cliente e,public.notacredito n WHERE n.idcomprobante = c.idcomprobante and t.idtipocomprobante = c.idtipocomprobante and e.idcliente = c.idcliente";
+        List<ComprobantePago> listaComprobantes = null;
+        try{
+            listaComprobantes = jdbcTemplate.query(SQL,new Object[] {}, this::mapParam5);
+        }catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+        }
+
+        for(ComprobantePago comprobantePago: listaComprobantes){
+            List<DetalleFactura> listaDetalle =  this.obtenerDetalleComprobante(comprobantePago.getV_id());
+            if((listaDetalle == null) || listaDetalle.isEmpty()){
+                comprobantePago.setListaDetalleComprobante(new ArrayList<DetalleFactura>());
+            }else{
+                comprobantePago.setListaDetalleComprobante(listaDetalle);
+            }
+        }
+        return listaComprobantes;
+    }
+
+
+    public ComprobantePago mapParam5(ResultSet rs, int i) throws SQLException {
+        ComprobantePago comprobantePago = new ComprobantePago();
+
+        comprobantePago.setV_id(rs.getLong("idcomprobante"));
+        comprobantePago.setV_idTipoComprobante(rs.getLong("idtipocomprobante"));
+        comprobantePago.setV_idCliente(rs.getLong("idcliente"));
+        comprobantePago.setV_igv(rs.getFloat("igv"));
+        comprobantePago.setV_total(rs.getFloat("total"));
+
+        Timestamp fechacreacion = rs.getTimestamp("fechacreacion");
+        if(fechacreacion == null){
+            comprobantePago.setV_fechaCreacion("");
+        }else{
+            comprobantePago.setV_fechaCreacion(DateParser.timestampToString(fechacreacion));
+        }
+        //comprobantePago.setV_fechaCreacion(rs.getString("fechacreacion"));
+        comprobantePago.setV_activo(rs.getBoolean("activo"));
+        comprobantePago.setV_flete(rs.getFloat("costoflete"));
+        comprobantePago.setV_idEnvio(rs.getLong("idenvio"));
+        comprobantePago.setV_subtotal(rs.getFloat("subtotal"));
+        comprobantePago.setV_tipoComprobante(rs.getString("descripcion"));
+        comprobantePago.setV_cliente(rs.getString("razonsocial"));
+        comprobantePago.setDireccionCliente(rs.getString("direccion"));
+        comprobantePago.setNumeroDocumentoCliente(rs.getString("numdoc"));
+        comprobantePago.setIdNotaCredito((rs.getLong("idnotadecredito")));
+        return comprobantePago;
     }
 
 }

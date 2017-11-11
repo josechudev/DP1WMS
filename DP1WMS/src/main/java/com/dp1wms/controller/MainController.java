@@ -237,6 +237,11 @@ public class MainController implements FxmlController {
         this.stageManager.mostrarModal(MainView.LISTA_LOTES);
     }
 
+    @FXML
+    private void cargarListaNotaCredito(){
+        this.stageManager.mostrarModal(MainView.LISTA_NOTA_CREDITO);
+    }
+
     public void setUsuario(Usuario usuario){
         this.usuario = usuario;
     }
