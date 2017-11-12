@@ -1,28 +1,17 @@
-import Controllers.GestorAlmacen;
-import Controllers.GestorDistancias;
-import Controllers.GestorImpresion;
-import Controllers.GestorProducto;
-import Models.Almacen;
-import Models.GeneradorAlmacen;
-import Models.Producto;
-import Tabu.*;
-import Utils.ExpNumerica;
-import Utils.NearestInsertion;
-import Utils.NearestNeighbor;
-import Utils.NearestNeighborNoCyclic;
+package com.dp1wms.tabu;
+
+import com.dp1wms.controller.Tabu.GestorAlmacen;
+import com.dp1wms.controller.Tabu.GestorDistancias;
+import com.dp1wms.controller.Tabu.GestorProducto;
+import com.dp1wms.model.tabu.Almacen;
+import com.dp1wms.model.tabu.Producto;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Random;
 
-public class Main {
+public class Test {
 
-    private static Random random = new Random();
-
-
-
-    public static void main(String[] args) {
-
+    public static void run(){
         //Almacen random para las pruebas
         Almacen alm = new Almacen(20,20);
         //Convertir lista de racks a matriz boolean[][]

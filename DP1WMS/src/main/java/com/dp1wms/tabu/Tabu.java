@@ -1,6 +1,4 @@
-package Tabu;
-
-import java.awt.*;
+package com.dp1wms.tabu;
 
 public class Tabu {
 
@@ -89,8 +87,8 @@ public class Tabu {
     }
 
     private int[] obtenerMejorVecino(ListaTabu listaTabu,
-                                        int[][] distancias,
-                                        int[] solInicial) {
+                                     int[][] distancias,
+                                     int[] solInicial) {
 
         int[] mejorSol = new int[solInicial.length]; //la mejor solucion local
         System.arraycopy(solInicial, 0, mejorSol, 0, mejorSol.length);
@@ -108,7 +106,7 @@ public class Tabu {
                 int[] mejorSolActual = new int[mejorSol.length]; //mejor solucion actual
                 System.arraycopy(mejorSol, 0, mejorSolActual, 0, mejorSolActual.length);
 
-                mejorSolActual = opt2_swap(i,j,solInicial);
+                mejorSolActual = twoOPT_swap(i,j,solInicial);
                 //mejorSolActual = this.intercambiarNodos(i, j, solInicial); //Intercambiar nodos i y j
                 // calcular el nuevo mejor costo
                 int mejorCostoActual = this.funcionObjetivo(mejorSolActual);
@@ -137,35 +135,27 @@ public class Tabu {
     private int[] intercambiarNodos(int nodo1, int nodo2, int[] solucion) {
         //int[] sol_aux = new int[solucion.length];
         //System.arraycopy(solucion,0,sol_aux,0,solucion.length);
-
         int temp = solucion[nodo1];
         solucion[nodo1] = solucion[nodo2];
         solucion[nodo2] = temp;
         return solucion;
     }
 
-    private int[] opt2_swap(int nodo1, int nodo2, int[] solucion){
+    private int[] twoOPT_swap(int nodo1, int nodo2, int[] solucion){
         int [] nuevaSol = new int [solucion.length];
-
+        //1. take route[0] to route[i-1] and add them in order to new_route
         for (int i = 0; i < nodo1 ; i++) {
             nuevaSol[i] = solucion[i];
         }
-
+        //2. take route[i] to route[k] and add them in reverse order to new_route
         for (int i = 0; i <= nodo2 - nodo1; i++) {
             nuevaSol[nodo1 + i] = solucion[nodo2 - i];
         }
-
+        //3. take route[k+1] to end and add them in order to new_route
         for(int i = nodo2 +1; i < solucion.length; i++){
             nuevaSol[i] = solucion[i];
         }
-
         return nuevaSol;
-//        2optSwap(route, i, k) {
-//            1. take route[0] to route[i-1] and add them in order to new_route
-//            2. take route[i] to route[k] and add them in reverse order to new_route
-//            3. take route[k+1] to end and add them in order to new_route
-//            return new_route;
-//        }
     }
 
     public long getDuracion(){
@@ -179,4 +169,5 @@ public class Tabu {
     public int[] getDistanciaPorIter(){
         return this.distanciaPorIter;
     }
+
 }

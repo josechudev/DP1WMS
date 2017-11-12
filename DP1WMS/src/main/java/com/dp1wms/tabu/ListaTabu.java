@@ -1,4 +1,4 @@
-package Tabu;
+package com.dp1wms.tabu;
 
 import java.util.ArrayList;
 

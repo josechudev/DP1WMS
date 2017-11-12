@@ -1,4 +1,4 @@
-package Models;
+package com.dp1wms.model.tabu;
 
 import java.util.ArrayList;
 

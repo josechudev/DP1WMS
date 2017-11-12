@@ -1,11 +1,12 @@
-package Models;
+package com.dp1wms.model.tabu;
 
-import java.awt.Point;
+import java.awt.*;
 import java.util.Random;
 
 import static java.lang.StrictMath.abs;
 
 public class Rack {
+
     private Point posIni;
     private Point posFin;
     private int niveles;

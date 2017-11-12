@@ -1,4 +1,4 @@
-package Models;
+package com.dp1wms.model.tabu;
 
 public class Nodo {
     private int x;
