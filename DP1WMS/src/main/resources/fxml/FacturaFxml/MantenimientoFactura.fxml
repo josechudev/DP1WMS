@@ -25,8 +25,8 @@
     </Label>
     <Button fx:id="btn_Crear" layoutX="27.0" layoutY="94.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="90.0" onAction="#btnClickCrear" text="Agregar" />
     <Button fx:id="btn_Modificar" layoutX="137.0" layoutY="94.0" mnemonicParsing="false" prefHeight="1.0" prefWidth="90.0" onAction="#btnClickDetalle" text="Detalle" />
-    <Button fx:id="btn_eliminar" layoutX="247.0" layoutY="94.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="200.0" onAction="#btnClickCancelar" text="Cancelar Comprobante de Pago" />
-    <Button fx:id="btn_activarr" layoutX="467.0" layoutY="94.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="200.0" onAction="#btnClickRenovar" text="Reactivar Comprobante de Pago" />
+    <Button fx:id="btn_eliminar" layoutX="247.0" layoutY="94.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="200.0" onAction="#btnClickCancelar" text="Cancelar Comprobante de Pago" visible="false" />
+    <Button fx:id="btn_activarr" layoutX="467.0" layoutY="94.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="200.0" onAction="#btnClickRenovar" text="Reactivar Comprobante de Pago" visible="false" />
     <TableView fx:id="e_table" layoutX="27.0" layoutY="132.0" prefHeight="201.0" prefWidth="1192.0">
       <columns>
         <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="40.0" text="Id" fx:id="e_id" />

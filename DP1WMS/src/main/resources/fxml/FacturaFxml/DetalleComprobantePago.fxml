@@ -31,17 +31,17 @@
     </TableView>
     <Label font="$x1" layoutX="29.0" layoutY="90.0" prefHeight="27.0" prefWidth="51.0" text="Cliente:" />
     <Label font="$x1" layoutX="632.0" layoutY="60.0" prefHeight="27.0" prefWidth="51.0" text="Fecha:" />
-    <Label font="$x1" layoutX="632.0" layoutY="345.0" prefHeight="27.0" prefWidth="65.0" text="Flete:" />
-    <Label font="$x1" layoutX="632.0" layoutY="375.0" prefHeight="27.0" prefWidth="65.0" text="Subtotal:" />
-    <Label font="$x1" layoutX="632.0" layoutY="405.0" prefHeight="27.0" prefWidth="65.0" text="IGV:" />
+    <Label font="$x1" layoutX="632.0" layoutY="405.0" prefHeight="27.0" prefWidth="65.0" text="Flete:" />
+    <Label font="$x1" layoutX="632.0" layoutY="345.0" prefHeight="27.0" prefWidth="65.0" text="Subtotal:" />
+    <Label font="$x1" layoutX="632.0" layoutY="375.0" prefHeight="27.0" prefWidth="65.0" text="IGV:" />
     <Label font="$x1" layoutX="632.0" layoutY="445.0" prefHeight="27.0" prefWidth="65.0" text="Total:" />
 
     <TextField fx:id="e_TFtipoComprobante" editable="false" layoutX="227.0" layoutY="63.0" prefHeight="24.0" prefWidth="198.0" style="-fx-alignment: CENTER-RIGHT;" />
     <TextField fx:id="e_TFcliente" editable="false" layoutX="80.0" layoutY="93.0" prefHeight="24.0" prefWidth="345.0" style="-fx-alignment: CENTER-RIGHT;" />
     <TextField fx:id="e_TFfecha" editable="false" layoutX="679.0" layoutY="63.0" prefHeight="25.0" prefWidth="127.0" style="-fx-alignment: CENTER-RIGHT;" />
-    <TextField fx:id="e_TFflete" editable="false" layoutX="690.0" layoutY="348.0" prefHeight="24.0" prefWidth="116.0" style="-fx-alignment: CENTER-RIGHT;" />
-    <TextField fx:id="e_TFsubtotal" editable="false" layoutX="690.0" layoutY="378.0" prefHeight="24.0" prefWidth="116.0" style="-fx-alignment: CENTER-RIGHT;" />
-    <TextField fx:id="e_TFigv" editable="false" layoutX="690.0" layoutY="408.0" prefHeight="24.0" prefWidth="116.0" style="-fx-alignment: CENTER-RIGHT;" />
+    <TextField fx:id="e_TFflete" editable="false" layoutX="690.0" layoutY="408.0" prefHeight="24.0" prefWidth="116.0" style="-fx-alignment: CENTER-RIGHT;" />
+    <TextField fx:id="e_TFsubtotal" editable="false" layoutX="690.0" layoutY="348.0" prefHeight="24.0" prefWidth="116.0" style="-fx-alignment: CENTER-RIGHT;" />
+    <TextField fx:id="e_TFigv" editable="false" layoutX="690.0" layoutY="378.0" prefHeight="24.0" prefWidth="116.0" style="-fx-alignment: CENTER-RIGHT;" />
     <TextField fx:id="e_TFtotal" editable="false" layoutX="690.0" layoutY="448.0" prefHeight="24.0" prefWidth="116.0" style="-fx-alignment: CENTER-RIGHT;" />
   </children>
 </AnchorPane>
