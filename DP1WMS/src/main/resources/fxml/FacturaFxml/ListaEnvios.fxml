@@ -8,18 +8,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Factura.ListaEnvio">
+<AnchorPane prefHeight="400.0" prefWidth="791.0" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Factura.ListaEnvio">
    <children>
-      <TableView fx:id="tablaEnviosPendientes" layoutX="46.0" layoutY="128.0" prefHeight="200.0" prefWidth="514.0">
+      <TableView fx:id="tablaEnviosPendientes" layoutX="46.0" layoutY="128.0" prefHeight="200.0" prefWidth="724.0">
         <columns>
           <TableColumn fx:id="c_indice" prefWidth="38.99998474121094" text="Id" />
           <TableColumn fx:id="c_cliente" prefWidth="148.0" text="Cliente" />
-          <TableColumn fx:id="c_fechaenvio" prefWidth="200.0" text="Fecha Envio" />
-          <TableColumn fx:id="c_destino" prefWidth="126.0" text="Destino" />
+          <TableColumn fx:id="c_fechaenvio" prefWidth="156.0" text="Fecha Envio" />
+          <TableColumn fx:id="c_destino" prefWidth="380.0" text="Destino" />
         </columns>
       </TableView>
-      <Button layoutX="76.0" layoutY="349.0" mnemonicParsing="false" onAction="#crearComprobantePago" text="Crear comprobante de pago" />
-      <Button layoutX="393.0" layoutY="349.0" mnemonicParsing="false" onAction="#cancelarListaEnvios" prefHeight="25.0" prefWidth="88.0" text="Cancelar" />
+      <Button layoutX="160.0" layoutY="349.0" mnemonicParsing="false" onAction="#crearComprobantePago" text="Crear comprobante de pago" />
+      <Button layoutX="570.0" layoutY="349.0" mnemonicParsing="false" onAction="#cancelarListaEnvios" prefHeight="25.0" prefWidth="88.0" text="Cancelar" />
       <Label layoutX="46.0" layoutY="28.0" text="Lista Envios">
          <font>
             <Font size="18.0" />
