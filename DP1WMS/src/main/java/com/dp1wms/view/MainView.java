@@ -439,6 +439,19 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
+    },UBICACIONES{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("ubicaciones.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Ubicaciones/Ubicaciones.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
     };
 
     public String getStringFromResourceBundle(String key) {
