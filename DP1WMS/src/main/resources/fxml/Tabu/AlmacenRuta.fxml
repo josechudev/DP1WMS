@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="594.0" prefWidth="595.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Tabu.AlmacenRutaController">
+<AnchorPane prefHeight="594.0" prefWidth="595.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Tabu.AlmacenRutaController">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="62.0" layoutY="217.0" prefHeight="348.0" prefWidth="481.0">
          <content>
@@ -39,7 +39,7 @@
                   <HBox spacing="10.0">
                      <children>
                         <Label text="Iteraciones" />
-                        <TextField fx:id="numIteraciones" prefHeight="15.0" prefWidth="65.0" />
+                        <TextField fx:id="numeroIteraciones" prefHeight="15.0" prefWidth="65.0" />
                      </children>
                   </HBox>
                   <HBox alignment="TOP_RIGHT" prefHeight="29.0" prefWidth="233.0" spacing="10.0">
@@ -55,7 +55,7 @@
                   <HBox spacing="10.0">
                      <children>
                         <Label text="Tamaño Lista Tabu" />
-                        <TextField fx:id="listaTabuTamahno" prefHeight="26.0" prefWidth="46.0" />
+                        <TextField fx:id="listaTabuTamanho" prefHeight="26.0" prefWidth="46.0" />
                      </children>
                   </HBox>
                   <HBox spacing="10.0">

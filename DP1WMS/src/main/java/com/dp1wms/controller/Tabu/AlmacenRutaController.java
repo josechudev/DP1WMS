@@ -7,9 +7,11 @@ import com.dp1wms.model.tabu.Nodo;
 import com.dp1wms.model.tabu.Producto;
 import com.dp1wms.tabu.Tabu;
 import com.dp1wms.view.StageManager;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
@@ -28,6 +30,13 @@ public class AlmacenRutaController implements FxmlController {
     private StageManager stageManager;
     private Almacen almacen;
 
+    @FXML private TextField numeroIteraciones;
+    @FXML private TextField numIteracionesSinMejora;
+    @FXML private TextField listaTabuTamanho;
+    @FXML private TextField listaTabuPermanencia;
+
+    private ArrayList<Button> solucion = new ArrayList<Button>();
+
     @Autowired
     @Lazy
     public AlmacenRutaController(StageManager stageManager) {
@@ -37,6 +46,25 @@ public class AlmacenRutaController implements FxmlController {
 
     @FXML
     public void click_generar_ruta(ActionEvent event){
+
+        for (Button button: solucion) {
+            button.setVisible(false);
+        }
+
+        Integer tabuTamanho;
+        Integer tabuPermanencia;
+        Long numIter;
+        Long numIterSinMejora;
+
+        try {
+            tabuTamanho = Integer.parseInt(listaTabuTamanho.getText());
+            tabuPermanencia = Integer.parseInt(listaTabuPermanencia.getText());
+            numIter = Long.parseLong(numeroIteraciones.getText());
+            numIterSinMejora = Long.parseLong(numIteracionesSinMejora.getText());
+        }catch (NumberFormatException e){
+            System.out.println("Do Nothing");
+            return;
+        }
 
         GestorDistancias gestorDistancias = new GestorDistancias(almacen);
         gestorDistancias.calcularDistancias();
@@ -51,7 +79,10 @@ public class AlmacenRutaController implements FxmlController {
 
         //Ejecutar tabu
         Tabu tabu = new Tabu(distancias, caminoInicial);
-        int[] solucion = tabu.generarCamino(50000, 25000, 10, 10);
+
+
+        int[] solucion = tabu.generarCamino(numIter, numIterSinMejora, tabuTamanho,tabuPermanencia);
+
 
         this.imprimirAlmacen();
 
@@ -68,6 +99,7 @@ public class AlmacenRutaController implements FxmlController {
     }
 
     public void imprimirAlmacen(){
+
 
         //color celdas
         for (int i = 0; i < almacen.getAlto(); i++) {
@@ -127,6 +159,7 @@ public class AlmacenRutaController implements FxmlController {
     }
 
     private void imprimirSolucion(ArrayList<Nodo> solucion){
+
         //colocar productos
         for(int i = 0; i < solucion.size() - 1; i++){
             Nodo nodo = solucion.get(i);
@@ -174,8 +207,12 @@ public class AlmacenRutaController implements FxmlController {
 
         almacen_layout.setGridLinesVisible(true);
     }
+
+    public ArrayList<Button> getSolucion() {
+        return solucion;
+    }
+
+    public void setSolucion(ArrayList<Button> solucion) {
+        this.solucion = solucion;
+    }
 }
-
-
-
-

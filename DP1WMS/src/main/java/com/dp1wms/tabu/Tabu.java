@@ -106,7 +106,7 @@ public class Tabu {
                 int[] mejorSolActual = new int[mejorSol.length]; //mejor solucion actual
                 System.arraycopy(mejorSol, 0, mejorSolActual, 0, mejorSolActual.length);
 
-                mejorSolActual = twoOPT_swap(i,j,solInicial);
+                mejorSolActual = twoOPT_swap(i,j,mejorSol);
                 //mejorSolActual = this.intercambiarNodos(i, j, solInicial); //Intercambiar nodos i y j
                 // calcular el nuevo mejor costo
                 int mejorCostoActual = this.funcionObjetivo(mejorSolActual);
