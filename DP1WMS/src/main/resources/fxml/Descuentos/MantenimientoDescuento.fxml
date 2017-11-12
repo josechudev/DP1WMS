@@ -23,7 +23,7 @@
       <Button fx:id="btn_agregar" layoutX="36.0" layoutY="93.0" mnemonicParsing="false" onAction="#agregarDescuento" prefHeight="25.0" prefWidth="81.0" text="Agregar" />
       <Button fx:id="btn_modificar" layoutX="144.0" layoutY="93.0" mnemonicParsing="false" onAction="#modificarDescuento" prefHeight="25.0" prefWidth="87.0" text="Modificar" />
       <Button fx:id="btn_eliminar" layoutX="265.0" layoutY="93.0" mnemonicParsing="false" onAction="#eliminarDescuento" prefHeight="25.0" prefWidth="97.0" text="Eliminar" />
-      <StackPane layoutX="36.0" layoutY="184.0" prefHeight="119.0" prefWidth="1286.0">
+      <StackPane layoutX="36.0" layoutY="184.0" prefHeight="186.0" prefWidth="1286.0">
          <children>
             <TableView fx:id="tableViewDescuentos" prefHeight="119.0" prefWidth="1492.0">
               <columns>
@@ -45,5 +45,6 @@
             </TableView>
          </children>
       </StackPane>
+      <Button layoutX="379.0" layoutY="93.0" mnemonicParsing="false" onAction="#cargaMasiva" prefHeight="25.0" prefWidth="97.0" text="Cargar Datos" />
    </children>
 </AnchorPane>

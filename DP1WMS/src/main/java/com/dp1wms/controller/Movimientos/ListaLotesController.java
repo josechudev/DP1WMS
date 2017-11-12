@@ -2,6 +2,7 @@ package com.dp1wms.controller.Movimientos;
 
 import com.dp1wms.controller.FxmlController;
 import com.dp1wms.controller.MainController;
+import com.dp1wms.dao.RepositoryCargaMasiva;
 import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.model.Lote;
 import com.dp1wms.view.MainView;
@@ -46,6 +47,8 @@ public class ListaLotesController implements FxmlController {
 
     @Autowired
     private RepositoryMantMov repositoryMantMov;
+    @Autowired
+    private RepositoryCargaMasiva repositoryCargaMasiva;
 
     private  MainController mainController;
 
@@ -58,6 +61,14 @@ public class ListaLotesController implements FxmlController {
         this.stageManager = stageManager;
         this.mainController = mainController;
     }
+
+    public void cargaMasiva(ActionEvent event){
+        this.repositoryCargaMasiva.storeProcedure_cargarLotes();
+        this.listaLotes = obtenerLotes();
+        this.limpiarTabla();
+        llenarTabla(this.listaLotes);
+    }
+
     public void verUbicacionLote(ActionEvent event){
         Lote lote = tablaLotes.getSelectionModel().getSelectedItem();
         if( lote == null){
