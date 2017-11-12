@@ -186,7 +186,8 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
             }
         }
 
-        int idTipoMovimiento =1; // para ingreso de lote
+        //int idTipoMovimiento =1; // para ingreso de lote
+        int idTipoMovimiento = Constantes.TIPO_MOV_INGRESOLOTE;
         int totalProductos = 1;
         System.out.println("IdLoteInsertado -> "+idLote);
         if(idLote != 0){
@@ -202,7 +203,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         String SQL = "INSERT INTO public.movimiento (totalproductos,observaciones,fechamovimiento,idtipomovimiento,idempleadoauditado,idenvio) VALUES (?,?,?,?,?,?) RETURNING idmovimiento";
 
         int idMovimiento = 0;
-        int idTipoMovSalida = 6;
+        int idTipoMovSalida = Constantes.TIPO_MOV_SALIDA;
         try {
             Movimiento movimientoInsertado = (Movimiento) this.jdbcTemplate.queryForObject(SQL, new Object[]{movimiento.getTotalProductos(),movimiento.getObservaciones(),movimiento.getFechaMovimiento(),idTipoMovSalida,movimiento.getIdEmpleadoAuditado(),movimiento.getIdEnvio()},
                     (rs, i)->{
@@ -454,7 +455,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
 
         java.util.Date today = new java.util.Date();
         Timestamp fechahoraactual =new java.sql.Timestamp(today.getTime());
-        int idTipoMovimiento = 8;
+        int idTipoMovimiento = Constantes.TIPO_MOV_UBICACIONLOTE;
         registrarMovimiento(1,"Asignacion de un lote a una ubicacion",fechahoraactual,idTipoMovimiento,idProducto,idLote,cantidad,idEmpleadoAuditado,idCajon);
     }
 
@@ -471,7 +472,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         }
         java.util.Date today = new java.util.Date();
         Timestamp fechahoraactual =new java.sql.Timestamp(today.getTime());
-        int idTipoMovimiento = 8;
+        int idTipoMovimiento = Constantes.TIPO_MOV_REUBICACIONLOTE;
         registrarMovimiento(1,"Asignacion de un lote a una ubicacion",fechahoraactual,idTipoMovimiento,idProducto,idLote,cantidad,idEmpleadoAuditado,idCajon);
     }
 
