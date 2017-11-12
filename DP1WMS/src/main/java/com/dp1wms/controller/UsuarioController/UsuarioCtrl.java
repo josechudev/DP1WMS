@@ -1,6 +1,7 @@
 package com.dp1wms.controller.UsuarioController;
 
 import com.dp1wms.controller.FxmlController;
+import com.dp1wms.dao.RepositoryCargaMasiva;
 import com.dp1wms.dao.RepositoryMantEmpleado;
 import com.dp1wms.dao.RepositoryMantTipoEmpleado;
 import com.dp1wms.dao.RepositoryMantUsuario;
@@ -51,10 +52,17 @@ public class UsuarioCtrl implements FxmlController {
     private RepositoryMantEmpleado repositoryMantEmpleado;
     @Autowired
     private RepositoryMantTipoEmpleado repositoryMantTipoEmpleado;
+    @Autowired
+    private RepositoryCargaMasiva repositoryCargaMasiva;
 
     @Autowired @Lazy
     public  UsuarioCtrl(StageManager stageManager){
         this.stageManager = stageManager;
+    }
+
+   public void cargaMasiva(ActionEvent event){
+        this.repositoryCargaMasiva.storeProcedure_cargarUsuariosEmpleados();
+        this._llenarGrilla();
     }
 
     //Los botones del mantenimiento de usuarios

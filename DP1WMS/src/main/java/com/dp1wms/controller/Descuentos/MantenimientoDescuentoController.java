@@ -2,6 +2,7 @@ package com.dp1wms.controller.Descuentos;
 
 import com.dp1wms.controller.FxmlController;
 import com.dp1wms.controller.MainController;
+import com.dp1wms.dao.RepositoryCargaMasiva;
 import com.dp1wms.dao.RepositoryCondicion;
 import com.dp1wms.model.Condicion;
 import com.dp1wms.util.DateParser;
@@ -79,12 +80,19 @@ public class MantenimientoDescuentoController implements FxmlController {
     private final StageManager stageManager;
 
     private boolean esCreacion;
+    @Autowired
+    private RepositoryCargaMasiva repositoryCargaMasiva;
 
     @Autowired
     @Lazy
     public MantenimientoDescuentoController(StageManager stageManager,MainController mainController) {
         this.stageManager = stageManager;
         this.mainController = mainController;
+    }
+
+    public void cargaMasiva(ActionEvent event){
+        this.repositoryCargaMasiva.storeProcedure_cargarCondicionesComerciales();
+        this.actualizarTabla();
     }
 
     public void agregarDescuento(ActionEvent event) {
