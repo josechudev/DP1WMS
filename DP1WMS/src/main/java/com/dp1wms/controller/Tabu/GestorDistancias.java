@@ -71,6 +71,26 @@ public class GestorDistancias {
         }
     }
 
+    public ArrayList<Nodo> convertirIdANodos(int[] solucionID){
+        ArrayList<Nodo> solucionNodo = new ArrayList<>();
+        for(int i = 0; i < solucionID.length; i++){
+            Nodo nodo = buscarNodoPorId(solucionID[i]);
+            if(nodo != null){
+                solucionNodo.add(nodo);
+            }
+        }
+        return solucionNodo;
+    }
+
+    private Nodo buscarNodoPorId(int id){
+        for(Nodo nodo: this.nodos){
+            if(nodo.getNumId() == id){
+                return nodo;
+            }
+        }
+        return null;
+    }
+
 
     private void generarDistancias(){
 
