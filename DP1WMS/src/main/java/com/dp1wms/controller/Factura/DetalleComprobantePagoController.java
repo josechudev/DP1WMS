@@ -9,6 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class DetalleComprobantePagoController implements FxmlController {
@@ -21,7 +22,7 @@ public class DetalleComprobantePagoController implements FxmlController {
     @FXML private TableColumn<DetalleComprobantePago, Float> e_descuento;
     @FXML private TableColumn<DetalleComprobantePago, Float> e_subtotal;
 
-    @FXML private TextField e_TFtipoComprobante, e_TFcliente, e_TFfecha, e_TFflete, e_TFsubtotal, e_TFigv, e_TFtotal;
+    @FXML private TextField e_TFtipoComprobante, e_TFcliente, e_TFfecha, e_TFsubtotal, e_TFflete, e_TFtotalSinIGV, e_TFigv, e_TFtotal;
 
 
 
@@ -43,9 +44,19 @@ public class DetalleComprobantePagoController implements FxmlController {
         e_TFtipoComprobante.setText(auxComprobantePago.getV_tipoComprobante());
         e_TFcliente.setText(auxComprobantePago.getV_cliente());
         e_TFfecha.setText(auxComprobantePago.getV_fechaCreacion().substring(0, 19));
-        e_TFflete.setText(Float.toString(auxComprobantePago.getV_flete()));
-        e_TFsubtotal.setText(Float.toString(auxComprobantePago.getV_subtotal()));
-        e_TFigv.setText(Float.toString(auxComprobantePago.getV_igv()));
-        e_TFtotal.setText(Float.toString(auxComprobantePago.getV_total()));
+
+        //e_TFsubtotal.setText(Float.toString(auxComprobantePago.getV_subtotal()));
+        DecimalFormat decimalFormat = new DecimalFormat("0.##");
+        e_TFsubtotal.setText( decimalFormat.format(auxComprobantePago.getV_subtotal()) );
+        //e_TFflete.setText(Float.toString(auxComprobantePago.getV_flete()));
+        e_TFflete.setText(decimalFormat.format(auxComprobantePago.getV_flete()));
+
+        //e_TFtotalSinIGV.setText( Float.toString( auxComprobantePago.getV_total() - auxComprobantePago.getV_igv() ) );
+        e_TFtotalSinIGV.setText( decimalFormat.format( auxComprobantePago.getV_total() - auxComprobantePago.getV_igv() ) );
+        //e_TFigv.setText(Float.toString(auxComprobantePago.getV_igv()));
+        e_TFigv.setText(decimalFormat.format(auxComprobantePago.getV_igv()));
+
+        //e_TFtotal.setText(Float.toString(auxComprobantePago.getV_total()));
+        e_TFtotal.setText(decimalFormat.format(auxComprobantePago.getV_total()));
     }
 }

@@ -1,4 +1,4 @@
-CREATE EXTENSION PGCRYPTO;
+﻿CREATE EXTENSION PGCRYPTO;
 
 
 --Estados de pedido
@@ -75,3 +75,7 @@ INSERT INTO tipoempleadoxseccion (idtipoempleado, idseccion, idempleadoauditado)
 VALUES (1,16,1);
 INSERT INTO tipoempleadoxseccion (idtipoempleado, idseccion, idempleadoauditado)
 VALUES (1,17,1);
+
+-- Tipo comprobante de pago
+INSERT INTO TipoComprobante (descripcion) VALUES ('Boleta');
+INSERT INTO TipoComprobante (descripcion) VALUES ('Factura');
