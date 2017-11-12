@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="534.0" prefWidth="827.0" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Factura.DetalleComprobantePagoController">
+  <children>
+    <Label layoutX="29.0" layoutY="60.0" prefHeight="27.0" prefWidth="198.0" text="Tipo de comprobante de pago:">
+      <font>
+        <Font size="14.0" fx:id="x1" />
+      </font>
+    </Label>
+    <Label layoutX="29.0" layoutY="25.0" text="Detalle comprobante de pago">
+      <font>
+        <Font size="18.0" />
+      </font>
+    </Label>
+    <TableView fx:id="e_table" layoutX="27.0" layoutY="139.0" prefHeight="201.0" prefWidth="779.0">
+      <columns>
+        <TableColumn fx:id="e_codigoProducto" maxWidth="5000.0" minWidth="10.0" prefWidth="130.0" text="Codigo producto" />
+        <TableColumn fx:id="e_nombreProducto" maxWidth="5000.0" minWidth="10.0" prefWidth="130.0" text="Nombre producto" />
+        <TableColumn fx:id="e_cantidad" maxWidth="5000.0" minWidth="10.0" prefWidth="150.0" style="-fx-alignment: CENTER-RIGHT;" text="Cantidad" />
+        <TableColumn fx:id="e_precioUnitario" maxWidth="5000.0" minWidth="10.0" prefWidth="150.0" style="-fx-alignment: CENTER-RIGHT;" text="Precio Unitario" />
+        <TableColumn fx:id="e_descuento" maxWidth="5000.0" minWidth="10.0" prefWidth="110.0" style="-fx-alignment: CENTER-RIGHT;" text="Descuento" />
+        <TableColumn fx:id="e_subtotal" maxWidth="5000.0" minWidth="10.0" prefWidth="110.0" style="-fx-alignment: CENTER-RIGHT;" text="Subtotal" />
+      </columns>
+    </TableView>
+    <Label font="$x1" layoutX="29.0" layoutY="90.0" prefHeight="27.0" prefWidth="51.0" text="Cliente:" />
+    <Label font="$x1" layoutX="632.0" layoutY="60.0" prefHeight="27.0" prefWidth="51.0" text="Fecha:" />
+
+    <Label font="$x1" layoutX="603.0" layoutY="345.0" prefHeight="27.0" prefWidth="87.0" text="Subtotal:" />
+    <TextField fx:id="e_TFsubtotal" editable="false" layoutX="690.0" layoutY="348.0" prefHeight="24.0" prefWidth="116.0" style="-fx-alignment: CENTER-RIGHT;" />
+    <Label font="$x1" layoutX="603.0" layoutY="375.0" prefHeight="27.0" prefWidth="65.0" text="Flete:" />
+    <TextField fx:id="e_TFflete" editable="false" layoutX="690.0" layoutY="378.0" prefHeight="24.0" prefWidth="116.0" style="-fx-alignment: CENTER-RIGHT;" />
+    <Label font="$x1" layoutX="603.0" layoutY="417.0" prefHeight="27.0" prefWidth="87.0" text="Total sin IGV:" />
+    <TextField fx:id="e_TFtotalSinIGV" editable="false" layoutX="690.0" layoutY="418.0" prefHeight="24.0" prefWidth="116.0" style="-fx-alignment: CENTER-RIGHT;" />
+    <Label font="$x1" layoutX="603.0" layoutY="445.0" prefHeight="27.0" prefWidth="65.0" text="IGV:" />
+    <TextField fx:id="e_TFigv" editable="false" layoutX="690.0" layoutY="448.0" prefHeight="24.0" prefWidth="116.0" style="-fx-alignment: CENTER-RIGHT;" />
+    <Label font="$x1" layoutX="603.0" layoutY="485.0" prefHeight="27.0" prefWidth="65.0" text="Total:" />
+    <TextField fx:id="e_TFtotal" editable="false" layoutX="690.0" layoutY="488.0" prefHeight="24.0" prefWidth="116.0" style="-fx-alignment: CENTER-RIGHT;" />
+
+    <TextField fx:id="e_TFtipoComprobante" editable="false" layoutX="227.0" layoutY="63.0" prefHeight="24.0" prefWidth="198.0" style="-fx-alignment: CENTER-RIGHT;" />
+    <TextField fx:id="e_TFcliente" editable="false" layoutX="80.0" layoutY="93.0" prefHeight="24.0" prefWidth="345.0" style="-fx-alignment: CENTER-RIGHT;" />
+    <TextField fx:id="e_TFfecha" editable="false" layoutX="679.0" layoutY="63.0" prefHeight="25.0" prefWidth="127.0" style="-fx-alignment: CENTER-RIGHT;" />
+  </children>
+</AnchorPane>

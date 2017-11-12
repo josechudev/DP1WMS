@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Guia.ListaGuiasController">
+   <children>
+      <TableView fx:id="tablaGuias" layoutX="45.0" layoutY="130.0" prefHeight="200.0" prefWidth="511.0">
+        <columns>
+          <TableColumn fx:id="c_indice" prefWidth="52.0" text="N°" />
+          <TableColumn fx:id="c_numeroGuia" prefWidth="146.0" text="Numero Guia" />
+            <TableColumn fx:id="c_cliente" prefWidth="214.0" text="Cliente" />
+            <TableColumn fx:id="c_pesoTotal" prefWidth="98.0" text="Peso Total" />
+        </columns>
+      </TableView>
+      <Button layoutX="39.0" layoutY="84.0" mnemonicParsing="false" onAction="#crearGuiaRemision" prefHeight="25.0" prefWidth="116.0" text="Nueva Guia" />
+      <Label layoutX="39.0" layoutY="21.0" text="Guías de Remisión">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="280.0" layoutY="347.0" mnemonicParsing="false" onAction="#cancelarOperacion" text="Cancelar" />
+   </children>
+</AnchorPane>
