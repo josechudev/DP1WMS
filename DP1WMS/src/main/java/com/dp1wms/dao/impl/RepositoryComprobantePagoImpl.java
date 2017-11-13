@@ -124,7 +124,7 @@ public class RepositoryComprobantePagoImpl implements RepositoryComprobantePago 
         try {
             jdbcTemplate.update(sql2,
                     new Object[]{ auxSubtotal,
-                            (auxSubtotal + auxEnvio.getCostoFlete() )/(1 + IGV), auxSubtotal + auxEnvio.getCostoFlete(),
+                            ( ( auxSubtotal + auxEnvio.getCostoFlete() )/(1 + IGV) )*IGV , auxSubtotal + auxEnvio.getCostoFlete(),
                             auxIdComprobantePago});
         }catch (Exception e){
             e.printStackTrace();
