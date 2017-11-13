@@ -36,7 +36,7 @@ public class AlmacenRutaController implements FxmlController {
     @FXML private TextField numeroIteraciones;
     @FXML private TextField tiempoMaximoTF;
     @FXML private TextField listaTabuTamanho;
-    @FXML private TextField listaTabuPermanencia;
+    @FXML private TextField numIteracionesSinMejora;
 
     private ArrayList<Node> nodes;
 
@@ -62,9 +62,9 @@ public class AlmacenRutaController implements FxmlController {
         //obtiene valores para tabu
         try {
             tabuTamanho = Integer.parseInt(listaTabuTamanho.getText());
-            tabuPermanencia = Integer.parseInt(listaTabuPermanencia.getText());
+            tabuPermanencia =tabuTamanho;
             numIter = Long.parseLong(numeroIteraciones.getText());
-            numIterSinMejora = numIter;
+            numIterSinMejora =  Long.parseLong(numIteracionesSinMejora.getText());
             tiempoMaximo = Long.parseLong(tiempoMaximoTF.getText()) * 1000;
         }catch (NumberFormatException e){
             this.stageManager.mostrarErrorDialog("Error Generar Ruta", null,
