@@ -201,7 +201,6 @@ public class AlmacenRutaController implements FxmlController {
     public void initialize() {
         this.initFields();
         this.nodes = new ArrayList<>();
-        System.out.println("Eleccion de Algoritmo");
 
         //Almacen nuevo
         this.almacen = new Almacen(25,25);
