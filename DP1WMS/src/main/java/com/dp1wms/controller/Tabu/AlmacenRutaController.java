@@ -120,8 +120,8 @@ public class AlmacenRutaController implements FxmlController {
         }
         this.nodes.clear();
 
-        for (int i = 0; i < almacen.getAlto(); i++) {
-            for (int j = 0; j < almacen.getAncho(); j++) {
+        for (int i = 0; i < almacen.getAncho(); i++) {
+            for (int j = 0; j < almacen.getAlto(); j++) {
                 Region cell = new Region();
                 cell.setStyle("-fx-background-color: #B9B8FF;");
                 cell.setPrefHeight(20);
@@ -137,8 +137,8 @@ public class AlmacenRutaController implements FxmlController {
         boolean [][] productos = almacen.getProductos();
 
         //color racks
-        for (int i = 0; i < almacen.getAlto(); i++) {
-            for (int j = 0; j < almacen.getAncho(); j++) {
+        for (int i = 0; i < almacen.getAncho(); i++) {
+            for (int j = 0; j < almacen.getAlto(); j++) {
                     if (layout[i][j]){
                         Region cell = new Region();
                         cell.setStyle("-fx-background-color: #4C6CCC;");
@@ -151,8 +151,8 @@ public class AlmacenRutaController implements FxmlController {
         }
 
         //color nodos
-        for (int i = 0; i < almacen.getAlto(); i++) {
-            for (int j = 0; j < almacen.getAncho(); j++) {
+        for (int i = 0; i < almacen.getAncho(); i++) {
+            for (int j = 0; j < almacen.getAlto(); j++) {
                 if (nodos[i][j]){
                     Region cell = new Region();
                     cell.setStyle("-fx-background-color: #FFF579;");
@@ -165,8 +165,8 @@ public class AlmacenRutaController implements FxmlController {
         }
 
         //colocar productos
-        for (int i = 0; i < almacen.getAlto(); i++) {
-            for (int j = 0; j < almacen.getAncho(); j++) {
+        for (int i = 0; i < almacen.getAncho(); i++) {
+            for (int j = 0; j < almacen.getAlto(); j++) {
                 if (productos[i][j]){
                     Region rack = new Region();
                     rack.setStyle("-fx-background-color: #95CC4C;");
@@ -174,6 +174,7 @@ public class AlmacenRutaController implements FxmlController {
                     rack.setPrefWidth(20);
                     this.nodes.add(rack);
                     almacen_layout.add(rack,i,j);
+                    System.out.println("imprimiendo products");
                 }
             }
         }
@@ -206,12 +207,12 @@ public class AlmacenRutaController implements FxmlController {
         this.almacen = new Almacen(25,25);
 
         //construir grid de almacen
-        for (int i = 0; i < almacen.getAlto()-1; i++) {
+        for (int i = 0; i < almacen.getAncho() - 1; i++) {
             RowConstraints row = new RowConstraints();
             row.setPrefHeight(20);
             almacen_layout.getRowConstraints().add(row);
         }
-        for (int j = 0; j < almacen.getAncho()-1; j++) {
+        for (int j = 0; j < almacen.getAlto() - 1; j++) {
             ColumnConstraints col = new ColumnConstraints();
             col.setPrefWidth(20);
             almacen_layout.getColumnConstraints().add(col);
@@ -224,6 +225,7 @@ public class AlmacenRutaController implements FxmlController {
         //Productos aleatorios para test
         int numProductos = 5;
         ArrayList<Producto> productos = GestorProducto.generarProductos(almacen, numProductos);
+
         GestorAlmacen.llenarConProdYPtoPartida(almacen, productos, puntoInicio);
 
         //Imprime el almacen
