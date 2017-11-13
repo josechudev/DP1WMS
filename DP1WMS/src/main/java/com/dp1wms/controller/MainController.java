@@ -1,5 +1,6 @@
 package com.dp1wms.controller;
 
+import com.dp1wms.controller.Factura.MantenimientoFacturaController;
 import com.dp1wms.controller.UsuarioController.UsuarioCtrl;
 import com.dp1wms.dao.RepositoryMantTipoEmpleado;
 import com.dp1wms.model.Empleado;
@@ -50,6 +51,7 @@ public class MainController implements FxmlController {
     private final StageManager stageManager;
 
     private final UsuarioCtrl usuarioCtrl;
+    private final MantenimientoFacturaController mantenimientoFacturaController;
 
     @Autowired
     private RepositoryMantTipoEmpleado repositoryMantTipoEmpleado;
@@ -58,9 +60,10 @@ public class MainController implements FxmlController {
     private RepositoryMantEmpleado repositoryMantEmpleado;
 
     @Autowired @Lazy
-    public MainController(StageManager stageManager, UsuarioCtrl usuarioCtrl){
+    public MainController(StageManager stageManager, UsuarioCtrl usuarioCtrl, MantenimientoFacturaController mantenimientoFacturaController){
         this.stageManager = stageManager;
         this.usuarioCtrl = usuarioCtrl;
+        this.mantenimientoFacturaController = mantenimientoFacturaController;
     }
 
     @Override
@@ -219,7 +222,14 @@ public class MainController implements FxmlController {
     @FXML
     private void cargarMantenimientoComprobantePago(){
         System.out.println("cargarDevolucionPedido");
+        this.mantenimientoFacturaController.setUsuario(usuario);
         this.stageManager.mostrarModal(FacturaView.MANTENIMIENTO_FACTURA);
+    }
+
+
+    @FXML
+    private void cargarListaLotes(){
+        this.stageManager.mostrarModal(MainView.LISTA_LOTES);
     }
 
     public void setUsuario(Usuario usuario){
