@@ -186,7 +186,8 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
             }
         }
 
-        int idTipoMovimiento =1; // para ingreso de lote
+        //int idTipoMovimiento =1; // para ingreso de lote
+        int idTipoMovimiento = Constantes.TIPO_MOV_INGRESOLOTE;
         int totalProductos = 1;
         System.out.println("IdLoteInsertado -> "+idLote);
         if(idLote != 0){
@@ -202,7 +203,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         String SQL = "INSERT INTO public.movimiento (totalproductos,observaciones,fechamovimiento,idtipomovimiento,idempleadoauditado,idenvio) VALUES (?,?,?,?,?,?) RETURNING idmovimiento";
 
         int idMovimiento = 0;
-        int idTipoMovSalida = 6;
+        int idTipoMovSalida = Constantes.TIPO_MOV_SALIDA;
         try {
             Movimiento movimientoInsertado = (Movimiento) this.jdbcTemplate.queryForObject(SQL, new Object[]{movimiento.getTotalProductos(),movimiento.getObservaciones(),movimiento.getFechaMovimiento(),idTipoMovSalida,movimiento.getIdEmpleadoAuditado(),movimiento.getIdEnvio()},
                     (rs, i)->{
@@ -255,6 +256,29 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         return listaAlmacenes;
     }
 
+    public List<Almacen> obtenerTodosAlmacenes() {
+        String SQL = "SELECT * FROM almacen";
+        List<Almacen> listaAlmacenes = null;
+        try{
+            listaAlmacenes = jdbcTemplate.query(SQL,new Object[] {}, this::mapParamAlmacen);
+        }catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+        }
+
+        for(Almacen almacen: listaAlmacenes){
+            List<Area> listaAreas = this.obtenerTodasAreas(almacen.getIdAlmacen());
+            if(listaAreas.isEmpty()){
+                almacen.setListaArea(new ArrayList<Area>());
+            }else{
+                almacen.setListaArea(listaAreas);
+            }
+
+        }
+
+        return listaAlmacenes;
+    }
+
+
     private Almacen mapParamAlmacen(ResultSet rs, int i) throws SQLException {
         Almacen almacen = new Almacen();
         almacen.setIdAlmacen(rs.getInt("idalmacen"));
@@ -284,6 +308,28 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
 
         return listaAreas;
     }
+    private List<Area> obtenerTodasAreas(int idAlmacen){
+        String SQL = "SELECT * FROM area WHERE idalmacen = ?";
+        List<Area> listaAreas = null;
+        try{
+            listaAreas = jdbcTemplate.query(SQL,new Object[] {idAlmacen}, this::mapParamArea);
+        }catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+        }
+
+        for(Area area: listaAreas){
+            List<Rack> listaRacks  =this.obtenerTodosRack(area.getIdArea());
+            if(listaRacks.isEmpty()){
+                area.setListaRack(new ArrayList<Rack>());
+            }else{
+                area.setListaRack(listaRacks);
+            }
+
+        }
+
+        return listaAreas;
+    }
+
 
     private Area mapParamArea(ResultSet rs, int i) throws SQLException {
         Area area = new Area();
@@ -296,6 +342,29 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
 
     private List<Rack> obtenerRack(int idArea){
         String SQL = "SELECT * FROM rack WHERE activo and idarea = ?";
+        List<Rack> listaRack = null;
+        try{
+            listaRack = jdbcTemplate.query(SQL,new Object[] {idArea}, this::mapParamRack);
+        }catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+        }
+
+        for(Rack rack: listaRack){
+            List<Cajon> listaCajones = this.obtenerCajones(rack.getIdRack());
+            //System.out.println("DAO tam lista cajones: "+listaCajones.size());
+            if(listaCajones.isEmpty()){
+                rack.setListaCajones(new ArrayList<Cajon>());
+            }else{
+                rack.setListaCajones(listaCajones);
+            }
+
+        }
+
+        return listaRack;
+    }
+
+    private List<Rack> obtenerTodosRack(int idArea){
+        String SQL = "SELECT * FROM rack WHERE idarea = ?";
         List<Rack> listaRack = null;
         try{
             listaRack = jdbcTemplate.query(SQL,new Object[] {idArea}, this::mapParamRack);
@@ -373,7 +442,7 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         return ubicacion;
     }
 
-
+    @Transactional(rollbackFor = Exception.class)
     public void insertarUbicacion(int idLote,int idProducto,int idCajon,int cantidad,Long idEmpleadoAuditado){
         String SQL = "INSERT INTO public.ubicacion (idlote,idproducto,idcajon,cantidad) VALUES (?,?,?,?)";
         try{
@@ -386,10 +455,11 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
 
         java.util.Date today = new java.util.Date();
         Timestamp fechahoraactual =new java.sql.Timestamp(today.getTime());
-        int idTipoMovimiento = 8;
+        int idTipoMovimiento = Constantes.TIPO_MOV_UBICACIONLOTE;
         registrarMovimiento(1,"Asignacion de un lote a una ubicacion",fechahoraactual,idTipoMovimiento,idProducto,idLote,cantidad,idEmpleadoAuditado,idCajon);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void actualizarUbicacion(int idLote,int idProducto,int idCajon,int cantidad,int idCajonAntiguo,Long idEmpleadoAuditado){
         //System.out.println(idLote+"|"+idProducto+"|"+idCajon+"|"+cantidad+"|"+idCajonAntiguo);
         String SQL = "UPDATE public.ubicacion SET idcajon=?,cantidad=? WHERE idlote = ? and idproducto = ? and idcajon = ?";
@@ -402,7 +472,55 @@ public class RepositoryMantMovImpl implements RepositoryMantMov{
         }
         java.util.Date today = new java.util.Date();
         Timestamp fechahoraactual =new java.sql.Timestamp(today.getTime());
-        int idTipoMovimiento = 8;
+        int idTipoMovimiento = Constantes.TIPO_MOV_REUBICACIONLOTE;
         registrarMovimiento(1,"Asignacion de un lote a una ubicacion",fechahoraactual,idTipoMovimiento,idProducto,idLote,cantidad,idEmpleadoAuditado,idCajon);
+    }
+
+    public void habilitarArea(Boolean activo,int idArea,Long idEmpleadoAuditado){
+        //select racks de esa area
+        String SQL = "SELECT idrack FROM public.rack WHERE idarea = ?";
+        List<Integer> listaRack = null;
+        try{
+            listaRack = jdbcTemplate.queryForList(SQL,new Object[] {idArea},Integer.class);
+        }catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+        }
+        //update inhabilitar todos los racks
+        for(Integer idRack: listaRack){
+            System.out.printf("IdRack: "+idRack);
+            this.inhabilitarRack(activo,idRack,idEmpleadoAuditado);
+        }
+
+        //update inhabilitar area
+        this.inhabilitarArea(activo,idArea,idEmpleadoAuditado);
+    }
+
+    public void habilitarRack(Boolean activo,int idRack,Long idEmpleadoAuditado){
+        //update inhabilitar rack
+        this.inhabilitarRack(activo,idRack,idEmpleadoAuditado);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    private void inhabilitarArea(Boolean activo,int idArea,Long idEmpleadoAuditado) {
+        String SQL = "UPDATE public.area SET activo = ?, idempleadoauditado = ? WHERE idarea = ?";
+        try {
+            jdbcTemplate.update(SQL, new Object[]{activo,idEmpleadoAuditado, idArea});
+            System.out.println("Se ha actualizado en la tabla area");
+        } catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    private void inhabilitarRack(Boolean activo,int idRack,Long idEmpleadoAuditado) {
+        String SQL = "UPDATE public.rack SET activo = ?, idempleadoauditado = ? WHERE idrack = ?";
+        try {
+            jdbcTemplate.update(SQL, new Object[]{activo,idEmpleadoAuditado, idRack});
+            System.out.println("Se ha actualizado en la tabla rack");
+        } catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 }

@@ -27,6 +27,12 @@ public class ComprobantePago {
 
     private String v_mostrarActivo;
 
+    private List<DetalleFactura> listaDetalleComprobante;
+    private Integer indiceTabla;
+    private String direccionCliente;
+    private String numeroDocumentoCliente;
+    private Long idNotaCredito;
+
     //private List<DetalleComprobantePago> v_listaDetalleComprobante;
 
     public ComprobantePago(){
@@ -188,4 +194,45 @@ public class ComprobantePago {
         this.v_fechaModificacion = v_fechaModificacion;
     }
 
+    public List<DetalleFactura> getListaDetalleComprobante() {
+        return listaDetalleComprobante;
+    }
+
+    public void setListaDetalleComprobante(List<DetalleFactura> listaDetalleComprobante) {
+        this.listaDetalleComprobante = listaDetalleComprobante;
+    }
+
+
+    public Integer getIndiceTabla() {
+        return indiceTabla;
+    }
+
+    public void setIndiceTabla(Integer indiceTabla) {
+        this.indiceTabla = indiceTabla;
+    }
+
+
+    public String getDireccionCliente() {
+        return direccionCliente;
+    }
+
+    public void setDireccionCliente(String direccionCliente) {
+        this.direccionCliente = direccionCliente;
+    }
+
+    public String getNumeroDocumentoCliente() {
+        return numeroDocumentoCliente;
+    }
+
+    public void setNumeroDocumentoCliente(String numeroDocumentoCliente) {
+        this.numeroDocumentoCliente = numeroDocumentoCliente;
+    }
+
+    public Long getIdNotaCredito() {
+        return idNotaCredito;
+    }
+
+    public void setIdNotaCredito(Long idNotaCredito) {
+        this.idNotaCredito = idNotaCredito;
+    }
 }

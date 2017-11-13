@@ -374,6 +374,84 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
+    },LISTA_FACTURAS_DEVOLUCION{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("listaFacturas.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/DevolucionPedido/ListaFacturas.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },DETALLE_DEVOLUCION{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("detalleDevolucion.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/DevolucionPedido/DetalleDevolucion.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },LISTA_NOTA_CREDITO{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("listaNotaCredito.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/DevolucionPedido/ListaNotaCredito.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },LISTA_PEDIDOS_DEVOLUCION{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("listaPedidoDevolucion.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/DevolucionPedido/ListaPedidoDevolucion.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },CREAR_NOTACREDITO{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("crearNotaCredito.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/DevolucionPedido/CrearNotaCredito.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },UBICACIONES{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("ubicaciones.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Ubicaciones/Ubicaciones.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
     };
 
     public String getStringFromResourceBundle(String key) {

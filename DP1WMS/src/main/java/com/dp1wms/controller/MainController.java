@@ -226,10 +226,24 @@ public class MainController implements FxmlController {
         this.stageManager.mostrarModal(FacturaView.MANTENIMIENTO_FACTURA);
     }
 
+    @FXML
+    private void cargarPedidoDevolucion(){
+        System.out.println("cargarPedidoDevolucion");
+        this.stageManager.mostrarModal(MainView.LISTA_FACTURAS_DEVOLUCION);
+    }
 
     @FXML
     private void cargarListaLotes(){
         this.stageManager.mostrarModal(MainView.LISTA_LOTES);
+    }
+
+    @FXML
+    private void cargarListaNotaCredito(){
+        this.stageManager.mostrarModal(MainView.LISTA_NOTA_CREDITO);
+    }
+    @FXML
+    private void cargarUbicaciones(){
+        this.stageManager.mostrarModal(MainView.UBICACIONES);
     }
 
     public void setUsuario(Usuario usuario){

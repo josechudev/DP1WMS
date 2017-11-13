@@ -198,7 +198,7 @@ public class MantenimientoFacturaController implements FxmlController {
     }
 
     public List<Envio> selectAllEnviosSinComprobantePago(){
-        return repositoryEnvio.obtenerListaEnvio();
+        return repositoryEnvio.obtenerListaEnvioRepoio();
     }
 
     public List<TipoComprobantePago> selectAllTipoComprobantePago(){ return repositoryComprobantePago.selectAllTipoComprobantePago(); }

@@ -76,7 +76,6 @@ group by p.codigo,p.nombreproducto, p.descripcion,p.stockminimo, p.stock, p.prec
 
 select * from producto
 
-
 select * from envio fecha
 
 select idproducto,sum(cantidad) from detalleenvio where idproducto=1 group by (idproducto)

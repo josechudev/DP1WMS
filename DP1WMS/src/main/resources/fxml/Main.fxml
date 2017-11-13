@@ -29,6 +29,7 @@
                         <MenuItem fx:id="clientesMI" mnemonicParsing="false" onAction="#cargarMantenimientoCliente" style="-fx-padding: 0 10;" text="Clientes" />
                         <MenuItem fx:id="categoriasMI" mnemonicParsing="false" onAction="#cargarMantenimientoCategoria" style="-fx-padding: 0 10;" text="Categorias" />
                         <MenuItem fx:id="productosMI" mnemonicParsing="false" onAction="#cargarMantenimientoProducto" style="-fx-padding: 0 10;" text="Productos" />
+                        <MenuItem mnemonicParsing="false" onAction="#cargarUbicaciones" text="Ubicaciones" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Almacenes">
@@ -56,6 +57,12 @@
                         </Menu>
                         <MenuItem fx:id="ventaGuiaMI" mnemonicParsing="false" onAction="#cargarListaGuias" style="-fx-padding: 0 10;" text="Guias de remision" />
                         <MenuItem fx:id="ventaCompPago" mnemonicParsing="false" onAction="#cargarMantenimientoComprobantePago" style="-fx-padding: 0 10;" text="Comprobante de Pago" />
+                        <Menu mnemonicParsing="false" text="Devoluciones">
+                          <items>
+                            <MenuItem mnemonicParsing="false" onAction="#cargarPedidoDevolucion" text="Pedido Devolucion" />
+                              <MenuItem mnemonicParsing="false" onAction="#cargarListaNotaCredito" text="Nota de Credito" />
+                          </items>
+                        </Menu>
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Reportes">

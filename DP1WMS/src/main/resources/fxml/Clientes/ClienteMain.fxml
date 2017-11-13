@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantCliente.ClienteMainController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantCliente.ClienteMainController">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
@@ -43,6 +43,7 @@
                               <Button mnemonicParsing="false" onAction="#cargarCSV" text="Cargar CSV" />
                               <Button mnemonicParsing="false" onAction="#registrarCliente" text="Registrar" />
                               <Button mnemonicParsing="false" onAction="#modificarCliente" text="Modificar" />
+                              <Button mnemonicParsing="false" onAction="#cargaMasiva" text="Cargar Datos" />
                            </children>
                         </HBox>
                         <TableView fx:id="clienteTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">

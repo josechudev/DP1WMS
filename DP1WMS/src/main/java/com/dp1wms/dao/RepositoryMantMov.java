@@ -18,4 +18,7 @@ public interface RepositoryMantMov{
     List<Ubicacion> obtenerUbicaciones(int idLote,int idProducto);
     void insertarUbicacion(int idLote,int idProducto,int idCajon,int cantidad,Long idEmpleadoAuditado);
     void actualizarUbicacion(int idLote,int idProducto,int idCajon,int cantidad,int idCajonAntiguo,Long idEmpleadoAuditado);
+    void habilitarArea(Boolean activo,int idArea,Long idEmpleadoAuditado);
+    void habilitarRack(Boolean activo,int idRack,Long idEmpleadoAuditado);
+    List<Almacen> obtenerTodosAlmacenes();
 }
