@@ -16,13 +16,14 @@ public class Guia {
     private String puntoLlegada;
     private String nombreTransportista;
     private String numeroPlaca;
-    private Double pesoTotal;
+    private Float pesoTotal;
     private Long idEnvio;
     private Long idEmpleadoAuditado;
     private String numeroGuia;
     private Integer indiceTabla;
     private String razonSocial;
     private Long idCliente;
+    private Boolean recibido;
 
     private List<DetalleGuia> listaDetalleGuia = new ArrayList<DetalleGuia>();
 
@@ -98,11 +99,11 @@ public class Guia {
         this.numeroPlaca = numeroPlaca;
     }
 
-    public Double getPesoTotal() {
+    public Float getPesoTotal() {
         return pesoTotal;
     }
 
-    public void setPesoTotal(Double pesoTotal) {
+    public void setPesoTotal(Float pesoTotal) {
         this.pesoTotal = pesoTotal;
     }
 
@@ -174,5 +175,13 @@ public class Guia {
 
     public void setIdCliente(Long idCliente) {
         this.idCliente = idCliente;
+    }
+
+    public Boolean getRecibido() {
+        return recibido;
+    }
+
+    public void setRecibido(Boolean recibido) {
+        this.recibido = recibido;
     }
 }

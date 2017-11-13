@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="datosDescuentoAnchorPane" prefHeight="457.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Descuentos.DatosDescuentoController">
+<AnchorPane fx:id="datosDescuentoAnchorPane" prefHeight="480.0" prefWidth="727.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Descuentos.DatosDescuentoController">
    <children>
-      <TitledPane fx:id="titledPaneGen" layoutX="438.0" layoutY="107.0" prefHeight="189.0" prefWidth="337.0" text="Datos que generan el condicion" />
-      <TitledPane layoutX="19.0" layoutY="106.0" prefHeight="196.0" prefWidth="378.0" text="Datos afectados por el condicion" />
-      <Label layoutX="57.0" layoutY="273.0" text="Valor Descuento" />
+      <TitledPane fx:id="titledPaneGen" layoutX="27.0" layoutY="105.0" prefHeight="189.0" prefWidth="337.0" text="Datos que generan el condicion" />
+      <TitledPane fx:id="titledPaneDesc" layoutX="305.0" layoutY="105.0" prefHeight="196.0" prefWidth="392.0" text="Datos afectados por el condicion" />
+      <Label fx:id="labelValorDesc" layoutX="349.0" layoutY="273.0" text="Valor Descuento" />
       <Label fx:id="l_nombreFormulario" layoutX="27.0" layoutY="21.0" text="Label">
          <font>
             <Font size="18.0" />
@@ -22,37 +22,46 @@
       </Label>
       <Label layoutX="27.0" layoutY="73.0" text="Tipo Descuento" />
       <ComboBox fx:id="cb_tipoDescuento" layoutX="152.0" layoutY="69.0" onAction="#cambiarTipoDescuento" prefWidth="150.0" />
-      <Label fx:id="labelCategoriaGen" layoutX="473.0" layoutY="194.0" text="Categoria:" />
-      <ComboBox fx:id="cb_categoriaGenerador" layoutX="536.0" layoutY="191.0" prefWidth="150.0" />
-      <TextField fx:id="txb_productoGenerador" layoutX="536.0" layoutY="154.0" prefHeight="25.0" prefWidth="150.0" />
-      <Button fx:id="btn_buscarGen" layoutX="703.0" layoutY="155.0" mnemonicParsing="false" onAction="#buscarProductoGen" text="Buscar" />
-      <Label fx:id="labelCantidadGen" layoutX="473.0" layoutY="236.0" text="Cantidad:" />
-      <TextField fx:id="txb_cantidadGenerador" layoutX="535.0" layoutY="233.0" />
-      <Label fx:id="label_ProductoGen" layoutX="472.0" layoutY="158.0" text="Producto:" />
-      <Label fx:id="labelProductoDesc" layoutX="59.0" layoutY="156.0" text="Producto Descuento" />
-      <Label fx:id="labelCategoriaDesc" layoutX="60.0" layoutY="194.0" text="Categoria" />
-      <Label layoutX="57.0" layoutY="235.0" text="Cantidad" />
-      <TextField fx:id="txb_productoDescuento" layoutX="178.0" layoutY="146.0" />
-      <ComboBox fx:id="cb_categoriaDescuento" layoutX="178.0" layoutY="187.0" onAction="#actualizarCategoria" prefWidth="150.0" />
-      <Button fx:id="btn_buscarDesc" layoutX="341.0" layoutY="146.0" mnemonicParsing="false" onAction="#buscarProductoDesc" text="Buscar" />
-      <TextField fx:id="txb_cantidadDescuento" layoutX="177.0" layoutY="229.0" />
-      <TextField fx:id="txb_valorDescuento" layoutX="177.0" layoutY="268.0" prefHeight="25.0" prefWidth="54.0" />
-      <Label layoutX="14.0" layoutY="324.0" text="Fecha Inicio:" />
-      <Label layoutX="13.0" layoutY="357.0" text="Fecha Fin:" />
-      <DatePicker fx:id="dp_fechaInicio" layoutX="87.0" layoutY="320.0" />
-      <DatePicker fx:id="dp_fechaFin" layoutX="86.0" layoutY="353.0" />
-      <Label fx:id="txa_descripcion" layoutX="308.0" layoutY="324.0" text="Descripcion:" />
-      <Button fx:id="btnGuardar" layoutX="242.0" layoutY="418.0" mnemonicParsing="false" onAction="#guardarFormulario" prefHeight="25.0" prefWidth="88.0" text="Guardar" />
-      <Button fx:id="btnCancelar" layoutX="388.0" layoutY="418.0" mnemonicParsing="false" onAction="#cancelarFormulario" prefHeight="25.0" prefWidth="88.0" text="Cancelar" />
-      <TextField fx:id="txb_descripcion" layoutX="385.0" layoutY="320.0" prefHeight="60.0" prefWidth="314.0" />
-      <RadioButton fx:id="rb_prodGen" layoutX="452.0" layoutY="159.0" mnemonicParsing="false" onAction="#radioButtonProdGenAccion" />
-      <RadioButton fx:id="rb_catGen" layoutX="451.0" layoutY="195.0" mnemonicParsing="false" onAction="#radioButtonCatGenAccion" />
-      <RadioButton fx:id="rb_prodDesc" layoutX="36.0" layoutY="156.0" mnemonicParsing="false" onAction="#radioButtonProdDescAccion" prefHeight="17.0" prefWidth="83.0" />
-      <RadioButton fx:id="rb_catDesc" layoutX="37.0" layoutY="193.0" mnemonicParsing="false" onAction="#radioButtonCatDescAccion" />
-      <Label layoutX="234.0" layoutY="272.0" text="\%">
+      <Label fx:id="labelCategoriaGen" layoutX="58.0" layoutY="199.0" text="Categoria:" />
+      <ComboBox fx:id="cb_categoriaGenerador" layoutX="121.0" layoutY="196.0" prefWidth="150.0" />
+      <TextField fx:id="txb_productoGenerador" layoutX="121.0" layoutY="159.0" prefHeight="25.0" prefWidth="150.0" />
+      <Button fx:id="btn_buscarGen" layoutX="288.0" layoutY="160.0" mnemonicParsing="false" onAction="#buscarProductoGen" text="Buscar" />
+      <Label fx:id="labelCantidadGen" layoutX="58.0" layoutY="241.0" text="Cantidad:" />
+      <TextField fx:id="txb_cantidadGenerador" layoutX="120.0" layoutY="238.0" prefHeight="25.0" prefWidth="72.0" />
+      <Label fx:id="label_ProductoGen" layoutX="57.0" layoutY="163.0" text="Producto:" />
+      <Label fx:id="labelProductoDesc" layoutX="351.0" layoutY="156.0" text="Producto Descuento" />
+      <Label fx:id="labelCategoriaDesc" layoutX="352.0" layoutY="194.0" text="Categoria" />
+      <Label fx:id="labelCantidadDesc" layoutX="349.0" layoutY="235.0" text="Cantidad" />
+      <TextField fx:id="txb_productoDescuento" layoutX="470.0" layoutY="146.0" />
+      <ComboBox fx:id="cb_categoriaDescuento" layoutX="470.0" layoutY="187.0" onAction="#actualizarCategoria" prefWidth="150.0" />
+      <Button fx:id="btn_buscarDesc" layoutX="633.0" layoutY="146.0" mnemonicParsing="false" onAction="#buscarProductoDesc" text="Buscar" />
+      <TextField fx:id="txb_cantidadDescuento" layoutX="469.0" layoutY="229.0" prefHeight="25.0" prefWidth="65.0" />
+      <TextField fx:id="txb_valorDescuento" layoutX="463.0" layoutY="267.0" prefHeight="25.0" prefWidth="54.0" />
+      <Label layoutX="14.0" layoutY="338.0" text="Fecha Inicio:" />
+      <Label layoutX="13.0" layoutY="371.0" text="Fecha Fin:" />
+      <DatePicker fx:id="dp_fechaInicio" layoutX="87.0" layoutY="334.0" />
+      <DatePicker fx:id="dp_fechaFin" layoutX="86.0" layoutY="367.0" />
+      <Label fx:id="txa_descripcion" layoutX="308.0" layoutY="338.0" text="Descripcion:" />
+      <Button fx:id="btnGuardar" layoutX="242.0" layoutY="432.0" mnemonicParsing="false" onAction="#guardarFormulario" prefHeight="25.0" prefWidth="88.0" text="Guardar" />
+      <Button fx:id="btnCancelar" layoutX="388.0" layoutY="432.0" mnemonicParsing="false" onAction="#cancelarFormulario" prefHeight="25.0" prefWidth="88.0" text="Cancelar" />
+      <TextField fx:id="txb_descripcion" layoutX="385.0" layoutY="334.0" prefHeight="60.0" prefWidth="314.0" />
+      <RadioButton fx:id="rb_prodGen" layoutX="37.0" layoutY="164.0" mnemonicParsing="false" onAction="#radioButtonProdGenAccion" />
+      <RadioButton fx:id="rb_catGen" layoutX="36.0" layoutY="200.0" mnemonicParsing="false" onAction="#radioButtonCatGenAccion" />
+      <RadioButton fx:id="rb_prodDesc" layoutX="328.0" layoutY="156.0" mnemonicParsing="false" onAction="#radioButtonProdDescAccion" prefHeight="17.0" prefWidth="83.0" />
+      <RadioButton fx:id="rb_catDesc" layoutX="329.0" layoutY="193.0" mnemonicParsing="false" onAction="#radioButtonCatDescAccion" />
+      <Label fx:id="labelPorcentaje" layoutX="520.0" layoutY="271.0" text="\%">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
+      <Label fx:id="labelCantidad1" layoutX="153.0" layoutY="28.0" text="Por la cantidad de:  " />
+      <Label fx:id="labelCantidad3" layoutX="336.0" layoutY="28.0" text="Lleva" />
+      <Label fx:id="labelCantidad2" layoutX="284.0" layoutY="28.0" text="En: " />
+      <Label fx:id="labelCantidad4" layoutX="386.0" layoutY="28.0" text="A un % descuento de su valor del: " />
+      <Label fx:id="labelCantidad5" layoutX="152.0" layoutY="50.0" text="En:" />
+      <Label fx:id="labelCantidad6" layoutX="199.0" layoutY="50.0" text="Por cada " />
+      <Label fx:id="labelCantidad7" layoutX="270.0" layoutY="50.0" text="Kilogramos(Kg) se le añadirá un costo de" />
+      <Label fx:id="labelCantidad8" layoutX="477.0" layoutY="60.0" text="Kilómetros(Km) se le añadirá un costo de" />
+      <Label fx:id="labelCantidad9" layoutX="616.0" layoutY="73.0" text="Soles" />
    </children>
 </AnchorPane>

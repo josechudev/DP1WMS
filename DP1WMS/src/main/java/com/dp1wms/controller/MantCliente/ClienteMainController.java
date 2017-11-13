@@ -2,12 +2,14 @@ package com.dp1wms.controller.MantCliente;
 
 import com.dp1wms.controller.FxmlController;
 import com.dp1wms.controller.MainController;
+import com.dp1wms.dao.RepositoryCargaMasiva;
 import com.dp1wms.dao.RepositoryMantCliente;
 import com.dp1wms.model.Cliente;
 import com.dp1wms.util.ClienteCampo;
 import com.dp1wms.view.ClientesView;
 import com.dp1wms.view.StageManager;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -42,10 +44,18 @@ public class ClienteMainController implements FxmlController{
 
     @Autowired
     private RepositoryMantCliente repositoryMantCliente;
+    @Autowired
+    private RepositoryCargaMasiva repositoryCargaMasiva;
 
     private StageManager stageManager;
     private MainController mainController;
     private ClienteInfoController clienteInfoController;
+
+
+    public void cargaMasiva(ActionEvent event){
+        this.repositoryCargaMasiva.storeProcedure_cargarClientes();
+        this.llenarClienteTable();
+    }
 
     @FXML
     private void cargarCSV(){
@@ -106,6 +116,9 @@ public class ClienteMainController implements FxmlController{
         this.stageManager.mostrarModal(ClientesView.INFO);
         Cliente c = this.clienteInfoController.getCliente();
         if(c != null){
+            if(this.clientes ==  null){
+                this.clientes = new ArrayList<>();
+            }
             this.clientes.add(c);
             this.clienteTable.getItems().add(c);
         }
@@ -131,10 +144,11 @@ public class ClienteMainController implements FxmlController{
     @Override
     public void initialize(){
         this.initCampoCB();
+        this.limpiarClienteTable();
     }
     private void initCampoCB(){
         ArrayList<ClienteCampo> campos = new ArrayList<>();
-        campos.add(new ClienteCampo("RUC", "numdoc"));
+        campos.add(new ClienteCampo("RUC / DNI", "numdoc"));
         campos.add(new ClienteCampo("Razon Social", "razonsocial"));
         campos.add(new ClienteCampo("Telefono", "telefono"));
         campos.add(new ClienteCampo("Email", "email"));

@@ -70,6 +70,7 @@ public class GridRacksController extends SuperficieGridController {
     private void marcarSeleccion(Rectangle rectangle){
         rectangle.setStroke(Color.AQUAMARINE);
         rectangle.setStrokeWidth(1);
+        vistaRacksController.rackSeleccionado(false);
     }
 
     private void marcarRack(Rack rack){

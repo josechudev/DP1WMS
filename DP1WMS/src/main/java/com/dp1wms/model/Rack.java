@@ -2,15 +2,19 @@ package com.dp1wms.model;
 
 import javafx.geometry.Point2D;
 import org.postgresql.geometric.PGpoint;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Rack {
 
     private int idRack;
     private int idArea;
+    private int idAlmacen;
     private Point2D posicionInicial;
     private Point2D posicionFinal;
     private int altura;
     private int longitudCajon;
+    private List<Cajon> listaCajones = new ArrayList<Cajon>();
     private String codigo;
 
     public Rack(){
@@ -76,8 +80,23 @@ public class Rack {
     public String getCodigo() {
         return codigo;
     }
-
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public List<Cajon> getListaCajones() {
+        return listaCajones;
+    }
+
+    public void setListaCajones(List<Cajon> listaCajones) {
+        this.listaCajones = listaCajones;
+    }
+
+    public int getIdAlmacen() {
+        return idAlmacen;
+    }
+
+    public void setIdAlmacen(int idAlmacen) {
+        this.idAlmacen = idAlmacen;
     }
 }

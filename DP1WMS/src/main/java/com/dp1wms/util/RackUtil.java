@@ -14,7 +14,7 @@ public class RackUtil {
             int y = (int) rack.getPosicionInicial().getY();
             int x1 = (int) rack.getPosicionInicial().getX();
             int x2 = (int)rack.getPosicionFinal().getX();
-            for (int i=x1; i<x2; i++){
+            for (int i=x1; i<=x2; i++){
                 Point2D p = new Point2D(i, y);
                 posiciones.add(p);
             }
@@ -22,7 +22,7 @@ public class RackUtil {
             int x = (int) rack.getPosicionInicial().getX();
             int y1 = (int) rack.getPosicionInicial().getY();
             int y2 = (int)rack.getPosicionFinal().getY();
-            for (int j= y1; j<y2; j++){
+            for (int j= y1; j<=y2; j++){
                 Point2D p = new Point2D(x, j);
                 posiciones.add(p);
             }

@@ -8,15 +8,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.util.regex.Pattern;
+
 @Component
 public class ClienteInfoController implements FxmlController{
 
-
+    @FXML private ComboBox tipoDocumentoCB;
     @FXML private TextField rucField;
     @FXML private TextField nombreField;
     @FXML private TextField telefonoField;
@@ -49,6 +52,21 @@ public class ClienteInfoController implements FxmlController{
             this.stageManager.mostrarErrorDialog("Eror cliente", null,
                     "Completar los campos vacios que estan marcos con (*)");
         } else {
+            String numDoc = c.getNumDoc();
+            if(this.tipoDocumentoCB.getSelectionModel().getSelectedIndex() == 0){
+                if (!validarRUC(numDoc)){
+                    this.stageManager.mostrarErrorDialog("Error cliente", null,
+                            "El RUC ingresado no es válido.");
+                    return;
+                }
+            } else {
+                if (!validarDNI(numDoc)){
+                    this.stageManager.mostrarErrorDialog("Error cliente", null,
+                            "El DNI ingresado no es válido");
+                    return;
+                }
+            }
+
             this.cliente = this.repositoryMantCliente.registrarCliente(c);
             if(this.cliente == null){
                 this.stageManager.mostrarErrorDialog("Eror cliente", null,
@@ -72,18 +90,41 @@ public class ClienteInfoController implements FxmlController{
 
     @FXML
     private void guardarCliente(ActionEvent event){
-        cliente.setNumDoc(rucField.getText());
-        cliente.setRazonSocial(nombreField.getText());
-        cliente.setTelefono(telefonoField.getText());
-        cliente.setDireccion(direccionField.getText());
-        cliente.setEmail(emailField.getText());
-        cliente.setActivo(estadoCB.isSelected());
+        String numDoc = rucField.getText();
+        String  nombre = nombreField.getText();
+        String telefono = telefonoField.getText();
+        String direccion = direccionField.getText();
+        String email = emailField.getText();
+        Boolean activo = estadoCB.isSelected();
+
         if(cliente.getNumDoc().isEmpty() || cliente.getRazonSocial().isEmpty() ||
                 cliente.getTelefono().isEmpty() ||
                 cliente.getDireccion().isEmpty() ){
             this.stageManager.mostrarErrorDialog("Eror cliente", null,
                     "Completar los campos vacios que estan marcos con (*)");
         } else {
+
+            if(this.tipoDocumentoCB.getSelectionModel().getSelectedIndex() == 0){
+                if (!validarRUC(numDoc)){
+                    this.stageManager.mostrarErrorDialog("Error cliente", null,
+                            "El RUC ingresado no es válido.");
+                    return;
+                }
+            } else {
+                if (!validarDNI(numDoc)){
+                    this.stageManager.mostrarErrorDialog("Error cliente", null,
+                            "El DNI ingresado no es válido");
+                    return;
+                }
+            }
+
+            cliente.setNumDoc(numDoc);
+            cliente.setRazonSocial(nombre);
+            cliente.setTelefono(telefono);
+            cliente.setDireccion(direccion);
+            cliente.setEmail(email);
+            cliente.setActivo(activo);
+
             boolean exito = this.repositoryMantCliente.modificarCliente(cliente);
             if(!exito){
                 this.stageManager.mostrarErrorDialog("Eror cliente", null,
@@ -108,6 +149,10 @@ public class ClienteInfoController implements FxmlController{
         guardarBtn.managedProperty().bind(guardarBtn.visibleProperty());
         limpiarBtn.managedProperty().bind(limpiarBtn.visibleProperty());
 
+        tipoDocumentoCB.getItems().clear();
+        tipoDocumentoCB.getItems().add("RUC");
+        tipoDocumentoCB.getItems().add("DNI");
+
         if(this.cliente == null){
             this.registrarBtn.setDisable(false);
             this.registrarBtn.setVisible(true);
@@ -119,6 +164,8 @@ public class ClienteInfoController implements FxmlController{
             this.limpiarBtn.setVisible(true);
 
             this.estadoCB.setDisable(true);
+
+            this.tipoDocumentoCB.getSelectionModel().select(0);
         } else {
             this.registrarBtn.setDisable(true);
             this.registrarBtn.setVisible(false);
@@ -135,6 +182,13 @@ public class ClienteInfoController implements FxmlController{
     }
 
     private void initCampos(){
+
+        if(this.validarDNI(this.cliente.getNumDoc())){
+            this.tipoDocumentoCB.getSelectionModel().select(1);
+        } else {
+            this.tipoDocumentoCB.getSelectionModel().select(0);
+        }
+
         this.rucField.setText(this.cliente.getNumDoc());
         this.nombreField.setText(this.cliente.getRazonSocial());
         this.telefonoField.setText(this.cliente.getTelefono());
@@ -155,4 +209,16 @@ public class ClienteInfoController implements FxmlController{
     public void setCliente(Cliente cliente){
         this.cliente = cliente;
     }
+
+    private boolean validarRUC(String ruc){
+        Pattern p = Pattern.compile("[0-9]{11}");
+        return p.matcher(ruc).matches();
+    }
+
+    private boolean validarDNI(String dni){
+        Pattern p = Pattern.compile("[0-9]{8}");
+        return p.matcher(dni).matches();
+    }
+
+
 }

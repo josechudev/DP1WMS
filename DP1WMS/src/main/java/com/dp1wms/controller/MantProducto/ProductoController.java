@@ -3,6 +3,8 @@ package com.dp1wms.controller.MantProducto;
 import com.dp1wms.controller.FxmlController;
 import com.dp1wms.controller.MantCategoria.CategoriaDatosController;
 import com.dp1wms.dao.IProducto.RepositoryMantProducto;
+import com.dp1wms.dao.RepositoryCargaMasiva;
+import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.model.CategoriaProducto;
 import com.dp1wms.model.Producto;
 import com.dp1wms.view.StageManager;
@@ -64,9 +66,23 @@ public class ProductoController  implements FxmlController {
     @Autowired
     private RepositoryMantProducto repositoryMantProducto;
     @Autowired
+    private RepositoryMantMov repositoryMantMov;
+    @Autowired
+    private RepositoryCargaMasiva repositoryCargaMasiva;
+    @Autowired
     @Lazy
     public ProductoController (StageManager stageManager){
         this.stageManager = stageManager;
+    }
+
+
+    public List<CategoriaProducto> obtenerListaCategorias(){
+        return repositoryMantMov.obtenerCategoriasProducto();
+    }
+
+    public void cargaMasiva(ActionEvent event){
+        this.repositoryCargaMasiva.storeProcedure_cargarProductos();
+        this._llenarGrilla();
     }
 
     public void btnClickAgregar(ActionEvent event){
@@ -80,6 +96,7 @@ public class ProductoController  implements FxmlController {
             ProductoDatosController controller = loader.getController();
             controller._setData(producto,0);
             controller.setV_parentController(this);
+            controller.llenarComboCategoria();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,8 +124,9 @@ public class ProductoController  implements FxmlController {
             root = (Parent) loader.load();
             ProductoDatosController controller = loader.getController();
             //1 es modificar
-            controller._setData(producto,1);
             controller.setV_parentController(this);
+            controller.llenarComboCategoria();
+            controller._setData(producto,1);
         } catch (IOException e) {
             e.printStackTrace();
         }

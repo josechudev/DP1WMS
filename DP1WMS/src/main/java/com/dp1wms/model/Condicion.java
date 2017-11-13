@@ -7,7 +7,8 @@ public class Condicion {
     public static final String DESC_C = "Cantidad";
     public static final String DESC_B = "Bonificacion Por Especie";
     public static final String DESC_P = "Porcentaje";
-    public static final String DESC_F = "Flete por Peso";
+    public static final String DESC_FP = "Flete por Peso";
+    public static final String DESC_FD = "Flete por Distancia";
 
     private int idCondicion;
 
@@ -25,7 +26,7 @@ public class Condicion {
 
     private int cantProdDesc;
 
-    private Double valorDescuento;
+    private float valorDescuento;
 
     private Timestamp fechaInicio;
 
@@ -46,6 +47,10 @@ public class Condicion {
     private int prioridad;
 
     private Long idEmpleadoAuditado;
+
+    private float factorFlete;
+
+    private Boolean activo;
 
     public int getPrioridad(){
         return this.prioridad;
@@ -120,11 +125,11 @@ public class Condicion {
         this.cantProdDesc = cantProdDesc;
     }
 
-    public Double getValorDescuento() {
+    public float getValorDescuento() {
         return valorDescuento;
     }
 
-    public void setValorDescuento(Double valorDescuento) {
+    public void setValorDescuento(float valorDescuento) {
         this.valorDescuento = valorDescuento;
     }
 
@@ -198,5 +203,21 @@ public class Condicion {
 
     public void setIdEmpleadoAuditado(Long idEmpleadoAuditado) {
         this.idEmpleadoAuditado = idEmpleadoAuditado;
+    }
+
+    public float getFactorFlete() {
+        return factorFlete;
+    }
+
+    public void setFactorFlete(float factorFlete) {
+        this.factorFlete = factorFlete;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 }

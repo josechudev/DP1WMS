@@ -1,8 +1,11 @@
 package com.dp1wms.controller.MantVenta;
 
 import com.dp1wms.controller.FxmlController;
+import com.dp1wms.dao.IProducto.RepositoryMantProducto;
 import com.dp1wms.dao.RepositoryProforma;
+import com.dp1wms.model.Detalle;
 import com.dp1wms.model.DetalleProforma;
+import com.dp1wms.model.Producto;
 import com.dp1wms.model.Proforma;
 import com.dp1wms.util.ClienteCampo;
 import com.dp1wms.util.DateParser;
@@ -41,6 +44,8 @@ public class VentaBuscarProforma implements FxmlController {
 
     @Autowired
     private RepositoryProforma repositoryProforma;
+    @Autowired
+    private RepositoryMantProducto repositoryMantProducto;
 
     private Proforma proforma;
 
@@ -53,6 +58,9 @@ public class VentaBuscarProforma implements FxmlController {
 
         //mas validacion
         if(desdeLD == null || hastaLD == null){
+            this.stageManager.mostrarErrorDialog("Error Buscar Proforma", null,
+                    "Debe seleccionar un rango de fecha adecuado");
+        } else if (desdeLD.isAfter(hastaLD)){
             this.stageManager.mostrarErrorDialog("Error Buscar Proforma", null,
                     "Debe seleccionar un rango de fecha adecuado");
         } else {
@@ -81,6 +89,16 @@ public class VentaBuscarProforma implements FxmlController {
         } else {
             //Obtener los detalles
             ArrayList<DetalleProforma> detalles = this.repositoryProforma.obtenerDetallesDeProforma(p.getIdProforma());
+            List<Producto> productos = this.repositoryMantProducto.obtenerProductosStockLogicoSegunProforma(p.getIdProforma());
+            //Asignar productos que tienen el stock logico correspondiente
+            for(DetalleProforma detalle: detalles){
+                for(Producto prod: productos){
+                    if(detalle.getProducto().getIdProducto() == prod.getIdProducto()){
+                        detalle.setProducto(prod);
+                        break;
+                    }
+                }
+            }
             if(detalles == null){
                 this.stageManager.mostrarErrorDialog("Error Busqueda de Proforma", null,
                         "Hubo un error al seleccionar la proforma. Inténtelo de nuevo.");
@@ -130,8 +148,8 @@ public class VentaBuscarProforma implements FxmlController {
 
     private void initCampoCB(){
         ArrayList<ClienteCampo> campos = new ArrayList<>();
-        campos.add(new ClienteCampo("RUC", "numdoc"));
-        campos.add(new ClienteCampo("Razon Social", "razonsocial"));
+        campos.add(new ClienteCampo("DNI / RUC", "numdoc"));
+        campos.add(new ClienteCampo("Nombre / Razon Social", "razonsocial"));
         campos.add(new ClienteCampo("Telefono", "telefono"));
         campos.add(new ClienteCampo("Email", "email"));
         this.campoClienteCB.getItems().addAll(campos);

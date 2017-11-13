@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="687.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.DevolucionPedido.CrearNotaCreditoController">
+   <children>
+      <AnchorPane layoutX="18.0" layoutY="194.0" prefHeight="200.0" prefWidth="565.0">
+         <children>
+            <TableView fx:id="tablaDetalleComprobante" layoutY="7.0" prefHeight="210.0" prefWidth="565.0">
+              <columns>
+                <TableColumn fx:id="c_indice" prefWidth="43.0" text="N°" />
+                <TableColumn fx:id="c_codigoproducto" prefWidth="158.0" text="Codigo Producto" />
+                  <TableColumn fx:id="c_nombreproducto" prefWidth="120.0" text="Nombre Producto" />
+                  <TableColumn fx:id="c_cantidad" prefWidth="75.0" text="Cantidad" />
+                  <TableColumn fx:id="c_precio" prefWidth="83.0" text="Precio" />
+                  <TableColumn fx:id="c_subtotal" prefWidth="85.0" text="Subtotal" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <Label layoutX="18.0" layoutY="91.0" text="Nombre del Cliente" />
+      <Label layoutX="18.0" layoutY="161.0" text="Direccion" />
+      <Label layoutX="14.0" layoutY="29.0" text="NOTA DE CREDITO">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="314.0" layoutY="91.0" text="N° Comprobante Pago" />
+      <Label layoutX="310.0" layoutY="422.0" text="SubTotal Productos" />
+      <Label layoutX="321.0" layoutY="540.0" text="IGV" />
+      <Label layoutX="317.0" layoutY="505.0" text="Total" />
+      <Label layoutX="313.0" layoutY="458.0" text="Otros(Flete)" />
+      <TextField fx:id="txb_subtotal" layoutX="512.0" layoutY="420.0" prefHeight="25.0" prefWidth="70.0" />
+      <TextField fx:id="txb_igv" layoutX="512.0" layoutY="545.0" prefHeight="25.0" prefWidth="70.0" />
+      <TextField fx:id="txb_flete" layoutX="512.0" layoutY="454.0" prefHeight="25.0" prefWidth="70.0" />
+      <Label layoutX="312.0" layoutY="484.0" prefHeight="17.0" prefWidth="279.0" text="---------------------------------------------------------" />
+      <TextField fx:id="txb_total" layoutX="512.0" layoutY="501.0" prefHeight="25.0" prefWidth="70.0" />
+      <TextField fx:id="txb_nombreCliente" layoutX="133.0" layoutY="87.0" />
+      <TextField fx:id="txb_direccion" layoutX="133.0" layoutY="157.0" prefHeight="25.0" prefWidth="236.0" />
+      <TextField fx:id="txb_numComprobante" layoutX="451.0" layoutY="87.0" prefHeight="25.0" prefWidth="70.0" />
+      <Button layoutX="140.0" layoutY="639.0" mnemonicParsing="false" onAction="#registrarNotaCredito" prefHeight="25.0" prefWidth="104.0" text="Registrar" />
+      <Button layoutX="324.0" layoutY="639.0" mnemonicParsing="false" onAction="#cancelarOperacion" prefHeight="25.0" prefWidth="90.0" text="Cancelar" />
+      <Label layoutX="18.0" layoutY="131.0" text="Numero Documento" />
+      <TextField fx:id="txb_numDocCliente" layoutX="133.0" layoutY="127.0" />
+      <Label layoutX="310.0" layoutY="569.0" prefHeight="17.0" prefWidth="279.0" text="----------------------------------------------------------" />
+      <Label layoutX="317.0" layoutY="600.0" text="Total Con IGV" />
+      <TextField fx:id="txb_totaligv" layoutX="513.0" layoutY="596.0" prefHeight="25.0" prefWidth="74.0" />
+   </children>
+</AnchorPane>

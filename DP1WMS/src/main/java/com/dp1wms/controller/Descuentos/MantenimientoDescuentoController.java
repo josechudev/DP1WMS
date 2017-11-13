@@ -2,14 +2,17 @@ package com.dp1wms.controller.Descuentos;
 
 import com.dp1wms.controller.FxmlController;
 import com.dp1wms.controller.MainController;
+import com.dp1wms.dao.RepositoryCargaMasiva;
 import com.dp1wms.dao.RepositoryCondicion;
 import com.dp1wms.model.Condicion;
+import com.dp1wms.util.DateParser;
 import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -58,9 +61,17 @@ public class MantenimientoDescuentoController implements FxmlController {
     @FXML
     private TableColumn<Condicion,String> c_porcentajeDesc;
     @FXML
-    private TableColumn<Condicion,Timestamp> c_fechaInicio;
+    private TableColumn<Condicion,String> c_fechaInicio;
     @FXML
-    private TableColumn<Condicion,Timestamp> c_fechaFin;
+    private TableColumn<Condicion,String> c_fechaFin;
+    @FXML
+    private TableColumn<Condicion,String> c_costoFlete;
+    @FXML
+    private TableColumn<Condicion,String> c_habilitado;
+    @FXML
+    private TableColumn<Condicion,String> c_cantidadFlete;
+    @FXML
+    private Button btn_modificar;
 
     private MainController mainController;
 
@@ -69,12 +80,19 @@ public class MantenimientoDescuentoController implements FxmlController {
     private final StageManager stageManager;
 
     private boolean esCreacion;
+    @Autowired
+    private RepositoryCargaMasiva repositoryCargaMasiva;
 
     @Autowired
     @Lazy
     public MantenimientoDescuentoController(StageManager stageManager,MainController mainController) {
         this.stageManager = stageManager;
         this.mainController = mainController;
+    }
+
+    public void cargaMasiva(ActionEvent event){
+        this.repositoryCargaMasiva.storeProcedure_cargarCondicionesComerciales();
+        this.actualizarTabla();
     }
 
     public void agregarDescuento(ActionEvent event) {
@@ -128,11 +146,54 @@ public class MantenimientoDescuentoController implements FxmlController {
         c_ProdDesc.setCellValueFactory(new PropertyValueFactory<Condicion, String>("nombreProductoDescuento"));
         c_categoriaDesc.setCellValueFactory(new PropertyValueFactory<Condicion, String>("categoriaDescuento"));
         c_cantidadDesc.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("cantProdDesc"));
+        //c_costoFlete.setCellValueFactory(new PropertyValueFactory<Condicion, Float>("factorFlete"));
+        c_costoFlete.setCellValueFactory(value->{
+            if(value.getValue().getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FP) ||value.getValue().getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FD)){
+                return new SimpleStringProperty("" + value.getValue().getValorDescuento());
+            }else{
+
+                return new SimpleStringProperty("");
+            }
+
+        });
+        c_cantidadFlete.setCellValueFactory(value->{
+            if(value.getValue().getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FP) ||value.getValue().getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FD)){
+                return new SimpleStringProperty("" + value.getValue().getFactorFlete());
+            }else{
+                return new SimpleStringProperty("");
+            }
+
+        });
+
         //c_porcentajeDesc.setCellValueFactory(new PropertyValueFactory<Condicion, Double>("valorDescuento"));
-        c_fechaInicio.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaInicio"));
-        c_fechaFin.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaFin"));
+        //c_fechaInicio.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaInicio"));
+
+        this.c_fechaInicio.setCellValueFactory(value->{
+            String fechaInicio = DateParser.timestampToString(value.getValue().getFechaInicio());
+            return new SimpleStringProperty(fechaInicio);
+        });
+        this.c_fechaFin.setCellValueFactory(value->{
+            String fechaFin= DateParser.timestampToString(value.getValue().getFechaFin());
+            return new SimpleStringProperty(fechaFin);
+        });
+        //c_fechaFin.setCellValueFactory(new PropertyValueFactory<Condicion, Timestamp>("fechaFin"));
         this.c_porcentajeDesc.setCellValueFactory(value->{
-            return new SimpleStringProperty("" + (value.getValue().getValorDescuento() *100));
+            if(value.getValue().getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FP) ||value.getValue().getTipoCondicion().equalsIgnoreCase(Condicion.DESC_FD)){
+                return new SimpleStringProperty("");
+            }else{
+                return new SimpleStringProperty("" + (value.getValue().getValorDescuento() *100));
+            }
+
+        });
+
+        this.c_habilitado.setCellValueFactory(value->{
+            String habilitado="";
+            if(value.getValue().getActivo()){
+                habilitado="Si";
+            }else{
+                habilitado="No";
+            }
+            return new SimpleStringProperty(habilitado);
         });
         tableViewDescuentos.setEditable(true);
     }
@@ -151,7 +212,7 @@ public class MantenimientoDescuentoController implements FxmlController {
     @Override
     public void initialize() {
         this.listaCondicions = repositoryCondicion.obtenerDescuentos();
-        c_indice.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("indiceTabla"));
+        /*c_indice.setCellValueFactory(new PropertyValueFactory<Condicion, Integer>("indiceTabla"));
         c_tipoDescuento.setCellValueFactory(new PropertyValueFactory<Condicion, String>("tipoCondicion"));
         c_productoGen.setCellValueFactory(new PropertyValueFactory<Condicion, String>("nombreProductoGenerador"));
         c_categoriaGen.setCellValueFactory(new PropertyValueFactory<Condicion, String>("categoriaGenerador"));
@@ -166,9 +227,12 @@ public class MantenimientoDescuentoController implements FxmlController {
             return new SimpleStringProperty("" + (value.getValue().getValorDescuento() *100));
         });
 
-        tableViewDescuentos.setEditable(true);
+        tableViewDescuentos.setEditable(true);*/
 
+        this.btn_modificar.setDisable(true);
+        this.btn_modificar.setVisible(false);
 
+        this.limpiarTabla();
         this.llenarTabla(this.listaCondicions);
         System.out.println("Cantidad Descuentos -> "+ listaCondicions.size());
 

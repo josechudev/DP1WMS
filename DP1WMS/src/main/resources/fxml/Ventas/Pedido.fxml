@@ -176,7 +176,7 @@
                               </HBox>
                               <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="447.0" prefWidth="1152.0" spacing="10.0" VBox.vgrow="NEVER">
                                  <children>
-                                    <Label text="Total Flete (S/.) :">
+                                    <Label text="Costo Flete (S/.) :">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font>

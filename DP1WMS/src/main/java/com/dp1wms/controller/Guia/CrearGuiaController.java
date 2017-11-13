@@ -66,7 +66,7 @@ public class CrearGuiaController implements FxmlController {
 
     private Envio envioEscogido;
 
-    private Double pesoTotal;
+    private float pesoTotal;
 
     private List<DetalleEnvio> listaDetalleEnvio;
 
@@ -87,12 +87,63 @@ public class CrearGuiaController implements FxmlController {
     }
 
     public void registrarGuia(ActionEvent event){
+
+        if(this.txb_numeroguia.getText().equalsIgnoreCase("")){
+            this.stageManager.mostrarErrorDialog("Error creacion Guia de Remision", null,
+                    "Debe ingresar un numero de guia");
+            return;
+        }
+
+        if(dp_fechaEmision.getValue() == null){
+            this.stageManager.mostrarErrorDialog("Error creacion Guia de Remision", null,
+                    "Debe ingresar una fecha de emision");
+            return;
+        }
+
+        if(dp_fechaInicio.getValue() == null){
+            this.stageManager.mostrarErrorDialog("Error creacion Guia de Remision", null,
+                    "Debe ingresar una fecha de inicio de traslado");
+            return;
+        }
+
+        if(dp_fechaFin.getValue() == null){
+            this.stageManager.mostrarErrorDialog("Error creacion Guia de Remision", null,
+                    "Debe ingresar una fecha de fin de traslado");
+            return;
+        }
+
+        if(this.txb_puntoPartida.getText().equalsIgnoreCase("")){
+            this.stageManager.mostrarErrorDialog("Error creacion Guia de Remision", null,
+                    "Debe ingresar un punto de partida");
+            return;
+        }
+
+        if(this.txb_puntoLlegada.getText().equalsIgnoreCase("")){
+            this.stageManager.mostrarErrorDialog("Error creacion Guia de Remision", null,
+                    "Debe ingresar un punto de llegada");
+            return;
+        }
+
+
+        if(this.txb_nombreTransportista.getText().equalsIgnoreCase("")){
+            this.stageManager.mostrarErrorDialog("Error creacion Guia de Remision", null,
+                    "Debe ingresar el nombre del transportista encargado del envio al cliente");
+            return;
+        }
+
+        if(this.txb_numeroPlaca.getText().equalsIgnoreCase("")){
+            this.stageManager.mostrarErrorDialog("Error creacion Guia de Remision", null,
+                    "Debe ingresar el numero de placa");
+            return;
+        }
+
+
         Guia guia = new Guia();
         List<DetalleGuia> listaDetalleGuia = new ArrayList<DetalleGuia>();
-        Double pesoTotal = 0.0;
+        Float pesoTotal = (float)0;
         for(DetalleEnvio detalleEnvio: this.listaDetalleEnvio){
             DetalleGuia detalleGuia = new DetalleGuia();
-            Double pesoProducto = detalleEnvio.getPeso();
+            Float pesoProducto = detalleEnvio.getPeso();
             if(pesoProducto != null){
                 detalleGuia.setPeso(pesoProducto);
                 pesoTotal += pesoProducto;
@@ -214,10 +265,10 @@ public class CrearGuiaController implements FxmlController {
         }
     }
 
-    private Double calcularPesoTotal() {
-        Double pesoTotal = 0.0;
+    private float calcularPesoTotal() {
+        float pesoTotal = 0;
         for (DetalleEnvio detalleEnvio : this.listaDetalleEnvio) {
-            Double pesoProducto = repositoryGuia.obtenerPesoProducto(detalleEnvio.getIdProducto());
+            Float pesoProducto = repositoryGuia.obtenerPesoProducto(detalleEnvio.getIdProducto());
             detalleEnvio.setPeso(pesoProducto);
             if (pesoProducto != null)
                 pesoTotal += pesoProducto;
@@ -238,7 +289,7 @@ public class CrearGuiaController implements FxmlController {
         this.listaDetalleEnvio = envioEscogido.getDetalleEnvio();
 
 
-        Double pesoTotal = calcularPesoTotal();
+        float pesoTotal = calcularPesoTotal();
         //pesoTotal = this.round(pesoTotal);
 
         this.txb_nombreCliente.setText(repositoryGuia.obtenerNombreCliente(this.envioEscogido.getIdCliente()));

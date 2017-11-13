@@ -40,5 +40,6 @@
 
             </columns>
         </TableView>
+      <Button layoutX="380.0" layoutY="93.0" mnemonicParsing="false" onAction="#cargaMasiva" prefHeight="25.0" prefWidth="132.0" text="Cargar Datos" />
     </children>
 </AnchorPane>

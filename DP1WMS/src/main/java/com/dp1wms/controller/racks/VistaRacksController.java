@@ -7,14 +7,12 @@ import com.dp1wms.dao.impl.RepositoryMantRackImpl;
 import com.dp1wms.model.Almacen;
 import com.dp1wms.model.Area;
 import com.dp1wms.model.Rack;
+import com.dp1wms.view.AlmacenView;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -94,19 +92,38 @@ public class VistaRacksController implements FxmlController {
 
     @FXML
     private void btnClickInsertarRack(ActionEvent event){
+        stageManager.mostrarModal(AlmacenView.NUEVO_RACK);
+    }
 
+    public void nuevoRack(Rack rack){
+        racksCreados.add(rack);
+        gridRacksController.anadirRack(rack);
     }
 
     @FXML
     private void btnClickEliminarRack(ActionEvent event){
         Rack rackSeleccionado = gridRacksController.getRackSeleccionado();
-        racksEliminados.add(rackSeleccionado);
+        if (racksCreados.contains(rackSeleccionado)){
+            racksCreados.remove(rackSeleccionado);
+        } else {
+            racksEliminados.add(rackSeleccionado);
+        }
         gridRacksController.eliminarRack(rackSeleccionado);
     }
 
     @FXML
     private void btnClickGuardarCambios(ActionEvent event){
-
+        if (racksEliminados.size() == 1){
+            repositoryMantRack.eliminar(racksEliminados.get(0));
+        } else if (racksEliminados.size() > 1) {
+            repositoryMantRack.eliminar(racksEliminados);
+        }
+        if (racksCreados.size() == 1){
+            repositoryMantRack.crear(racksCreados.get(0));
+        } else if (racksCreados.size() > 1){
+            repositoryMantRack.crear(racksCreados);
+        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Se guardaron los cambios", ButtonType.OK);
     }
 
     public Point2D getPosicionActualGrid(){

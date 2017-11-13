@@ -216,7 +216,6 @@ public class AlmacenController implements FxmlController{
     public Almacen getAlmacen(){
         return this.almacen;
     }
-
     public Area getAreaSeleccionada(){
         return this.areaSeleccionada;
     }
@@ -224,5 +223,4 @@ public class AlmacenController implements FxmlController{
     public List<Area> getAreas(){
         return this.areas;
     }
-
 }

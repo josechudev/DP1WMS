@@ -8,13 +8,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="login" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.LoginController">
+<AnchorPane fx:id="login" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.LoginController">
    <children>
       <VBox layoutX="115.0" layoutY="74.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: rgb(4,10,37);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Label layoutX="421.0" layoutY="14.0" prefHeight="45.0" prefWidth="153.0" text="Warehouse" textAlignment="RIGHT" textFill="WHITE" AnchorPane.rightAnchor="10.0">
+                  <Label layoutX="421.0" layoutY="14.0" prefHeight="45.0" text="Warehouse" textAlignment="RIGHT" textFill="WHITE" AnchorPane.rightAnchor="10.0">
                      <font>
                         <Font size="30.0" />
                      </font>
@@ -29,18 +29,26 @@
             <AnchorPane prefHeight="390.0" prefWidth="600.0" style="-fx-background-color: #fff;">
                <children>
                   <Button fx:id="ingresarBtn" defaultButton="true" layoutX="250.0" layoutY="224.0" mnemonicParsing="false" onAction="#onClickIngresarBtn" onKeyPressed="#onKeyPressedIngresar" prefHeight="40.0" prefWidth="100.0" text="INGRESAR" />
-                  <TextField fx:id="userField" layoutX="180.0" layoutY="64.0" prefHeight="32.0" prefWidth="240.0" />
-                  <PasswordField fx:id="passwordField" layoutX="180.0" layoutY="142.0" prefHeight="32.0" prefWidth="240.0" />
-                  <Label layoutX="180.0" layoutY="41.0" text="Nombre de usuario" textFill="#040a25">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="180.0" layoutY="125.0" text="Contraseña" textFill="#040a25">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
+                  <VBox layoutX="180.0" layoutY="41.0">
+                     <children>
+                        <Label text="Nombre de usuario" textFill="#040a25">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="userField" prefHeight="32.0" prefWidth="240.0" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="180.0" layoutY="125.0">
+                     <children>
+                        <Label text="Contraseña" textFill="#040a25">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <PasswordField fx:id="passwordField" prefHeight="32.0" prefWidth="240.0" />
+                     </children>
+                  </VBox>
                   <Label fx:id="statusLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-6.0" layoutY="189.0" prefHeight="17.0" prefWidth="320.0" textAlignment="CENTER" textFill="#b90000" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                </children>
             </AnchorPane>

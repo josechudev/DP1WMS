@@ -42,29 +42,6 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
-    } , MANTENIMIENTO_TIPOEMPLEADO {
-        @Override
-        public String getTitle() {
-            return getStringFromResourceBundle("mantenimiento.roles.title");
-        }
-        @Override
-        public String getFxmlFile() {
-            return "/fxml/MantenimientoTipoEmpleado.fxml";
-        }
-        @Override
-        public boolean isResizable(){return false;}
-    }, NUEVO_TIPOEMPLEADO {
-        @Override
-        public String getTitle() {
-            return getStringFromResourceBundle("mantenimiento.movimiento.title");
-        }
-        @Override
-        public String getFxmlFile() {
-            return "/fxml/CrearTipoEmpleado.fxml";
-        }
-        @Override
-        public boolean isResizable(){return false;}
-    
     },MANTENIMIENTO_CATEGORIA {
         @Override
         public String getTitle() {
@@ -332,19 +309,6 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
-    }, DEVOLVER_PEDIDO{
-        @Override
-        public String getTitle() {
-            return getStringFromResourceBundle("devolucionPedido.title");
-        }
-        @Override
-        public String getFxmlFile() {
-            return "/fxml/DevolucionPedido/DevolucionPedido.fxml";
-        }
-        @Override
-        public boolean isResizable(){
-            return false;
-        }
     }, CARGAR_KARDEX{
         @Override
         public String getTitle() {
@@ -358,9 +322,137 @@ public enum MainView implements FxmlView{
         public boolean isResizable(){
             return false;
         }
-    }
-
-    ;
+    }, UBICACION_LOTE{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("ubicacionLote.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Movimientos/UbicacionLote.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },ESCOGER_UBICACION_LOTE{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("escogerUbicacionLote.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Movimientos/EscogerUbicacionLote.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },REPORTE_ALMACEN{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("cargarReporteAlmacen.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/ReporteAlmacen/ReporteAlmacen.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },LISTA_LOTES{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("listaLotes.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Movimientos/ListaLotes.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },LISTA_FACTURAS_DEVOLUCION{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("listaFacturas.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/DevolucionPedido/ListaFacturas.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },DETALLE_DEVOLUCION{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("detalleDevolucion.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/DevolucionPedido/DetalleDevolucion.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },LISTA_NOTA_CREDITO{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("listaNotaCredito.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/DevolucionPedido/ListaNotaCredito.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },LISTA_PEDIDOS_DEVOLUCION{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("listaPedidoDevolucion.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/DevolucionPedido/ListaPedidoDevolucion.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },CREAR_NOTACREDITO{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("crearNotaCredito.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/DevolucionPedido/CrearNotaCredito.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    },UBICACIONES{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("ubicaciones.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Ubicaciones/Ubicaciones.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return false;
+        }
+    };
 
     public String getStringFromResourceBundle(String key) {
         return ResourceBundle.getBundle("Bundle").getString(key);

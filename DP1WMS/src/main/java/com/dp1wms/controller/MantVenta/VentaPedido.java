@@ -28,50 +28,30 @@ import java.util.Optional;
 @Component
 public class VentaPedido implements FxmlController {
 
-    @FXML
-    private Label nombreLabel;
-    @FXML
-    private Label telefonoLabel;
-    @FXML
-    private Label emailLabel;
-    @FXML
-    private Label rucLabel;
-    @FXML
-    private Label direccionLabel;
+    @FXML private Label nombreLabel;
+    @FXML private Label telefonoLabel;
+    @FXML private Label emailLabel;
+    @FXML private Label rucLabel;
+    @FXML private Label direccionLabel;
 
-    @FXML
-    private TableView<DetallePedido> pedidoTable;
-    @FXML
-    private TableColumn<DetallePedido, String> codigoTC;
-    @FXML
-    private TableColumn<DetallePedido, String> productoTC;
-    @FXML
-    private TableColumn<DetallePedido, Float> precioTC;
-    @FXML
-    private TableColumn<DetallePedido, Integer> cantidadTC;
-    @FXML
-    private TableColumn<DetallePedido, Float> descuentoTC;
-    @FXML
-    private TableColumn<DetallePedido, Float> subtotalTC;
+    @FXML private TableView<DetallePedido> pedidoTable;
+    @FXML private TableColumn<DetallePedido, String> codigoTC;
+    @FXML private TableColumn<DetallePedido, String> productoTC;
+    @FXML private TableColumn<DetallePedido, Float> precioTC;
+    @FXML private TableColumn<DetallePedido, Integer> cantidadTC;
+    @FXML private TableColumn<DetallePedido, Float> descuentoTC;
+    @FXML private TableColumn<DetallePedido, Float> subtotalTC;
 
-    @FXML
-    private TableView<Envio> enviosTable;
-    @FXML
-    private TableColumn<Envio, String> destinoTC;
-    @FXML
-    private TableColumn<Envio, String> fechaEnvioTC;
-    @FXML
-    private TableColumn<Envio, Float> costoFleteTC;
+    @FXML private TableView<Envio> enviosTable;
+    @FXML private TableColumn<Envio, String> destinoTC;
+    @FXML private TableColumn<Envio, String> fechaEnvioTC;
+    @FXML private TableColumn<Envio, Float> costoFleteTC;
 
 
-    @FXML
-    private TextArea observacionTA;
-    @FXML
-    private Label subtotalLabel;
-    @FXML
-    private Label totalFleteLabel;
-    @FXML
-    private Label totalLabel;
+    @FXML private TextArea observacionTA;
+    @FXML private Label subtotalLabel;
+    @FXML private Label totalFleteLabel;
+    @FXML private Label totalLabel;
 
     private Cliente cliente;
     private Pedido pedido;
@@ -234,7 +214,7 @@ public class VentaPedido implements FxmlController {
 
     private void llenarTablaPedido() {
         this.limpiarTablaPedido();
-        List<Condicion> condiciones = this.repositoryCondicion.obtenerCondicionesActivos();
+        List<Condicion> condiciones = this.repositoryCondicion.obtenerDescuentosActivos();
         DescuentoAlgoritmo.aplicarDescuento(condiciones, this.pedido);
         this.pedido.calcularsubTotal();
         this.pedido.calcularTotal();
@@ -291,7 +271,7 @@ public class VentaPedido implements FxmlController {
                             "Inténtelo otra vez.");
         } else {
             this.stageManager.mostrarInfoDialog("Pedido", null,
-                    "Se registró satisfactoriamente. Continue seleccionado los envios.");
+                    "Se registró satisfactoriamente.");
             this.cerrarVentana(event);
         }
     }

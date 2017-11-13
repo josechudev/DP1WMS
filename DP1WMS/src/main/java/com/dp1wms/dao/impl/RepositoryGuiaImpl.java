@@ -43,12 +43,13 @@ public class RepositoryGuiaImpl implements RepositoryGuia {
 
         System.out.println("idGuia Insertado -> "+idGuia);
         List<DetalleGuia> listaDetalleGuia = guia.getListaDetalleGuia();
-        int idEstadoEnviado = 1;// estado enviado
+        //int idEstadoEnviado = 1;// estado enviado
+        Boolean recibido = true;
         for(DetalleGuia detalle : listaDetalleGuia){
             if(idGuia != null){
-                SQL = "INSERT INTO public.detalleguia (idguiaremision,idproducto,cantidad,idestadodetalleremision,peso) VALUES (?,?,?,?,?)";
+                SQL = "INSERT INTO public.detalleguia (idguiaremision,idproducto,cantidad,recibido,peso) VALUES (?,?,?,?,?)";
                 try{
-                    jdbcTemplate.update(SQL,new Object[] {idGuia,detalle.getIdProducto(),detalle.getCantidad(),idEstadoEnviado,detalle.getPeso()});
+                    jdbcTemplate.update(SQL,new Object[] {idGuia,detalle.getIdProducto(),detalle.getCantidad(),recibido,detalle.getPeso()});
                     System.out.println("Se ha insertado en la tabla detalle guia");
                 }catch (EmptyResultDataAccessException e) {
                     e.printStackTrace();
@@ -60,11 +61,11 @@ public class RepositoryGuiaImpl implements RepositoryGuia {
         return 1;
     }
 
-    public Double obtenerPesoProducto(int idProducto){
+    public Float obtenerPesoProducto(int idProducto){
         String SQL = "SELECT peso FROM public.producto WHERE idproducto=?";
-        Double peso=null;
+        Float peso=null;
         try{
-            peso = jdbcTemplate.queryForObject(SQL,new Object[] {idProducto},Double.class);
+            peso = jdbcTemplate.queryForObject(SQL,new Object[] {idProducto},Float.class);
         }catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
         }
@@ -122,7 +123,7 @@ public class RepositoryGuiaImpl implements RepositoryGuia {
         guia.setPuntoLlegada(rs.getString("puntollegada"));
         guia.setNombreTransportista(rs.getString("transportista"));
         guia.setNumeroPlaca(rs.getString("numeroplaca"));
-        guia.setPesoTotal(rs.getDouble("pesototal"));
+        guia.setPesoTotal(rs.getFloat("pesototal"));
         guia.setIdEnvio(rs.getLong("idenvio"));
         guia.setIdEmpleadoAuditado(rs.getLong("idempleadoauditado"));
         guia.setNumeroGuia(rs.getString("numeroguia"));
