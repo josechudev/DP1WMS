@@ -116,7 +116,7 @@ public class Tabu {
 
                 mejorSolActual = twoOPT_swap(i,j,solInicial);
                 // calcular el nuevo mejor costo
-                long mejorCostoActual = this.funcionObjetivo(mejorSolActual);
+                long mejorCostoActual = this.funcionObjetivo(mejorSol);
 
                 //si se encontro un mejor movimiento, guardar
                 if ((mejorCostoActual < mejorCosto || primerVecino) && !listaTabu.contieneMovimiento(i,j)) {

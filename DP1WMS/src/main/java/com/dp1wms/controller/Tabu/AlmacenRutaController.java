@@ -7,6 +7,7 @@ import com.dp1wms.model.tabu.Nodo;
 import com.dp1wms.model.tabu.Producto;
 import com.dp1wms.tabu.Tabu;
 import com.dp1wms.view.StageManager;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -83,25 +84,32 @@ public class AlmacenRutaController implements FxmlController {
         }
         System.out.println();System.out.println();
 
-        //Ejecutar tabu
-        Tabu tabu = new Tabu(distancias, caminoInicial);
-        int[] solucion = tabu.generarCamino(numIter, numIterSinMejora, tabuTamanho,tabuPermanencia, tiempoMaximo);
+        Thread thread = new Thread(()->{
+            //Ejecutar tabu
+            Tabu tabu = new Tabu(distancias, caminoInicial);
+            int[] solucion = tabu.generarCamino(numIter, numIterSinMejora, tabuTamanho,tabuPermanencia, tiempoMaximo);
+             Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
 
-        //Imprimie Almacen
-        this.imprimirAlmacen();
+                    //Imprimie Almacen
+                    imprimirAlmacen();
+                    //Obtiene los puntos con la solucion
+                    ArrayList<Nodo> solucionNodo = gestorDistancias.convertirIdANodos(solucion);
+                    //Imprime la solucion consola
+                    for (int i = 0; i < solucion.length ; i++) {
+                        System.out.print(solucion[i]);
+                        System.out.print(" - ");
+                    }
+                    //Tiempo
+                    System.out.println("\nTiempo Tabu: " + String.valueOf(tabu.getDuracion()));
 
-        //Obtiene los puntos con la solucion
-        ArrayList<Nodo> solucionNodo = gestorDistancias.convertirIdANodos(solucion);
-        //Imprime la solucion consola
-        for (int i = 0; i < solucion.length ; i++) {
-            System.out.print(solucion[i]);
-            System.out.print(" - ");
-        }
-        //Tiempo
-        System.out.println("\nTiempo Tabu: " + String.valueOf(tabu.getDuracion()));
-
-        //Dibuja la solucion en pantalla
-        imprimirSolucion(solucionNodo);
+                    //Dibuja la solucion en pantalla
+                    imprimirSolucion(solucionNodo);
+                }
+            });
+        });
+       thread.start();
     }
 
     public void imprimirAlmacen(){
@@ -190,6 +198,7 @@ public class AlmacenRutaController implements FxmlController {
 
     @Override
     public void initialize() {
+        this.initFields();
         this.nodes = new ArrayList<>();
         System.out.println("Eleccion de Algoritmo");
 
@@ -228,6 +237,13 @@ public class AlmacenRutaController implements FxmlController {
         this.gestorDistancias.calcularDistancias();
 
         almacen_layout.setGridLinesVisible(true);
+    }
+
+    private void initFields(){
+        this.numeroIteraciones.setText("100000");
+        this.tiempoMaximoTF.setText("300");
+        this.listaTabuTamanho.setText("30");
+        this.numIteracionesSinMejora.setText("100000");
     }
 
 }
