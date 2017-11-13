@@ -230,6 +230,7 @@ public class MantenimientoDescuentoController implements FxmlController {
         tableViewDescuentos.setEditable(true);*/
 
         this.btn_modificar.setDisable(true);
+        this.btn_modificar.setVisible(false);
 
         this.limpiarTabla();
         this.llenarTabla(this.listaCondicions);

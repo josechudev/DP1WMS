@@ -88,7 +88,7 @@ public class ListaNotaCreditoController implements FxmlController {
         c_total.setCellValueFactory(value->{
             Float total = value.getValue().getV_total();
             BigDecimal b_total = new BigDecimal(total);
-            return new SimpleStringProperty(""+b_total.setScale(3,BigDecimal.ROUND_HALF_UP));
+            return new SimpleStringProperty(""+b_total.setScale(2,BigDecimal.ROUND_HALF_UP));
         });
         tablaNotaCredito.setEditable(true);
     }
