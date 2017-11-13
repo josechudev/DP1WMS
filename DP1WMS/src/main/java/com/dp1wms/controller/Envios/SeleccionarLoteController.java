@@ -137,14 +137,16 @@ public class SeleccionarLoteController implements FxmlController {
 
     @Override
     public void initialize() {
+        this.listaLotes = new ArrayList<Lote>();
         this.detalleEnvioEscogido = retiroEnvioController.obtenerDetalleMovimientoEscogido();
         this.obtenerListaProductosLotes();
 
-        c_nombre.setCellValueFactory(new PropertyValueFactory<Lote, String>("nombreProducto"));
+       /* c_nombre.setCellValueFactory(new PropertyValueFactory<Lote, String>("nombreProducto"));
         c_cantidadDisponible.setCellValueFactory(new PropertyValueFactory<Lote, Integer>("stockParcial"));
         c_fechaEntrada.setCellValueFactory(new PropertyValueFactory<Lote, String>("fechaEntrada"));
         c_indice.setCellValueFactory(new PropertyValueFactory<Lote, Integer>("indiceTableView"));
-        tableViewProductos.setEditable(true);
+        tableViewProductos.setEditable(true);*/
+       this.limpiarTabla();
 
         llenarTabla(this.listaLotes);
     }
