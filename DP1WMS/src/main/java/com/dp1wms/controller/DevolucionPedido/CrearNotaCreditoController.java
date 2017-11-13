@@ -52,6 +52,8 @@ public class CrearNotaCreditoController implements FxmlController {
     private TextField txb_total;
     @FXML
     private TextField txb_numDocCliente;
+    @FXML
+    private TextField txb_totaligv;
 
     private ListaPedidoDevolucionController listaPedidoDevolucionController;
 
@@ -121,6 +123,7 @@ public class CrearNotaCreditoController implements FxmlController {
         this.txb_flete.setDisable(true);
         this.txb_total.setDisable(true);
         this.txb_numDocCliente.setDisable(true);
+        this.txb_totaligv.setDisable(true);
 
         this.txb_nombreCliente.setText(facturaEscogida.getV_cliente());
         this.txb_numComprobante.setText("" + facturaEscogida.getV_id());
@@ -129,20 +132,23 @@ public class CrearNotaCreditoController implements FxmlController {
 
         Float subtotal = facturaEscogida.getV_subtotal();
         BigDecimal b_subtotal = new BigDecimal(subtotal);
-        this.txb_subtotal.setText(""+b_subtotal.setScale(3,BigDecimal.ROUND_HALF_UP));
+        this.txb_subtotal.setText(""+b_subtotal.setScale(2,BigDecimal.ROUND_HALF_UP));
 
         Float igv = facturaEscogida.getV_igv();
         BigDecimal b_igv = new BigDecimal(igv);
-        this.txb_igv.setText(""+b_igv.setScale(3,BigDecimal.ROUND_HALF_UP));
+        this.txb_igv.setText(""+b_igv.setScale(2,BigDecimal.ROUND_HALF_UP));
 
         Float total = facturaEscogida.getV_total();
         BigDecimal b_total = new BigDecimal(total);
-        this.txb_total.setText(""+b_total.setScale(3,BigDecimal.ROUND_HALF_UP));
+        this.txb_total.setText(""+b_total.setScale(2,BigDecimal.ROUND_HALF_UP));
 
 
         //BigDecimal flete = b_total.subtract(b_igv.add(b_subtotal));
         BigDecimal flete = new BigDecimal(facturaEscogida.getV_flete());
-        this.txb_flete.setText(""+flete.setScale(3,BigDecimal.ROUND_HALF_UP));
+        this.txb_flete.setText(""+flete.setScale(2,BigDecimal.ROUND_HALF_UP));
+
+        BigDecimal totalConIgv = b_total.add(b_igv);
+        this.txb_totaligv.setText(""+totalConIgv.setScale(2,BigDecimal.ROUND_HALF_UP));
 
         this.limpiarTabla();
         this.llenarTabla(facturaEscogida.getListaDetalleComprobante());
