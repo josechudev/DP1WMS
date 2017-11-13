@@ -1,6 +1,6 @@
 package com.dp1wms.model;
 
-import java.awt.*;
+import javafx.geometry.Point2D;
 
 public class Cajon {
 
@@ -8,6 +8,11 @@ public class Cajon {
     private int idRack;
     private int posX;
     private int posY;
+    private Point2D posicion;
+
+    public Cajon(){
+
+    }
 
     public int getIdCajon() {
         return idCajon;
@@ -23,6 +28,14 @@ public class Cajon {
 
     public void setIdRack(int idRack) {
         this.idRack = idRack;
+    }
+
+    public Point2D getPosicion() {
+        return posicion;
+    }
+
+    public void setPosicion(Point2D posicion) {
+        this.posicion = posicion;
     }
 
     public int getPosX() {

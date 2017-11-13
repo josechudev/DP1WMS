@@ -1,6 +1,5 @@
 package com.dp1wms.model;
 
-import com.sun.org.apache.xml.internal.utils.RawCharacterHandler;
 import javafx.geometry.Point2D;
 import org.postgresql.geometric.PGpoint;
 
@@ -81,7 +80,6 @@ public class Area {
     public Point2D getVertInfDer(){
         return this.getPosicionFinal();
     }
-
 
     public List<Rack> getListaRack() {
         return listaRack;
