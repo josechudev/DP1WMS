@@ -140,16 +140,13 @@ public class CrearNotaCreditoController implements FxmlController {
 
         Float total = facturaEscogida.getV_total();
         BigDecimal b_total = new BigDecimal(total);
-        this.txb_total.setText(""+b_total.setScale(2,BigDecimal.ROUND_HALF_UP));
-
+        BigDecimal totalsinIgv = b_total.subtract(b_igv);
+        this.txb_total.setText(""+totalsinIgv.setScale(2,BigDecimal.ROUND_HALF_UP));
+        this.txb_totaligv.setText(""+b_total.setScale(2,BigDecimal.ROUND_HALF_UP));
 
         //BigDecimal flete = b_total.subtract(b_igv.add(b_subtotal));
         BigDecimal flete = new BigDecimal(facturaEscogida.getV_flete());
         this.txb_flete.setText(""+flete.setScale(2,BigDecimal.ROUND_HALF_UP));
-
-        BigDecimal totalConIgv = b_total.add(b_igv);
-        this.txb_totaligv.setText(""+totalConIgv.setScale(2,BigDecimal.ROUND_HALF_UP));
-
         this.limpiarTabla();
         this.llenarTabla(facturaEscogida.getListaDetalleComprobante());
     }
