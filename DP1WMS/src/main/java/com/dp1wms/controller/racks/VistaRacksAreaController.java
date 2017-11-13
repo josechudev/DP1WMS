@@ -2,11 +2,12 @@ package com.dp1wms.controller.racks;
 
 import com.dp1wms.controller.FxmlController;
 import com.dp1wms.controller.almacenes.AlmacenController;
-import com.dp1wms.controller.superficies.SuperficieGridController;
+import com.dp1wms.dao.impl.RepositoryCajonImpl;
 import com.dp1wms.dao.impl.RepositoryMantRackImpl;
 import com.dp1wms.model.Almacen;
 import com.dp1wms.model.Area;
 import com.dp1wms.model.Rack;
+import com.dp1wms.util.AreaUtil;
 import com.dp1wms.view.AlmacenView;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
@@ -21,9 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class VistaRacksController implements FxmlController {
+public class VistaRacksAreaController implements FxmlController {
 
-    @FXML private ComboBox cbArea;
+    @FXML private Label lbTitulo;
     @FXML private ScrollPane spRacksView;
     @FXML private TextField tfPosX;
     @FXML private TextField tfPosY;
@@ -32,10 +33,12 @@ public class VistaRacksController implements FxmlController {
 
     @Autowired
     RepositoryMantRackImpl repositoryMantRack;
+    @Autowired
+    RepositoryCajonImpl repositoryCajon;
 
     private StageManager stageManager;
     private AlmacenController almacenController;
-    private GridRacksController gridRacksController;
+    private GridRacksAreaController gridRacksController;
 
     private List<Area> areas;
     private List<Rack> racks;
@@ -47,19 +50,22 @@ public class VistaRacksController implements FxmlController {
     private Almacen almacen;
 
     private Point2D posicionActual;
+    private int offsetAreaX;
+    private int offsetAreaY;
 
     @Autowired @Lazy
-    public VistaRacksController(AlmacenController almacenController, StageManager stageManager){
+    public VistaRacksAreaController(AlmacenController almacenController, StageManager stageManager){
         this.almacenController = almacenController;
         this.stageManager = stageManager;
     }
 
     @Override
     public void initialize() {
-        almacen = almacenController.getAlmacen();
-        areas = almacenController.getAreas();
         areaSeleccionada = almacenController.getAreaSeleccionada();
-        gridRacksController = new GridRacksController(almacen.getLargo(), almacen.getAncho(), this);
+        offsetAreaX = (int) areaSeleccionada.getPosicionInicial().getX();
+        offsetAreaY = (int) areaSeleccionada.getPosicionInicial().getY();
+        lbTitulo.setText("Vista de Racks - Area " + areaSeleccionada.getCodigo());
+        gridRacksController = new GridRacksAreaController(AreaUtil.getLargo(areaSeleccionada), AreaUtil.getAncho(areaSeleccionada), this);
         racksCreados = new ArrayList<>();
         racksEliminados = new ArrayList<>();
         obtenerRacks();
@@ -69,7 +75,7 @@ public class VistaRacksController implements FxmlController {
     }
 
     private void obtenerRacks(){
-        racks = repositoryMantRack.getRacksByAlmacenId(almacen.getIdAlmacen());
+        racks = repositoryMantRack.getRacksByAreaId(areaSeleccionada.getIdArea());
     }
 
     private void dibujarRacks(){
@@ -80,9 +86,9 @@ public class VistaRacksController implements FxmlController {
     }
 
     void actualizarPosicion(int x, int y){
-        tfPosX.setText(String.valueOf(x));
-        tfPosY.setText(String.valueOf(y));
-        posicionActual = new Point2D(x, y);
+        tfPosX.setText(String.valueOf(x + offsetAreaX));
+        tfPosY.setText(String.valueOf(y + offsetAreaY));
+        posicionActual = new Point2D(x + offsetAreaX, y + offsetAreaY);
     }
 
     void rackSeleccionado(boolean seleccionado){
@@ -100,6 +106,12 @@ public class VistaRacksController implements FxmlController {
         gridRacksController.anadirRack(rack);
     }
 
+    public void nuevaSerie(ArrayList<Rack> racks){
+        for (Rack r: racks){
+            nuevoRack(r);
+        }
+    }
+
     @FXML
     private void btnClickEliminarRack(ActionEvent event){
         Rack rackSeleccionado = gridRacksController.getRackSeleccionado();
@@ -115,18 +127,36 @@ public class VistaRacksController implements FxmlController {
     private void btnClickGuardarCambios(ActionEvent event){
         if (racksEliminados.size() == 1){
             repositoryMantRack.eliminar(racksEliminados.get(0));
+            repositoryCajon.eliminar(racksEliminados.get(0).getIdRack());
         } else if (racksEliminados.size() > 1) {
             repositoryMantRack.eliminar(racksEliminados);
+            repositoryCajon.eliminar(racksEliminados);
         }
         if (racksCreados.size() == 1){
             repositoryMantRack.crear(racksCreados.get(0));
+            repositoryCajon.crear(racksCreados.get(0));
         } else if (racksCreados.size() > 1){
             repositoryMantRack.crear(racksCreados);
+            repositoryCajon.crear(racksCreados);
         }
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Se guardaron los cambios", ButtonType.OK);
+        alert.showAndWait();
+        stageManager.cerrarVentana(event);
     }
 
     public Point2D getPosicionActualGrid(){
         return this.posicionActual;
+    }
+
+    public Area getAreaSeleccionada(){
+        return this.areaSeleccionada;
+    }
+
+    public int getOffsetAreaX() {
+        return offsetAreaX;
+    }
+
+    public int getOffsetAreaY() {
+        return offsetAreaY;
     }
 }

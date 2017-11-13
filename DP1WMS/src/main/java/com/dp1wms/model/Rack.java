@@ -9,7 +9,6 @@ public class Rack {
 
     private int idRack;
     private int idArea;
-    private int idAlmacen;
     private Point2D posicionInicial;
     private Point2D posicionFinal;
     private int altura;
@@ -90,13 +89,5 @@ public class Rack {
 
     public void setListaCajones(List<Cajon> listaCajones) {
         this.listaCajones = listaCajones;
-    }
-
-    public int getIdAlmacen() {
-        return idAlmacen;
-    }
-
-    public void setIdAlmacen(int idAlmacen) {
-        this.idAlmacen = idAlmacen;
     }
 }

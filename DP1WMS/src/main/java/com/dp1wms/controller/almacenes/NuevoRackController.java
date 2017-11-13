@@ -1,7 +1,7 @@
 package com.dp1wms.controller.almacenes;
 
 import com.dp1wms.controller.FxmlController;
-import com.dp1wms.controller.racks.VistaRacksController;
+import com.dp1wms.controller.racks.VistaRacksAreaController;
 import com.dp1wms.model.Rack;
 import com.dp1wms.util.PosicionFormatter;
 import com.dp1wms.util.RackUtil;
@@ -15,6 +15,8 @@ import org.springframework.context.annotation.Lazy;
 
 import com.dp1wms.util.RackUtil.RackOrientacion;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 
 @Component
 public class NuevoRackController implements FxmlController {
@@ -45,20 +47,20 @@ public class NuevoRackController implements FxmlController {
     private ToggleGroup grpOrientacionSerie = new ToggleGroup();
 
     private StageManager stageManager;
-    private VistaRacksController vistaRacksController;
+    private VistaRacksAreaController vistaRacksAreaController;
 
     private Point2D posicion;
     private boolean agregarEnSerie;
 
     @Autowired @Lazy
-    public NuevoRackController(StageManager stageManager, VistaRacksController vistaRacksController){
+    public NuevoRackController(StageManager stageManager, VistaRacksAreaController vistaRacksAreaController){
         this.stageManager = stageManager;
-        this.vistaRacksController = vistaRacksController;
+        this.vistaRacksAreaController = vistaRacksAreaController;
     }
 
     @Override
     public void initialize() {
-        posicion = vistaRacksController.getPosicionActualGrid();
+        posicion = vistaRacksAreaController.getPosicionActualGrid();
         tfPosIni.setText(PosicionFormatter.pointToXYPair(posicion));
         tfPosIni.setDisable(true);
         rbHorizontal.setToggleGroup(grpOrientacion);
@@ -131,8 +133,8 @@ public class NuevoRackController implements FxmlController {
         }
 
         String codigo;
-        int altura, longitudCajon;
-        Point2D posicionFinal;
+        int altura, longitudCajon, separacion, largoRack;
+        Point2D posicionFinal, posicionFinalSerie;
         RackOrientacion rackOrientacion;
 
         codigo = tfCodigo.getText();
@@ -141,13 +143,59 @@ public class NuevoRackController implements FxmlController {
         posicionFinal = new Point2D(Double.valueOf(tfPosFinX.getText()), Double.valueOf(tfPosFinY.getText()));
 
         Rack nuevoRack = new Rack();
+        nuevoRack.setIdArea(vistaRacksAreaController.getAreaSeleccionada().getIdArea());
         nuevoRack.setCodigo(codigo);
         nuevoRack.setPosicionInicial(posicion);
         nuevoRack.setAltura(altura);
         nuevoRack.setLongitudCajon(longitudCajon);
         nuevoRack.setPosicionFinal(posicionFinal);
 
-        vistaRacksController.nuevoRack(nuevoRack);
+        if (chAgregarSerie.isSelected()){
+            if (!validarSerie()){
+                return;
+            }
+            ArrayList<Rack> nuevaSerie = new ArrayList<>();
+
+            largoRack = RackUtil.getLargo(nuevoRack);
+            separacion = Integer.parseInt(tfSeparacion.getText());
+            posicionFinalSerie = new Point2D(Double.valueOf(tfPosFinSerieX.getText()), Double.valueOf(tfPosFinSerieY.getText()));
+
+            Rack r = nuevoRack, prev;
+
+            int i = 2;
+
+            while (posicionFinalSerie.getX() >= r.getPosicionFinal().getX() &&  posicionFinalSerie.getY() >= r.getPosicionFinal().getY()){
+                nuevaSerie.add(r);
+                prev = r;
+
+                r = new Rack();
+                r.setIdArea(vistaRacksAreaController.getAreaSeleccionada().getIdArea());
+                r.setCodigo(codigo + "-" + String.valueOf(i));
+                r.setAltura(altura);
+                r.setLongitudCajon(longitudCajon);
+
+                Point2D posIniPrev = prev.getPosicionInicial(), posFinPrev = prev.getPosicionFinal();
+                if (rbHorizontalSerie.isSelected()){
+                    int x1 = RackUtil.tieneOrientacionVertical(prev) ? (int) posIniPrev.getX() + separacion + 1 : (int) posIniPrev.getX() + largoRack + separacion;
+                    int x2 = RackUtil.tieneOrientacionVertical(prev) ? (int) posFinPrev.getX() + separacion + 1 : (int) posFinPrev.getX() + largoRack + separacion;
+
+                    r.setPosicionInicial(new Point2D(x1, posIniPrev.getY()));
+                    r.setPosicionFinal(new Point2D(x2, posFinPrev.getY()));
+                } else {
+                    int y1 = RackUtil.tieneOrientacionHorizontal(prev) ? (int) posIniPrev.getY() + separacion + 1 : (int) posIniPrev.getY() + largoRack + separacion;
+                    int y2 = RackUtil.tieneOrientacionHorizontal(prev) ? (int) posFinPrev.getY() + separacion + 1: (int) posFinPrev.getY() + largoRack + separacion;
+
+                    r.setPosicionInicial(new Point2D(posIniPrev.getX(), y1));
+                    r.setPosicionFinal(new Point2D(posFinPrev.getX(), y2));
+                }
+
+                i++;
+            }
+            vistaRacksAreaController.nuevaSerie(nuevaSerie);
+        } else {
+            vistaRacksAreaController.nuevoRack(nuevoRack);
+        }
+
         stageManager.cerrarVentana(event);
     }
 

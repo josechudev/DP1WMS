@@ -34,6 +34,7 @@ public enum AlmacenView implements FxmlView{
         @Override
         public String getTitle() {
             return getStringFromResourceBundle("mantenimiento.racks.title");
+
         }
 
         @Override
@@ -43,7 +44,24 @@ public enum AlmacenView implements FxmlView{
 
         @Override
         public boolean isResizable() {
-            return true;
+            return false;
+        }
+
+    },
+    TABU{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("tabu.title");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Tabu/AlmacenRuta.fxml";
+        }
+
+        @Override
+        public boolean isResizable() {
+            return false;
         }
     },
     NUEVO_RACK {

@@ -9,8 +9,8 @@ public interface RepositoryMantRack {
 
     List<Rack> getRacksByAlmacenId(int almacenId);
     List<Rack> getRacksByAreaId(int areaId);
-    int crear(Rack rack);
-    int[] crear(ArrayList<Rack> racks);
+    void crear(Rack rack);
+    void crear(ArrayList<Rack> racks);
     int eliminar(Rack rack);
     int[] eliminar(ArrayList<Rack> racks);
     int editarRack(Rack rack);

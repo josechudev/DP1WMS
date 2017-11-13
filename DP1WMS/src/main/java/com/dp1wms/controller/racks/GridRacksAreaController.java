@@ -10,9 +10,9 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
-public class GridRacksController extends SuperficieGridController {
+public class GridRacksAreaController extends SuperficieGridController {
 
-    private VistaRacksController vistaRacksController;
+    private VistaRacksAreaController vistaRacksAreaController;
 
     private Color RACK_PIXEL_COLOR = Color.BLUE;
     private Rack[][] distRacks;
@@ -20,9 +20,9 @@ public class GridRacksController extends SuperficieGridController {
     private Rack rackSeleccionado;
     private Point2D posicionActual;
 
-    GridRacksController(int uLargo, int uAncho, VistaRacksController vistaRacksController){
+    GridRacksAreaController(int uLargo, int uAncho, VistaRacksAreaController vistaRacksAreaController){
         super(uLargo, uAncho);
-        this.vistaRacksController = vistaRacksController;
+        this.vistaRacksAreaController = vistaRacksAreaController;
         this.distRacks = new Rack[uLargo][uAncho];
         this.posicionActual = new Point2D(0,0);
     }
@@ -49,8 +49,8 @@ public class GridRacksController extends SuperficieGridController {
         int x, y;
 
         for(Point2D p: posiciones){
-            x = (int) p.getX();
-            y = (int) p.getY();
+            x = (int) p.getX() - vistaRacksAreaController.getOffsetAreaX();
+            y = (int) p.getY() - vistaRacksAreaController.getOffsetAreaY();
 
             dibujarRack(x, y);
             distRacks[x][y] = rack;
@@ -70,46 +70,46 @@ public class GridRacksController extends SuperficieGridController {
     private void marcarSeleccion(Rectangle rectangle){
         rectangle.setStroke(Color.AQUAMARINE);
         rectangle.setStrokeWidth(1);
-        vistaRacksController.rackSeleccionado(false);
+        vistaRacksAreaController.rackSeleccionado(false);
     }
 
     private void marcarRack(Rack rack){
         ArrayList<Point2D> posiciones = RackUtil.getListaDePosicionesOcupadas(rack);
         int x, y;
         for (Point2D p: posiciones){
-            x = (int) p.getX();
-            y = (int) p.getY();
+            x = (int) p.getX() - vistaRacksAreaController.getOffsetAreaX();
+            y = (int) p.getY() - vistaRacksAreaController.getOffsetAreaY();
             Rectangle r = (Rectangle) nodeGrid[x][y];
             r.setFill(Color.AQUAMARINE);
         }
         rackSeleccionado = rack;
-        vistaRacksController.rackSeleccionado(true);
+        vistaRacksAreaController.rackSeleccionado(true);
     }
 
     private void desmarcarRack(Rack rack){
         ArrayList<Point2D> posiciones = RackUtil.getListaDePosicionesOcupadas(rack);
         int x, y;
         for (Point2D p: posiciones){
-            x = (int) p.getX();
-            y = (int) p.getY();
+            x = (int) p.getX() - vistaRacksAreaController.getOffsetAreaX();
+            y = (int) p.getY() - vistaRacksAreaController.getOffsetAreaY();
             Rectangle r = (Rectangle) nodeGrid[x][y];
             r.setFill(Color.BLUE);
         }
         rackSeleccionado = null;
-        vistaRacksController.rackSeleccionado(false);
+        vistaRacksAreaController.rackSeleccionado(false);
     }
 
     private void actualizarPosicion(Rectangle rectangle){
         posicionActual = new Point2D(getColumnIndex(rectangle), getRowIndex(rectangle));
-        vistaRacksController.actualizarPosicion((int) posicionActual.getX(), (int) posicionActual.getY());
+        vistaRacksAreaController.actualizarPosicion((int) posicionActual.getX(), (int) posicionActual.getY());
     }
 
     void eliminarRack(Rack rack){
         ArrayList<Point2D> posiciones = RackUtil.getListaDePosicionesOcupadas(rack);
         int x, y;
         for (Point2D p: posiciones){
-            x = (int) p.getX();
-            y = (int) p.getY();
+            x = (int) p.getX() - vistaRacksAreaController.getOffsetAreaX();
+            y = (int) p.getY() - vistaRacksAreaController.getOffsetAreaY();
             remove(x, y);
             resetTile(x, y);
             distRacks[x][y] = null;

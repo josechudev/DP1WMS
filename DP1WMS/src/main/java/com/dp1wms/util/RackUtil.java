@@ -45,6 +45,14 @@ public class RackUtil {
         return x1 == x2;
     }
 
+    public static int getLargo(Rack rack){
+        if (tieneOrientacionHorizontal(rack)){
+            return (int) rack.getPosicionFinal().getX() - (int) rack.getPosicionInicial().getX() + 1;
+        } else {
+            return (int) rack.getPosicionFinal().getY() - (int) rack.getPosicionInicial().getY() + 1;
+        }
+    }
+
     public enum RackOrientacion {
         VERTICAL,
         HORIZONTAL

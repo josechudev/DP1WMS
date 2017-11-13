@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -24,58 +26,37 @@ public class RepositoryMantRackImpl implements RepositoryMantRack {
 
     @Override
     public List<Rack> getRacksByAlmacenId(int almacenId) {
-        String sql = "SELECT * FROM rack WHERE idalmacen = ?";
+        String sql = "SELECT r.idrack, r.idarea, r.posicioninicial, r.posicionfinal, r.altura, r.longitudcajon, r.codigo FROM rack r" +
+                " INNER JOIN area a on r.idarea = a.idarea WHERE idalmacen = ?";
         return jdbcTemplate.query(sql, new Object[]{almacenId}, new RackRowMapper());
     }
 
     @Override
     public List<Rack> getRacksByAreaId(int areaId) {
-        String sql = "SELECT * rack WHERE idarea = ?";
+        String sql = "SELECT * FROM rack WHERE idarea = ?";
         return jdbcTemplate.query(sql, new Object[] {areaId}, new RackRowMapper());
     }
 
     @Override
-    public int crear(Rack rack) {
-        String sql = "INSERT INTO rack (idarea, posicioninicial, posicionfinal, altura, longitudcajon, codigo, idalmacen)" +
-                " values (?,?,?,?,?,?, ?)";
-        return jdbcTemplate.update(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(sql);
-                ps.setInt(1, rack.getIdRack());
-                ps.setObject(2, new PGpoint(rack.getPosicionInicial().getX(), rack.getPosicionInicial().getY()));
-                ps.setObject(3, new PGpoint(rack.getPosicionFinal().getX(), rack.getPosicionFinal().getY()));
-                ps.setInt(4, rack.getAltura());
-                ps.setInt(5, rack.getLongitudCajon());
-                ps.setString(6, rack.getCodigo());
-                ps.setInt(7, rack.getIdAlmacen());
-                return ps;
-            }
+    public void crear(Rack rack) {
+        String sql = "INSERT INTO rack (idarea, posicioninicial, posicionfinal, altura, longitudcajon, codigo)" +
+                " values (?,?,?,?,?,?) RETURNING idrack";
+        KeyHolder holder = new GeneratedKeyHolder();
+        Rack r = (Rack) jdbcTemplate.queryForObject(sql, new Object[]{rack.getIdArea(), new PGpoint(rack.getPosicionInicial().getX(), rack.getPosicionInicial().getY()),
+                new PGpoint(rack.getPosicionFinal().getX(), rack.getPosicionFinal().getY()), rack.getAltura(), rack.getLongitudCajon(), rack.getCodigo()}, (rs, i) -> {
+            Rack aux = new Rack();
+            aux.setIdRack(rs.getInt(1));
+            return aux;
         });
+        rack.setIdRack(r.getIdRack());
     }
 
     @Override
-    public int[] crear(ArrayList<Rack> racks) {
-        String sql = "INSERT INTO rack (idarea, posicioninicial, posicionfinal, altura, longitudcajon, codigo, idalmacen)" +
-                " values (?,?,?,?,?,?, ?)";
-        return jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
-            @Override
-            public void setValues(PreparedStatement ps, int i) throws SQLException {
-                Rack rack = racks.get(i);
-                ps.setInt(1, rack.getIdRack());
-                ps.setObject(2, new PGpoint(rack.getPosicionInicial().getX(), rack.getPosicionInicial().getY()));
-                ps.setObject(3, new PGpoint(rack.getPosicionFinal().getX(), rack.getPosicionFinal().getY()));
-                ps.setInt(4, rack.getAltura());
-                ps.setInt(5, rack.getLongitudCajon());
-                ps.setString(6, rack.getCodigo());
-                ps.setInt(7, rack.getIdAlmacen());
-            }
-
-            @Override
-            public int getBatchSize() {
-                return racks.size();
-            }
-        });
+    public void crear(ArrayList<Rack> racks) {
+        // Se intento hacer un batch insert, sin embargo no hay forma de recuperar los ids de cada fila creada, para pasarlo a los cajones
+        for (Rack rack: racks){
+            crear(rack);
+        }
     }
 
     @Override

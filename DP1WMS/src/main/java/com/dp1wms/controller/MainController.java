@@ -246,6 +246,11 @@ public class MainController implements FxmlController {
         this.stageManager.mostrarModal(MainView.UBICACIONES);
     }
 
+    @FXML
+    private void cargarGenerarRuta(){
+        this.stageManager.mostrarModal(AlmacenView.TABU);
+    }
+
     public void setUsuario(Usuario usuario){
         this.usuario = usuario;
     }
