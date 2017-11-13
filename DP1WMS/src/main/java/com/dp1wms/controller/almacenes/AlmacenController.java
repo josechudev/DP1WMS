@@ -55,7 +55,7 @@ public class AlmacenController implements FxmlController{
     private Almacen almacen;
     private List<Area> areas;
     private Area areaSeleccionada;
-    private final int PIXELS_WIDTH_M2 = 5;
+    private final int PIXELS_WIDTH_M2 = 10;
 
     @Autowired @Lazy
     public AlmacenController(StageManager stageManager, MantenimientoAlmacenesController mantenimientoAlmacenesController){
@@ -129,6 +129,7 @@ public class AlmacenController implements FxmlController{
         rectAlmacen.setHeight(gAncho);
         rectAlmacen.setFill(Color.web("#46ACC2", 0.1));
         rectAlmacen.setStroke(Color.BLACK);
+        rectAlmacen.setStrokeWidth(2.0);
 
         AnchorPane.setTopAnchor(rectAlmacen, 0.0);
         AnchorPane.setLeftAnchor(rectAlmacen, 0.0);
@@ -210,11 +211,27 @@ public class AlmacenController implements FxmlController{
 
     @FXML
     private void verRacks(ActionEvent event){
-        
+        if (areas.size() == 0){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Debe crear un área para añadir racks", ButtonType.OK);
+            alert.showAndWait();
+        }
+        else if (areaSeleccionada == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Seleccione un área", ButtonType.OK);
+            alert.showAndWait();
+        }
+        else {
+            stageManager.mostrarModal(AlmacenView.VISTA_RACKS);
+        }
     }
 
     public Almacen getAlmacen(){
         return this.almacen;
     }
+    public Area getAreaSeleccionada(){
+        return this.areaSeleccionada;
+    }
 
+    public List<Area> getAreas(){
+        return this.areas;
+    }
 }
