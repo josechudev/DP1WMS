@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="273.0" prefWidth="382.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantCategoria.CategoriaController">
+<AnchorPane prefHeight="275.0" prefWidth="442.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantCategoria.CategoriaController">
    <children>
       <Label layoutX="29.0" layoutY="59.0" prefHeight="27.0" prefWidth="117.0" text="Acciones">
          <font>
@@ -20,13 +20,14 @@
          </font>
       </Label>
       <Button fx:id="btn_CrearCategoria" layoutX="29.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnClickCrearCategoria" prefHeight="0.0" prefWidth="92.0" text="Agregar" />
-      <Button fx:id="btn_ModificarCategoria" layoutX="141.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnClickModificarCategoria" prefHeight="1.0" prefWidth="92.0" text="Modificar" />
-      <Button fx:id="btn_eliminarCategoria" layoutX="253.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnClickEliminarCategoria" prefHeight="14.0" prefWidth="92.0" text="Eliminar" />
-      <TableView fx:id="e_table" layoutX="31.0" layoutY="132.0" prefHeight="127.0" prefWidth="310.0">
+      <Button fx:id="btn_ModificarCategoria" layoutX="135.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnClickModificarCategoria" prefHeight="1.0" prefWidth="92.0" text="Modificar" />
+      <Button fx:id="btn_eliminarCategoria" layoutX="240.0" layoutY="94.0" mnemonicParsing="false" onAction="#btnClickEliminarCategoria" prefHeight="14.0" prefWidth="92.0" text="Eliminar" />
+      <TableView fx:id="e_table" layoutX="31.0" layoutY="132.0" prefHeight="127.0" prefWidth="398.0">
          <columns>
             <TableColumn fx:id="e_id" prefWidth="48.0" text="Id" />
-            <TableColumn fx:id="e_descripcion" prefWidth="261.0" text="Descripcion" />
+            <TableColumn fx:id="e_descripcion" prefWidth="349.0" text="Descripcion" />
          </columns>
       </TableView>
+      <Button layoutX="342.0" layoutY="94.0" mnemonicParsing="false" onAction="#cargaMasiva" text="Cargar Datos" />
    </children>
 </AnchorPane>

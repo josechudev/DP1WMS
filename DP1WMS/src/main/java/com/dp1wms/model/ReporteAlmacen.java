@@ -73,7 +73,7 @@ public class ReporteAlmacen {
     }
 
     public int getCantidadPedido() {
-        return cantidadPedido;
+        return cantidadPedido<0?0:cantidadPedido;
     }
 
     public void setCantidadPedido(int cantidadPedido) {
@@ -81,7 +81,7 @@ public class ReporteAlmacen {
     }
 
     public int getStockLogico() {
-        return stockLogico;
+        return stockLogico<0?0:stockLogico;
     }
 
     public void setStockLogico(int stockLogico) {

@@ -2,6 +2,7 @@ package com.dp1wms.controller.MantCategoria;
 
 import com.dp1wms.controller.FxmlController;
 import com.dp1wms.dao.ICategoriaProducto.RepositoryMantCategoria;
+import com.dp1wms.dao.RepositoryCargaMasiva;
 import com.dp1wms.model.CategoriaProducto;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
@@ -36,9 +37,18 @@ public class CategoriaController implements FxmlController {
 
     @Autowired
     private RepositoryMantCategoria repositoryMantCategoria;
+    @Autowired
+    private RepositoryCargaMasiva repositoryCargaMasiva;
+
     @Autowired @Lazy
     public CategoriaController (StageManager stageManager){
         this.stageManager = stageManager;
+    }
+
+
+    public void cargaMasiva(ActionEvent event){
+        this.repositoryCargaMasiva.storeProcedure_cargarCategoriaProductos();
+        this._llenarGrilla();
     }
 
     public void btnClickCrearCategoria(ActionEvent event){

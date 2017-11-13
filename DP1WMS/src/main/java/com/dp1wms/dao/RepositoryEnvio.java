@@ -12,4 +12,5 @@ public interface RepositoryEnvio {
     List<Envio> obtenerEnvios(int idPedido);
 
     List<Envio> obtenerListaEnvio();
+    List<Envio> obtenerListaEnvioRepoio();
 }

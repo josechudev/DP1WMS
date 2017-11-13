@@ -241,6 +241,10 @@ public class MainController implements FxmlController {
     private void cargarListaNotaCredito(){
         this.stageManager.mostrarModal(MainView.LISTA_NOTA_CREDITO);
     }
+    @FXML
+    private void cargarUbicaciones(){
+        this.stageManager.mostrarModal(MainView.UBICACIONES);
+    }
 
     @FXML
     private void cargarGenerarRuta(){

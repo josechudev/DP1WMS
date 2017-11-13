@@ -36,7 +36,7 @@ public class RepositoryReporteAlmacenImpl implements RepositoryReporteAlmacen {
                 "left join detallepedido as dp on dp.idproducto = p.idproducto\n" +
                 "left join (select * from pedido where (not esdevolucion) and idestadopedido in (1,5)) as pd on pd.idpedido = dp.idpedido\n" +
                 "left join (select * from envio where not realizado) as e on e.idpedido = pd.idpedido\n"+
-                "left join detalleenvio as de on de.idenvio = e.idenvio\n"+
+                "left join detalleenvio as de on de.idenvio = e.idenvio and de.idproducto = p.idproducto\n"+
                 "group by p.codigo,p.nombreproducto, p.descripcion,p.stockminimo, p.stock, p.preciocompra \n" +
                 "order by p.codigo";
         return jdbcTemplate.query(sql, new ReporteAlmacenRowMapper());

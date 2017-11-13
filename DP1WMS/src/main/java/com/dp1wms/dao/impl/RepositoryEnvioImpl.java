@@ -146,4 +146,50 @@ public class RepositoryEnvioImpl implements RepositoryEnvio{
         return listaEnvios;
 
     }
+
+    public List<Envio> obtenerListaEnvioRepoio(){
+
+        String sql = "SELECT e.idenvio, e.fechaenvio, e.destino, " +
+                "e.realizado,e.idpedido, p.idcliente,c.razonsocial, e.costoflete " +
+                "FROM public.envio e INNER JOIN public.pedido p ON e.idpedido = p.idpedido " +
+                "INNER JOIN public.cliente c ON  c.idcliente = p.idcliente " +
+                "WHERE (not p.esdevolucion) ";
+        String SQL = "SELECT e.idenvio,e.fechaenvio,e.destino,e.realizado,e.idpedido, p.idcliente,c.razonsocial " +
+                "FROM public.envio e ,public.pedido p,public.cliente c " +
+                "WHERE (e.realizado = ?) and e.idpedido = p.idpedido and (not p.esdevolucion) and (c.idcliente = p.idcliente) ";
+        List<Envio> listaEnvios = null;
+        try{
+            listaEnvios = jdbcTemplate.query(sql,new Object[] {}, this::mapParamRepoio);
+        }catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+        }
+
+        for(Envio envio: listaEnvios){
+
+            List<DetalleEnvio> listaDetalle = this.obtenerDetalleEnvio(envio.getIdEnvio());
+
+            if(listaDetalle != null){
+                envio.setDetalleEnvio(listaDetalle);
+            }
+        }
+
+
+        return listaEnvios;
+
+    }
+
+    public Envio mapParamRepoio(ResultSet rs, int i) throws SQLException {
+        Envio envio = new Envio();
+
+        envio.setIdEnvio(rs.getLong("idenvio"));
+        envio.setDestino(rs.getString("destino"));
+        envio.setFechaEnvio(rs.getTimestamp("fechaenvio"));
+        envio.setRealizado(rs.getBoolean("realizado"));
+        envio.setIdPedido(rs.getLong("idpedido"));
+        envio.setIdCliente(rs.getLong("idcliente"));
+        envio.setRazonSocial(rs.getString("razonsocial"));
+        envio.setCostoFlete(rs.getFloat("costoflete"));
+
+        return envio;
+    }
 }
