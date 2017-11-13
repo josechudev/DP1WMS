@@ -47,7 +47,8 @@ public class Test {
 
         //Ejecutar tabu
         Tabu tabu = new Tabu(distancias, caminoInicial);
-        int[] solucion = tabu.generarCamino(1000, 1000, 5, 5);
+        int[] solucion = tabu.generarCamino(1000, 1000,
+                5, 5, 999999999);
 
         //Imprime la solucion
         for (int i = 0; i < solucion.length ; i++) {

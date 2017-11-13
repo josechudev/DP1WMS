@@ -1,5 +1,10 @@
 package com.dp1wms.tabu;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Random;
+
 public class Tabu {
 
     private int[][] distancias;
@@ -7,7 +12,7 @@ public class Tabu {
     private long duracion;
     private long iteracion;
     private long iteracionSinMejora;
-    private int[] distanciaPorIter;
+    private long[] distanciaPorIter;
 
     public Tabu(){
         //prueba
@@ -35,8 +40,8 @@ public class Tabu {
     /**
      * Funcion objetivo: suma de distancias
      */
-    public int funcionObjetivo(int[] solucion){
-        int valor = 0;
+    public long funcionObjetivo(int[] solucion){
+        long valor = 0;
 
         for(int i = 0 ; i < solucion.length-1; i++){
             valor += this.distancias[solucion[i]][solucion[i+1]];
@@ -45,25 +50,26 @@ public class Tabu {
     }
 
     public int[] generarCamino(long numIteraciones, long numIteracionesSinMejora,
-                               int listaTabuTamahno, int listaTabuPermanencia){
+                               int listaTabuTamahno, int listaTabuPermanencia,
+                               long tiempoMaximo){
         int[] solucionActual =  new int[this.caminoInicial.length];  //inicializar solucion
-        this.distanciaPorIter = new int[(int)numIteraciones]; //
+        this.distanciaPorIter = new long[(int)numIteraciones]; //
         System.arraycopy(this.caminoInicial, 0, solucionActual, 0, this.caminoInicial.length);
 
         ListaTabu listaTabu = new ListaTabu(listaTabuTamahno, listaTabuPermanencia);
 
         int[] mejorSol = new int[solucionActual.length]; //la mejor solucion hasta el momento
         System.arraycopy(solucionActual, 0, mejorSol, 0, mejorSol.length);
-        int mejorCosto = this.funcionObjetivo(mejorSol);
+        long mejorCosto = this.funcionObjetivo(mejorSol);
 
         this.iteracion = 0;
         this.iteracionSinMejora = 0;
 
         long time_start = System.currentTimeMillis();
-        while(condicionDeParada(numIteraciones, numIteracionesSinMejora)){// iterar segun parametro - condicion de parada
+        while(condicionDeParada(numIteraciones, numIteracionesSinMejora, tiempoMaximo)){// iterar segun parametro - condicion de parada
             solucionActual = this.obtenerMejorVecino(listaTabu, this.distancias, solucionActual);
 
-            int costoActual = this.funcionObjetivo(solucionActual);
+            long costoActual = this.funcionObjetivo(solucionActual);
 
             if (costoActual < mejorCosto) {
                 System.arraycopy(solucionActual, 0, mejorSol, 0, mejorSol.length);
@@ -75,15 +81,17 @@ public class Tabu {
             }
             this.distanciaPorIter[(int)iteracion] = mejorCosto;
             iteracion++;
+            this.duracion = ( System.currentTimeMillis() - time_start );
         }
-        this.duracion = ( System.currentTimeMillis() - time_start );
 
         return mejorSol;
     }
 
-    private boolean condicionDeParada(long iteracionMax, long iteracionSinMejoraMax){
+    private boolean condicionDeParada(long iteracionMax,
+                                      long iteracionSinMejoraMax,
+                                      long tiempoMax){
 
-        return this.iteracion < iteracionMax && this.iteracionSinMejora < iteracionSinMejoraMax;
+        return this.iteracion < iteracionMax && this.iteracionSinMejora < iteracionSinMejoraMax && this.duracion < tiempoMax;
     }
 
     private int[] obtenerMejorVecino(ListaTabu listaTabu,
@@ -92,7 +100,7 @@ public class Tabu {
 
         int[] mejorSol = new int[solInicial.length]; //la mejor solucion local
         System.arraycopy(solInicial, 0, mejorSol, 0, mejorSol.length);
-        int mejorCosto = this.funcionObjetivo(solInicial);
+        long mejorCosto = this.funcionObjetivo(solInicial);
         int nodo1 = 0;
         int nodo2 = 0;
         boolean primerVecino = true;
@@ -106,10 +114,9 @@ public class Tabu {
                 int[] mejorSolActual = new int[mejorSol.length]; //mejor solucion actual
                 System.arraycopy(mejorSol, 0, mejorSolActual, 0, mejorSolActual.length);
 
-                mejorSolActual = twoOPT_swap(i,j,mejorSol);
-                //mejorSolActual = this.intercambiarNodos(i, j, solInicial); //Intercambiar nodos i y j
+                mejorSolActual = twoOPT_swap(i,j,solInicial);
                 // calcular el nuevo mejor costo
-                int mejorCostoActual = this.funcionObjetivo(mejorSolActual);
+                long mejorCostoActual = this.funcionObjetivo(mejorSolActual);
 
                 //si se encontro un mejor movimiento, guardar
                 if ((mejorCostoActual < mejorCosto || primerVecino) && !listaTabu.contieneMovimiento(i,j)) {
@@ -126,10 +133,10 @@ public class Tabu {
             listaTabu.decrementarListaTabu();
             listaTabu.agregarNodo(nodo1, nodo2);
         }
+
         return mejorSol;
-
-
     }
+
 
     // intercambiar dos nodos
     private int[] intercambiarNodos(int nodo1, int nodo2, int[] solucion) {
@@ -166,8 +173,44 @@ public class Tabu {
         return this.iteracion;
     }
 
-    public int[] getDistanciaPorIter(){
+    public long[] getDistanciaPorIter(){
         return this.distanciaPorIter;
+    }
+
+    /**
+     * Unir dos o más arrays
+     */
+    private int[] joinArray(int[]... arrays) {
+        int length = 0;
+        for (int[] array : arrays) {
+            length += array.length;
+        }
+
+        final int[] result = new int[length];
+
+        int offset = 0;
+        for (int[] array : arrays) {
+            System.arraycopy(array, 0, result, offset, array.length);
+            offset += array.length;
+        }
+
+        return result;
+    }
+
+    /**
+     * Reverse an array
+     */
+    private void reverse(int[] array){
+        for(int i = 0; i < array.length / 2; i++)
+        {
+            int temp = array[i];
+            array[i] = array[array.length - i - 1];
+            array[array.length - i - 1] = temp;
+        }
+    }
+
+    private int[] subArray(int[] array, int from, int to){
+        return Arrays.copyOfRange(array, from, to);
     }
 
 }
