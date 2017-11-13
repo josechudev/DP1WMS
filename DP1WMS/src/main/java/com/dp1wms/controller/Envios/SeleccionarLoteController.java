@@ -87,6 +87,12 @@ public class SeleccionarLoteController implements FxmlController {
             return;
         }
 
+        if(lote.getStockParcial() < this.detalleEnvioEscogido.getCantidad()){
+            this.stageManager.mostrarErrorDialog("Error Seleccion de Lote", null,
+                    "No dispone de la cantidad necesaria para el despacho con ese lote");
+            return;
+        }
+
         System.out.println("Nombre Producto: " + lote.getNombreProducto()+" IdLote: "+lote.getIdLote()+" IdProducto: "+lote.getIdProducto());
 
         retiroEnvioController.actualizarDataLote(lote);
