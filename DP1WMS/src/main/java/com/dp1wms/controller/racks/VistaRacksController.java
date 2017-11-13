@@ -10,6 +10,7 @@ import com.dp1wms.model.Rack;
 import com.dp1wms.view.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
@@ -47,6 +48,8 @@ public class VistaRacksController implements FxmlController {
     private Area areaSeleccionada;
     private Almacen almacen;
 
+    private Point2D posicionActual;
+
     @Autowired @Lazy
     public VistaRacksController(AlmacenController almacenController, StageManager stageManager){
         this.almacenController = almacenController;
@@ -63,6 +66,8 @@ public class VistaRacksController implements FxmlController {
         racksEliminados = new ArrayList<>();
         obtenerRacks();
         dibujarRacks();
+        btnInsertarRack.setDisable(true);
+        btnEliminarRack.setDisable(true);
     }
 
     private void obtenerRacks(){
@@ -79,6 +84,7 @@ public class VistaRacksController implements FxmlController {
     void actualizarPosicion(int x, int y){
         tfPosX.setText(String.valueOf(x));
         tfPosY.setText(String.valueOf(y));
+        posicionActual = new Point2D(x, y);
     }
 
     void rackSeleccionado(boolean seleccionado){
@@ -101,5 +107,9 @@ public class VistaRacksController implements FxmlController {
     @FXML
     private void btnClickGuardarCambios(ActionEvent event){
 
+    }
+
+    public Point2D getPosicionActualGrid(){
+        return this.posicionActual;
     }
 }

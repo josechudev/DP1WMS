@@ -44,4 +44,10 @@ public class RackUtil {
 
         return x1 == x2;
     }
+
+    public enum RackOrientacion {
+        VERTICAL,
+        HORIZONTAL
+    }
+
 }
