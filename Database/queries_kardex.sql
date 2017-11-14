@@ -84,3 +84,18 @@ select idproducto,sum(cantidad) from detalleenvio where idproducto=1 group by (i
 select e.idenvio,e.realizado,de.idproducto,de.tot_cantidad  from envio e
 left join (select idenvio,idproducto,sum(cantidad) tot_cantidad from detalleenvio where idproducto=1 group by (idenvio,idproducto)) as de on de.idenvio = e.idenvio
 where not(realizado)
+
+select * from detallemovimiento
+select * from producto
+
+select * from detallemovimiento as dm
+select * from movimiento as m
+left join tipomovimiento as tm on tm.idtipomovimiento = m.idtipomovimiento
+
+select  idtipomovimiento,descripcion, esingreso,(case when esingreso is not null then 3 when esingreso then 1 else 2 end) from tipomovimiento
+select  idtipomovimiento,descripcion, esingreso,(case when (esingreso is not false) then 3 when esingreso then 1 else 3 end) from tipomoselect  idtipomovimiento,descripcion, esingreso,(case when coalesce(esingreso,3) =3 then 3 when esingreso then 1 else 3 end) from tipomovimientovimiento
+select m.idmovimiento,tm.descripcion,m.fechamovimiento,m.totalproductos,p.nombreproducto,p.precio,p.preciocompra,dm.cantidad
+from movimiento m
+left join tipomovimiento as tm on tm.idtipomovimiento = m.idtipomovimiento
+left join detallemovimiento as dm on dm.idmovimiento = m.idmovimiento
+left join producto as p on p.idproducto = dm.idproducto

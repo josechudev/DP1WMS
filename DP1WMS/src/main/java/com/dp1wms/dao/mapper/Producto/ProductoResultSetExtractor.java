@@ -60,6 +60,7 @@ public class ProductoResultSetExtractor implements ResultSetExtractor{
         producto.setActivo(resultSet.getBoolean(12));
         producto.setPrecioCompra(resultSet.getFloat(13));
         producto.setUnidades(resultSet.getString(14));
+        producto.setStockMinimo(resultSet.getInt(15));
 
         return producto;
 

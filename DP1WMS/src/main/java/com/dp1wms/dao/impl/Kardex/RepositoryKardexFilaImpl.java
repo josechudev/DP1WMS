@@ -25,7 +25,8 @@ public class RepositoryKardexFilaImpl implements RepositoryKardexFila {
                 "p.precio,\n" +
                 "p.preciocompra,\n" +
                 "(p.precio*dm.cantidad) valortotal,\n" +
-                "tm.esingreso\n" +
+                "tm.esingreso,\n" +
+                "(case when tm.esingreso is null then 3 WHEN tm.esingreso then 1 else 2 end)\n"+
                 "from movimiento m\n" +
                 "left join detallemovimiento as dm on dm.idmovimiento = m.idmovimiento\n" +
                 "left join tipomovimiento as tm on tm.idtipomovimiento = m.idtipomovimiento\n" +
@@ -47,7 +48,8 @@ public class RepositoryKardexFilaImpl implements RepositoryKardexFila {
                 "p.precio,\n" +
                 "p.preciocompra,\n" +
                 "(p.precio*dm.cantidad) valortotal,\n" +
-                "tm.esingreso\n" +
+                "tm.esingreso,\n" +
+                "(case when tm.esingreso is null then 3 WHEN tm.esingreso then 1 else 2 end)\n"+
                 "from movimiento m\n" +
                 "left join detallemovimiento as dm on dm.idmovimiento = m.idmovimiento\n" +
                 "left join tipomovimiento as tm on tm.idtipomovimiento = m.idtipomovimiento\n" +
