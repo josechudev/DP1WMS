@@ -94,7 +94,12 @@ public class CrearLoteController implements FxmlController{
         int cantidad = Integer.parseInt(this.txb_cantidad.getText());
 
         Long idEmpleadoAuditado = this.mainController.getEmpleado().getIdempleado();
-        int idCajon = cb_cajon.getValue().getIdCajon();
+        int idCajon;
+        if (cb_cajon.getValue() == null){
+            idCajon = -1;
+        } else {
+            idCajon = cb_cajon.getValue().getIdCajon();
+        }
 
         repositoryMantMov.registrarLote(this.idProducto,fechaLote,fechaEntrada,cantidad,idEmpleadoAuditado,idCajon);
         stageManager.cerrarVentana(event);
@@ -164,14 +169,7 @@ public class CrearLoteController implements FxmlController{
             return false;
         }
 
-        if (cb_cajon.getValue() == null){
-            this.stageManager.mostrarErrorDialog("Error creacion lote", null,
-                    "Debe seleccionar un cajón donde guardar el lote");
-            return false;
-        }
-
         return true;
-
     }
 
     private Timestamp obtenerFecha(String fecha) throws ParseException {
