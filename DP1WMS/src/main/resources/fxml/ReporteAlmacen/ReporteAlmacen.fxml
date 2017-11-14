@@ -5,12 +5,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="1027.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.ReporteAlmacen.ReporteAlmacenController">
+<AnchorPane prefHeight="569.0" prefWidth="1027.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.ReporteAlmacen.ReporteAlmacenController">
     <children>
-        <TableView fx:id="tableViewReporteAlmacen" layoutX="24.0" layoutY="172.0" prefHeight="200.0" prefWidth="987.0">
+        <TableView fx:id="tableViewReporteAlmacen" layoutX="24.0" layoutY="172.0" prefHeight="392.0" prefWidth="987.0">
             <columns>
                 <TableColumn fx:id="c_codigo" prefWidth="78.0" text="Codigo" />
                 <TableColumn fx:id="c_prod" prefWidth="154.0" text="Producto" />
@@ -36,5 +37,7 @@
         <Button fx:id="btn_Consulta" focusTraversable="false" layoutX="528.0" layoutY="99.0" mnemonicParsing="false" onAction="#consultarAlmacen" text="Consultar" />
         <DatePicker fx:id="dp_fecFin" editable="false" layoutX="266.0" layoutY="99.0" prefWidth="187.0" />
       <Button fx:id="btn_Actualizar" focusTraversable="false" layoutX="650.0" layoutY="99.0" mnemonicParsing="false" onAction="#actualizarAlmacen" text="Actualizar" />
+      <TextField fx:id="filterField" layoutX="72.0" layoutY="138.0" />
+      <Label layoutX="27.0" layoutY="143.0" text="Filtro:" />
     </children>
 </AnchorPane>

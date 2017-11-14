@@ -14,6 +14,7 @@ public class Producto {
     private int stock;
     private String codigo;
     private float precio;
+    private int stockMinimo;
     private boolean activo;
     private String fechaCreacion;
     private float precioCompra;
@@ -39,6 +40,32 @@ public class Producto {
         this.unidades = unidades;
     }
 
+    public Producto(int idProducto, String nombreProducto, int idCategoria, String categoria, float peso, String fechaVencimiento, String descripcion, int stock, String codigo, float precio, int stockMinimo, boolean activo, String fechaCreacion, float precioCompra, String unidades, int indiceTableView) {
+        this.idProducto = idProducto;
+        this.nombreProducto = nombreProducto;
+        this.idCategoria = idCategoria;
+        this.categoria = categoria;
+        this.peso = peso;
+        this.fechaVencimiento = fechaVencimiento;
+        this.descripcion = descripcion;
+        this.stock = stock;
+        this.codigo = codigo;
+        this.precio = precio;
+        this.stockMinimo = stockMinimo;
+        this.activo = activo;
+        this.fechaCreacion = fechaCreacion;
+        this.precioCompra = precioCompra;
+        this.unidades = unidades;
+        this.indiceTableView = indiceTableView;
+    }
+
+    public int getStockMinimo() {
+        return stockMinimo;
+    }
+
+    public void setStockMinimo(int stockMinimo) {
+        this.stockMinimo = stockMinimo;
+    }
 
     public Producto(String unidades) {
         this.unidades = unidades;
@@ -95,6 +122,7 @@ public class Producto {
         this.fechaCreacion = producto.getFechaCreacion();
         this.precioCompra = producto.precioCompra;
         this.unidades=producto.unidades;
+        this.stockMinimo = producto.stockMinimo;
     }
 
     public String isActivo() {
