@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -95,6 +96,7 @@ public class StageManager {
 
     public void mostrarErrorDialog(String title, String header, String content){
         Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);
@@ -103,6 +105,7 @@ public class StageManager {
 
     public void mostrarInfoDialog(String title, String header, String content){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);
@@ -111,6 +114,7 @@ public class StageManager {
 
     public boolean mostrarConfirmationDialog(String content){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.setTitle("Confirmación");
         alert.setHeaderText(null);
         alert.setContentText(content);

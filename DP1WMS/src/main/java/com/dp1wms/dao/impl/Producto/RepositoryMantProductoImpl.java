@@ -24,7 +24,7 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
 
     @Override
     public List<Producto> selectAllProducto() {
-        String sql = "select idproducto, nombreproducto, peso, to_char(fechavencimiento,'DD/MM/YYYY')fechavencimiento, p.descripcion, precio, stock, p.idcategoria,cp.descripcion, codigo,to_char(fechacreacion,'DD/MM/YYYY') fechacreacion, activo,preciocompra,unidades\n" +
+        String sql = "select idproducto, nombreproducto, peso, to_char(fechavencimiento,'DD/MM/YYYY')fechavencimiento, p.descripcion, precio, stock, p.idcategoria,cp.descripcion, codigo,to_char(fechacreacion,'DD/MM/YYYY') fechacreacion, activo,preciocompra,unidades,stockminimo\n" +
                 "from producto p\n" +
                 "left join categoriaproducto as cp on cp.idcategoria = p.idcategoria\n" +
                 "order by idproducto;";
@@ -50,7 +50,7 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
                 "idcategoria," +
                 "codigo," +
                 "fechacreacion," +
-                "activo,preciocompra,unidades) VALUES(default, ?,?,?,?,?,?,?,?,?,?,?,?)";
+                "activo,preciocompra,unidades,stockminimo) VALUES(default, ?,?,?::DATE,?,?,?,?,?,?::DATE,?,?,?,?)";
         try {
            /* jdbcTemplate.update(sql,
                     new Object[]{producto.getNombreProducto(),
@@ -68,16 +68,18 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
             jdbcTemplate.update(sql,
                     new Object[]{producto.getNombreProducto(),
                             producto.getPeso(),
-                            DateParser.stringToTimestamp(producto.getFechaVencimiento()),
+                            //DateParser.stringToTimestamp(producto.getFechaVencimiento()),
+                            producto.getFechaVencimiento(),
                             producto.getDescripcion(),
                             producto.getPrecio(),
                             producto.getStock(),
                             producto.getIdCategoria(),
                             producto.getCodigo(),
-                            DateParser.stringToTimestamp(producto.getFechaCreacion()),
+                            //DateParser.stringToTimestamp(producto.getFechaCreacion()),
+                            producto.getFechaCreacion(),
                             producto.esActivo(),
                             producto.getPrecioCompra(),
-                            producto.getUnidades()});
+                            producto.getUnidades(),producto.getStockMinimo()});
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -85,18 +87,20 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
 
     @Override
     public void updateProducto(Producto producto) {
-        String sql = "UPDATE producto SET nombreproducto = ?,peso=?,fechavencimiento=?," +
-                "descripcion=?,precio=?,stock=?,idcategoria=?,fechacreacion=?,activo=?,preciocompra=?,unidades=? WHERE idproducto=?";
+        String sql = "UPDATE producto SET nombreproducto = ?,peso=?,fechavencimiento=?::DATE ," +
+                "descripcion=?,precio=?,stock=?,idcategoria=?,fechacreacion=?::DATE ,activo=?,preciocompra=?,unidades=?,stockminimo=? WHERE idproducto=?";
         jdbcTemplate.update(sql, new Object[]{producto.getNombreProducto(), producto.getPeso(),
-                Timestamp.valueOf(producto.getFechaVencimiento()), producto.getDescripcion(),
+                producto.getFechaVencimiento(), producto.getDescripcion(),
                 producto.getPrecio(),
                 producto.getStock(),
                 producto.getIdCategoria(),
-                Timestamp.valueOf(producto.getFechaCreacion()),
+                producto.getFechaCreacion(),
                 producto.esActivo(),
                 producto.getPrecioCompra(),
                 producto.getUnidades(),
+                producto.getStockMinimo(),
                 producto.getIdProducto()
+
         });
     }
 

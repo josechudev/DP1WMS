@@ -25,4 +25,6 @@ public interface RepositoryMantEmpleado {
 
     Usuario findUsuariobyName(String auxName);
 
+    boolean usuarioActualLoginActivo(String auxUserName);
+
 }

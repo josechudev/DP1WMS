@@ -184,7 +184,7 @@ public enum MainView implements FxmlView{
 
         @Override
         public boolean isResizable() {
-            return true;
+            return false;
         }
     },
     ALMACEN {
@@ -195,7 +195,7 @@ public enum MainView implements FxmlView{
 
         @Override
         public String getFxmlFile() {
-            return "/fxml/Almacen/Almacen.fxml";
+            return "/fxml/Almacen/AlmacenInfo.fxml";
         }
 
         @Override
@@ -451,6 +451,19 @@ public enum MainView implements FxmlView{
         @Override
         public boolean isResizable(){
             return false;
+        }
+    }, REPORTE_AUDITORIA{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("auditoria.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Auditoria/ReporteAuditoria.fxml";
+        }
+        @Override
+        public boolean isResizable(){
+            return true;
         }
     };
 

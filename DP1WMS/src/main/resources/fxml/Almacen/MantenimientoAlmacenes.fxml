@@ -44,7 +44,7 @@
       </Label>
       <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
          <content>
-            <VBox fx:id="vbAlmacenes" style="-fx-background-color: #FFFFFF;" />
+            <VBox fx:id="vbAlmacenes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="315.0" prefWidth="568.0" style="-fx-background-color: #FFFFFF;" />
          </content></ScrollPane>
    </children>
    <padding>
