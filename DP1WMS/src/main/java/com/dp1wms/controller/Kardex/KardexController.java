@@ -44,9 +44,16 @@ public class KardexController implements FxmlController {
     @FXML private TableColumn<KardexFila,String> c_decMov;
     @FXML private TableColumn<KardexFila,String> c_entradas;
     @FXML private TableColumn<KardexFila,String> c_salidas;
+    @FXML private TableColumn<KardexFila,String> c_cantEntrada;
+    @FXML private TableColumn<KardexFila,String> c_cantSalida;
     @FXML private DatePicker dp_fecInicio;
     @FXML private DatePicker dp_fecFin;
     @FXML private Button btn_Consulta;
+    @FXML private TableColumn c_precioCompra;
+    @FXML private TableColumn c_importe;
+    @FXML private TextField txt_totMov;
+    @FXML private TextField txt_totCompras;
+    @FXML private TextField txt_totVentas;
 
     @FXML private TextField txt_balance;
     @Autowired
@@ -78,29 +85,48 @@ public class KardexController implements FxmlController {
         tableViewKardex.getItems().clear();
         List<KardexFila> kardexFilaList = repositoryKardexFila.selectAllKardexFila();
         float valTotal = 0;
+        int comprasTot = 0;
+        int ventasTot = 0 ;
+        int totMov =0;
         for (KardexFila k : kardexFilaList) {
+            totMov += k.getCantidad();
             tableViewKardex.getItems().add(k);
-            if (k.isEsIngreso()){
+            if (k.getAuxIngreso()==1){
                 valTotal = valTotal - k.getValorTotal();
+                comprasTot += k.getValorTotal();
             }else{
-                valTotal = valTotal + k.getValorTotal();
+                if(k.getAuxIngreso()==2)
+                    valTotal = valTotal + k.getValorTotal();
+                ventasTot += k.getValorTotal();
             }
         }
         txt_balance.setText(String.valueOf(valTotal));
+        txt_totCompras.setText(String.valueOf(comprasTot));
+        txt_totVentas.setText(String.valueOf(ventasTot));
+        txt_totMov.setText(String.valueOf(totMov));
     }
     private void llenarGrilla(String fecInicio,String fecFin) {
         tableViewKardex.getItems().clear();
         List<KardexFila> kardexFilaList = repositoryKardexFila.selectAllKardexFila(fecInicio,fecFin);
         float valTotal = 0;
+        float comprasTot = 0;
+        float ventasTot = 0 ;
+        int totMov =0;
         for (KardexFila k : kardexFilaList) {
             tableViewKardex.getItems().add(k);
-            if (k.isEsIngreso()){
+            if (k.getAuxIngreso()==1){
                 valTotal = valTotal - k.getValorTotal();
+                comprasTot += k.getValorTotal();
             }else{
-                valTotal = valTotal + k.getValorTotal();
+                if(k.getAuxIngreso()==2)
+                    valTotal = valTotal + k.getValorTotal();
+                ventasTot += k.getValorTotal();
             }
         }
         txt_balance.setText(String.valueOf(valTotal));
+        txt_totCompras.setText(String.valueOf(comprasTot));
+        txt_totVentas.setText(String.valueOf(ventasTot));
+        txt_totMov.setText(String.valueOf(totMov));
     }
 
 
@@ -113,12 +139,22 @@ public class KardexController implements FxmlController {
         c_descProd.setCellValueFactory(new PropertyValueFactory<KardexFila,String>("nombreProducto"));
         c_cantidad.setCellValueFactory(new PropertyValueFactory<KardexFila,Integer>("cantidad"));
         c_decMov.setCellValueFactory(new PropertyValueFactory<KardexFila,String>("descripcion"));
+        c_precioCompra.setCellValueFactory(new PropertyValueFactory<KardexFila,Float>("PrecioCompra"));
+        c_importe.setCellValueFactory(new PropertyValueFactory<KardexFila,Float>("PrecioVenta"));
         c_entradas.setCellValueFactory(value -> {
             return new SimpleStringProperty(value.getValue().isEsIngreso()?String.valueOf(value.getValue().getCantidad()*value.getValue().getPrecioCompra()):"-");
+        });
+        c_cantEntrada.setCellValueFactory(value -> {
+            return new SimpleStringProperty(value.getValue().getAuxIngreso()==1?String.valueOf(value.getValue().getCantidad()):"-");
+        });
+
+        c_cantSalida.setCellValueFactory(value -> {
+            return new SimpleStringProperty(value.getValue().getAuxIngreso()==2?String.valueOf(value.getValue().getCantidad()):"-");
         });
         c_salidas.setCellValueFactory(value -> {
             return new SimpleStringProperty(!value.getValue().isEsIngreso()?String.valueOf(value.getValue().getCantidad()*value.getValue().getPrecioVenta()):"-");
         });
+
 
         llenarGrilla();
     }
@@ -136,6 +172,10 @@ public class KardexController implements FxmlController {
         } else {
             llenarGrilla(dp_fecInicio.getValue().toString(), dp_fecFin.getValue().toString());
         }
+    }
+    @FXML
+    private void actualizarKardex(){
+            llenarGrilla();
     }
 
     private Timestamp obtenerFecha(String fecha) throws ParseException {

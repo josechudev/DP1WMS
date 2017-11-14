@@ -2,6 +2,7 @@ package com.dp1wms.controller;
 
 import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.model.*;
+import com.dp1wms.util.DateParser;
 import com.dp1wms.view.MainView;
 import com.dp1wms.view.StageManager;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
@@ -83,70 +84,92 @@ public class CrearLoteController implements FxmlController{
     }
 
     public void registrarLote(ActionEvent event){
-        System.out.println("Registrar Lote");
+        if (!validarDatos()){
+            return;
+        }
+
+        Timestamp fechaLote = DateParser.localdateToTimestamp(this.dp_fechaLote.getValue());
+        Timestamp fechaEntrada = DateParser.localdateToTimestamp(this.dp_fechaEntrada.getValue());
+
+        int cantidad = Integer.parseInt(this.txb_cantidad.getText());
+
+        Long idEmpleadoAuditado = this.mainController.getEmpleado().getIdempleado();
+        int idCajon;
+        if (cb_cajon.getValue() == null){
+            idCajon = -1;
+        } else {
+            idCajon = cb_cajon.getValue().getIdCajon();
+        }
+
+        repositoryMantMov.registrarLote(this.idProducto,fechaLote,fechaEntrada,cantidad,idEmpleadoAuditado,idCajon);
+        stageManager.cerrarVentana(event);
+    }
+
+    private boolean validarDatos(){
+
+        if(this.txb_nombreProducto.getText().equals("")){
+            this.stageManager.mostrarErrorDialog("Error creacion lote", null,
+                    "Debe seleccionar un producto");
+            return false;
+        }
 
         if(this.dp_fechaLote.getValue() == null){
             this.stageManager.mostrarErrorDialog("Error creacion lote", null,
                     "Debe ingresar una fecha para el lote");
-            return;
+            return false;
         }
 
         if(this.dp_fechaEntrada.getValue() == null){
-               this.stageManager.mostrarErrorDialog("Error creacion lote", null,
-                        "Debe ingresar una fecha de entrada para el lote");
-                return;
+            this.stageManager.mostrarErrorDialog("Error creacion lote", null,
+                    "Debe ingresar una fecha de entrada para el lote");
+            return false;
         }
 
         if(this.txb_cantidad == null){
             this.stageManager.mostrarErrorDialog("Error creacion lote", null,
                     "Debe ingresar una cantidad de ingreso para el lote");
-            return;
+            return false;
         }
 
         if(this.txb_cantidad.getText().equalsIgnoreCase("")){
             this.stageManager.mostrarErrorDialog("Error creacion lote", null,
                     "Debe ingresar una cantidad de ingreso para el lote");
-            return;
+            return false;
         }
 
         if(this.txb_nombreProducto.getText().equalsIgnoreCase("")){
             this.stageManager.mostrarErrorDialog("Error creacion lote", null,
                     "Debe ingresar una producto para el lote");
-            return;
+            return false;
         }
 
-       if((this.dp_fechaLote.getValue() != null) && (this.dp_fechaEntrada.getValue() != null) && (!this.txb_cantidad.getText().equalsIgnoreCase("")) &&(!this.txb_nombreProducto.getText().equalsIgnoreCase(""))){
-           Timestamp fechaLote = null;
-           Timestamp fechaEntrada = null;
-           try {
-               fechaLote = this.obtenerFecha(this.dp_fechaLote.getValue().toString());
-               fechaEntrada = this.obtenerFecha(this.dp_fechaEntrada.getValue().toString());
-           } catch (ParseException e) {
-               e.printStackTrace();
-               System.out.println("Error al ingresar la fecha");
-               return;
-           }
+        if (this.dp_fechaLote.getValue() == null){
+            this.stageManager.mostrarErrorDialog("Error creacion lote", null,
+                    "Debe ingresar la fecha del lote");
+            return false;
+        }
 
-           System.out.println("Cantidad text box-> "+this.txb_cantidad.getText());
-           int cantidad;
-           try{
-               cantidad = Integer.parseInt(this.txb_cantidad.getText());
-           }catch(Exception e){
-               System.out.println("Error al ingresar la cantidad");
-               return;
-           }
-           System.out.println("Cantidad parseo->"+cantidad);
+        if (this.dp_fechaEntrada.getValue() == null){
+            this.stageManager.mostrarErrorDialog("Error creacion lote", null,
+                    "Debe ingresar la fecha de entrada del lote");
+            return false;
+        }
 
-           Long idEmpleadoAuditado = this.mainController.getEmpleado().getIdempleado();
-           int idCajon=-1;
-           if(cb_cajon.getValue() != null){
-               idCajon = cb_cajon.getValue().getIdCajon();
-           }
-           repositoryMantMov.registrarLote(this.idProducto,fechaLote,fechaEntrada,cantidad,idEmpleadoAuditado,idCajon);
-           crearLoteAnchorPane.getScene().getWindow().hide();
-       }
+        if (this.txb_cantidad.getText().equals("")){
+            this.stageManager.mostrarErrorDialog("Error creacion lote", null,
+                    "Debe ingresar la cantidad de productos del lote");
+            return false;
+        }
 
+        try {
+            int cant = Integer.parseInt(txb_cantidad.getText());
+        } catch (NumberFormatException e){
+            this.stageManager.mostrarErrorDialog("Error creacion lote", null,
+                    "La cantidad ingresada debe ser un número");
+            return false;
+        }
 
+        return true;
     }
 
     private Timestamp obtenerFecha(String fecha) throws ParseException {

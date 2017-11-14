@@ -5,6 +5,7 @@ import com.dp1wms.dao.RepositoryMantMov;
 import com.dp1wms.model.CategoriaProducto;
 import com.dp1wms.model.Producto;
 import com.dp1wms.util.DateParser;
+import com.fasterxml.jackson.databind.util.ISO8601Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -14,7 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 ;import javax.xml.soap.Text;
+import java.sql.Timestamp;
 import java.text.ParseException;
+import java.text.ParsePosition;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 
@@ -40,8 +46,11 @@ public class ProductoDatosController  implements FxmlController {
     @FXML private ComboBox<CategoriaProducto> cb_categoria;
     @FXML private DatePicker dp_fechavencimiento;
     @FXML private DatePicker dp_fechacreacion;
-
+    @FXML private TextField txt_prodStockMin;
     private List<CategoriaProducto> listaCategorias;
+
+
+
 
 
     @Override
@@ -92,7 +101,11 @@ public class ProductoDatosController  implements FxmlController {
             cb_prodActivo.getSelectionModel().select(producto.isActivo());
             txt_prodPrecioC.setText(Float.toString(producto.getPrecioCompra()));
             txt_prodUnidades.setText(producto.getUnidades());
+            dp_fechavencimiento.setValue(LOCAL_DATE(producto.getFechaVencimiento()));
+            dp_fechacreacion.setValue(LOCAL_DATE(producto.getFechaCreacion()));
+            txt_prodStockMin.setText(Integer.toString(producto.getStockMinimo()));
             btn_aceptar.setText("Modificar Producto");
+
         }
     }
 
@@ -113,21 +126,23 @@ public class ProductoDatosController  implements FxmlController {
         producto.setIdCategoria(cb_categoria.getValue().getIdCategoria());
         producto.setDescripcion(txt_prodDescripcion.getText());
         producto.setNombreProducto(txt_prodNombre.getText());
-        producto.setFechaVencimiento(DateParser.timestampToString(DateParser.localdateToTimestamp(dp_fechavencimiento.getValue())));
+        producto.setFechaVencimiento(dp_fechavencimiento.getValue().toString());
        // producto.setFechaVencimiento(txt_prodFechaV.getText());
         producto.setCodigo(txt_prodCod.getText());
         producto.setPrecio(Float.parseFloat(txt_prodPrecio.getText()));
         //producto.setFechaCreacion(txt_prodFechaC.getText());
-        producto.setFechaCreacion(DateParser.timestampToString(DateParser.localdateToTimestamp(dp_fechacreacion.getValue())));
+        producto.setFechaCreacion(dp_fechacreacion.getValue().toString());
         producto.setStock(v_accion==0?0:Integer.parseInt(txt_prodStock.getText()));
         producto.setUnidades(txt_prodUnidades.getText());
         producto.setPrecioCompra(Float.parseFloat(txt_prodPrecioC.getText()));
+        producto.setStockMinimo(Integer.parseInt(txt_prodStockMin.getText()));
         if(cb_prodActivo.getValue().equals("Activo"))
             System.out.println(cb_prodActivo.getValue());
         producto.setActivo(cb_prodActivo.getValue().equals("Activo")?true:false);
         if(this.v_accion ==0){
             v_parentController.crearProductoBD(producto);
         }else {
+            System.out.println(producto.getStockMinimo());
             v_parentController.modificarProductoBD(producto);
         }
         System.out.println("Accion realizada");
@@ -152,4 +167,18 @@ public class ProductoDatosController  implements FxmlController {
     public void setV_parentController(ProductoController productoController) {
         this.v_parentController = productoController;
     }
+    private Timestamp convertirFecha(String fecha) throws ParseException {
+
+        Date utiltime = null;
+        utiltime = ISO8601Utils.parse(fecha, new ParsePosition(0));
+        return new Timestamp(utiltime.getTime());
+
+    }
+
+    public static final LocalDate LOCAL_DATE(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate localDate = LocalDate.parse(dateString, formatter);
+        return localDate;
+    }
+
 }

@@ -22,6 +22,7 @@ public class KardexFilaResultSetExtractor implements ResultSetExtractor {
         kardexFila.setPrecioCompra(resultSet.getFloat(9));
         kardexFila.setValorTotal(resultSet.getFloat(10));
         kardexFila.setEsIngreso(resultSet.getBoolean(11));
+        kardexFila.setAuxIngreso(resultSet.getInt(12));
         return kardexFila;
 
     }

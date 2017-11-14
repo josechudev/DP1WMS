@@ -63,6 +63,7 @@ public class ProductoController  implements FxmlController {
     @FXML private TableColumn<Producto, String> c_prodAct;
     @FXML private TableColumn<Producto,Float>c_prodPrecioC;
     @FXML private TableColumn<Producto,String>c_prodUnidades;
+    @FXML private TableColumn<Producto,Integer>c_prodStockMin;
     @Autowired
     private RepositoryMantProducto repositoryMantProducto;
     @Autowired
@@ -139,7 +140,7 @@ public class ProductoController  implements FxmlController {
         this._llenarGrilla();
     }
     public void btnClickEliminar(ActionEvent actionEvent){
-        System.out.println("Eliminar Usuario");
+        System.out.println("Eliminar Producto");
 
         if(tableViewProductos.getSelectionModel().getSelectedItem() == null)
             return;
@@ -175,6 +176,7 @@ public class ProductoController  implements FxmlController {
         c_prodStock.setCellValueFactory(new PropertyValueFactory<Producto,Integer>("Stock"));
         c_prodUnidades.setCellValueFactory(new PropertyValueFactory<Producto,String>("Unidades"));
         c_prodPrecioC.setCellValueFactory(new PropertyValueFactory<Producto,Float>("PrecioCompra"));
+        c_prodStockMin.setCellValueFactory(new PropertyValueFactory<Producto,Integer>("StockMinimo"));
 
         this._llenarGrilla();
     }

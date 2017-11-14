@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="323.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantProducto.ProductoDatosController">
+<AnchorPane prefHeight="323.0" prefWidth="684.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantProducto.ProductoDatosController">
     <children>
         <TextField fx:id="txt_prodId" editable="true" layoutX="26.0" layoutY="58.0" prefHeight="25.0" prefWidth="25.0" visible="false" />
         <TextField fx:id="txt_prodPeso" layoutX="403.0" layoutY="71.0" prefHeight="25.0" prefWidth="95.0" />
@@ -37,5 +37,7 @@
       <ComboBox fx:id="cb_categoria" layoutX="29.0" layoutY="183.0" prefHeight="25.0" prefWidth="132.0" />
       <DatePicker fx:id="dp_fechavencimiento" layoutX="174.0" layoutY="184.0" prefHeight="25.0" prefWidth="125.0" />
       <DatePicker fx:id="dp_fechacreacion" layoutX="308.0" layoutY="183.0" prefHeight="25.0" prefWidth="113.0" />
+      <TextField fx:id="txt_prodStockMin" layoutX="530.0" layoutY="118.0" prefHeight="25.0" prefWidth="95.0" />
+      <Label layoutX="530.0" layoutY="101.0" text="Stock Minimo" />
     </children>
 </AnchorPane>

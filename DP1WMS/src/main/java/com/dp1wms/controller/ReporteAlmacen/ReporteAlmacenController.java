@@ -5,10 +5,12 @@ import com.dp1wms.dao.IReporteAlmacen.RepositoryReporteAlmacen;
 import com.dp1wms.model.ReporteAlmacen;
 import com.dp1wms.view.StageManager;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -62,6 +64,10 @@ public class ReporteAlmacenController implements FxmlController {
     private DatePicker dp_fecInicio;
     @FXML
     private DatePicker dp_fecFin;
+    @FXML
+    private TextField filterField;
+
+    private ObservableList<ReporteAlmacen> masterData = FXCollections.observableArrayList();
 
     @Autowired
     private RepositoryReporteAlmacen repositoryReporteAlmacen;
@@ -75,18 +81,31 @@ public class ReporteAlmacenController implements FxmlController {
     }
 
     private void llenarGrilla() {
-        tableViewReporteAlmacen.getItems().clear();
+        for ( int i = 0; i<tableViewReporteAlmacen.getItems().size(); i++) {
+            tableViewReporteAlmacen.getItems().clear();
+        }
+
+        if(!masterData.isEmpty()){
+            masterData.removeAll();
+        }
         List<ReporteAlmacen> reporteAlmacenList = repositoryReporteAlmacen.selectAllKardexFila();
         for (ReporteAlmacen r : reporteAlmacenList) {
             tableViewReporteAlmacen.getItems().add(r);
+            masterData.add(r);
         }
     }
 
     private void llenarGrilla(String fecInicio, String fecFin) {
-        tableViewReporteAlmacen.getItems().clear();
+        for ( int i = 0; i<tableViewReporteAlmacen.getItems().size(); i++) {
+            tableViewReporteAlmacen.getItems().clear();
+        }
+        if(!masterData.isEmpty()){
+            masterData.removeAll();
+        }
         List<ReporteAlmacen> reporteAlmacenList = repositoryReporteAlmacen.selectAllKardexFila(fecInicio, fecFin);
         for (ReporteAlmacen r : reporteAlmacenList) {
             tableViewReporteAlmacen.getItems().add(r);
+            masterData.add(r);
         }
     }
 
@@ -102,6 +121,7 @@ public class ReporteAlmacenController implements FxmlController {
                     "Debe seleccionar un rango de fecha adecuado");
         } else {
             llenarGrilla(dp_fecInicio.getValue().toString(), dp_fecFin.getValue().toString());
+
         }
     }
 
@@ -126,6 +146,8 @@ public class ReporteAlmacenController implements FxmlController {
         c_stockTotal.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen, Integer>("stockLogico"));
 
         llenarGrilla();
+
+
 
     }
 

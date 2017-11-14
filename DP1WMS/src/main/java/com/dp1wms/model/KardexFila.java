@@ -15,9 +15,17 @@ public class KardexFila {
     private float precioCompra;
     private float valorTotal;
     private boolean esIngreso;
+    private int auxIngreso;
 
+    public int getAuxIngreso() {
+        return auxIngreso;
+    }
 
-    public KardexFila(int idMovimiento, int idTipoMovimiento, String fechaMovimiento, int idProducto,String nombreProducto, int cantidad, String descripcion, float precioVenta, float precioCompra, float valorTotal, boolean esIngreso) {
+    public void setAuxIngreso(int auxIngreso) {
+        this.auxIngreso = auxIngreso;
+    }
+
+    public KardexFila(int idMovimiento, int idTipoMovimiento, String fechaMovimiento, int idProducto, String nombreProducto, int cantidad, String descripcion, float precioVenta, float precioCompra, float valorTotal, boolean esIngreso, int auxIngreso) {
         this.idMovimiento = idMovimiento;
         this.idTipoMovimiento = idTipoMovimiento;
         this.fechaMovimiento = fechaMovimiento;
@@ -29,6 +37,7 @@ public class KardexFila {
         this.precioCompra = precioCompra;
         this.valorTotal = valorTotal;
         this.esIngreso = esIngreso;
+        this.auxIngreso = auxIngreso;
     }
 
     public KardexFila() {
