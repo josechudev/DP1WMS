@@ -5,7 +5,7 @@ import com.dp1wms.controller.FxmlController;
 import com.dp1wms.model.tabu.Almacen;
 import com.dp1wms.model.tabu.Nodo;
 import com.dp1wms.model.tabu.Producto;
-import com.dp1wms.tabu.NearestNeighborHelper;
+import com.dp1wms.tabu.BestFirstSearch;
 import com.dp1wms.tabu.Tabu;
 import com.dp1wms.view.StageManager;
 import javafx.application.Platform;
@@ -76,13 +76,14 @@ public class AlmacenRutaController implements FxmlController {
 
 
         Thread thread = new Thread(()->{
+            System.err.println("Empezando");
             //generar caminos entra productos
-            NearestNeighborHelper nearestNeighborHelper = new NearestNeighborHelper(this.almacen, this.gestorDistancias);
-            nearestNeighborHelper.generarCaminosEntreProductos();
+            BestFirstSearch bestFirstSearch = new BestFirstSearch(this.almacen, this.gestorDistancias);
+            bestFirstSearch.generarCaminosEntreProductos();
 
             //matriz distancia calculada y camino inicial
-            int[][] distancias = nearestNeighborHelper.generarMatrizDistancia();
-            int[] caminoInicial = nearestNeighborHelper.generarCaminoInicial();
+            int[][] distancias = bestFirstSearch.generarMatrizDistancia();
+            int[] caminoInicial = bestFirstSearch.generarCaminoInicial();
 
             //Crear caminos entre productos y punto de partida
 
@@ -103,7 +104,7 @@ public class AlmacenRutaController implements FxmlController {
                     //Imprimie Almacen
                     imprimirAlmacen();
                     //Obtiene los puntos con la solucion
-                    ArrayList<Nodo> solucionNodo = nearestNeighborHelper.convertirANodos(solucion);
+                    ArrayList<Nodo> solucionNodo = bestFirstSearch.convertirANodos(solucion);
                     //Imprime la solucion consola
                     for (int i = 0; i < solucion.length ; i++) {
                         System.out.print(solucion[i]);
@@ -210,7 +211,7 @@ public class AlmacenRutaController implements FxmlController {
         this.nodes = new ArrayList<>();
 
         //Almacen nuevo
-        this.almacen = new Almacen(25,25);
+        this.almacen = new Almacen(30,30);
 
         //construir grid de almacen
         for (int i = 0; i < almacen.getAncho() - 1; i++) {
@@ -229,7 +230,7 @@ public class AlmacenRutaController implements FxmlController {
         Point puntoInicio = new Point(0,0);
 
         //Productos aleatorios para test
-        int numProductos = 30;
+        int numProductos = 50;
         ArrayList<Producto> productos = GestorProducto.generarProductos(almacen, numProductos);
 
         GestorAlmacen.llenarConProdYPtoPartida(almacen, productos, puntoInicio);

@@ -27,6 +27,6 @@ public class Segmento {
     }
 
     public int distanciaEntreNodos(Nodo a, Nodo b){
-        return Math.abs(a.x - b.x + a.y - b.y);
+        return Math.abs(a.x - b.x)  + Math.abs(a.y - b.y);
     }
 }
