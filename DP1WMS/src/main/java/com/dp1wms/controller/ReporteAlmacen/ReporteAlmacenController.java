@@ -144,6 +144,7 @@ public class ReporteAlmacenController implements FxmlController {
         c_stockActual.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen, Integer>("stockFisico"));
         c_stockPedidos.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen, Integer>("cantidadPedido"));
         c_stockTotal.setCellValueFactory(new PropertyValueFactory<ReporteAlmacen, Integer>("stockLogico"));
+        c_prod.setSortType(TableColumn.SortType.ASCENDING);
 
         llenarGrilla();
 

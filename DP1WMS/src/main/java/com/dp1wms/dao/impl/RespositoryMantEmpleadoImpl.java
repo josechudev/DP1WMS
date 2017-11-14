@@ -180,5 +180,26 @@ public class RespositoryMantEmpleadoImpl implements RepositoryMantEmpleado {
     }
 
 
+    public boolean usuarioActualLoginActivo(String auxUserName){
+        String sql = "SELECT u.idUsuario, u.nombreUsuario, " +
+                "e.numDoc, e.nombre, e.apellidos, " +
+                "tp.descripcion, e.activo " +
+                "FROM usuario u INNER JOIN empleado e ON u.idusuario = e.idusuario " +
+                "INNER JOIN tipoempleado tp ON e.idtipoempleado = tp.idtipoempleado " +
+                "WHERE e.idUsuario = ? " +
+                "ORDER BY u.idUsuario";
+        try{
+            Usuario auxUsuario = findUsuariobyName(auxUserName);
+            int auxId = auxUsuario.getV_id();
+
+            List<UsuarioXEmpleado> auxLista = jdbcTemplate.query(sql, new Object[] { auxId },
+                    new UsuarioXEmpleadoRowMapper());
+            return auxLista.get(0).getV_activo();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

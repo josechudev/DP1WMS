@@ -201,6 +201,10 @@ public class EscogerUbicacionLoteController implements FxmlController {
     }
 
     private void llenarComboBox(List<Almacen> listaAlmacenesLlenar){
+        cb_almacen.getItems().clear();
+        cb_area.getItems().clear();
+        cb_rack.getItems().clear();
+        cb_cajon.getItems().clear();
         for(Almacen almacen:listaAlmacenesLlenar){
             cb_almacen.getItems().add(almacen);
             List<Area> areas = almacen.getListaArea();
@@ -285,13 +289,13 @@ public class EscogerUbicacionLoteController implements FxmlController {
     private void llenarCombosPorModificacion(int idCajon){
         List<Almacen> listaAlmacenesLlenar = this.listaAlmacenes;
         for(Almacen almacen:listaAlmacenesLlenar){
-            cb_almacen.getItems().add(almacen);
+            //cb_almacen.getItems().add(almacen);
             List<Area> areas = almacen.getListaArea();
             for(Area area : areas){
-                cb_area.getItems().add(area);
+                //cb_area.getItems().add(area);
                 List<Rack> racks = area.getListaRack();
                 for(Rack rack : racks){
-                    cb_rack.getItems().add(rack);
+                    //cb_rack.getItems().add(rack);
                     List<Cajon> cajones = rack.getListaCajones();
                     for(Cajon cajon : cajones){
                         if(cajon.getIdCajon() == idCajon){
