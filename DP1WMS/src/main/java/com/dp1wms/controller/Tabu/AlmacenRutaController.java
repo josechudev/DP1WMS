@@ -2,20 +2,28 @@ package com.dp1wms.controller.Tabu;
 
 import com.dp1wms.controller.FxmlController;
 
+import com.dp1wms.dao.RepositoryAlmacen;
+import com.dp1wms.dao.RepositoryEnvio;
+import com.dp1wms.model.Cajon;
+import com.dp1wms.model.Envio;
 import com.dp1wms.dao.RepositoryRuta;
 import com.dp1wms.model.Envio;
 import com.dp1wms.model.tabu.Almacen;
 import com.dp1wms.model.tabu.Nodo;
 import com.dp1wms.model.tabu.Producto;
+import com.dp1wms.model.tabu.Rack;
 import com.dp1wms.tabu.BestFirstSearch;
 import com.dp1wms.tabu.Tabu;
 import com.dp1wms.view.AlmacenView;
 import com.dp1wms.view.StageManager;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -26,7 +34,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.awt.Point;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class AlmacenRutaController implements FxmlController {
@@ -35,6 +45,7 @@ public class AlmacenRutaController implements FxmlController {
 
     private StageManager stageManager;
     private VerHistorial verHistorial;
+    private TabuBuscarEnvioCtrl tabuBuscarEnvioCtrl;
 
     private Almacen almacen;
     private GestorDistancias gestorDistancias;
@@ -47,17 +58,24 @@ public class AlmacenRutaController implements FxmlController {
 
     private ArrayList<Node> nodes;
     private ArrayList<Nodo> solucionTabu;
+    private ArrayList<Producto> productos;
     private Envio envio;
+    private Point puntoInicio = new Point(0,0);
 
+
+    @Autowired
+    private RepositoryAlmacen repositoryAlmacen;
     @Autowired
     private RepositoryRuta repositoryRuta;
 
     @Autowired
     @Lazy
     public AlmacenRutaController(StageManager stageManager,
-                                 VerHistorial verHistorial) {
+                                 VerHistorial verHistorial,
+                                 TabuBuscarEnvioCtrl tabuBuscarEnvioCtrl) {
         this.stageManager = stageManager;
         this.verHistorial = verHistorial;
+        this.tabuBuscarEnvioCtrl = tabuBuscarEnvioCtrl;
     }
 
     @FXML
@@ -73,6 +91,11 @@ public class AlmacenRutaController implements FxmlController {
         Long numIterSinMejora;
         Long tiempoMaximo;
 
+        if(this.envio == null){
+            this.stageManager.mostrarErrorDialog("Generar Ruta", null,
+                    "Debe seleccionar un envio");
+            return;
+        }
         //obtiene valores para tabu
         try {
             tabuTamanho = Integer.parseInt(listaTabuTamanho.getText());
@@ -133,11 +156,50 @@ public class AlmacenRutaController implements FxmlController {
        thread.start();
     }
 
+    //al seleccionar envio deberia imprimir en el almacen solo los cajones a visitar
+    @FXML
+    private void seleccionarEnvio(ActionEvent e){
+        this.stageManager.mostrarModal(AlmacenView.BUSCAR_ENIVOS);
+        Envio envio = this.tabuBuscarEnvioCtrl.getEnvio();
+        if(envio == null){
+            return;
+        }
+
+        this.envio = envio;
+        Long idenvio = this.envio.getIdEnvio();
+        System.err.println("ID ENVIO: " + idenvio);
+
+        //Obtener una lista productos
+        List<Cajon> cajones = repositoryAlmacen.obtenerCajones(idenvio);
+        this.ubicarProductos(cajones);
+
+        System.err.println("Cantidad prods:" + this.productos.size());
+
+
+        //Llenar matriz prod boolean con list prods
+        GestorAlmacen.llenarConProdYPtoPartida(almacen, this.productos, this.puntoInicio);
+        //Puntos de interes
+        GestorAlmacen.generarNodos(almacen);
+
+        //
+        this.gestorDistancias = new GestorDistancias(almacen);
+        //Generar lista & hash de nodos
+        this.gestorDistancias.generarNodos();
+        //Asignar vecinos a cada nodo
+        this.gestorDistancias.asignarVecinosANodos();
+
+        this.imprimirAlmacen();
+    }
+
     @FXML
     private void guardarRuta(){
 
-        this.envio = new Envio();
-        this.envio.setIdEnvio((long) 1);
+        if(this.envio == null){
+            this.stageManager.mostrarErrorDialog("Generar Ruta", null,
+                    "Debe seleccionar un envio");
+            return;
+        }
+
         if(this.solucionTabu != null && this.solucionTabu.size() > 0){
             boolean res = this.repositoryRuta.guardarRuta(this.solucionTabu, this.envio);
             if(res){
@@ -191,6 +253,7 @@ public class AlmacenRutaController implements FxmlController {
             }
         }
 
+       /*
         //color nodos
         for (int i = 0; i < almacen.getAncho(); i++) {
             for (int j = 0; j < almacen.getAlto(); j++) {
@@ -203,7 +266,7 @@ public class AlmacenRutaController implements FxmlController {
                     almacen_layout.add(cell,i,j);
                 }
             }
-        }
+        }*/
 
         //colocar productos
         for (int i = 0; i < almacen.getAncho(); i++) {
@@ -222,13 +285,19 @@ public class AlmacenRutaController implements FxmlController {
     }
 
     private void imprimirSolucion(ArrayList<Nodo> solucion){
-
         //colocar productos
+        boolean[][] productos = this.almacen.getProductos();
         for(int i = 0; i < solucion.size() - 1; i++){
             Nodo nodo = solucion.get(i);
             Button punto = new Button();
-            punto.setStyle("-fx-background-color: #ffffff; -fx-padding: 0; -fx-margin: 0; -fx-border-radius: 0;" +
-                    " -fx-font-size: 10");
+
+            if(productos[nodo.x][nodo.y]){
+                punto.setStyle("-fx-background-color: #95CC4C; -fx-padding: 0; -fx-margin: 0; -fx-border-radius: 0;" +
+                        " -fx-font-size: 10");
+            } else {
+                punto.setStyle("-fx-background-color: #ffffff; -fx-padding: 0; -fx-margin: 0; -fx-border-radius: 0;" +
+                        " -fx-font-size: 10");
+            }
             punto.setPrefHeight(20);
             punto.setPrefWidth(20);
             punto.setText(String.valueOf(i));
@@ -237,53 +306,78 @@ public class AlmacenRutaController implements FxmlController {
         }
     }
 
+    private void limpiarproductos(){
+        boolean [][] productos = this.almacen.getProductos();
+        boolean [][] nodos = this.almacen.getNodos();
+        for (int i = 0; i < almacen.getAncho(); i++) {
+            for (int j = 0; j < almacen.getAlto(); j++) {
+                productos[i][j] = false;
+                nodos[i][j] = false;
+            }
+        }
+        almacen.setProductos(productos);
+        almacen.setNodos(nodos);
+    }
+
+    //luego de que obtengo una lista de cajones a visitar los ubico en el almacen
+    private void ubicarProductos(List<Cajon> cajones){
+        this.limpiarproductos();
+
+        Rack rack;
+
+
+        this.productos = new ArrayList<>();
+
+        int i = 0;
+        for (Cajon cajon: cajones) {
+
+            i++;
+            //posicion del rack
+            rack = this.almacen.getRackporId(cajon.getIdRack());
+
+            Point p = null;
+            if(rack.esHorizontal()){
+                p = new Point(rack.getPosIni().x + cajon.getPosX(),rack.getPosIni().y);
+            } else {
+                p = new Point(rack.getPosIni().x,rack.getPosIni().y + cajon.getPosX());
+            }
+            Producto prod = new Producto(i, "Producto" + String.valueOf(i), p);
+            prod.setRack(rack);
+            this.productos.add(prod);
+        }
+        //productos set
+    }
+
+
     @Override
     public void initialize() {
         this.initFields();
         this.nodes = new ArrayList<>();
 
-        //Almacen nuevo
-        this.almacen = new Almacen(30,30);
+        this.almacen = repositoryAlmacen.obtenerAlmacen();
 
-        //construir grid de almacen
-        for (int i = 0; i < almacen.getAncho() - 1; i++) {
+        //agregar filas
+        for (int i = 0; i < almacen.getAlto() - 1; i++) {
             RowConstraints row = new RowConstraints();
             row.setPrefHeight(20);
             almacen_layout.getRowConstraints().add(row);
         }
-        for (int j = 0; j < almacen.getAlto() - 1; j++) {
+
+        //agregar columnas
+        for (int j = 0; j < almacen.getAncho() - 1; j++) {
             ColumnConstraints col = new ColumnConstraints();
             col.setPrefWidth(20);
             almacen_layout.getColumnConstraints().add(col);
         }
 
-        //Racks aleatorio para test
-        GestorAlmacen.generarRacksAletorios(almacen);
-        Point puntoInicio = new Point(0,0);
 
-        //Productos aleatorios para test
-        int numProductos = 50;
-        ArrayList<Producto> productos = GestorProducto.generarProductos(almacen, numProductos);
+        //agregar racks
+        almacen.setRacks(new ArrayList<>(repositoryAlmacen.obtenerRacks()));
+        almacen.agregar_racks();
 
-        GestorAlmacen.llenarConProdYPtoPartida(almacen, productos, puntoInicio);
 
-        //Imprime el almacen
+        //imprimir almacen
         this.imprimirAlmacen();
-
-        //Puntos de interes
-        GestorAlmacen.generarNodos(almacen);
-
-
-        //Calcula distancias y camino inicial
-        this.gestorDistancias = new GestorDistancias(almacen);
-
-        //Generar lista & hash de nodos
-        this.gestorDistancias.generarNodos();
-
-        //Asignar vecinos a cada nodo
-        this.gestorDistancias.asignarVecinosANodos();
-
-        //this.gestorDistancias.calcularDistancias();
 
         almacen_layout.setGridLinesVisible(true);
     }
@@ -297,8 +391,13 @@ public class AlmacenRutaController implements FxmlController {
 
     @FXML
     private void verHistorialModal(){
-        this.envio = new Envio();
-        this.envio.setIdEnvio((long)1);
+
+        if(this.envio == null){
+            this.stageManager.mostrarErrorDialog("Generar Ruta", null,
+                    "Debe seleccionar un envio");
+            return;
+        }
+
         this.verHistorial.setEnvio(this.envio);
         this.stageManager.mostrarModal(AlmacenView.HISTORIAL_RUTAS);
     }

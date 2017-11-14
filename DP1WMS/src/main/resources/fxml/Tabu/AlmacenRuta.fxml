@@ -13,11 +13,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="634.0" prefWidth="683.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Tabu.AlmacenRutaController">
+<AnchorPane prefHeight="634.0" prefWidth="734.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Tabu.AlmacenRutaController">
    <children>
-      <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="17.0" layoutY="217.0" prefHeight="348.0" prefWidth="643.0">
+      <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="17.0" layoutY="260.0" prefHeight="305.0" prefWidth="703.0">
          <content>
-            <AnchorPane prefHeight="346.0" prefWidth="530.0">
+            <AnchorPane prefHeight="303.0" prefWidth="725.0">
                <children>
                   <GridPane fx:id="almacen_layout" gridLinesVisible="true" layoutX="0.5" layoutY="0.5">
                     <columnConstraints>
@@ -33,6 +33,7 @@
       </ScrollPane>
       <HBox layoutX="113.0" layoutY="163.0" spacing="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
+            <Button mnemonicParsing="false" onAction="#seleccionarEnvio" text="Seleccionar Envio" />
             <Button fx:id="generar_ruta" mnemonicParsing="false" onAction="#click_generar_ruta" text="Generar Ruta" />
             <Button mnemonicParsing="false" onAction="#guardarRuta" text="Guardar Ruta" />
             <Button mnemonicParsing="false" onAction="#limpiarGrilla" text="Limpiar" />
@@ -74,7 +75,7 @@
                   </HBox>
                   <HBox alignment="TOP_RIGHT" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Label text="Tiempo Maximo (segundos)" />
+                        <Label text="Tiempo Maximo (seg)" />
                         <TextField fx:id="tiempoMaximoTF" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="160.0" HBox.hgrow="NEVER" />
                      </children>
                   </HBox>

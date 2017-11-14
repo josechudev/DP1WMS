@@ -59,6 +59,21 @@ public enum AlmacenView implements FxmlView{
         public boolean isResizable() {
             return false;
         }
+    }, BUSCAR_ENIVOS{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("tabu.buscar_envios.title");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Tabu/BuscarEnvios.fxml";
+        }
+
+        @Override
+        public boolean isResizable() {
+            return false;
+        }
     };
 
     public String getStringFromResourceBundle(String key){
