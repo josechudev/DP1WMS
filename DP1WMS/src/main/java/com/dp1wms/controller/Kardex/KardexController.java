@@ -81,6 +81,7 @@ public class KardexController implements FxmlController {
 
     @FXML
     private TextField txt_balance;
+
     @Autowired
     private RepositoryKardexFila repositoryKardexFila;
 
@@ -152,6 +153,7 @@ public class KardexController implements FxmlController {
         int movSalidas = 0;
         int movInternos = 0;
         int totMov = 0;
+
         for (KardexFila k : kardexFilaList) {
             totMov += k.getCantidad();
             tableViewKardex.getItems().add(k);
@@ -184,13 +186,14 @@ public class KardexController implements FxmlController {
     public void initialize() {
         dp_fecInicio.setValue(LOCAL_DATE("01-09-2017"));
         dp_fecFin.setValue(LOCAL_DATE("22-11-2017"));
-        c_Codigo.setCellValueFactory(new PropertyValueFactory<KardexFila, Integer>("idMovimiento"));
-        c_fechaMov.setCellValueFactory(new PropertyValueFactory<KardexFila, String>("fechaMovimiento"));
-        c_descProd.setCellValueFactory(new PropertyValueFactory<KardexFila, String>("nombreProducto"));
-        c_cantidad.setCellValueFactory(new PropertyValueFactory<KardexFila, Integer>("cantidad"));
-        c_decMov.setCellValueFactory(new PropertyValueFactory<KardexFila, String>("descripcion"));
-        c_precioCompra.setCellValueFactory(new PropertyValueFactory<KardexFila, Float>("PrecioCompra"));
-        c_importe.setCellValueFactory(new PropertyValueFactory<KardexFila, Float>("PrecioVenta"));
+
+        c_Codigo.setCellValueFactory(new PropertyValueFactory<KardexFila,Integer>("idMovimiento"));
+        c_fechaMov.setCellValueFactory(new PropertyValueFactory<KardexFila,String>("fechaMovimiento"));
+        c_descProd.setCellValueFactory(new PropertyValueFactory<KardexFila,String>("nombreProducto"));
+        c_cantidad.setCellValueFactory(new PropertyValueFactory<KardexFila,Integer>("cantidad"));
+        c_decMov.setCellValueFactory(new PropertyValueFactory<KardexFila,String>("descripcion"));
+        c_precioCompra.setCellValueFactory(new PropertyValueFactory<KardexFila,Float>("PrecioCompra"));
+        c_importe.setCellValueFactory(new PropertyValueFactory<KardexFila,Float>("PrecioVenta"));
         c_entradas.setCellValueFactory(value -> {
             return new SimpleStringProperty(value.getValue().isEsIngreso() ? String.valueOf(value.getValue().getCantidad() * value.getValue().getPrecioCompra()) : "-");
         });
@@ -200,6 +203,13 @@ public class KardexController implements FxmlController {
 
         c_cantSalida.setCellValueFactory(value -> {
             return new SimpleStringProperty(value.getValue().getAuxIngreso() == 2 ? String.valueOf(value.getValue().getCantidad()) : "-");
+        });
+        c_cantEntrada.setCellValueFactory(value -> {
+            return new SimpleStringProperty(value.getValue().getAuxIngreso()==1?String.valueOf(value.getValue().getCantidad()):"-");
+        });
+
+        c_cantSalida.setCellValueFactory(value -> {
+            return new SimpleStringProperty(value.getValue().getAuxIngreso()==2?String.valueOf(value.getValue().getCantidad()):"-");
         });
         c_salidas.setCellValueFactory(value -> {
             return new SimpleStringProperty(!value.getValue().isEsIngreso() ? String.valueOf(value.getValue().getCantidad() * value.getValue().getPrecioVenta()) : "-");
