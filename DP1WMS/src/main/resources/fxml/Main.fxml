@@ -34,7 +34,7 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Almacenes">
                     <items>
-                        <MenuItem fx:id="almacenesCMMI" mnemonicParsing="false" onAction="#cargarMantenimientoAlmacenes" style="-fx-padding: 0 10;" text="Crear y Modificar" />
+                        <MenuItem fx:id="almacenesCMMI" mnemonicParsing="false" onAction="#cargarMantenimientoAlmacenes" style="-fx-padding: 0 10;" text="Crear y Modificar" visible="false"/>
                         <Menu mnemonicParsing="false" style="-fx-padding: 0 10;" text="Movimientos">
                           <items>
                               <MenuItem fx:id="almacenesTransMI" mnemonicParsing="false" onAction="#cargarListaLotes" style="-fx-padding: 0 10;" text="Transferencias Internas" />
