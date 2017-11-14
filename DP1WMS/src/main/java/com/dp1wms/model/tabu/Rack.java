@@ -10,13 +10,14 @@ public class Rack {
     private Point posIni;
     private Point posFin;
     private int niveles;
+    private int id_rack;
 
     private static Random rand = new Random();
 
     public Rack (Point ini, Point fin){
         this.posIni = new Point(ini.x, ini.y);
         this.posFin = new Point(fin.x, fin.y);
-        this.niveles = 1; //por defecto - no se utilizará
+        this.setNiveles(1); //por defecto - no se utilizará
     }
 
     public Point getPosIni(){
@@ -40,11 +41,7 @@ public class Rack {
     }
 
     public int longitud(){
-        if(this.esHorizontal()){
-            return abs(posIni.y - posFin.y)+1;
-        } else {
-            return abs(posIni.x - posFin.x)+1;
-        }
+        return abs(posIni.x - posFin.x + posIni.y - posFin.y) + 1;
     }
 
     public Point obtenerPosRandAlBorder(){
@@ -68,5 +65,17 @@ public class Rack {
         String posIni = "(" + String.valueOf(this.posIni.x) + ", " + String.valueOf(this.posIni.y) + ")";
         String posFin = "(" + String.valueOf(this.posFin.x) + ", " + String.valueOf(this.posFin.y) + ")";
         System.out.println("INI: " + posIni + " FIN: " + posFin);
+    }
+
+    public void setNiveles(int niveles) {
+        this.niveles = niveles;
+    }
+
+    public int getId_rack() {
+        return id_rack;
+    }
+
+    public void setId_rack(int id_rack) {
+        this.id_rack = id_rack;
     }
 }
