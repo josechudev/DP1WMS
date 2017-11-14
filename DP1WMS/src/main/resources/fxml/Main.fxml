@@ -29,7 +29,7 @@
                         <MenuItem fx:id="clientesMI" mnemonicParsing="false" onAction="#cargarMantenimientoCliente" style="-fx-padding: 0 10;" text="Clientes" />
                         <MenuItem fx:id="categoriasMI" mnemonicParsing="false" onAction="#cargarMantenimientoCategoria" style="-fx-padding: 0 10;" text="Categorias" />
                         <MenuItem fx:id="productosMI" mnemonicParsing="false" onAction="#cargarMantenimientoProducto" style="-fx-padding: 0 10;" text="Productos" />
-                        <MenuItem mnemonicParsing="false" onAction="#cargarUbicaciones" style="-fx-padding: 0 10;" text="Ubicaciones" />
+                        <MenuItem fx:id="ubicacionesMI" mnemonicParsing="false" onAction="#cargarUbicaciones" style="-fx-padding: 0 10;" text="Ubicaciones" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Almacenes">
@@ -37,7 +37,7 @@
                         <MenuItem fx:id="almacenesCMMI" mnemonicParsing="false" onAction="#cargarMantenimientoAlmacenes" style="-fx-padding: 0 10;" text="Crear y Modificar" />
                         <Menu mnemonicParsing="false" style="-fx-padding: 0 10;" text="Movimientos">
                           <items>
-                              <MenuItem mnemonicParsing="false" onAction="#cargarListaLotes" style="-fx-padding: 0 10;" text="Transferencias Internas" />
+                              <MenuItem fx:id="almacenesTransMI" mnemonicParsing="false" onAction="#cargarListaLotes" style="-fx-padding: 0 10;" text="Transferencias Internas" />
                               <MenuItem fx:id="almacenesISProdMI" mnemonicParsing="false" onAction="#cargarIngresoProducto" style="-fx-padding: 0 10;" text="Ingreso/Salida Producto" />
                             <MenuItem fx:id="almacenLoteMI" mnemonicParsing="false" onAction="#cargarCrearLote" style="-fx-padding: 0 10;" text="Crear Lote" />
                           </items>
@@ -57,11 +57,11 @@
                           </items>
                         </Menu>
                         <MenuItem fx:id="ventaGuiaMI" mnemonicParsing="false" onAction="#cargarListaGuias" style="-fx-padding: 0 10;" text="Guias de remision" />
-                        <MenuItem fx:id="ventaCompPago" mnemonicParsing="false" onAction="#cargarMantenimientoComprobantePago" style="-fx-padding: 0 10;" text="Comprobante de Pago" />
+                        <MenuItem fx:id="ventaCompPagoMI" mnemonicParsing="false" onAction="#cargarMantenimientoComprobantePago" style="-fx-padding: 0 10;" text="Comprobante de Pago" />
                         <Menu mnemonicParsing="false" style="-fx-padding: 0 10;" text="Devoluciones">
                           <items>
-                            <MenuItem mnemonicParsing="false" onAction="#cargarPedidoDevolucion" style="-fx-padding: 0 10;" text="Pedido Devolucion" />
-                              <MenuItem mnemonicParsing="false" onAction="#cargarListaNotaCredito" style="-fx-padding: 0 10;" text="Nota de Credito" />
+                            <MenuItem fx:id="ventaPedDevMI" mnemonicParsing="false" onAction="#cargarPedidoDevolucion" style="-fx-padding: 0 10;" text="Pedido Devolucion" />
+                              <MenuItem fx:id="ventaNotaCreditoMI" mnemonicParsing="false" onAction="#cargarListaNotaCredito" style="-fx-padding: 0 10;" text="Nota de Credito" />
                           </items>
                         </Menu>
                     </items>
