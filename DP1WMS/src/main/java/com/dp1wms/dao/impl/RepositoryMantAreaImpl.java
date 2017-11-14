@@ -1,5 +1,6 @@
 package com.dp1wms.dao.impl;
 
+import com.dp1wms.controller.MainController;
 import com.dp1wms.dao.RepositoryMantArea;
 import com.dp1wms.dao.mapper.AreaRowMapper;
 import com.dp1wms.model.Area;
@@ -22,6 +23,9 @@ public class RepositoryMantAreaImpl implements RepositoryMantArea {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    MainController mainController;
+
     public RepositoryMantAreaImpl(){}
 
     public Area getAreaById(int idArea) {
@@ -36,8 +40,8 @@ public class RepositoryMantAreaImpl implements RepositoryMantArea {
 
     @Transactional (rollbackFor = Exception.class)
     public int crearArea(Area auxArea) {
-        String sql = "INSERT INTO area (idalmacen, posicioninicial, posicionfinal, codigo)" +
-                     "VALUES (?,?,?,?)";
+        String sql = "INSERT INTO area (idalmacen, posicioninicial, posicionfinal, codigo, idempleadoauditado)" +
+                     "VALUES (?,?,?,?,?)";
         return jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -46,6 +50,7 @@ public class RepositoryMantAreaImpl implements RepositoryMantArea {
                 ps.setObject(2, new PGpoint(auxArea.getPosicionInicial().getX(), auxArea.getPosicionInicial().getY()));
                 ps.setObject(3, new PGpoint(auxArea.getPosicionFinal().getX(), auxArea.getPosicionFinal().getY()));
                 ps.setString(4, auxArea.getCodigo());
+                ps.setLong(5, mainController.getEmpleado().getIdempleado());
                 return ps;
             }
         });
@@ -53,7 +58,7 @@ public class RepositoryMantAreaImpl implements RepositoryMantArea {
 
     @Transactional (rollbackFor = Exception.class)
     public int editarArea(Area auxArea) {
-        String sql = "UPDATE area SET posicioninicial = (?), posicionfinal = (?), codigo = ? where idarea = ?";
+        String sql = "UPDATE area SET posicioninicial = (?), posicionfinal = (?), codigo = ?, idempleadoauditado = ? where idarea = ?";
         return jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -61,7 +66,8 @@ public class RepositoryMantAreaImpl implements RepositoryMantArea {
                 ps.setObject(1, new PGpoint(auxArea.getPosicionInicial().getX(), auxArea.getPosicionInicial().getY()));
                 ps.setObject(2, new PGpoint(auxArea.getPosicionFinal().getX(), auxArea.getPosicionFinal().getY()));
                 ps.setString(3, auxArea.getCodigo());
-                ps.setInt(4, auxArea.getIdArea());
+                ps.setLong(4, mainController.getEmpleado().getIdempleado());
+                ps.setInt(5, auxArea.getIdArea());
                 return ps;
             }
         });

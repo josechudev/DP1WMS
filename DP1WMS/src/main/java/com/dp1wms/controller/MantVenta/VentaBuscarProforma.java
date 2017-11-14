@@ -99,6 +99,23 @@ public class VentaBuscarProforma implements FxmlController {
                     }
                 }
             }
+            // Comprobar stock logico actual con cantidades
+            boolean decision = true;
+            for(DetalleProforma detalle: detalles){
+                if(detalle.getCantidad() > detalle.getProducto().getStock()){
+                    decision = this.stageManager.mostrarConfirmationDialog("La Proforma seleccionada tiene productos con" +
+                            " que no pueden ser atendidos por el stock. ¿Desea continuar eliminando dichos productos?");
+                    break;
+                }
+            }
+            if(decision){
+                detalles.removeIf(d->{
+                    return d.getCantidad() > d.getProducto().getStock();
+                });
+            } else {
+                return;
+            }
+
             if(detalles == null){
                 this.stageManager.mostrarErrorDialog("Error Busqueda de Proforma", null,
                         "Hubo un error al seleccionar la proforma. Inténtelo de nuevo.");

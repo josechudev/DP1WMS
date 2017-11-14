@@ -93,3 +93,14 @@ DELETE FROM warehouse.public.proforma;
 UPDATE public.proforma  SET idproforma = DEFAULT;
 
 DELETE FROM warehouse.public.ubicacion; 
+
+--- post eliminacion
+
+ALTER SEQUENCE producto_idproducto_seq RESTART;
+DELETE FROM warehouse.public.producto; 
+UPDATE public.producto  SET idproducto = DEFAULT;
+   
+   
+ALTER SEQUENCE categoriaproducto_idcategoria_seq RESTART;
+DELETE FROM warehouse.public.categoriaproducto; 
+UPDATE public.categoriaproducto  SET idcategoria = DEFAULT;

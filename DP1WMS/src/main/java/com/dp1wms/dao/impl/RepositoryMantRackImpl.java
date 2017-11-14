@@ -1,5 +1,6 @@
 package com.dp1wms.dao.impl;
 
+import com.dp1wms.controller.MainController;
 import com.dp1wms.dao.RepositoryMantRack;
 import com.dp1wms.dao.mapper.RackRowMapper;
 import com.dp1wms.model.Rack;
@@ -22,7 +23,10 @@ import java.util.List;
 public class RepositoryMantRackImpl implements RepositoryMantRack {
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private MainController mainController;
 
     @Override
     public List<Rack> getRacksByAlmacenId(int almacenId) {
@@ -39,11 +43,10 @@ public class RepositoryMantRackImpl implements RepositoryMantRack {
 
     @Override
     public void crear(Rack rack) {
-        String sql = "INSERT INTO rack (idarea, posicioninicial, posicionfinal, altura, longitudcajon, codigo)" +
+        String sql = "INSERT INTO rack (idarea, posicioninicial, posicionfinal, altura, longitudcajon, codigo, idempleadoauditado)" +
                 " values (?,?,?,?,?,?) RETURNING idrack";
-        KeyHolder holder = new GeneratedKeyHolder();
         Rack r = (Rack) jdbcTemplate.queryForObject(sql, new Object[]{rack.getIdArea(), new PGpoint(rack.getPosicionInicial().getX(), rack.getPosicionInicial().getY()),
-                new PGpoint(rack.getPosicionFinal().getX(), rack.getPosicionFinal().getY()), rack.getAltura(), rack.getLongitudCajon(), rack.getCodigo()}, (rs, i) -> {
+                new PGpoint(rack.getPosicionFinal().getX(), rack.getPosicionFinal().getY()), rack.getAltura(), rack.getLongitudCajon(), rack.getCodigo(), mainController.getEmpleado().getIdempleado()}, (rs, i) -> {
             Rack aux = new Rack();
             aux.setIdRack(rs.getInt(1));
             return aux;
@@ -85,20 +88,10 @@ public class RepositoryMantRackImpl implements RepositoryMantRack {
 
     @Override
     public int editarRack(Rack rack) {
-        String sql = "UPDATE rack SET posicioninicial = ?, posicionfinal = ?, altura = ?, longitudcajon = ?, codigo = ?" +
+        String sql = "UPDATE rack SET posicioninicial = ?, posicionfinal = ?, altura = ?, longitudcajon = ?, codigo = ?, idempleadoauditado = ?" +
                 "where idrack = ?";
-        return jdbcTemplate.update(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(sql);
-                ps.setInt(1, rack.getIdRack());
-                ps.setObject(2, new PGpoint(rack.getPosicionInicial().getX(), rack.getPosicionInicial().getY()));
-                ps.setObject(3, new PGpoint(rack.getPosicionFinal().getX(), rack.getPosicionFinal().getY()));
-                ps.setInt(4, rack.getAltura());
-                ps.setInt(5, rack.getLongitudCajon());
-                ps.setString(6, rack.getCodigo());
-                return ps;
-            }
-        });
+        return jdbcTemplate.update(sql, new PGpoint(rack.getPosicionInicial().getX(), rack.getPosicionInicial().getY()),
+                new PGpoint(rack.getPosicionFinal().getX(), rack.getPosicionFinal().getY()), rack.getAltura(), rack.getLongitudCajon(),
+                rack.getCodigo(), mainController.getEmpleado().getIdempleado(), rack.getIdRack());
     }
 }
