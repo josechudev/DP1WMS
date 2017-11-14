@@ -8,8 +8,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane prefHeight="655.0" prefWidth="1276.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Kardex.KardexController">
+    
+<AnchorPane prefHeight="680.0" prefWidth="1276.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Kardex.KardexController">
     <children>
         <TableView fx:id="tableViewKardex" layoutX="24.0" layoutY="172.0" prefHeight="333.0" prefWidth="1235.0">
             <columns>
@@ -37,16 +37,22 @@
         <DatePicker fx:id="dp_fecInicio" editable="false" layoutX="24.0" layoutY="99.0" />
         <Label layoutX="24.0" layoutY="70.0" text="Desde" />
         <Label layoutX="266.0" layoutY="70.0" text="Hasta" />
-        <TextField fx:id="txt_balance" disable="true" layoutX="866.0" layoutY="591.0" />
-        <Label layoutX="763.0" layoutY="593.0" prefHeight="26.0" prefWidth="89.0" text="Balance Total" />
+        <TextField fx:id="txt_balance" disable="true" layoutX="967.0" layoutY="630.0" />
+        <Label layoutX="830.0" layoutY="631.0" prefHeight="26.0" prefWidth="89.0" text="Balance Total" />
         <Button fx:id="btn_Consulta" focusTraversable="false" layoutX="528.0" layoutY="99.0" mnemonicParsing="false" onAction="#consultarKardex" text="Consultar" />
         <DatePicker fx:id="dp_fecFin" editable="false" layoutX="266.0" layoutY="99.0" prefWidth="187.0" />
-        <TextField fx:id="txt_totMov" disable="true" layoutX="528.0" layoutY="530.0" prefHeight="26.0" prefWidth="106.0" />
-        <TextField fx:id="txt_totCompras" disable="true" layoutX="763.0" layoutY="529.0" prefHeight="26.0" prefWidth="116.0" />
-        <TextField fx:id="txt_totVentas" disable="true" layoutX="1016.0" layoutY="529.0" prefHeight="26.0" prefWidth="116.0" />
-        <Label layoutX="391.0" layoutY="529.0" prefHeight="26.0" prefWidth="127.0" text="Total movimientos" />
-        <Label layoutX="637.0" layoutY="529.0" prefHeight="26.0" prefWidth="116.0" text="Compras totales" />
-        <Label layoutX="907.0" layoutY="529.0" prefHeight="26.0" prefWidth="97.0" text="Ventas totales" />
+        <TextField fx:id="txt_totMov" disable="true" layoutX="528.0" layoutY="634.0" prefHeight="26.0" prefWidth="133.0" />
+        <TextField fx:id="txt_totCompras" disable="true" layoutX="967.0" layoutY="595.0" prefHeight="26.0" prefWidth="171.0" />
+        <TextField fx:id="txt_totVentas" disable="true" layoutX="967.0" layoutY="558.0" prefHeight="26.0" prefWidth="171.0" />
+        <Label layoutX="370.0" layoutY="631.0" prefHeight="26.0" prefWidth="127.0" text="Total movimientos" />
       <Button fx:id="btn_Actualizar" focusTraversable="false" layoutX="642.0" layoutY="99.0" mnemonicParsing="false" onAction="#actualizarKardex" text="Actualizar" />
+      <Label layoutX="830.0" layoutY="564.0" prefHeight="26.0" prefWidth="89.0" text="Importes" />
+      <Label layoutX="830.0" layoutY="597.0" prefHeight="26.0" prefWidth="89.0" text="Compras" />
+      <TextField fx:id="txt_totMovInternos" disable="true" layoutX="528.0" layoutY="598.0" prefHeight="26.0" prefWidth="133.0" />
+      <TextField fx:id="txt_totMovSalidas" disable="true" layoutX="528.0" layoutY="560.0" prefHeight="26.0" prefWidth="133.0" />
+      <TextField fx:id="txt_totMovEntradas" disable="true" layoutX="528.0" layoutY="522.0" prefHeight="26.0" prefWidth="133.0" />
+      <Label layoutX="370.0" layoutY="522.0" prefHeight="26.0" prefWidth="127.0" text="Entradas" />
+      <Label layoutX="370.0" layoutY="558.0" prefHeight="26.0" prefWidth="127.0" text="Salidas" />
+      <Label layoutX="370.0" layoutY="595.0" prefHeight="26.0" prefWidth="148.0" text="Movimientos Internos" />
     </children>
 </AnchorPane>
