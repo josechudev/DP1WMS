@@ -262,4 +262,9 @@ public class MainController implements FxmlController {
     public Empleado getEmpleado(){
         return this.empleado;
     }
+
+    @FXML
+    private void menuAuditoriaClick(ActionEvent event){
+        this.stageManager.mostrarModal(MainView.REPORTE_AUDITORIA);
+    }
 }
