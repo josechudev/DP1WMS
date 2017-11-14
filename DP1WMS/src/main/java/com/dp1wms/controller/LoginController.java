@@ -1,6 +1,8 @@
 package com.dp1wms.controller;
 
 import com.dp1wms.dao.RepositoryCargaMasiva;
+import com.dp1wms.dao.RepositoryMantEmpleado;
+import com.dp1wms.dao.RepositoryMantUsuario;
 import com.dp1wms.dao.RepositorySeguridad;
 import com.dp1wms.model.Usuario;
 import com.dp1wms.view.MainView;
@@ -28,6 +30,9 @@ public class LoginController implements FxmlController{
 
     @Autowired
     private RepositorySeguridad repositorySeguridad;
+    @Autowired
+    private RepositoryMantEmpleado repositoryMantEmpleado;
+
 
     private final StageManager stageManager;
     private final MainController mainController;
@@ -54,9 +59,15 @@ public class LoginController implements FxmlController{
         usuario.setNombreusuario(username);
         usuario.setPassword(password);
         if ((usuario = repositorySeguridad.validarCredenciales(usuario)) != null){
-            this.clearOutStatusLabel();
-            this.mainController.setUsuario(usuario);
-            this.stageManager.cambiarScene(MainView.MAIN);
+            if( !repositoryMantEmpleado.usuarioActualLoginActivo(usuario.getNombreusuario()) ){
+                this.borrarCredenciales();
+                statusLabel.setText("Nombre de usuario o contraseña inválidos");
+            }
+            else {
+                this.clearOutStatusLabel();
+                this.mainController.setUsuario(usuario);
+                this.stageManager.cambiarScene(MainView.MAIN);
+            }
         } else {
             this.borrarCredenciales();
             statusLabel.setText("Nombre de usuario o contraseña inválidos");
