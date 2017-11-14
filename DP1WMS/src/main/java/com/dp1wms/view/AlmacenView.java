@@ -44,6 +44,21 @@ public enum AlmacenView implements FxmlView{
         public boolean isResizable() {
             return false;
         }
+    },HISTORIAL_RUTAS{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("tabu.historial.title");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Tabu/HistorialRutas.fxml";
+        }
+
+        @Override
+        public boolean isResizable() {
+            return false;
+        }
     };
 
     public String getStringFromResourceBundle(String key){

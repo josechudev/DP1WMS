@@ -2,11 +2,14 @@ package com.dp1wms.controller.Tabu;
 
 import com.dp1wms.controller.FxmlController;
 
+import com.dp1wms.dao.RepositoryRuta;
+import com.dp1wms.model.Envio;
 import com.dp1wms.model.tabu.Almacen;
 import com.dp1wms.model.tabu.Nodo;
 import com.dp1wms.model.tabu.Producto;
 import com.dp1wms.tabu.BestFirstSearch;
 import com.dp1wms.tabu.Tabu;
+import com.dp1wms.view.AlmacenView;
 import com.dp1wms.view.StageManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -31,6 +34,7 @@ public class AlmacenRutaController implements FxmlController {
     @FXML GridPane almacen_layout;
 
     private StageManager stageManager;
+    private VerHistorial verHistorial;
 
     private Almacen almacen;
     private GestorDistancias gestorDistancias;
@@ -40,12 +44,20 @@ public class AlmacenRutaController implements FxmlController {
     @FXML private TextField listaTabuTamanho;
     @FXML private TextField numIteracionesSinMejora;
 
+
     private ArrayList<Node> nodes;
+    private ArrayList<Nodo> solucionTabu;
+    private Envio envio;
+
+    @Autowired
+    private RepositoryRuta repositoryRuta;
 
     @Autowired
     @Lazy
-    public AlmacenRutaController(StageManager stageManager) {
+    public AlmacenRutaController(StageManager stageManager,
+                                 VerHistorial verHistorial) {
         this.stageManager = stageManager;
+        this.verHistorial = verHistorial;
     }
 
     @FXML
@@ -104,7 +116,7 @@ public class AlmacenRutaController implements FxmlController {
                     //Imprimie Almacen
                     imprimirAlmacen();
                     //Obtiene los puntos con la solucion
-                    ArrayList<Nodo> solucionNodo = bestFirstSearch.convertirANodos(solucion);
+                    solucionTabu = bestFirstSearch.convertirANodos(solucion);
                     //Imprime la solucion consola
                     for (int i = 0; i < solucion.length ; i++) {
                         System.out.print(solucion[i]);
@@ -114,11 +126,31 @@ public class AlmacenRutaController implements FxmlController {
                     System.out.println("\nTiempo Tabu: " + String.valueOf(tabu.getDuracion()));
 
                     //Dibuja la solucion en pantalla
-                    imprimirSolucion(solucionNodo);
+                    imprimirSolucion(solucionTabu);
                 }
             });
         });
        thread.start();
+    }
+
+    @FXML
+    private void guardarRuta(){
+
+        this.envio = new Envio();
+        this.envio.setIdEnvio((long) 1);
+        if(this.solucionTabu != null && this.solucionTabu.size() > 0){
+            boolean res = this.repositoryRuta.guardarRuta(this.solucionTabu, this.envio);
+            if(res){
+                this.stageManager.mostrarInfoDialog("Generar Ruta", null,
+                        "Se guardó la ruta generada.");
+            } else {
+                this.stageManager.mostrarInfoDialog("Error Gnerar Ruta", null,
+                        "Hubo un error al intentar guardar la ruta. Inténtelo otra vez.");
+            }
+        } else {
+            this.stageManager.mostrarErrorDialog("Error Generer Ruta", null,
+                    "Debe haber generado una ruta para poder guardarlo");
+        }
     }
 
     public void imprimirAlmacen(){
@@ -244,6 +276,7 @@ public class AlmacenRutaController implements FxmlController {
 
         //Calcula distancias y camino inicial
         this.gestorDistancias = new GestorDistancias(almacen);
+
         //Generar lista & hash de nodos
         this.gestorDistancias.generarNodos();
 
@@ -260,6 +293,14 @@ public class AlmacenRutaController implements FxmlController {
         this.tiempoMaximoTF.setText("300");
         this.listaTabuTamanho.setText("30");
         this.numIteracionesSinMejora.setText("100000");
+    }
+
+    @FXML
+    private void verHistorialModal(){
+        this.envio = new Envio();
+        this.envio.setIdEnvio((long)1);
+        this.verHistorial.setEnvio(this.envio);
+        this.stageManager.mostrarModal(AlmacenView.HISTORIAL_RUTAS);
     }
 
 }
