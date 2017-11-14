@@ -80,6 +80,7 @@ select * from envio fecha
 
 select idproducto,sum(cantidad) from detalleenvio where idproducto=1 group by (idproducto)
 
+  select * from producto where LOWER(nombreproducto) like '%mar%'
 
 select e.idenvio,e.realizado,de.idproducto,de.tot_cantidad  from envio e
 left join (select idenvio,idproducto,sum(cantidad) tot_cantidad from detalleenvio where idproducto=1 group by (idenvio,idproducto)) as de on de.idenvio = e.idenvio
@@ -87,7 +88,7 @@ where not(realizado)
 
 select * from detallemovimiento
 select * from producto
-
+select * from tipomovimiento
 select * from detallemovimiento as dm
 select * from movimiento as m
 left join tipomovimiento as tm on tm.idtipomovimiento = m.idtipomovimiento
@@ -99,3 +100,28 @@ from movimiento m
 left join tipomovimiento as tm on tm.idtipomovimiento = m.idtipomovimiento
 left join detallemovimiento as dm on dm.idmovimiento = m.idmovimiento
 left join producto as p on p.idproducto = dm.idproducto
+
+
+
+select
+m.idmovimiento,
+m.idtipomovimiento,
+to_char(m.fechamovimiento,'DD/MM/YYYY') fechamovimiento,
+dm.idproducto,
+p.nombreproducto,
+dm.cantidad,
+tm.descripcion,
+p.precio,
+p.preciocompra,
+(p.precio*dm.cantidad) valortotal,
+tm.esingreso,
+(case when tm.esingreso is null then 3 WHEN tm.esingreso then 1 else 2 end)
+from movimiento m
+left join detallemovimiento as dm on dm.idmovimiento = m.idmovimiento
+left join tipomovimiento as tm on tm.idtipomovimiento = m.idtipomovimiento
+left join producto as p on p.idproducto = dm.idproducto
+where (lower(p.nombreproducto) like '%ma%')  and (lower(tm.descripcion) like '%ingreso de lote%' )
+order by idmovimiento
+
+
+select * from tipomovimiento

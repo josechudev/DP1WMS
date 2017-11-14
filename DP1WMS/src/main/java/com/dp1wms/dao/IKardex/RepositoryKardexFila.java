@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface RepositoryKardexFila {
     List<KardexFila> selectAllKardexFila();
-    List<KardexFila> selectAllKardexFila(String fecInicio,String fecFin);
+    List<KardexFila> selectAllKardexFila(String fecInicio,String fecFin,String producto, String tipoMovimiento);
 }

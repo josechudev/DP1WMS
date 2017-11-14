@@ -30,17 +30,7 @@ import static com.dp1wms.controller.Kardex.KardexController.LOCAL_DATE;
 public class ReporteAlmacenController implements FxmlController {
 
     private final StageManager stageManager;
-    /*
 
-                <TableColumn fx:id="c_codigo" prefWidth="78.0" text="Codigo"/>
-                <TableColumn fx:id="c_prod" prefWidth="154.0" text="Producto"/>
-                <TableColumn fx:id="c_descripcion" prefWidth="154.0" text="Descripcion"/>
-                <TableColumn fx:id="c_stockMinimo" prefWidth="154.0" text="Stock Minimo"/>
-                <TableColumn fx:id="c_precioCompra" prefWidth="154.0" text="Precio de Compra"/>
-                <TableColumn fx:id="c_stockActual" prefWidth="154.0" text="Stock Actual"/>
-                <TableColumn fx:id="c_stockPedidos" prefWidth="154.0" text="Pedidos"/>
-                <TableColumn fx:id="c_stockTotal" prefWidth="88.0" text="Stock Total"/>
-     */
 
     @FXML
     private TableView<ReporteAlmacen> tableViewReporteAlmacen;

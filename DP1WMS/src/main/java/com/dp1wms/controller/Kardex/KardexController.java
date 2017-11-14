@@ -81,6 +81,10 @@ public class KardexController implements FxmlController {
 
     @FXML
     private TextField txt_balance;
+    @FXML
+    private ComboBox cb_Movimiento;
+    @FXML
+    private TextField txt_Producto;
 
     @Autowired
     private RepositoryKardexFila repositoryKardexFila;
@@ -143,9 +147,9 @@ public class KardexController implements FxmlController {
         txt_totMovInternos.setText(String.valueOf(movInternos));
     }
 
-    private void llenarGrilla(String fecInicio, String fecFin) {
+    private void llenarGrilla(String fecInicio, String fecFin,String producto, String tipoMovimiento) {
         tableViewKardex.getItems().clear();
-        List<KardexFila> kardexFilaList = repositoryKardexFila.selectAllKardexFila(fecInicio, fecFin);
+        List<KardexFila> kardexFilaList = repositoryKardexFila.selectAllKardexFila(fecInicio, fecFin,"%"+producto.toLowerCase()+"%","%"+tipoMovimiento.toLowerCase()+"%");
         float valTotal = 0;
         float comprasTot = 0;
         float ventasTot = 0;
@@ -184,6 +188,10 @@ public class KardexController implements FxmlController {
 
     @Override
     public void initialize() {
+        cb_Movimiento.getItems().removeAll(cb_Movimiento.getItems());
+        cb_Movimiento.getItems().addAll("Todos","Ingreso de Lote","Despacho","Ubicacion Lote",
+                "ReUbicacion Lote","Robo","Perdida","Ingreso","Salida","Incorporacion Producto","Devolucion");
+        cb_Movimiento.getSelectionModel().selectFirst();
         dp_fecInicio.setValue(LOCAL_DATE("01-09-2017"));
         dp_fecFin.setValue(LOCAL_DATE("22-11-2017"));
 
@@ -230,7 +238,7 @@ public class KardexController implements FxmlController {
             this.stageManager.mostrarErrorDialog("Error Buscar Proforma", null,
                     "Debe seleccionar un rango de fecha adecuado");
         } else {
-            llenarGrilla(dp_fecInicio.getValue().toString(), dp_fecFin.getValue().toString());
+            llenarGrilla(dp_fecInicio.getValue().toString(), dp_fecFin.getValue().toString(),txt_Producto.getText(),cb_Movimiento.getValue().toString());
         }
     }
 
