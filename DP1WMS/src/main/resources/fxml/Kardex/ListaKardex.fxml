@@ -41,6 +41,7 @@
         <TextField fx:id="txt_balance" disable="true" layoutX="967.0" layoutY="630.0" />
         <Label layoutX="830.0" layoutY="631.0" prefHeight="26.0" prefWidth="89.0" text="Balance Total" />
         <Button fx:id="btn_Consulta" focusTraversable="false" layoutX="29.0" layoutY="201.0" mnemonicParsing="false" onAction="#consultarKardex" text="Consultar" />
+
         <DatePicker fx:id="dp_fecFin" editable="false" layoutX="266.0" layoutY="99.0" prefWidth="187.0" />
         <TextField fx:id="txt_totMov" disable="true" layoutX="528.0" layoutY="634.0" prefHeight="26.0" prefWidth="133.0" />
         <TextField fx:id="txt_totCompras" disable="true" layoutX="967.0" layoutY="595.0" prefHeight="26.0" prefWidth="171.0" />
@@ -59,5 +60,6 @@
       <ComboBox fx:id="cb_Movimiento" layoutX="268.0" layoutY="160.0" prefWidth="150.0" />
       <Label layoutX="27.0" layoutY="139.0" text="Producto" />
       <Label layoutX="266.0" layoutY="139.0" text="Movimiento" />
+
     </children>
 </AnchorPane>

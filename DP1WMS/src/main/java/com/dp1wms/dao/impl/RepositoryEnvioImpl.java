@@ -37,8 +37,6 @@ public class RepositoryEnvioImpl implements RepositoryEnvio{
                 envio.setDetalleEnvio(listaDetalle);
             }
         }
-
-
         return listaEnvios;
     }
 
@@ -60,6 +58,22 @@ public class RepositoryEnvioImpl implements RepositoryEnvio{
 
         envio.setIdEnvio(rs.getLong("idenvio"));
         envio.setDestino(rs.getString("destino"));
+        envio.setFechaEnvio(rs.getTimestamp("fechaenvio"));
+        envio.setFechaEnvio(rs.getTimestamp("fechaenvio"));
+        envio.setRealizado(rs.getBoolean("realizado"));
+        envio.setIdPedido(rs.getLong("idpedido"));
+        envio.setIdCliente(rs.getLong("idcliente"));
+        envio.setRazonSocial(rs.getString("razonsocial"));
+
+        return envio;
+    }
+
+    public Envio mapParamTodos(ResultSet rs) throws SQLException{
+        Envio envio = new Envio();
+
+        envio.setIdEnvio(rs.getLong("idenvio"));
+        envio.setDestino(rs.getString("destino"));
+        envio.setFechaEnvio(rs.getTimestamp("fechaenvio"));
         envio.setFechaEnvio(rs.getTimestamp("fechaenvio"));
         envio.setRealizado(rs.getBoolean("realizado"));
         envio.setIdPedido(rs.getLong("idpedido"));
@@ -115,6 +129,8 @@ public class RepositoryEnvioImpl implements RepositoryEnvio{
             return null;
         }
     }
+
+
 
     public List<Envio> obtenerListaEnvio(){
 

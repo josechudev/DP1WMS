@@ -5,11 +5,12 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AlmacenRowMapper implements RowMapper{
-
+public class CajonesRowMapper implements RowMapper{
     @Override
     public Object mapRow(ResultSet resultSet, int i) throws SQLException {
-        AlmacenResultSetExtractor almacenResultSetExtractor = new AlmacenResultSetExtractor();
-        return almacenResultSetExtractor.extractData(resultSet);
+        CajonesResultSetExtractor cajonesResultSetExtractor = new CajonesResultSetExtractor();
+        return cajonesResultSetExtractor.extractData(resultSet);
     }
+
 }
+

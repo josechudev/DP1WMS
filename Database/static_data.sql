@@ -22,6 +22,7 @@ INSERT INTO seccion (descripcion) VALUES ('Transferencias Internas');
 INSERT INTO seccion (descripcion) VALUES ('Movimientos - Ingreso/Salida Producto');
 INSERT INTO seccion (descripcion) VALUES ('Movimientos - Crear Lote');
 INSERT INTO seccion (descripcion) VALUES ('Despacho de Envios');
+INSERT INTO seccion (descripcion) VALUES ('Generación de Rutas');
 
 --Ventas
 INSERT INTO seccion (descripcion) VALUES ('Admninistración de Condiciones Comerciales');
@@ -36,6 +37,7 @@ INSERT INTO seccion (descripcion) VALUES ('Generación de Nota de Crétido');
 --Reporte
 INSERT INTO seccion (descripcion) VALUES ('Reporte Kardex');
 INSERT INTO seccion (descripcion) VALUES ('Reporte de Almacén');
+INSERT INTO seccion (descripcion) VALUES ('Reporte de Auditoria');
 
 --Master User
 --tipo empleado

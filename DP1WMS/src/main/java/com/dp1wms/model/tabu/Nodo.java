@@ -1,14 +1,25 @@
 package com.dp1wms.model.tabu;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+
 public class Nodo {
-    private int x;
-    private int y;
+    public int x;
+    public int y;
     private int numId;
+
+    private ArrayList<Nodo> vecinos;
+
+    public boolean visitado;
 
     public Nodo(int x, int y, int numId) {
         this.setX(x);
         this.setY(y);
         this.numId = numId;
+
+        this.setVecinos(new ArrayList<>());
+
+        this.visitado = false;
     }
 
     public int getNumId() {
@@ -34,5 +45,19 @@ public class Nodo {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public ArrayList<Nodo> getVecinos() {
+        return vecinos;
+    }
+
+    public void setVecinos(ArrayList<Nodo> vecinos) {
+        this.vecinos = vecinos;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        Nodo nodo = (Nodo) o;
+        return o instanceof  Nodo && (nodo.x == this.x && nodo.y == this.y);
     }
 }

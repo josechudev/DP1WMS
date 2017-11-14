@@ -85,7 +85,6 @@ public class KardexController implements FxmlController {
     private ComboBox cb_Movimiento;
     @FXML
     private TextField txt_Producto;
-
     @Autowired
     private RepositoryKardexFila repositoryKardexFila;
 

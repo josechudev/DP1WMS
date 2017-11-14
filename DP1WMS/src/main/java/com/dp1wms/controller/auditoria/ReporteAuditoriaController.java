@@ -58,7 +58,9 @@ public class ReporteAuditoriaController implements FxmlController {
         eventosFiltrados = new FilteredList<Evento>(eventosAuditoria);
 
         ObservableList<String> tiposAcciones = FXCollections.observableArrayList("Todos", "Insertar", "Actualizar", "Eliminar");
+
         cbTipoAccion.setItems(tiposAcciones);
+        cbTipoAccion.getSelectionModel().selectFirst();
 
         tbvEventos.setItems(eventosAuditoria);
     }
