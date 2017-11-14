@@ -50,7 +50,7 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
                 "idcategoria," +
                 "codigo," +
                 "fechacreacion," +
-                "activo,preciocompra,unidades),stockminimo VALUES(default, ?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                "activo,preciocompra,unidades,stockminimo) VALUES(default, ?,?,?::DATE,?,?,?,?,?,?::DATE,?,?,?,?)";
         try {
            /* jdbcTemplate.update(sql,
                     new Object[]{producto.getNombreProducto(),
@@ -68,13 +68,15 @@ public class RepositoryMantProductoImpl implements RepositoryMantProducto {
             jdbcTemplate.update(sql,
                     new Object[]{producto.getNombreProducto(),
                             producto.getPeso(),
-                            DateParser.stringToTimestamp(producto.getFechaVencimiento()),
+                            //DateParser.stringToTimestamp(producto.getFechaVencimiento()),
+                            producto.getFechaVencimiento(),
                             producto.getDescripcion(),
                             producto.getPrecio(),
                             producto.getStock(),
                             producto.getIdCategoria(),
                             producto.getCodigo(),
-                            DateParser.stringToTimestamp(producto.getFechaCreacion()),
+                            //DateParser.stringToTimestamp(producto.getFechaCreacion()),
+                            producto.getFechaCreacion(),
                             producto.esActivo(),
                             producto.getPrecioCompra(),
                             producto.getUnidades(),producto.getStockMinimo()});
