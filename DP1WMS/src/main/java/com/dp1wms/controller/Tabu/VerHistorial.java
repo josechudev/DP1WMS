@@ -6,7 +6,6 @@ import com.dp1wms.model.Envio;
 import com.dp1wms.model.Ruta;
 import com.dp1wms.view.StageManager;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -41,7 +40,7 @@ public class VerHistorial implements FxmlController{
             this.stageManager.mostrarErrorDialog("Historial de Rutas", null,
                     "Debe seleccionar una ruta");
         } else {
-            this.ruta = ruta;
+            this.setRuta(ruta);
             this.stageManager.cerrarVentana(event);
         }
     }
@@ -53,7 +52,7 @@ public class VerHistorial implements FxmlController{
 
     @Override
     public void initialize() {
-        //rutas = this.repositoryRuta
+        this.ruta = null;
         this.rutas = this.repositoryRuta.obtenerRutasPorEnvio(this.envio);
         if(this.rutas == null){
             this.stageManager.mostrarErrorDialog("Historial de Rutas", null,
@@ -73,5 +72,13 @@ public class VerHistorial implements FxmlController{
 
     public void setEnvio(Envio envio){
         this.envio = envio;
+    }
+
+    public Ruta getRuta() {
+        return ruta;
+    }
+
+    public void setRuta(Ruta ruta) {
+        this.ruta = ruta;
     }
 }
