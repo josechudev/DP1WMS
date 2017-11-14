@@ -116,7 +116,8 @@ public class VentaBuscarProducto implements FxmlController{
         this.precioTC.setCellValueFactory(new PropertyValueFactory<Producto, Float>("precio"));
         this.categoriaTC.setCellValueFactory(new PropertyValueFactory<Producto, String>("Categoria"));
         this.stockTC.setCellValueFactory(value->{
-            return new SimpleObjectProperty<Integer>(value.getValue().getStock());
+            int stock = value.getValue().getStock();
+            return new SimpleObjectProperty<Integer>(stock < 0 ? 0 : stock);
         });
         this.productoTable.setEditable(false);
     }

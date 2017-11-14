@@ -70,7 +70,8 @@ public class DescuentoAlgoritmo {
                         Detalle detalle = null;
                         for(int i = 0; i < cabecera.getCantidadDetalle(); i++){
                             Detalle d = cabecera.getDetalle(i);
-                            if(d.getProducto().getIdProducto() == desc.getIdProductoDescuento()){
+                            if(d.getProducto().getIdProducto() == desc.getIdProductoGenerador() ||
+                                    d.getProducto().getIdCategoria() == desc.getIdCategoriaProdGen()){
                                 detalle = d;
                                 break;
                             }
@@ -185,7 +186,7 @@ public class DescuentoAlgoritmo {
                 if(desc.getPrioridad() < 7){
                     break;
                 }
-                if(desc.getIdProductoGenerador() == p.getIdProducto() || desc.getIdCategoriaProdGen() == p.getIdProducto()){
+                if(desc.getIdProductoGenerador() == p.getIdProducto() || desc.getIdCategoriaProdGen() == p.getIdCategoria()){
                     descuento += d.getCantidad() * p.getPrecio() * desc.getValorDescuento();
                 }
             }
