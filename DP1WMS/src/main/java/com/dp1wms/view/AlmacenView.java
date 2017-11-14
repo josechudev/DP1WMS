@@ -48,6 +48,22 @@ public enum AlmacenView implements FxmlView{
         }
 
     },
+    NUEVO_RACK {
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("mantenimiento.racks.nuevo");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Almacen/NuevoRack.fxml";
+        }
+
+        @Override
+        public boolean isResizable() {
+            return false;
+        }
+    },
     TABU{
         @Override
         public String getTitle() {
@@ -63,16 +79,30 @@ public enum AlmacenView implements FxmlView{
         public boolean isResizable() {
             return false;
         }
-    },
-    NUEVO_RACK {
+    },HISTORIAL_RUTAS{
         @Override
         public String getTitle() {
-            return getStringFromResourceBundle("mantenimiento.racks.nuevo");
+            return getStringFromResourceBundle("tabu.historial.title");
         }
 
         @Override
         public String getFxmlFile() {
-            return "/fxml/Almacen/NuevoRack.fxml";
+            return "/fxml/Tabu/HistorialRutas.fxml";
+        }
+
+        @Override
+        public boolean isResizable() {
+            return false;
+        }
+    }, BUSCAR_ENIVOS{
+        @Override
+        public String getTitle() {
+            return getStringFromResourceBundle("tabu.buscar_envios.title");
+        }
+
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/Tabu/BuscarEnvios.fxml";
         }
 
         @Override

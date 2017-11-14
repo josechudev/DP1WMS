@@ -1,6 +1,7 @@
 package com.dp1wms.controller.Tabu;
 
 import com.dp1wms.model.tabu.Almacen;
+import com.dp1wms.model.tabu.Nodo;
 import com.dp1wms.model.tabu.Producto;
 import com.dp1wms.model.tabu.Rack;
 
@@ -28,7 +29,6 @@ public class GestorAlmacen {
             return this.dy;
         }
     }
-
 
     /**
      *  Genera un almacen aleatorio de racks
@@ -297,6 +297,8 @@ public class GestorAlmacen {
     public static void llenarConProdYPtoPartida(Almacen alm, ArrayList<Producto> productos, Point puntoInicio){
         boolean[][] nodos = alm.getNodos();
         boolean[][] prods = alm.getProductos();
+
+        alm.setPuntoInicio(puntoInicio);
 
         //punto de inicio
         nodos[puntoInicio.x][puntoInicio.y] = true;

@@ -16,6 +16,8 @@ public class Envio {
     private Boolean realizado;
     private float distancia;
 
+    private Cliente cliente;
+
     private List<DetalleEnvio> detalleEnvio;
 
     public Envio (Envio envio){
@@ -170,5 +172,13 @@ public class Envio {
 
     public void setDistancia(float distancia) {
         this.distancia = distancia;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

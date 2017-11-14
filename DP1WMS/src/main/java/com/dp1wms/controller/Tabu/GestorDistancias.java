@@ -5,6 +5,7 @@ import com.dp1wms.model.tabu.Nodo;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static java.lang.Math.abs;
@@ -15,6 +16,8 @@ public class GestorDistancias {
 
     private Almacen almacen;
 
+    private HashMap<String, Nodo> nodosHashMap;
+
     private List<Nodo> nodos;
 
     private List<Point> posNodos;
@@ -23,12 +26,13 @@ public class GestorDistancias {
 
     public GestorDistancias(Almacen almacen) {
         this.almacen = almacen;
-        this.nodos = new ArrayList<Nodo>();
+        this.setNodos(new ArrayList<Nodo>());
         this.posNodos = new ArrayList<Point>();
+        this.nodosHashMap = new HashMap<>();
     }
 
     public int[][] getMatrizDistancia(){
-        int[][] mat = new int[nodos.size()][nodos.size()];
+        int[][] mat = new int[getNodos().size()][getNodos().size()];
         for(int i = 0; i < mat.length; i++){
             for(int j = 0; j < mat.length; j++){
                 mat[i][j] = matrizDistancia[i][j];
@@ -38,7 +42,7 @@ public class GestorDistancias {
     }
 
     public int obtenerNumeroNodos(){
-        return this.nodos.size();
+        return this.getNodos().size();
     }
 
     public int [] generarCaminoInicial(){
@@ -52,19 +56,20 @@ public class GestorDistancias {
     }
 
     public int [][] calcularDistancias(){
-        obtenerNodos();
         generarDistancias();
         return this.matrizDistancia;
     }
 
-    private void obtenerNodos() {
+    public void generarNodos() {
         //agrego a una lista los nodos a analizar
         boolean[][] almNodos = this.almacen.getNodos();
-        for (int i = 0; i < almacen.getAlmacen().length; i++) {
-            for (int j = 0; j < almacen.getAlmacen()[i].length; j++) {
+        for (int i = 0; i < almacen.getAncho(); i++) {
+            for (int j = 0; j < almacen.getAlto(); j++) {
                 if(almNodos[i][j]){
-                    nodos.add(new Nodo(i,j,numId));
+                    Nodo nodo = new Nodo(i,j,numId);
+                    getNodos().add(nodo);
                     posNodos.add(new Point(i,j));
+                    nodosHashMap.put(i + "-" + j, nodo);
                     numId++;
                 }
             }
@@ -83,7 +88,7 @@ public class GestorDistancias {
     }
 
     private Nodo buscarNodoPorId(int id){
-        for(Nodo nodo: this.nodos){
+        for(Nodo nodo: this.getNodos()){
             if(nodo.getNumId() == id){
                 return nodo;
             }
@@ -94,7 +99,7 @@ public class GestorDistancias {
 
     private void generarDistancias(){
 
-        matrizDistancia = new int[nodos.size()][nodos.size()];
+        matrizDistancia = new int[getNodos().size()][getNodos().size()];
 
         for (int i = 0; i < matrizDistancia.length; i++) {
             for (int j = 0; j < matrizDistancia[i].length; j++) {
@@ -107,10 +112,10 @@ public class GestorDistancias {
 
         for (int i = 0; i < posNodos.size(); i++) {
             //calculo las distancias al nodo en cada direccion
-            distanciaXpos(posNodos.get(i),nodos.get(i).getNumId());
-            distanciaYpos(posNodos.get(i),nodos.get(i).getNumId());
-            distanciaXneg(posNodos.get(i),nodos.get(i).getNumId());
-            distanciaYneg(posNodos.get(i),nodos.get(i).getNumId());
+            distanciaXpos(posNodos.get(i), getNodos().get(i).getNumId());
+            distanciaYpos(posNodos.get(i), getNodos().get(i).getNumId());
+            distanciaXneg(posNodos.get(i), getNodos().get(i).getNumId());
+            distanciaYneg(posNodos.get(i), getNodos().get(i).getNumId());
         }
 
     }
@@ -193,4 +198,65 @@ public class GestorDistancias {
         return x >= 0 && y >= 0 && x < almacen.getAncho() && y < almacen.getAlto();
     }
 
+    public List<Nodo> getNodos() {
+        return nodos;
+    }
+
+    public void setNodos(List<Nodo> nodos) {
+        this.nodos = nodos;
+    }
+
+    public void asignarVecinosANodos(){
+        for(Nodo nodo: this.nodos){
+            ArrayList<Nodo> vecinos = buscarVecinoPorNodo(nodo);
+            nodo.setVecinos(vecinos);
+        }
+    }
+
+    private ArrayList<Nodo> buscarVecinoPorNodo(Nodo nodo){
+        ArrayList<Nodo> vecinos = new ArrayList<>();
+        boolean[][] nodos = this.almacen.getNodos();
+        boolean[][] almacen = this.almacen.getAlmacen();
+        //buscar en x-
+        for(int i = nodo.x - 1; i >= 0; i--){
+            if(almacen[i][nodo.y]) break;
+            if(nodos[i][nodo.y]){
+                vecinos.add(this.nodosHashMap.get(i + "-" + nodo.y));
+                break;
+            }
+        }
+        //buscar en x+
+        for(int i = nodo.x + 1; i < this.almacen.getAncho(); i++){
+            if(almacen[i][nodo.y]) break;
+            if(nodos[i][nodo.y]){
+                vecinos.add(this.nodosHashMap.get(i + "-" + nodo.y));
+                break;
+            }
+        }
+        //buscar en y-
+        for(int j = nodo.y - 1; j >= 0; j--){
+            if(almacen[nodo.x][j]) break;
+            if(nodos[nodo.x][j]){
+                vecinos.add(this.nodosHashMap.get(nodo.x + "-" + j));
+                break;
+            }
+        }
+        //buscar en y+
+        for(int j = nodo.y + 1; j < this.almacen.getAlto(); j++){
+            if(almacen[nodo.x][j]) break;
+            if(nodos[nodo.x][j]){
+                vecinos.add(this.nodosHashMap.get(nodo.x + "-" + j));
+                break;
+            }
+        }
+        return vecinos;
+    }
+
+    public HashMap<String, Nodo> getNodosHashMap() {
+        return nodosHashMap;
+    }
+
+    public void setNodosHashMap(HashMap<String, Nodo> nodosHashMap) {
+        this.nodosHashMap = nodosHashMap;
+    }
 }

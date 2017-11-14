@@ -35,7 +35,7 @@ public class MainController implements FxmlController {
     //Almacenes
     @FXML private MenuItem almacenesCMMI; @FXML private MenuItem almacenesTransMI;
     @FXML private MenuItem almacenesISProdMI; @FXML private MenuItem almacenLoteMI;
-    @FXML private MenuItem almacenDespachoMI;
+    @FXML private MenuItem almacenDespachoMI; @FXML private MenuItem almacenRutaMI;
     //Ventas
     @FXML private MenuItem ventaCondComMI; @FXML private MenuItem ventaProformaMI;
     @FXML private MenuItem ventaConsPedMI; @FXML private MenuItem ventaGenPedMI;
@@ -43,6 +43,7 @@ public class MainController implements FxmlController {
     @FXML private MenuItem ventaPedDevMI; @FXML private MenuItem ventaNotaCreditoMI;
     //Reporte
     @FXML private MenuItem reportKardexMI; @FXML private MenuItem reporteAlmacenMI;
+    @FXML private MenuItem reporteAuditoriaMI;
 
 
     @FXML
@@ -93,14 +94,15 @@ public class MainController implements FxmlController {
         //Almacenes
         menus.put(7, this.almacenesCMMI); menus.put(8, this.almacenesTransMI);
         menus.put(9, this.almacenesISProdMI); menus.put(10, this.almacenLoteMI);
-        menus.put(11, this.almacenDespachoMI);
+        menus.put(11, this.almacenDespachoMI); menus.put(12, this.almacenRutaMI);
         //Ventas
-        menus.put(12, this.ventaCondComMI); menus.put(13, this.ventaProformaMI);
-        menus.put(14, this.ventaConsPedMI); menus.put(15, this.ventaGenPedMI);
-        menus.put(16, this.ventaGuiaMI); menus.put(17, this.ventaCompPagoMI);
-        menus.put(18, this.ventaPedDevMI); menus.put(19, this.ventaNotaCreditoMI);
+        menus.put(13, this.ventaCondComMI); menus.put(14, this.ventaProformaMI);
+        menus.put(15, this.ventaConsPedMI); menus.put(16, this.ventaGenPedMI);
+        menus.put(17, this.ventaGuiaMI); menus.put(18, this.ventaCompPagoMI);
+        menus.put(19, this.ventaPedDevMI); menus.put(20, this.ventaNotaCreditoMI);
         //Reporte
-        menus.put(20, this.reportKardexMI); menus.put(21, this.reporteAlmacenMI);
+        menus.put(21, this.reportKardexMI); menus.put(22, this.reporteAlmacenMI);
+        menus.put(23, this.reporteAuditoriaMI);
 
         TipoEmpleado te = this.empleado.getTipoEmpleado();
         //cargar secciones

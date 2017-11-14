@@ -36,7 +36,7 @@ public class TipoEmpleadoNuevo implements FxmlController{
 
     private final StageManager stageManager;
 
-    @Autowired
+
     private RepositoryMantTipoEmpleado repositoryMantTipoEmpleado;
 
     @FXML
