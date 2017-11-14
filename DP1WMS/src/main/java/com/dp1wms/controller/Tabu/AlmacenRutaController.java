@@ -8,6 +8,7 @@ import com.dp1wms.model.Cajon;
 import com.dp1wms.model.Envio;
 import com.dp1wms.dao.RepositoryRuta;
 import com.dp1wms.model.Envio;
+import com.dp1wms.model.Ruta;
 import com.dp1wms.model.tabu.Almacen;
 import com.dp1wms.model.tabu.Nodo;
 import com.dp1wms.model.tabu.Producto;
@@ -353,6 +354,8 @@ public class AlmacenRutaController implements FxmlController {
     public void initialize() {
         this.initFields();
         this.nodes = new ArrayList<>();
+        this.envio = null;
+        this.productos = null;
 
         this.almacen = repositoryAlmacen.obtenerAlmacen();
 
@@ -400,6 +403,32 @@ public class AlmacenRutaController implements FxmlController {
 
         this.verHistorial.setEnvio(this.envio);
         this.stageManager.mostrarModal(AlmacenView.HISTORIAL_RUTAS);
+        Ruta ruta = this.verHistorial.getRuta();
+        if(ruta != null){
+            this.dibujuarRuta(ruta);
+        }
+    }
+
+    private void dibujuarRuta(Ruta ruta){
+        this.imprimirAlmacen();
+        Integer[] camino_x = ruta.getCamino_x();
+        Integer[] camino_y = ruta.getCamino_y();
+        boolean[][] productos = this.almacen.getProductos();
+        for(int i = 0; i < camino_x.length - 1; i++){
+            Button punto = new Button();
+            if(productos[camino_x[i]][camino_y[i]]){
+                punto.setStyle("-fx-background-color: #95CC4C; -fx-padding: 0; -fx-margin: 0; -fx-border-radius: 0;" +
+                        " -fx-font-size: 10");
+            } else {
+                punto.setStyle("-fx-background-color: #ffffff; -fx-padding: 0; -fx-margin: 0; -fx-border-radius: 0;" +
+                        " -fx-font-size: 10");
+            }
+            punto.setPrefHeight(20);
+            punto.setPrefWidth(20);
+            punto.setText(String.valueOf(i));
+            this.nodes.add(punto);
+            almacen_layout.add(punto, camino_x[i], camino_y[i]);
+        }
     }
 
 }

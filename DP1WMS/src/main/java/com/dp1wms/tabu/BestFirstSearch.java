@@ -146,6 +146,7 @@ public class BestFirstSearch {
                 return a.heuristic - b.heuristic;
             });
             evaluationNode = queue.get(0); queue.remove(0);
+            evaluationNode = queue.get(0); queue.remove(0);
             if(evaluationNode.valor.equals(nodoB)){//encontró el camino
                 break;
             }
