@@ -6,6 +6,7 @@ import com.dp1wms.model.tabu.Nodo;
 
 import java.awt.*;
 import java.util.*;
+import java.util.concurrent.PriorityBlockingQueue;
 
 public class BestFirstSearch {
 
@@ -96,7 +97,7 @@ public class BestFirstSearch {
     private Segmento crearSegmentoEntreProductos(Nodo nodoA, Nodo nodoB){
         Segmento segmento = new Segmento();
         ArrayList<NodoBFS> queue = new ArrayList<>();
-        HashSet<NodoBFS> visitados = new HashSet<>();
+        HashSet<Nodo> visitados = new HashSet<>();
         queue.add(new NodoBFS(nodoA, 0));
 
         NodoBFS evaluationNode = null;
@@ -106,12 +107,12 @@ public class BestFirstSearch {
             if(evaluationNode.valor.equals(nodoB)){
                 break;
             }
-            visitados.add(evaluationNode);
+            visitados.add(evaluationNode.valor);
             for(Nodo vecino: evaluationNode.valor.getVecinos()){
                 NodoBFS vecinoBFS = new NodoBFS(vecino, 0);
-                if(!visitados.contains(vecinoBFS) && !queue.contains(vecinoBFS)){
+                if(!visitados.contains(vecino) && !queue.contains(vecinoBFS)){
                     vecinoBFS.anterior = evaluationNode;
-                    visitados.add(vecinoBFS);
+                    visitados.add(vecino);
                     queue.add(vecinoBFS);
                 }
             }
@@ -131,27 +132,30 @@ public class BestFirstSearch {
         return segmento;
     }
 
-    /*
-    private Segmento crearSegmentoEntreProductos(Nodo nodoA, Nodo nodoB){
+
+    private Segmento crearSegmentoEntreProductos2(Nodo nodoA, Nodo nodoB){
         Segmento segmento = new Segmento();
-        PriorityQueue<NodoBFS> priorityQueue = new PriorityQueue<>();
-        HashSet<NodoBFS> visitados = new HashSet<>();
-        priorityQueue.add(new NodoBFS(nodoA, 0));
+        ArrayList<NodoBFS> queue = new ArrayList<>();
+        HashSet<Nodo> visitados = new HashSet<>();
+        queue.add(new NodoBFS(nodoA, 0));
 
         NodoBFS evaluationNode = null;
-        while(!priorityQueue.isEmpty()){
+        while(!queue.isEmpty()){
             //el nodo con menos prioridad
-            evaluationNode = priorityQueue.remove();
+            queue.sort((a,b)->{
+                return a.heuristic - b.heuristic;
+            });
+            evaluationNode = queue.get(0); queue.remove(0);
             if(evaluationNode.valor.equals(nodoB)){//encontró el camino
                 break;
             }
-            visitados.add(evaluationNode);
+            visitados.add(evaluationNode.valor);
             for(Nodo vecino: evaluationNode.valor.getVecinos()){
                 NodoBFS vecinoBFS = new NodoBFS(vecino, segmento.distanciaEntreNodos(vecino, nodoB));
-                if(!visitados.contains(vecinoBFS)){
+                if(!visitados.contains(vecino) && !queue.contains(vecinoBFS)){
                     vecinoBFS.anterior = evaluationNode;
-                    visitados.add(vecinoBFS);
-                    priorityQueue.add(vecinoBFS);
+                    visitados.add(vecino);
+                    queue.add(vecinoBFS);
                 }
             }
         }
@@ -162,14 +166,11 @@ public class BestFirstSearch {
                 evaluationNode = evaluationNode.anterior;
             }
         }
-        priorityQueue.clear();
+        queue.clear();
         visitados.clear();
-
         segmento.calcularDistancia();
-
         return segmento;
     }
-    */
 
     public int[][] generarMatrizDistancia(){
         int[][] distancias = new int[this.productos.size()][this.productos.size()];
