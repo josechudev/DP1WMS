@@ -2,16 +2,24 @@ package com.dp1wms.controller.Tabu;
 
 import com.dp1wms.controller.FxmlController;
 
+import com.dp1wms.dao.RepositoryAlmacen;
+import com.dp1wms.dao.RepositoryEnvio;
+import com.dp1wms.model.Cajon;
+import com.dp1wms.model.Envio;
 import com.dp1wms.model.tabu.Almacen;
 import com.dp1wms.model.tabu.Nodo;
 import com.dp1wms.model.tabu.Producto;
+import com.dp1wms.model.tabu.Rack;
 import com.dp1wms.tabu.Tabu;
 import com.dp1wms.view.StageManager;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -22,7 +30,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.awt.Point;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class AlmacenRutaController implements FxmlController {
@@ -38,8 +48,14 @@ public class AlmacenRutaController implements FxmlController {
     @FXML private TextField tiempoMaximoTF;
     @FXML private TextField listaTabuTamanho;
     @FXML private TextField numIteracionesSinMejora;
+    @FXML private ComboBox ids_envios;
 
     private ArrayList<Node> nodes;
+
+    @Autowired
+    private RepositoryAlmacen repositoryAlmacen;
+    private RepositoryEnvio repositoryEnvio;
+
 
     @Autowired
     @Lazy
@@ -112,6 +128,17 @@ public class AlmacenRutaController implements FxmlController {
        thread.start();
     }
 
+    //al seleccionar envio deberia imprimir en el almacen solo los cajones a visitar
+    @FXML void seleccion_envios(ActionEvent e){
+        Long idenvio = Long.parseLong(ids_envios.getValue().toString());
+        List<Cajon> cajones = repositoryAlmacen.obtenerCajones(idenvio);
+        this.ubicarProductos(cajones);
+
+        System.out.println(cajones.get(0).getIdRack());
+        System.out.println(cajones.get(0).getPosX());
+        this.imprimirAlmacen();
+    }
+
     public void imprimirAlmacen(){
         //color celdas
 
@@ -182,7 +209,6 @@ public class AlmacenRutaController implements FxmlController {
     }
 
     private void imprimirSolucion(ArrayList<Nodo> solucion){
-
         //colocar productos
         for(int i = 0; i < solucion.size() - 1; i++){
             Nodo nodo = solucion.get(i);
@@ -197,47 +223,109 @@ public class AlmacenRutaController implements FxmlController {
         }
     }
 
+    private void limpiarproductos(){
+        boolean [][] productos = new boolean [almacen.getAncho()][almacen.getAlto()];
+        for (int i = 0; i < almacen.getAncho(); i++) {
+            for (int j = 0; j < almacen.getAlto(); j++) {
+                productos[i][j] = false;
+            }
+        }
+        almacen.setProductos(productos);
+    }
+
+    //luego de que obtengo una lista de cajones a visitar los ubico en el almacen
+    private void ubicarProductos(List<Cajon> cajones){
+        this.limpiarproductos();
+
+        Rack rack;
+        int rack_id;
+        boolean [][] productos = new boolean[almacen.getAncho()][almacen.getAlto()];
+
+        for (int i = 0; i < almacen.getAncho(); i++) {
+            for (int j = 0; j < almacen.getAncho(); j++) {
+                productos[i][j] = false;
+            }
+        }
+
+        List <Producto> lista_productos = new ArrayList<>();
+
+        int i = 0;
+        for (Cajon cajon: cajones) {
+
+            i++;
+            //posicion del rack
+            rack = this.almacen.getRackporId(cajon.getIdRack());
+
+            productos[rack.getPosIni().x + cajon.getPosX()][rack.getPosIni().y] = true;
+
+            Point p = new Point(rack.getPosIni().x + cajon.getPosX(),rack.getPosIni().y);
+            Producto prod = new Producto(i, "Producto" + String.valueOf(i), p);
+            prod.setRack(rack);
+            lista_productos.add(prod);
+            
+        }
+
+        //productos set
+        System.out.println("procuctos set");
+        almacen.setProductos(productos);
+    }
+
+
     @Override
     public void initialize() {
         this.initFields();
         this.nodes = new ArrayList<>();
 
-        //Almacen nuevo
-        this.almacen = new Almacen(25,25);
+        this.almacen = repositoryAlmacen.obtenerAlmacen();
 
-        //construir grid de almacen
-        for (int i = 0; i < almacen.getAncho() - 1; i++) {
+        //agregar filas
+        for (int i = 0; i < almacen.getAlto() - 1; i++) {
             RowConstraints row = new RowConstraints();
             row.setPrefHeight(20);
             almacen_layout.getRowConstraints().add(row);
         }
-        for (int j = 0; j < almacen.getAlto() - 1; j++) {
+
+        //agregar columnas
+        for (int j = 0; j < almacen.getAncho() - 1; j++) {
             ColumnConstraints col = new ColumnConstraints();
             col.setPrefWidth(20);
             almacen_layout.getColumnConstraints().add(col);
         }
 
-        //Racks aleatorio para test
-        GestorAlmacen.generarRacksAletorios(almacen);
-        Point puntoInicio = new Point(0,0);
+//        Point puntoInicio = new Point(0,0);
 
-        //Productos aleatorios para test
-        int numProductos = 5;
-        ArrayList<Producto> productos = GestorProducto.generarProductos(almacen, numProductos);
+        //agregar racks
+        almacen.setRacks(new ArrayList<>(repositoryAlmacen.obtenerRacks()));
+        almacen.agregar_racks();
 
-        GestorAlmacen.llenarConProdYPtoPartida(almacen, productos, puntoInicio);
 
-        //Imprime el almacen
+        //llenar combo box con lista de envios
+        List<Envio> envios = repositoryAlmacen.obtenerEnvios();
+        System.out.println(envios.size());
+        ArrayList<Long> ids = new ArrayList<Long>();
+        for (Envio envio: envios) {
+            ids.add(envio.getIdEnvio());
+        }
+        ObservableList<Long> envios_combo= FXCollections.observableArrayList(ids);
+        ids_envios.setItems(envios_combo);
+
+
+
+
+        //imprimir almacen
         this.imprimirAlmacen();
 
-        //Puntos de interes
-        GestorAlmacen.generarNodos(almacen);
 
-        //Calcula distancias y camino inicial
-        this.gestorDistancias = new GestorDistancias(almacen);
-        this.gestorDistancias.calcularDistancias();
 
-        almacen_layout.setGridLinesVisible(true);
+//        //Puntos de interes
+//        GestorAlmacen.generarNodos(almacen);
+//
+//        //Calcula distancias y camino inicial
+//        this.gestorDistancias = new GestorDistancias(almacen);
+//        this.gestorDistancias.calcularDistancias();
+//
+//        almacen_layout.setGridLinesVisible(true);
+
     }
 
     private void initFields(){
@@ -246,5 +334,4 @@ public class AlmacenRutaController implements FxmlController {
         this.listaTabuTamanho.setText("30");
         this.numIteracionesSinMejora.setText("100000");
     }
-
 }

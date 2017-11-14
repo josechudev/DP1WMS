@@ -104,6 +104,15 @@ public class Almacen {
         this.racks = racks;
     }
 
+    public Rack getRackporId(int id){
+        for (Rack rack: this.racks) {
+            if(rack.getId_rack() == id){
+                return rack;
+            }
+        }
+        return this.racks.get(0);
+    }
+
     public int getAncho(){
         return this.ancho;
     }
@@ -117,6 +126,21 @@ public class Almacen {
         for(int i = 0; i < ancho; i++){
             for(int j = 0; j < alto; j++){
                 this.nodos[i][j] = false;
+            }
+        }
+    }
+
+    public void agregar_racks(){
+        for (Rack rack: this.getRacks()) {
+
+            if(rack.esHorizontal()){
+                for (int i = rack.getPosIni().x; i <= rack.getPosFin().x; i++) {
+                    almacen[i][rack.getPosFin().y] = true;
+                }
+            } else{
+                for (int i = rack.getPosIni().y; i <= rack.getPosFin().y ; i++) {
+                    almacen[rack.getPosIni().x][i] = true;
+                }
             }
         }
     }
