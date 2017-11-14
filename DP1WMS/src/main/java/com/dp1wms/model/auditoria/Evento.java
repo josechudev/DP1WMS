@@ -8,6 +8,7 @@ public class Evento {
     private String tabla;
     private String nombreEmpleado;
     private String fechaAccion;
+    private String horaAccion;
     private String accion;
     private String dataOriginal;
     private String dataNueva;
@@ -70,5 +71,13 @@ public class Evento {
 
     public void setNombreEmpleado(String nombreEmpleado) {
         this.nombreEmpleado = nombreEmpleado;
+    }
+
+    public String getHoraAccion() {
+        return horaAccion;
+    }
+
+    public void setHoraAccion(String horaAccion) {
+        this.horaAccion = horaAccion;
     }
 }

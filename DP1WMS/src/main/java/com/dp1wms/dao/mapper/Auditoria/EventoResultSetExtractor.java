@@ -7,6 +7,10 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class EventoResultSetExtractor implements ResultSetExtractor {
     @Override
@@ -14,7 +18,10 @@ public class EventoResultSetExtractor implements ResultSetExtractor {
         Evento evento = new Evento();
         evento.setTabla(resultSet.getString(2));
         evento.setNombreEmpleado(resultSet.getString("nombre") + resultSet.getString("apellidos"));
-        evento.setFechaAccion(DateParser.timestampToString(resultSet.getTimestamp(4)));
+        Timestamp ts = resultSet.getTimestamp(4);
+        DateFormat df = new SimpleDateFormat("HH:mm");
+        evento.setFechaAccion(DateParser.timestampToString(ts));
+        evento.setHoraAccion(df.format(new Date(ts.getTime())));
         String idAccion = resultSet.getString(5);
 
         switch (idAccion){

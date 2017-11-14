@@ -4,14 +4,17 @@ import com.dp1wms.controller.FxmlController;
 import com.dp1wms.dao.impl.RepositoryAuditoriaImpl;
 import com.dp1wms.model.auditoria.Evento;
 import com.dp1wms.util.DateParser;
+import com.dp1wms.view.AuditoriaView;
 import com.dp1wms.view.StageManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -30,12 +33,14 @@ public class ReporteAuditoriaController implements FxmlController {
 
     @FXML private TableView tbvEventos;
     @FXML private TableColumn<Evento, String> colFecha;
+    @FXML private TableColumn<Evento, String> colHora;
     @FXML private TableColumn<Evento, String> colAccion;
     @FXML private TableColumn<Evento, String> colElemento;
     @FXML private TableColumn<Evento, String> colEmpleado;
 
     private ObservableList<Evento> eventosAuditoria;
     private FilteredList<Evento> eventosFiltrados;
+    private Evento eventoSeleccionado;
 
     private StageManager stageManager;
 
@@ -50,6 +55,7 @@ public class ReporteAuditoriaController implements FxmlController {
     @Override
     public void initialize() {
         colFecha.setCellValueFactory(new PropertyValueFactory<Evento, String>("fechaAccion"));
+        colHora.setCellValueFactory(new PropertyValueFactory<Evento, String>("horaAccion"));
         colAccion.setCellValueFactory(new PropertyValueFactory<Evento, String>("accion"));
         colElemento.setCellValueFactory(new PropertyValueFactory<Evento, String>("tabla"));
         colEmpleado.setCellValueFactory(new PropertyValueFactory<Evento, String>("nombreEmpleado"));
@@ -62,6 +68,19 @@ public class ReporteAuditoriaController implements FxmlController {
         cbTipoAccion.setItems(tiposAcciones);
         cbTipoAccion.getSelectionModel().selectFirst();
 
+        tbvEventos.setRowFactory(tv -> {
+            TableRow<Evento> row = new TableRow<>();
+            row.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (event.getClickCount() == 2 && (!row.isEmpty())){
+                        eventoSeleccionado = row.getItem();
+                        stageManager.mostrarModal(AuditoriaView.DETALLE_EVENTO);
+                    }
+                }
+            });
+            return row;
+        });
         tbvEventos.setItems(eventosAuditoria);
     }
 
@@ -89,5 +108,9 @@ public class ReporteAuditoriaController implements FxmlController {
             return true;
         });
         tbvEventos.setItems(eventosFiltrados);
+    }
+
+    Evento getEventoSeleccionado(){
+        return this.eventoSeleccionado;
     }
 }
