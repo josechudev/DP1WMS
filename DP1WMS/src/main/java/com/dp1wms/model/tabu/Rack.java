@@ -40,11 +40,7 @@ public class Rack {
     }
 
     public int longitud(){
-        if(this.esHorizontal()){
-            return abs(posIni.y - posFin.y)+1;
-        } else {
-            return abs(posIni.x - posFin.x)+1;
-        }
+        return abs(posIni.x - posFin.x + posIni.y - posFin.y) + 1;
     }
 
     public Point obtenerPosRandAlBorder(){

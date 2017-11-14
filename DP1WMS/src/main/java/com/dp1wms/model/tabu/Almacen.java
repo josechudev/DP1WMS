@@ -1,5 +1,6 @@
 package com.dp1wms.model.tabu;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Almacen {
@@ -11,6 +12,7 @@ public class Almacen {
     private int alto;
     private ArrayList<Rack> racks;
 
+    private Point puntoInicio;
 
     public static int MIN_LARGO = 8;
     public static int MAX_LARGO = 10;
@@ -127,5 +129,13 @@ public class Almacen {
 
     public void setProductos(boolean[][] productos) {
         this.productos = productos;
+    }
+
+    public Point getPuntoInicio() {
+        return puntoInicio;
+    }
+
+    public void setPuntoInicio(Point puntoInicio) {
+        this.puntoInicio = puntoInicio;
     }
 }

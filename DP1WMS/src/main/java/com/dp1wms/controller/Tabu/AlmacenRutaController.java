@@ -5,6 +5,7 @@ import com.dp1wms.controller.FxmlController;
 import com.dp1wms.model.tabu.Almacen;
 import com.dp1wms.model.tabu.Nodo;
 import com.dp1wms.model.tabu.Producto;
+import com.dp1wms.tabu.NearestNeighborHelper;
 import com.dp1wms.tabu.Tabu;
 import com.dp1wms.view.StageManager;
 import javafx.application.Platform;
@@ -73,18 +74,25 @@ public class AlmacenRutaController implements FxmlController {
             return;
         }
 
-        //matriz distancia calculada y camino inicial
-        int[][] distancias = this.gestorDistancias.getMatrizDistancia();
-        int[] caminoInicial = this.gestorDistancias.generarCaminoInicial();
-
-        //Imprime camino inicial
-        for (int i = 0; i < caminoInicial.length ; i++) {
-            System.out.print(caminoInicial[i]);
-            System.out.print(" - ");
-        }
-        System.out.println();System.out.println();
 
         Thread thread = new Thread(()->{
+            //generar caminos entra productos
+            NearestNeighborHelper nearestNeighborHelper = new NearestNeighborHelper(this.almacen, this.gestorDistancias);
+            nearestNeighborHelper.generarCaminosEntreProductos();
+
+            //matriz distancia calculada y camino inicial
+            int[][] distancias = nearestNeighborHelper.generarMatrizDistancia();
+            int[] caminoInicial = nearestNeighborHelper.generarCaminoInicial();
+
+            //Crear caminos entre productos y punto de partida
+
+            //Imprime camino inicial
+            for (int i = 0; i < caminoInicial.length ; i++) {
+                System.out.print(caminoInicial[i]);
+                System.out.print(" - ");
+            }
+            System.out.println();System.out.println();
+
             //Ejecutar tabu
             Tabu tabu = new Tabu(distancias, caminoInicial);
             int[] solucion = tabu.generarCamino(numIter, numIterSinMejora, tabuTamanho,tabuPermanencia, tiempoMaximo);
@@ -95,7 +103,7 @@ public class AlmacenRutaController implements FxmlController {
                     //Imprimie Almacen
                     imprimirAlmacen();
                     //Obtiene los puntos con la solucion
-                    ArrayList<Nodo> solucionNodo = gestorDistancias.convertirIdANodos(solucion);
+                    ArrayList<Nodo> solucionNodo = nearestNeighborHelper.convertirANodos(solucion);
                     //Imprime la solucion consola
                     for (int i = 0; i < solucion.length ; i++) {
                         System.out.print(solucion[i]);
@@ -174,7 +182,6 @@ public class AlmacenRutaController implements FxmlController {
                     rack.setPrefWidth(20);
                     this.nodes.add(rack);
                     almacen_layout.add(rack,i,j);
-                    System.out.println("imprimiendo products");
                 }
             }
         }
@@ -222,7 +229,7 @@ public class AlmacenRutaController implements FxmlController {
         Point puntoInicio = new Point(0,0);
 
         //Productos aleatorios para test
-        int numProductos = 5;
+        int numProductos = 30;
         ArrayList<Producto> productos = GestorProducto.generarProductos(almacen, numProductos);
 
         GestorAlmacen.llenarConProdYPtoPartida(almacen, productos, puntoInicio);
@@ -233,9 +240,16 @@ public class AlmacenRutaController implements FxmlController {
         //Puntos de interes
         GestorAlmacen.generarNodos(almacen);
 
+
         //Calcula distancias y camino inicial
         this.gestorDistancias = new GestorDistancias(almacen);
-        this.gestorDistancias.calcularDistancias();
+        //Generar lista & hash de nodos
+        this.gestorDistancias.generarNodos();
+
+        //Asignar vecinos a cada nodo
+        this.gestorDistancias.asignarVecinosANodos();
+
+        //this.gestorDistancias.calcularDistancias();
 
         almacen_layout.setGridLinesVisible(true);
     }
