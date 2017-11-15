@@ -3,11 +3,9 @@ package com.dp1wms.controller.Tabu;
 import com.dp1wms.controller.FxmlController;
 
 import com.dp1wms.dao.RepositoryAlmacen;
-import com.dp1wms.dao.RepositoryEnvio;
 import com.dp1wms.model.Cajon;
 import com.dp1wms.model.Envio;
 import com.dp1wms.dao.RepositoryRuta;
-import com.dp1wms.model.Envio;
 import com.dp1wms.model.Ruta;
 import com.dp1wms.model.tabu.Almacen;
 import com.dp1wms.model.tabu.Nodo;
@@ -18,13 +16,10 @@ import com.dp1wms.tabu.Tabu;
 import com.dp1wms.view.AlmacenView;
 import com.dp1wms.view.StageManager;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -35,7 +30,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.awt.Point;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,7 +106,6 @@ public class AlmacenRutaController implements FxmlController {
 
 
         Thread thread = new Thread(()->{
-            System.err.println("Empezando");
             //generar caminos entra productos
             BestFirstSearch bestFirstSearch = new BestFirstSearch(this.almacen, this.gestorDistancias);
             bestFirstSearch.generarCaminosEntreProductos();
@@ -124,11 +117,11 @@ public class AlmacenRutaController implements FxmlController {
             //Crear caminos entre productos y punto de partida
 
             //Imprime camino inicial
-            for (int i = 0; i < caminoInicial.length ; i++) {
+            /*for (int i = 0; i < caminoInicial.length ; i++) {
                 System.out.print(caminoInicial[i]);
                 System.out.print(" - ");
             }
-            System.out.println();System.out.println();
+            System.out.println();System.out.println();*/
 
             //Ejecutar tabu
             Tabu tabu = new Tabu(distancias, caminoInicial);
@@ -141,11 +134,11 @@ public class AlmacenRutaController implements FxmlController {
                     imprimirAlmacen();
                     //Obtiene los puntos con la solucion
                     solucionTabu = bestFirstSearch.convertirANodos(solucion);
-                    //Imprime la solucion consola
+                    /*//Imprime la solucion consola
                     for (int i = 0; i < solucion.length ; i++) {
                         System.out.print(solucion[i]);
                         System.out.print(" - ");
-                    }
+                    }*/
                     //Tiempo
                     System.out.println("\nTiempo Tabu: " + String.valueOf(tabu.getDuracion()));
 
@@ -168,13 +161,10 @@ public class AlmacenRutaController implements FxmlController {
 
         this.envio = envio;
         Long idenvio = this.envio.getIdEnvio();
-        System.err.println("ID ENVIO: " + idenvio);
 
         //Obtener una lista productos
         List<Cajon> cajones = repositoryAlmacen.obtenerCajones(idenvio);
         this.ubicarProductos(cajones);
-
-        System.err.println("Cantidad prods:" + this.productos.size());
 
 
         //Llenar matriz prod boolean con list prods
@@ -323,10 +313,7 @@ public class AlmacenRutaController implements FxmlController {
     //luego de que obtengo una lista de cajones a visitar los ubico en el almacen
     private void ubicarProductos(List<Cajon> cajones){
         this.limpiarproductos();
-
         Rack rack;
-
-
         this.productos = new ArrayList<>();
 
         int i = 0;
@@ -346,7 +333,6 @@ public class AlmacenRutaController implements FxmlController {
             prod.setRack(rack);
             this.productos.add(prod);
         }
-        //productos set
     }
 
 
