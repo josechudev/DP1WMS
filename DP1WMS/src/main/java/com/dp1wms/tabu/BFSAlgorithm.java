@@ -3,12 +3,13 @@ package com.dp1wms.tabu;
 import com.dp1wms.controller.Tabu.GestorDistancias;
 import com.dp1wms.model.tabu.Almacen;
 import com.dp1wms.model.tabu.Nodo;
-
-import java.awt.*;
+import java.awt.Point;
 import java.util.*;
-import java.util.concurrent.PriorityBlockingQueue;
 
-public class BestFirstSearch {
+public class BFSAlgorithm {
+
+    public static String BREATH_ALG = "Breath-First Search";
+    public static String BEST_ALG = "Best-First Search";
 
     private GestorDistancias gestorDistancias;
     private Almacen almacen;
@@ -17,8 +18,9 @@ public class BestFirstSearch {
 
     private ArrayList<Segmento> segmentos;
 
+    private String choice_algorithm;
 
-    public BestFirstSearch(Almacen almacen, GestorDistancias gestorDistancias){
+    public BFSAlgorithm(Almacen almacen, GestorDistancias gestorDistancias, String choice_algorithm){
         this.almacen = almacen;
         this.gestorDistancias = gestorDistancias;
 
@@ -35,6 +37,7 @@ public class BestFirstSearch {
             }
         }
         this.segmentos = new ArrayList<>();
+        this.choice_algorithm  = choice_algorithm;
     }
 
     public void generarCaminosEntreProductos(){
@@ -44,7 +47,13 @@ public class BestFirstSearch {
                 //crear camino entre dos productos
                 Nodo a = productos.get(i);
                 Nodo b = productos.get(j);
-                Segmento segmento = crearSegmentoEntreProductos(a,b);
+                Segmento segmento;
+                if(this.choice_algorithm == BEST_ALG){
+                    segmento = bestFirstAlgorithm(a,b);
+                } else { //this.choice_algorithm == BREATH_ALG
+                    segmento = breadFirstAlgorithm(a,b);
+                }
+
                 this.segmentos.add(segmento);
             }
         }
@@ -88,13 +97,11 @@ public class BestFirstSearch {
     }
 
     /**
-     * ------ Eje X +
-     * |
-     * |
-     * |
-     * Eje Y +
+     * Breadth-First Algorithm
+     * Start: nodoA
+     * Goal: nodoB
      */
-    private Segmento crearSegmentoEntreProductos(Nodo nodoA, Nodo nodoB){
+    private Segmento breadFirstAlgorithm(Nodo nodoA, Nodo nodoB){
         Segmento segmento = new Segmento();
         ArrayList<NodoBFS> queue = new ArrayList<>();
         HashSet<Nodo> visitados = new HashSet<>();
@@ -132,8 +139,12 @@ public class BestFirstSearch {
         return segmento;
     }
 
-
-    private Segmento crearSegmentoEntreProductos2(Nodo nodoA, Nodo nodoB){
+    /**
+     * Best-First Algorithm
+     * Start: nodoA
+     * Goal: nodoB
+     */
+    private Segmento bestFirstAlgorithm(Nodo nodoA, Nodo nodoB){
         Segmento segmento = new Segmento();
         ArrayList<NodoBFS> queue = new ArrayList<>();
         HashSet<Nodo> visitados = new HashSet<>();
@@ -145,7 +156,6 @@ public class BestFirstSearch {
             queue.sort((a,b)->{
                 return a.heuristic - b.heuristic;
             });
-            evaluationNode = queue.get(0); queue.remove(0);
             evaluationNode = queue.get(0); queue.remove(0);
             if(evaluationNode.valor.equals(nodoB)){//encontró el camino
                 break;
