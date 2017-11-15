@@ -35,9 +35,6 @@ public class RepositoryAlmacenImpl implements RepositoryAlmacen {
             e.printStackTrace();
         }
 
-        System.out.println("Lista de almacenes");
-        System.out.println(almacenes.size());
-
         return almacenes.get(0);
     }
 
@@ -53,9 +50,6 @@ public class RepositoryAlmacenImpl implements RepositoryAlmacen {
         }catch(EmptyResultDataAccessException e ){
             e.printStackTrace();
         }
-
-        System.out.println("Numero de Racks");
-        System.out.println(racks.size());
 
         return racks;
     }
@@ -86,9 +80,6 @@ public class RepositoryAlmacenImpl implements RepositoryAlmacen {
             e.printStackTrace();
         }
 
-        System.out.println("Numero de Envios");
-        System.out.println(envios.size());
-
         return envios;
     }
 
@@ -106,13 +97,6 @@ public class RepositoryAlmacenImpl implements RepositoryAlmacen {
             e.printStackTrace();
         }
 
-        if (cajones != null) {
-            System.out.println("Numero de Cajones: ");
-            System.out.println(cajones.size());
-        }
-        else {
-            System.out.println("No hay cajones rip");
-        }
         return cajones;
 
     }

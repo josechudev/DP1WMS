@@ -28,6 +28,8 @@ public class TabuBuscarEnvioCtrl implements FxmlController{
     @FXML private TableColumn<Envio, String> rucTC;
     @FXML private TableColumn<Envio, String> nombreTC;
 
+
+
     @Autowired
     private RepositoryAlmacen repositoryAlmacen;
 
