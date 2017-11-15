@@ -16,9 +16,6 @@ public class CajonesResultSetExtractor implements ResultSetExtractor{
         cajon.setIdRack(resultSet.getInt("idrack"));
         cajon.setPosX(resultSet.getInt("posx"));
 
-        System.out.println("query");
-        System.out.println(cajon.getIdRack());
-        System.out.println(cajon.getPosX());
         return cajon;
     }
 

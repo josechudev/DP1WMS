@@ -3,23 +3,19 @@ package com.dp1wms.controller.Tabu;
 import com.dp1wms.controller.FxmlController;
 
 import com.dp1wms.dao.RepositoryAlmacen;
-import com.dp1wms.dao.RepositoryEnvio;
 import com.dp1wms.model.Cajon;
 import com.dp1wms.model.Envio;
 import com.dp1wms.dao.RepositoryRuta;
-import com.dp1wms.model.Envio;
 import com.dp1wms.model.Ruta;
 import com.dp1wms.model.tabu.Almacen;
 import com.dp1wms.model.tabu.Nodo;
 import com.dp1wms.model.tabu.Producto;
 import com.dp1wms.model.tabu.Rack;
-import com.dp1wms.tabu.BestFirstSearch;
+import com.dp1wms.tabu.BFSAlgorithm;
 import com.dp1wms.tabu.Tabu;
 import com.dp1wms.view.AlmacenView;
 import com.dp1wms.view.StageManager;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -35,7 +31,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.awt.Point;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +51,7 @@ public class AlmacenRutaController implements FxmlController {
     @FXML private TextField listaTabuTamanho;
     @FXML private TextField numIteracionesSinMejora;
 
+    @FXML private ComboBox<String> complementoCB;
 
     private ArrayList<Node> nodes;
     private ArrayList<Nodo> solucionTabu;
@@ -85,7 +81,7 @@ public class AlmacenRutaController implements FxmlController {
     }
 
     @FXML
-    private void click_generar_ruta(ActionEvent event){
+    private void generarRuta(ActionEvent event){
         Integer tabuTamanho;
         Integer tabuPermanencia;
         Long numIter;
@@ -110,25 +106,26 @@ public class AlmacenRutaController implements FxmlController {
             return;
         }
 
+        String algorithm = this.complementoCB.getSelectionModel().getSelectedItem();
+
 
         Thread thread = new Thread(()->{
-            System.err.println("Empezando");
             //generar caminos entra productos
-            BestFirstSearch bestFirstSearch = new BestFirstSearch(this.almacen, this.gestorDistancias);
-            bestFirstSearch.generarCaminosEntreProductos();
+            BFSAlgorithm BFSAlgorithm = new BFSAlgorithm(this.almacen, this.gestorDistancias, algorithm);
+            BFSAlgorithm.generarCaminosEntreProductos();
 
             //matriz distancia calculada y camino inicial
-            int[][] distancias = bestFirstSearch.generarMatrizDistancia();
-            int[] caminoInicial = bestFirstSearch.generarCaminoInicial();
+            int[][] distancias = BFSAlgorithm.generarMatrizDistancia();
+            int[] caminoInicial = BFSAlgorithm.generarCaminoInicial();
 
             //Crear caminos entre productos y punto de partida
 
             //Imprime camino inicial
-            for (int i = 0; i < caminoInicial.length ; i++) {
+            /*for (int i = 0; i < caminoInicial.length ; i++) {
                 System.out.print(caminoInicial[i]);
                 System.out.print(" - ");
             }
-            System.out.println();System.out.println();
+            System.out.println();System.out.println();*/
 
             //Ejecutar tabu
             Tabu tabu = new Tabu(distancias, caminoInicial);
@@ -140,12 +137,12 @@ public class AlmacenRutaController implements FxmlController {
                     //Imprimie Almacen
                     imprimirAlmacen();
                     //Obtiene los puntos con la solucion
-                    solucionTabu = bestFirstSearch.convertirANodos(solucion);
-                    //Imprime la solucion consola
+                    solucionTabu = BFSAlgorithm.convertirANodos(solucion);
+                    /*//Imprime la solucion consola
                     for (int i = 0; i < solucion.length ; i++) {
                         System.out.print(solucion[i]);
                         System.out.print(" - ");
-                    }
+                    }*/
                     //Tiempo
                     System.out.println("\nTiempo Tabu: " + String.valueOf(tabu.getDuracion()));
 
@@ -168,13 +165,10 @@ public class AlmacenRutaController implements FxmlController {
 
         this.envio = envio;
         Long idenvio = this.envio.getIdEnvio();
-        System.err.println("ID ENVIO: " + idenvio);
 
         //Obtener una lista productos
         List<Cajon> cajones = repositoryAlmacen.obtenerCajones(idenvio);
         this.ubicarProductos(cajones);
-
-        System.err.println("Cantidad prods:" + this.productos.size());
 
 
         //Llenar matriz prod boolean con list prods
@@ -216,6 +210,91 @@ public class AlmacenRutaController implements FxmlController {
         }
     }
 
+    @FXML
+    private void verHistorialModal(){
+
+        if(this.envio == null){
+            this.stageManager.mostrarErrorDialog("Generar Ruta", null,
+                    "Debe seleccionar un envio");
+            return;
+        }
+
+        this.verHistorial.setEnvio(this.envio);
+        this.stageManager.mostrarModal(AlmacenView.HISTORIAL_RUTAS);
+        Ruta ruta = this.verHistorial.getRuta();
+        if(ruta != null){
+            this.dibujuarRuta(ruta);
+        }
+    }
+
+    @Override
+    public void initialize() {
+        this.initFields();
+        this.nodes = new ArrayList<>();
+        this.envio = null;
+        this.productos = null;
+
+        this.almacen = repositoryAlmacen.obtenerAlmacen();
+
+        //agregar filas
+        for (int i = 0; i < almacen.getAlto() - 1; i++) {
+            RowConstraints row = new RowConstraints();
+            row.setPrefHeight(20);
+            almacen_layout.getRowConstraints().add(row);
+        }
+
+        //agregar columnas
+        for (int j = 0; j < almacen.getAncho() - 1; j++) {
+            ColumnConstraints col = new ColumnConstraints();
+            col.setPrefWidth(20);
+            almacen_layout.getColumnConstraints().add(col);
+        }
+
+
+        //agregar racks
+        almacen.setRacks(new ArrayList<>(repositoryAlmacen.obtenerRacks()));
+        almacen.agregar_racks();
+
+
+        //imprimir almacen
+        this.imprimirAlmacen();
+
+        almacen_layout.setGridLinesVisible(true);
+    }
+
+    private void initFields(){
+        this.numeroIteraciones.setText("10000");
+        this.tiempoMaximoTF.setText("60");
+        this.listaTabuTamanho.setText("7");
+        this.numIteracionesSinMejora.setText("10000");
+        this.complementoCB.getItems().clear();
+        this.complementoCB.getItems().add(BFSAlgorithm.BREATH_ALG);
+        this.complementoCB.getItems().add(BFSAlgorithm.BEST_ALG);
+        this.complementoCB.getSelectionModel().select(0);
+    }
+
+    private void dibujuarRuta(Ruta ruta){
+        this.imprimirAlmacen();
+        Integer[] camino_x = ruta.getCamino_x();
+        Integer[] camino_y = ruta.getCamino_y();
+        boolean[][] productos = this.almacen.getProductos();
+        for(int i = 0; i < camino_x.length - 1; i++){
+            Button punto = new Button();
+            if(productos[camino_x[i]][camino_y[i]]){
+                punto.setStyle("-fx-background-color: #95CC4C; -fx-padding: 0; -fx-margin: 0; -fx-border-radius: 0;" +
+                        " -fx-font-size: 10");
+            } else {
+                punto.setStyle("-fx-background-color: #ffffff; -fx-padding: 0; -fx-margin: 0; -fx-border-radius: 0;" +
+                        " -fx-font-size: 10");
+            }
+            punto.setPrefHeight(20);
+            punto.setPrefWidth(20);
+            punto.setText(String.valueOf(i));
+            this.nodes.add(punto);
+            almacen_layout.add(punto, camino_x[i], camino_y[i]);
+        }
+    }
+
     public void imprimirAlmacen(){
         //color celdas
 
@@ -243,14 +322,14 @@ public class AlmacenRutaController implements FxmlController {
         //color racks
         for (int i = 0; i < almacen.getAncho(); i++) {
             for (int j = 0; j < almacen.getAlto(); j++) {
-                    if (layout[i][j]){
-                        Region cell = new Region();
-                        cell.setStyle("-fx-background-color: #4C6CCC;");
-                        cell.setPrefHeight(20);
-                        cell.setPrefWidth(20);
-                        this.nodes.add(cell);
-                        almacen_layout.add(cell,i,j);
-                    }
+                if (layout[i][j]){
+                    Region cell = new Region();
+                    cell.setStyle("-fx-background-color: #4C6CCC;");
+                    cell.setPrefHeight(20);
+                    cell.setPrefWidth(20);
+                    this.nodes.add(cell);
+                    almacen_layout.add(cell,i,j);
+                }
             }
         }
 
@@ -323,10 +402,7 @@ public class AlmacenRutaController implements FxmlController {
     //luego de que obtengo una lista de cajones a visitar los ubico en el almacen
     private void ubicarProductos(List<Cajon> cajones){
         this.limpiarproductos();
-
         Rack rack;
-
-
         this.productos = new ArrayList<>();
 
         int i = 0;
@@ -345,89 +421,6 @@ public class AlmacenRutaController implements FxmlController {
             Producto prod = new Producto(i, "Producto" + String.valueOf(i), p);
             prod.setRack(rack);
             this.productos.add(prod);
-        }
-        //productos set
-    }
-
-
-    @Override
-    public void initialize() {
-        this.initFields();
-        this.nodes = new ArrayList<>();
-        this.envio = null;
-        this.productos = null;
-
-        this.almacen = repositoryAlmacen.obtenerAlmacen();
-
-        //agregar filas
-        for (int i = 0; i < almacen.getAlto() - 1; i++) {
-            RowConstraints row = new RowConstraints();
-            row.setPrefHeight(20);
-            almacen_layout.getRowConstraints().add(row);
-        }
-
-        //agregar columnas
-        for (int j = 0; j < almacen.getAncho() - 1; j++) {
-            ColumnConstraints col = new ColumnConstraints();
-            col.setPrefWidth(20);
-            almacen_layout.getColumnConstraints().add(col);
-        }
-
-
-        //agregar racks
-        almacen.setRacks(new ArrayList<>(repositoryAlmacen.obtenerRacks()));
-        almacen.agregar_racks();
-
-
-        //imprimir almacen
-        this.imprimirAlmacen();
-
-        almacen_layout.setGridLinesVisible(true);
-    }
-
-    private void initFields(){
-        this.numeroIteraciones.setText("100000");
-        this.tiempoMaximoTF.setText("300");
-        this.listaTabuTamanho.setText("30");
-        this.numIteracionesSinMejora.setText("100000");
-    }
-
-    @FXML
-    private void verHistorialModal(){
-
-        if(this.envio == null){
-            this.stageManager.mostrarErrorDialog("Generar Ruta", null,
-                    "Debe seleccionar un envio");
-            return;
-        }
-
-        this.verHistorial.setEnvio(this.envio);
-        this.stageManager.mostrarModal(AlmacenView.HISTORIAL_RUTAS);
-        Ruta ruta = this.verHistorial.getRuta();
-        if(ruta != null){
-            this.dibujuarRuta(ruta);
-        }
-    }
-
-    private void dibujuarRuta(Ruta ruta){
-        this.imprimirAlmacen();
-        Integer[] camino_x = ruta.getCamino_x();
-        Integer[] camino_y = ruta.getCamino_y();
-        boolean[][] productos = this.almacen.getProductos();
-        for(int i = 0; i < camino_x.length - 1; i++){
-            Button punto = new Button();
-            if(productos[camino_x[i]][camino_y[i]]){
-                punto.setStyle("-fx-background-color: #95CC4C; -fx-padding: 0; -fx-margin: 0; -fx-border-radius: 0;" +
-                        " -fx-font-size: 10");
-            } else {
-                punto.setStyle("-fx-background-color: #ffffff; -fx-padding: 0; -fx-margin: 0; -fx-border-radius: 0;" +
-                        " -fx-font-size: 10");
-            }
-            punto.setPrefHeight(20);
-            punto.setPrefWidth(20);
-            punto.setText(String.valueOf(i));
-            this.nodes.add(punto);
-            almacen_layout.add(punto, camino_x[i], camino_y[i]);
         }
     }
 
