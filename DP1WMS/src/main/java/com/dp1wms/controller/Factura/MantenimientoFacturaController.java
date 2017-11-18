@@ -209,7 +209,7 @@ public class MantenimientoFacturaController implements FxmlController {
     }
 
     public boolean existeFacturaActiva(Long auxIdEnvio){
-        return repositoryComprobantePago.existeFacturaActiva(auxIdEnvio);
+        return repositoryComprobantePago.existeFacturaActivaCorregida(auxIdEnvio);
     }
 
     public void setUsuario(com.dp1wms.model.Usuario usuario){
