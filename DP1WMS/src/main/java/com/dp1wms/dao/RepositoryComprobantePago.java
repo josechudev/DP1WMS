@@ -19,5 +19,5 @@ public interface RepositoryComprobantePago {
 
     void cambiarActivo(boolean auxActivo, Long auxIdComprobante, Usuario auxUsuario);
 
-    boolean existeFacturaActiva(Long auxIdEnvio);
+    boolean existeFacturaActivaCorregida(Long auxIdEnvio);
 }

@@ -102,7 +102,12 @@ public class RepositoryComprobantePagoImpl implements RepositoryComprobantePago 
                     "?, ?, " +
                     "?, " +
                     "? ) ";
-            float auxDescuento = auxDetallePedido.getDescuento() * (auxDetalleEnvio.getCantidad()/auxDetallePedido.getCantidad());
+            float auxDescuento = auxDetallePedido.getDescuento();
+            int auxDetalleEnvioCantidad = auxDetalleEnvio.getCantidad();
+            int auxDetallePedidoCantidad = auxDetallePedido.getCantidad();
+            auxDescuento *= (float) auxDetalleEnvioCantidad;
+            auxDescuento /= (float) auxDetallePedidoCantidad;
+            //auxDescuento *= (auxDetalleEnvio.getCantidad()/auxDetallePedido.getCantidad());
             float auxSubTotalDetalle = (auxDetallePedido.getPrecioUnitario()*auxDetalleEnvio.getCantidad()) - auxDescuento;
             auxSubtotal += auxSubTotalDetalle;
             try {
@@ -254,10 +259,10 @@ public class RepositoryComprobantePagoImpl implements RepositoryComprobantePago 
         }
     }
 
-    public boolean existeFacturaActiva(Long auxIdEnvio){
+    public boolean existeFacturaActivaCorregida(Long auxIdEnvio){
         String sql = "SELECT idComprobante " +
                 "FROM ComprobantePago " +
-                "WHERE idEnvio = ? and activo = true ";
+                "WHERE idEnvio = ? ";
 
         try{
             return ( ( jdbcTemplate.query(sql,
