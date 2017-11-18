@@ -1,10 +1,7 @@
 package com.dp1wms.dao.impl;
 
 import com.dp1wms.dao.RepositoryAlmacen;
-import com.dp1wms.dao.mapper.AlmacenRowMapper;
-import com.dp1wms.dao.mapper.CajonesRowMapper;
-import com.dp1wms.dao.mapper.EnvioRowMapper;
-import com.dp1wms.dao.mapper.RackRowMapper;
+import com.dp1wms.dao.mapper.*;
 import com.dp1wms.model.Cajon;
 import com.dp1wms.model.Cliente;
 import com.dp1wms.model.Envio;
@@ -38,6 +35,20 @@ public class RepositoryAlmacenImpl implements RepositoryAlmacen {
         return almacenes.get(0);
     }
 
+
+    public List<String> obtenerNombresProductos(Long idenvio){
+        String SQL = "select nombreproducto from (select idproducto from detalleenvio where idenvio = " +
+                idenvio.toString() + ") a, producto where a.idproducto = producto.idproducto";
+
+        List<String> nombres_productos = new ArrayList<>();
+
+        try{
+            nombres_productos = jdbcTemplate.query(SQL,new EnvioProductosRowMapper());
+        }catch (EmptyResultDataAccessException e){
+            e.printStackTrace();
+        }
+        return nombres_productos;
+    }
 
     public List<Rack> obtenerRacks(){
 
