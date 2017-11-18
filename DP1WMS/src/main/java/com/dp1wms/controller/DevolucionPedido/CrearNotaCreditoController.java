@@ -37,6 +37,8 @@ public class CrearNotaCreditoController implements FxmlController {
     @FXML
     private TableColumn<DetalleFactura,String> c_subtotal;
     @FXML
+    private TableColumn<DetalleFactura,String> c_descuento;
+    @FXML
     private TextField txb_nombreCliente;
     @FXML
     private TextField txb_numComprobante;
@@ -96,6 +98,11 @@ public class CrearNotaCreditoController implements FxmlController {
             Double subtotal = value.getValue().getSubtotal();
             BigDecimal b_total = new BigDecimal(subtotal);
             return new SimpleStringProperty(""+b_total.setScale(3,BigDecimal.ROUND_HALF_UP));
+        });
+        c_descuento.setCellValueFactory(value->{
+            Double descuento = value.getValue().getDescuento();
+            BigDecimal b_descuento = new BigDecimal(descuento);
+            return new SimpleStringProperty(""+b_descuento.setScale(3,BigDecimal.ROUND_HALF_UP));
         });
         tablaDetalleComprobante.setEditable(true);
     }
