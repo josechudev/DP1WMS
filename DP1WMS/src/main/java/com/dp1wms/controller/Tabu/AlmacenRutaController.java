@@ -16,11 +16,14 @@ import com.dp1wms.tabu.Tabu;
 import com.dp1wms.view.AlmacenView;
 import com.dp1wms.view.StageManager;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -50,6 +53,7 @@ public class AlmacenRutaController implements FxmlController {
     @FXML private TextField tiempoMaximoTF;
     @FXML private TextField listaTabuTamanho;
     @FXML private TextField numIteracionesSinMejora;
+    @FXML private ListView lista_productos;
 
     @FXML private ComboBox<String> complementoCB;
 
@@ -154,6 +158,8 @@ public class AlmacenRutaController implements FxmlController {
        thread.start();
     }
 
+
+
     //al seleccionar envio deberia imprimir en el almacen solo los cajones a visitar
     @FXML
     private void seleccionarEnvio(ActionEvent e){
@@ -166,10 +172,31 @@ public class AlmacenRutaController implements FxmlController {
         this.envio = envio;
         Long idenvio = this.envio.getIdEnvio();
 
+
+
+        ObservableList<String> nombres_productos = FXCollections.observableArrayList();
+        List<String> nombres = repositoryAlmacen.obtenerNombresProductos(idenvio);
+
+        for (String nombre:nombres) {
+            nombres_productos.add(nombre);
+        }
+        lista_productos.setItems(nombres_productos);
+
+
         //Obtener una lista productos
         List<Cajon> cajones = repositoryAlmacen.obtenerCajones(idenvio);
         this.ubicarProductos(cajones);
 
+        for (Cajon cajon: cajones) {
+            System.out.println(cajon.getPosX());
+            System.out.println(cajon.getPosY());
+        }
+
+
+//        for (Producto producto: productos) {
+//            System.out.println(producto.getPosicion());
+//        }
+//        //lista_productos.setItems(nombres_productos);
 
         //Llenar matriz prod boolean con list prods
         GestorAlmacen.llenarConProdYPtoPartida(almacen, this.productos, this.puntoInicio);
@@ -185,6 +212,9 @@ public class AlmacenRutaController implements FxmlController {
 
         this.imprimirAlmacen();
     }
+
+
+
 
     @FXML
     private void guardarRuta(){
