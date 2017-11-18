@@ -48,7 +48,9 @@ public class ListaEnvio implements FxmlController {
         for(int i = 0; i < auxListaEnvio.size(); i++){
             System.out.printf("%f\n", auxListaEnvio.get(i).getCostoFlete());
             if( !v_parentController.existeFacturaActiva( auxListaEnvio.get(i).getIdEnvio() ) ) {
-                if( auxListaEnvio.get(i).getRealizado() ) this.tablaEnviosPendientes.getItems().add(auxListaEnvio.get(i));
+                if( auxListaEnvio.get(i).getRealizado() ) {
+                    this.tablaEnviosPendientes.getItems().add(auxListaEnvio.get(i));
+                }
             }
         }
         //this.tablaEnviosPendientes.getItems().addAll(auxListaEnvio);

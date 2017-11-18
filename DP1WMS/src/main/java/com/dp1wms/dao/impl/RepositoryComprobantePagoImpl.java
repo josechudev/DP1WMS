@@ -259,10 +259,10 @@ public class RepositoryComprobantePagoImpl implements RepositoryComprobantePago 
         }
     }
 
-    public boolean existeFacturaActiva(Long auxIdEnvio){
+    public boolean existeFacturaActivaCorregida(Long auxIdEnvio){
         String sql = "SELECT idComprobante " +
                 "FROM ComprobantePago " +
-                "WHERE idEnvio = ? and activo = true ";
+                "WHERE idEnvio = ? ";
 
         try{
             return ( ( jdbcTemplate.query(sql,
