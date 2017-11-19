@@ -9,4 +9,6 @@ public interface RepositoryCargaMasiva {
     void storeProcedure_cargarAlmacen();
     void storeProcedure_cargarCategoriaProductos();
     void storeProcedure_cargarProductos();
+    void storeProcedure_cargarLimpiarCargaMasiva();
+    void storeProcedure_cargarPedido();
 }

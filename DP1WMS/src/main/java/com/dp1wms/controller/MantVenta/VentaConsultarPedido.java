@@ -1,6 +1,7 @@
 package com.dp1wms.controller.MantVenta;
 
 import com.dp1wms.controller.FxmlController;
+import com.dp1wms.dao.RepositoryCargaMasiva;
 import com.dp1wms.dao.RepositoryMantPedido;
 import com.dp1wms.model.Pedido;
 import com.dp1wms.model.Proforma;
@@ -39,12 +40,18 @@ public class VentaConsultarPedido implements FxmlController {
     @FXML private TableColumn<Pedido, Integer> numEnviosCol;
     @FXML private TableColumn<Pedido, Float> totalCol;
     @FXML private TableColumn<Pedido, String> estadoCol;
+    @Autowired
+    private RepositoryCargaMasiva repositoryCargaMasiva;
 
     @Autowired
     RepositoryMantPedido repositoryMantPedido;
 
     private StageManager stageManager;
     private VentaInformacionPedido ventaInformacionPedido;
+
+    public void cargarPedidoMasivo(){
+        this.repositoryCargaMasiva.storeProcedure_cargarPedido();
+    }
 
 
     @FXML
