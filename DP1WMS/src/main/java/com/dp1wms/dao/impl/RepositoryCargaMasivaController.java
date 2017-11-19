@@ -57,4 +57,16 @@ public class RepositoryCargaMasivaController implements RepositoryCargaMasiva{
         jdbcTemplate.update("DO $$ BEGIN  PERFORM INSERTAR_PRODUCTOS(); END $$;");
         System.out.println("store procedure ok?...");
     }
+
+
+    public void storeProcedure_cargarLimpiarCargaMasiva(){
+        System.out.println("ejecutanto store procedure...");
+        jdbcTemplate.update("DO $$ BEGIN  PERFORM LIMPIAR_DATA(); END $$;");
+        System.out.println("store procedure ok?...");
+    }
+    public void storeProcedure_cargarPedido(){
+        System.out.println("ejecutanto store procedure...");
+        jdbcTemplate.update("DO $$ BEGIN  PERFORM INSERTAR_PEDIDOS(); END $$;");
+        System.out.println("store procedure ok?...");
+    }
 }

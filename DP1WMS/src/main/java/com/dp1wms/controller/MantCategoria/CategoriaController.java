@@ -45,7 +45,6 @@ public class CategoriaController implements FxmlController {
         this.stageManager = stageManager;
     }
 
-
     public void cargaMasiva(ActionEvent event){
         this.repositoryCargaMasiva.storeProcedure_cargarCategoriaProductos();
         this._llenarGrilla();

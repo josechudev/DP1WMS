@@ -257,6 +257,11 @@ public class MainController implements FxmlController {
         this.stageManager.mostrarModal(AlmacenView.TABU);
     }
 
+    @FXML
+    public void cargarConfiguracion(){
+        this.stageManager.mostrarModal(MainView.VENTANA_CONFIGURACION);
+    }
+
     public void setUsuario(Usuario usuario){
         this.usuario = usuario;
     }
