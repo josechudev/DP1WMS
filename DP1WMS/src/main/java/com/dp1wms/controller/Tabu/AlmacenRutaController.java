@@ -7,6 +7,7 @@ import com.dp1wms.model.Cajon;
 import com.dp1wms.model.Envio;
 import com.dp1wms.dao.RepositoryRuta;
 import com.dp1wms.model.Ruta;
+import com.dp1wms.model.Ubicacion;
 import com.dp1wms.model.tabu.Almacen;
 import com.dp1wms.model.tabu.Nodo;
 import com.dp1wms.model.tabu.Producto;
@@ -16,15 +17,14 @@ import com.dp1wms.tabu.Tabu;
 import com.dp1wms.view.AlmacenView;
 import com.dp1wms.view.StageManager;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
@@ -53,7 +53,19 @@ public class AlmacenRutaController implements FxmlController {
     @FXML private TextField tiempoMaximoTF;
     @FXML private TextField listaTabuTamanho;
     @FXML private TextField numIteracionesSinMejora;
-    @FXML private ListView lista_productos;
+
+
+    //@FXML private ListView lista_productos;
+    @FXML
+    private TableView<Ubicacion> tabla_productos = new TableView<Ubicacion>();
+    @FXML
+    private TableColumn<Ubicacion,Integer> c_cantidad;
+    @FXML
+    private TableColumn<Ubicacion,String> c_rack;
+    @FXML
+    private TableColumn<Ubicacion,String> c_cajon;
+    @FXML
+    private TableColumn<Ubicacion,String> c_nombreProducto;
 
     @FXML private ComboBox<String> complementoCB;
 
@@ -158,7 +170,28 @@ public class AlmacenRutaController implements FxmlController {
        thread.start();
     }
 
+    public void actualizarListaProductosEnvio(Long idenvio){
+        List<Ubicacion> ubicacionesProductosEnvio = this.repositoryAlmacen.obtenerUbicaciones(idenvio);
+        this.limpiarTabla();
+        this.llenarTabla(ubicacionesProductosEnvio);
+    }
 
+    public void limpiarTabla(){
+        tabla_productos.getItems().clear();
+        c_cantidad.setCellValueFactory(new PropertyValueFactory<Ubicacion,Integer>("cantidad"));
+        c_cajon.setCellValueFactory(value->{
+            return new SimpleStringProperty("X: "+value.getValue().getCajonPosicionX()+" Nivel: "+value.getValue().getCajonPosicionY());
+        });
+        c_rack.setCellValueFactory(new PropertyValueFactory<Ubicacion,String>("codigoRack"));
+        c_nombreProducto.setCellValueFactory(new PropertyValueFactory<Ubicacion,String>("nombreProducto"));
+        tabla_productos.setEditable(true);
+    }
+
+    public void llenarTabla(List<Ubicacion> lista){
+        for(Ubicacion ubicacion : lista){
+            this.tabla_productos.getItems().add(ubicacion);
+        }
+    }
 
     //al seleccionar envio deberia imprimir en el almacen solo los cajones a visitar
     @FXML
@@ -172,8 +205,8 @@ public class AlmacenRutaController implements FxmlController {
         this.envio = envio;
         Long idenvio = this.envio.getIdEnvio();
 
-
-
+// comentado el domingo
+/*
         ObservableList<String> nombres_productos = FXCollections.observableArrayList();
         List<String> nombres = repositoryAlmacen.obtenerNombresProductos(idenvio);
 
@@ -181,7 +214,11 @@ public class AlmacenRutaController implements FxmlController {
             nombres_productos.add(nombre);
         }
         lista_productos.setItems(nombres_productos);
+*/
 
+        // obtengo todas las ubicaciones asociadas a los productos del pedido
+        // si se conoce el lote se puede filtrar esta lista
+        this.actualizarListaProductosEnvio(idenvio);
 
         //Obtener una lista productos
         List<Cajon> cajones = repositoryAlmacen.obtenerCajones(idenvio);
