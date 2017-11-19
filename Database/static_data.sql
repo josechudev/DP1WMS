@@ -39,6 +39,9 @@ INSERT INTO seccion (descripcion) VALUES ('Reporte Kardex');
 INSERT INTO seccion (descripcion) VALUES ('Reporte de Almacén');
 INSERT INTO seccion (descripcion) VALUES ('Reporte de Auditoria');
 
+--Configuracion
+INSERT INTO seccion (descripcion) VALUES ('Configuracíón del Sistema');
+
 --Master User
 --tipo empleado
 INSERT INTO tipoempleado (descripcion) VALUES ('Master');
@@ -89,6 +92,12 @@ INSERT INTO tipoempleadoxseccion (idtipoempleado, idseccion, idempleadoauditado)
 VALUES (1,20,1);
 INSERT INTO tipoempleadoxseccion (idtipoempleado, idseccion, idempleadoauditado)
 VALUES (1,21,1);
+INSERT INTO tipoempleadoxseccion (idtipoempleado, idseccion, idempleadoauditado)
+VALUES (1,22,1);
+INSERT INTO tipoempleadoxseccion (idtipoempleado, idseccion, idempleadoauditado)
+VALUES (1,23,1);
+INSERT INTO tipoempleadoxseccion (idtipoempleado, idseccion, idempleadoauditado)
+VALUES (1,24,1);
 
 -- Tipo comprobante de pago
 INSERT INTO TipoComprobante (descripcion) VALUES ('Boleta');
@@ -96,3 +105,13 @@ INSERT INTO TipoComprobante (descripcion) VALUES ('Factura');
 
 
 -- Tipo de movimiento
+INSERT INTO TipoMovimiento (descripcion, esingreso) VALUES ('Ingreso de Lote', true);
+INSERT INTO TipoMovimiento (descripcion, esingreso) VALUES ('Despacho', false);
+INSERT INTO TipoMovimiento (descripcion) VALUES ('Ubicacion de Lote');
+INSERT INTO TipoMovimiento (descripcion) VALUES ('Reubicacion de Lote');
+INSERT INTO TipoMovimiento (descripcion, esingreso) VALUES ('Robo', false);
+INSERT INTO TipoMovimiento (descripcion, esingreso) VALUES ('Pérdida', false);
+INSERT INTO TipoMovimiento (descripcion, esingreso) VALUES ('Ingreso', true);
+INSERT INTO TipoMovimiento (descripcion, esingreso) VALUES ('Salida', false);
+INSERT INTO TipoMovimiento (descripcion, esingreso) VALUES ('Incorporación de Producto', true);
+INSERT INTO TipoMovimiento (descripcion, esingreso) VALUES ('Devolución', false);

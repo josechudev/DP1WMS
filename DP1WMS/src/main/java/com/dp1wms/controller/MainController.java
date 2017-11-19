@@ -44,6 +44,8 @@ public class MainController implements FxmlController {
     //Reporte
     @FXML private MenuItem reportKardexMI; @FXML private MenuItem reporteAlmacenMI;
     @FXML private MenuItem reporteAuditoriaMI;
+    //Configuracion
+    @FXML private MenuItem configuracionMI;
 
 
     @FXML
@@ -103,6 +105,8 @@ public class MainController implements FxmlController {
         //Reporte
         menus.put(21, this.reportKardexMI); menus.put(22, this.reporteAlmacenMI);
         menus.put(23, this.reporteAuditoriaMI);
+        //Configuracion
+        menus.put(24, this.configuracionMI);
 
         TipoEmpleado te = this.empleado.getTipoEmpleado();
         //cargar secciones

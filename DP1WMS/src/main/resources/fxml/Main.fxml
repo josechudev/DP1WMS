@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="634.0" prefWidth="1038.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MainController">
+<AnchorPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="634.0" prefWidth="1038.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MainController">
    <children>
       <VBox layoutX="65.0" layoutY="104.0" prefHeight="164.0" prefWidth="285.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -30,7 +30,7 @@
                         <MenuItem fx:id="categoriasMI" mnemonicParsing="false" onAction="#cargarMantenimientoCategoria" style="-fx-padding: 0 10;" text="Categorias" />
                         <MenuItem fx:id="productosMI" mnemonicParsing="false" onAction="#cargarMantenimientoProducto" style="-fx-padding: 0 10;" text="Productos" />
                         <MenuItem fx:id="ubicacionesMI" mnemonicParsing="false" onAction="#cargarUbicaciones" style="-fx-padding: 0 10;" text="Ubicaciones" />
-                        <MenuItem mnemonicParsing="false" onAction="#cargarConfiguracion" text="Configuracion" />
+                        <MenuItem fx:id="configuracionMI" mnemonicParsing="false" onAction="#cargarConfiguracion" style="-fx-padding: 0 10;" text="Configuracion" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Almacenes">
