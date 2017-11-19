@@ -93,3 +93,6 @@ VALUES (1,21,1);
 -- Tipo comprobante de pago
 INSERT INTO TipoComprobante (descripcion) VALUES ('Boleta');
 INSERT INTO TipoComprobante (descripcion) VALUES ('Factura');
+
+
+-- Tipo de movimiento

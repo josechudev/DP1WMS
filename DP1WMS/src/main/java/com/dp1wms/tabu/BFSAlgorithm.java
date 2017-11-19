@@ -156,7 +156,8 @@ public class BFSAlgorithm {
             queue.sort((a,b)->{
                 return a.heuristic - b.heuristic;
             });
-            evaluationNode = queue.get(0); queue.remove(0);
+            int indexMejor = this.obtenerMejorRandom(queue);
+            evaluationNode = queue.get(indexMejor); queue.remove(indexMejor);
             if(evaluationNode.valor.equals(nodoB)){//encontró el camino
                 break;
             }
@@ -181,6 +182,24 @@ public class BFSAlgorithm {
         visitados.clear();
         segmento.calcularDistancia();
         return segmento;
+    }
+
+    //lo recibe ordenado
+    private int obtenerMejorRandom(ArrayList<NodoBFS> nodos){
+        ArrayList<NodoBFS> mejoresNodos = new ArrayList<>();
+        NodoBFS mejorNodo = nodos.get(0);
+        mejoresNodos.add(mejorNodo);
+        int randomInd = 0;
+        for(int i = 1; i < nodos.size(); i++){
+            NodoBFS nodo = nodos.get(i);
+            if(nodo.heuristic == mejorNodo.heuristic){
+                mejoresNodos.add(nodo);
+            } else{
+                break;
+            }
+        }
+        randomInd = (new Random()).nextInt(mejoresNodos.size());
+        return randomInd;
     }
 
     public int[][] generarMatrizDistancia(){
