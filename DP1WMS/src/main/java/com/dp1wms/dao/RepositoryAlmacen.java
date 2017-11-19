@@ -16,5 +16,6 @@ public interface RepositoryAlmacen {
     List<Envio> obtenerEnvios();
     List<Cajon> obtenerCajones(Long idenvio);
     List<String> obtenerNombresProductos(Long idenvio);
-    List<Ubicacion> obtenerUbicaciones(Long idenvio);
+    //List<Ubicacion> obtenerUbicaciones(Long idenvio);
+    List<Cajon> obtenerCajonesConLote(Long id_envio);
 }

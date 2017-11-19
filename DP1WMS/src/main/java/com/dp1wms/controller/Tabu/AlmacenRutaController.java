@@ -57,15 +57,15 @@ public class AlmacenRutaController implements FxmlController {
 
     //@FXML private ListView lista_productos;
     @FXML
-    private TableView<Ubicacion> tabla_productos = new TableView<Ubicacion>();
+    private TableView<Cajon> tabla_productos = new TableView<Cajon>();
     @FXML
-    private TableColumn<Ubicacion,Integer> c_cantidad;
+    private TableColumn<Cajon,Integer> c_cantidad;
     @FXML
-    private TableColumn<Ubicacion,String> c_rack;
+    private TableColumn<Cajon,String> c_rack;
     @FXML
-    private TableColumn<Ubicacion,String> c_cajon;
+    private TableColumn<Cajon,String> c_cajon;
     @FXML
-    private TableColumn<Ubicacion,String> c_nombreProducto;
+    private TableColumn<Cajon,String> c_nombreProducto;
 
     @FXML private ComboBox<String> complementoCB;
 
@@ -170,26 +170,25 @@ public class AlmacenRutaController implements FxmlController {
        thread.start();
     }
 
-    public void actualizarListaProductosEnvio(Long idenvio){
-        List<Ubicacion> ubicacionesProductosEnvio = this.repositoryAlmacen.obtenerUbicaciones(idenvio);
+    public void actualizarListaProductosEnvio(List<Cajon> cajones){
         this.limpiarTabla();
-        this.llenarTabla(ubicacionesProductosEnvio);
+        this.llenarTabla(cajones);
     }
 
     public void limpiarTabla(){
         tabla_productos.getItems().clear();
-        c_cantidad.setCellValueFactory(new PropertyValueFactory<Ubicacion,Integer>("cantidad"));
+        c_cantidad.setCellValueFactory(new PropertyValueFactory<Cajon,Integer>("cantidad"));
         c_cajon.setCellValueFactory(value->{
-            return new SimpleStringProperty("X: "+value.getValue().getCajonPosicionX()+" Nivel: "+value.getValue().getCajonPosicionY());
+            return new SimpleStringProperty("X: "+value.getValue().getPosX()+" Nivel: "+value.getValue().getPosY());
         });
-        c_rack.setCellValueFactory(new PropertyValueFactory<Ubicacion,String>("codigoRack"));
-        c_nombreProducto.setCellValueFactory(new PropertyValueFactory<Ubicacion,String>("nombreProducto"));
+        c_rack.setCellValueFactory(new PropertyValueFactory<Cajon,String>("codigoRack"));
+        c_nombreProducto.setCellValueFactory(new PropertyValueFactory<Cajon,String>("nombreProducto"));
         tabla_productos.setEditable(true);
     }
 
-    public void llenarTabla(List<Ubicacion> lista){
-        for(Ubicacion ubicacion : lista){
-            this.tabla_productos.getItems().add(ubicacion);
+    public void llenarTabla(List<Cajon> lista){
+        for(Cajon cajon : lista){
+            this.tabla_productos.getItems().add(cajon);
         }
     }
 
@@ -216,19 +215,20 @@ public class AlmacenRutaController implements FxmlController {
         lista_productos.setItems(nombres_productos);
 */
 
-        // obtengo todas las ubicaciones asociadas a los productos del pedido
-        // si se conoce el lote se puede filtrar esta lista
-        this.actualizarListaProductosEnvio(idenvio);
 
         //Obtener una lista productos
-        List<Cajon> cajones = repositoryAlmacen.obtenerCajones(idenvio);
+
+        //List<Cajon> cajones = repositoryAlmacen.obtenerCajones(idenvio);
+        List<Cajon> cajones = this.repositoryAlmacen.obtenerCajonesConLote(idenvio);
         this.ubicarProductos(cajones);
 
         for (Cajon cajon: cajones) {
             System.out.println(cajon.getPosX());
             System.out.println(cajon.getPosY());
         }
-
+        // obtengo todas las ubicaciones asociadas a los productos del pedido
+        // si se conoce el lote se puede filtrar esta lista
+        this.actualizarListaProductosEnvio(cajones);
 
 //        for (Producto producto: productos) {
 //            System.out.println(producto.getPosicion());

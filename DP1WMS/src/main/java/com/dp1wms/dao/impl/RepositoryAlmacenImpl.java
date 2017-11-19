@@ -112,6 +112,76 @@ public class RepositoryAlmacenImpl implements RepositoryAlmacen {
 
     }
 
+    public List<Cajon> obtenerCajonesConLote(Long id_envio){
+
+
+        String SQL = "SELECT idproducto,cantidad FROM detalleenvio WHERE idenvio = ?";
+
+        List<DetalleEnvio> listaDetalle = null;
+        try{
+            listaDetalle = jdbcTemplate.query(SQL,new Object[]{id_envio},this::mapParamDetalleEnvio);
+        }catch(EmptyResultDataAccessException e ){
+            e.printStackTrace();
+        }
+        List<Cajon> cajones = new ArrayList<Cajon>();
+        for(DetalleEnvio detalleEnvio : listaDetalle){
+            //obtener lote
+            int idlote = -1;
+            SQL = "select u.idlote from ubicacion u,lote l where u.idproducto = ? and u.idproducto = l.idproducto and u.idlote = l.idlote order by l.fechalote asc limit 1";
+            try{
+                idlote = jdbcTemplate.queryForObject(SQL,new Object[]{detalleEnvio.getIdProducto()},Integer.class);
+            }catch(EmptyResultDataAccessException e ) {
+                e.printStackTrace();
+            }
+            /*Cajon cajon = new Cajon();
+            cajon.setIdProducto(idproducto);
+            cajon.setIdLote(idlote);*/
+
+            //obtener datos cajon
+            //SQL = "select c.idrack, c.posicion[0] as posx from cajon c,ubicacion u where u.idcajon = c.idcajon and u.idlote = ?";
+            SQL = "select p.nombreproducto,r.codigo,c.idrack, c.posicion[0] as posx,c.posicion[1] as posy from cajon c,ubicacion u,rack r,producto p where p.idproducto = u.idproducto and r.idrack = c.idrack and u.idcajon = c.idcajon and u.idlote = ?";
+            List<Cajon> listacajones = null;
+            try {
+                listacajones = jdbcTemplate.query(SQL,new Object[]{idlote}, this::mapParamCajon);
+            }catch(EmptyResultDataAccessException e ){
+                e.printStackTrace();
+            }
+
+            if((listacajones != null) && (listacajones.size()>0)){
+                Cajon cajonAux = listacajones.get(0);
+                cajonAux.setIdLote(idlote);
+                cajonAux.setIdProducto(detalleEnvio.getIdProducto());
+                cajonAux.setCantidad(detalleEnvio.getCantidad());
+                cajones.add(cajonAux);
+            }
+        }
+
+        return cajones;
+
+    }
+
+    private DetalleEnvio mapParamDetalleEnvio(ResultSet rs, int i) throws SQLException {
+        DetalleEnvio detalleEnvio = new DetalleEnvio();
+
+        detalleEnvio.setIdProducto(rs.getInt("idproducto"));
+        detalleEnvio.setCantidad(rs.getInt("cantidad"));
+
+        return detalleEnvio;
+    }
+
+    private Cajon mapParamCajon(ResultSet rs, int i) throws SQLException {
+        Cajon cajon = new Cajon();
+        cajon.setPosX(rs.getInt("posx"));
+        cajon.setIdRack(rs.getInt("idrack"));
+        cajon.setCodigoRack(rs.getString("codigo"));
+        cajon.setPosY(rs.getInt("posy"));
+        cajon.setNombreProducto(rs.getString("nombreProducto"));
+        //cajon.setIdLote(rs.getInt("idlote"));
+        //cajon.setIdProducto(rs.getInt("idproducto"));
+        return cajon;
+    }
+
+/*
     public List<Ubicacion> obtenerUbicaciones(Long idenvio) {
         String SQL = "SELECT p.nombreproducto,u.idlote,u.idproducto,al.idalmacen, al.nombre as nombreAlmacen,ar.idarea,ar.codigo as codigoArea, r.idrack,r.codigo as codigoRack,c.idcajon,c.posicion[0] as cajonX,c.posicion[1] as cajonY, d.cantidad FROM almacen al,area ar,rack r,cajon c,ubicacion u,detalleenvio d,producto p WHERE p.idproducto = d.idproducto and idenvio = ? and u.idproducto = d.idproducto and u.idcajon = c.idcajon and c.idrack = r.idrack and r.idarea = ar.idarea and ar.idalmacen = al.idalmacen";
         List<Ubicacion> listaUbicaciones = null;
@@ -140,5 +210,5 @@ public class RepositoryAlmacenImpl implements RepositoryAlmacen {
         ubicacion.setNombreProducto(rs.getString("nombreproducto"));
         return ubicacion;
     }
-
+*/
 }

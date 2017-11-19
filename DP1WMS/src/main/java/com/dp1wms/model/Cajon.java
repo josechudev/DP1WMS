@@ -9,6 +9,11 @@ public class Cajon {
     private int posX;
     private int posY;
     private Point2D posicion;
+    private int idLote;
+    private int idProducto;
+    private String nombreProducto;
+    private String codigoRack;
+    private int cantidad;
 
     public Cajon(){
 
@@ -52,5 +57,47 @@ public class Cajon {
 
     public void setPosY(int posY) {
         this.posY = posY;
+    }
+
+
+    public int getIdLote() {
+        return idLote;
+    }
+
+    public void setIdLote(int idLote) {
+        this.idLote = idLote;
+    }
+
+    public int getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
+    }
+
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public String getCodigoRack() {
+        return codigoRack;
+    }
+
+    public void setCodigoRack(String codigoRack) {
+        this.codigoRack = codigoRack;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 }
