@@ -4,18 +4,20 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="634.0" prefWidth="862.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Tabu.AlmacenRutaController">
+<AnchorPane prefHeight="634.0" prefWidth="917.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Tabu.AlmacenRutaController">
    <children>
       <VBox layoutY="40.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -118,8 +120,18 @@
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label text="Productos" />
-                        <ListView fx:id="lista_productos" prefHeight="325.0" prefWidth="232.0" VBox.vgrow="ALWAYS" />
+                        <StackPane prefHeight="340.0" prefWidth="360.0">
+                           <children>
+                              <TableView fx:id="tabla_productos" prefHeight="200.0" prefWidth="200.0">
+                                <columns>
+                                  <TableColumn fx:id="c_nombreProducto" prefWidth="135.0" text="Nombre  Producto" />
+                                    <TableColumn fx:id="c_rack" prefWidth="87.0" text="Rack" />
+                                  <TableColumn fx:id="c_cajon" minWidth="0.0" prefWidth="91.0" text="Cajon" />
+                                    <TableColumn fx:id="c_cantidad" prefWidth="121.0" text="Cantidad" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </StackPane>
                      </children>
                   </VBox>
                </children>

@@ -17,6 +17,7 @@ public class Ubicacion {
     private int idProducto;
     private int cantidad;
     private Integer indiceTabla;
+    private String nombreProducto;
 
 
     public int getIdAlmacen() {
@@ -124,5 +125,13 @@ public class Ubicacion {
 
     public void setIndiceTabla(Integer indiceTabla) {
         this.indiceTabla = indiceTabla;
+    }
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
     }
 }

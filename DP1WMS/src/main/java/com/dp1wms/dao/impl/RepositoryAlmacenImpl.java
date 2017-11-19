@@ -2,9 +2,7 @@ package com.dp1wms.dao.impl;
 
 import com.dp1wms.dao.RepositoryAlmacen;
 import com.dp1wms.dao.mapper.*;
-import com.dp1wms.model.Cajon;
-import com.dp1wms.model.Cliente;
-import com.dp1wms.model.Envio;
+import com.dp1wms.model.*;
 import com.dp1wms.model.tabu.Almacen;
 import com.dp1wms.model.tabu.Rack;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,5 +112,33 @@ public class RepositoryAlmacenImpl implements RepositoryAlmacen {
 
     }
 
+    public List<Ubicacion> obtenerUbicaciones(Long idenvio) {
+        String SQL = "SELECT p.nombreproducto,u.idlote,u.idproducto,al.idalmacen, al.nombre as nombreAlmacen,ar.idarea,ar.codigo as codigoArea, r.idrack,r.codigo as codigoRack,c.idcajon,c.posicion[0] as cajonX,c.posicion[1] as cajonY, d.cantidad FROM almacen al,area ar,rack r,cajon c,ubicacion u,detalleenvio d,producto p WHERE p.idproducto = d.idproducto and idenvio = ? and u.idproducto = d.idproducto and u.idcajon = c.idcajon and c.idrack = r.idrack and r.idarea = ar.idarea and ar.idalmacen = al.idalmacen";
+        List<Ubicacion> listaUbicaciones = null;
+        try{
+            listaUbicaciones = jdbcTemplate.query(SQL,new Object[] {idenvio}, this::mapParamUbicacion);
+        }catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+        }
+        return listaUbicaciones;
+    }
+
+    private Ubicacion mapParamUbicacion(ResultSet rs, int i) throws SQLException {
+        Ubicacion ubicacion = new Ubicacion();
+        ubicacion.setIdAlmacen(rs.getInt("idalmacen"));
+        ubicacion.setNombreAlmacen(rs.getString("nombreAlmacen"));
+        ubicacion.setIdArea(rs.getInt("idarea"));
+        ubicacion.setCodigoArea(rs.getString("codigoArea"));
+        ubicacion.setIdRack(rs.getInt("idrack"));
+        ubicacion.setCodigoRack(rs.getString("codigoRack"));
+        ubicacion.setCajonPosicionX(rs.getInt("cajonX"));
+        ubicacion.setCajonPosicionY(rs.getInt("cajonY"));
+        ubicacion.setIdCajon(rs.getInt("idcajon"));
+        ubicacion.setCantidad(rs.getInt("cantidad"));
+        ubicacion.setIdLote(rs.getInt("idlote"));
+        ubicacion.setIdProducto(rs.getInt("idproducto"));
+        ubicacion.setNombreProducto(rs.getString("nombreproducto"));
+        return ubicacion;
+    }
 
 }
