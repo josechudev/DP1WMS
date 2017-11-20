@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="982.0" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.auditoria.ReporteAuditoriaController">
+<GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="982.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.auditoria.ReporteAuditoriaController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -29,10 +36,10 @@
       </Label>
       <FlowPane prefHeight="82.0" prefWidth="801.0" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
          <children>
-            <HBox alignment="CENTER_LEFT" maxHeight="120.0" prefHeight="35.0" prefWidth="325.0">
+            <HBox alignment="CENTER_LEFT" maxHeight="120.0" prefHeight="35.0">
                <children>
                   <Label text="Fecha" />
-                  <DatePicker fx:id="dpFechaIni" prefHeight="25.0" prefWidth="130.0">
+                  <DatePicker fx:id="dpFechaIni" prefHeight="25.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -42,7 +49,7 @@
                         <Insets left="5.0" />
                      </HBox.margin>
                   </Label>
-                  <DatePicker fx:id="dpFechaFin" prefHeight="25.0" prefWidth="130.0">
+                  <DatePicker fx:id="dpFechaFin" prefHeight="25.0">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
@@ -52,26 +59,26 @@
                   <Insets right="15.0" />
                </FlowPane.margin>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="200.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="30.0">
                <FlowPane.margin>
                   <Insets right="15.0" />
                </FlowPane.margin>
                <children>
                   <Label text="Accion" />
-                  <ComboBox fx:id="cbTipoAccion" prefWidth="150.0">
+                  <ComboBox fx:id="cbTipoAccion">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </ComboBox>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="279.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="30.0">
                <FlowPane.margin>
                   <Insets right="10.0" />
                </FlowPane.margin>
                <children>
-                  <Label prefHeight="17.0" prefWidth="117.0" text="Nombre de empleado" />
-                  <TextField fx:id="tfNombreEmpleado">
+                  <Label prefHeight="17.0" text="Nombre de empleado" />
+                  <TextField fx:id="tfNombreEmpleado" prefHeight="26.0" prefWidth="127.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>

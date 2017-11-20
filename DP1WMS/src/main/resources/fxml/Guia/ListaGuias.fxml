@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Guia.ListaGuiasController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Guia.ListaGuiasController">
    <children>
       <TableView fx:id="tablaGuias" layoutX="45.0" layoutY="130.0" prefHeight="200.0" prefWidth="511.0">
         <columns>
@@ -17,7 +17,7 @@
             <TableColumn fx:id="c_pesoTotal" prefWidth="98.0" text="Peso Total" />
         </columns>
       </TableView>
-      <Button layoutX="39.0" layoutY="84.0" mnemonicParsing="false" onAction="#crearGuiaRemision" prefHeight="25.0" prefWidth="116.0" text="Nueva Guia" />
+      <Button layoutX="39.0" layoutY="84.0" mnemonicParsing="false" onAction="#crearGuiaRemision" prefHeight="25.0" text="Nueva Guia" />
       <Label layoutX="39.0" layoutY="21.0" text="Guías de Remisión">
          <font>
             <Font size="18.0" />

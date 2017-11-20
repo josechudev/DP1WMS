@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="364.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.DevolucionPedido.ListaNotaCreditoController">
+<AnchorPane prefHeight="364.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.DevolucionPedido.ListaNotaCreditoController">
    <children>
       <Label layoutX="14.0" layoutY="22.0" text="Notas de Credito">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="13.0" layoutY="86.0" mnemonicParsing="false" onAction="#nuevaNotaCredito" prefHeight="25.0" prefWidth="187.0" text="Crear Nota de Credito" />
+      <Button layoutX="13.0" layoutY="86.0" mnemonicParsing="false" onAction="#nuevaNotaCredito" prefHeight="25.0" text="Crear Nota de Credito" />
       <StackPane layoutX="13.0" layoutY="153.0" prefHeight="150.0" prefWidth="574.0">
          <children>
             <TableView fx:id="tablaNotaCredito" prefHeight="174.0" prefWidth="574.0">
