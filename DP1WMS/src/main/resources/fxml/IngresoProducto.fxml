@@ -9,27 +9,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ingresoProductoAnchorePane" prefHeight="346.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.IngresoProductoController">
+<AnchorPane fx:id="ingresoProductoAnchorePane" prefHeight="346.0" prefWidth="699.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.IngresoProductoController">
    <children>
       <Label layoutX="26.0" layoutY="55.0" text="Nombre Producto(*)" />
-      <TextField fx:id="txb_nombreProd" layoutX="137.0" layoutY="51.0" prefHeight="26.0" prefWidth="123.0" />
-      <Button fx:id="btn_buscar" layoutX="473.0" layoutY="52.0" mnemonicParsing="false" onAction="#buscarProducto" prefHeight="25.0" prefWidth="113.0" text="Buscar Lote" />
+      <TextField fx:id="txb_nombreProd" layoutX="167.0" layoutY="51.0" prefHeight="26.0" prefWidth="123.0" />
+      <Button fx:id="btn_buscar" layoutX="563.0" layoutY="52.0" mnemonicParsing="false" onAction="#buscarProducto" prefHeight="25.0" prefWidth="113.0" text="Buscar Lote" />
       <Label layoutX="28.0" layoutY="97.0" text="Cantidad(*)" />
-      <TextField fx:id="txb_cantidad" layoutX="137.0" layoutY="93.0" prefHeight="25.0" prefWidth="123.0" />
-      <Label layoutX="273.0" layoutY="97.0" text="Motivo(*)" />
-      <ComboBox fx:id="cb_motivo" layoutX="333.0" layoutY="93.0" prefWidth="150.0" />
+      <TextField fx:id="txb_cantidad" layoutX="167.0" layoutY="93.0" prefHeight="25.0" prefWidth="123.0" />
+      <Label layoutX="363.0" layoutY="97.0" text="Motivo(*)" />
+      <ComboBox fx:id="cb_motivo" layoutX="433.0" layoutY="93.0" prefWidth="150.0" />
       <Label layoutX="29.0" layoutY="139.0" text="Fecha(*)" />
-      <DatePicker fx:id="dp_fecha" layoutX="137.0" layoutY="135.0" prefHeight="25.0" prefWidth="123.0" />
-      <Label layoutX="35.0" layoutY="14.0" text="Ingreso/Salida de un producto">
+      <DatePicker fx:id="dp_fecha" layoutX="167.0" layoutY="135.0" prefHeight="25.0" prefWidth="123.0" />
+      <Label layoutX="25.0" layoutY="14.0" text="Ingreso/Salida de un producto">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
       <Label layoutX="30.0" layoutY="183.0" text="Observaciones" />
-      <TextArea fx:id="txa_observaciones" layoutX="137.0" layoutY="187.0" prefHeight="55.0" prefWidth="379.0" />
-      <Button fx:id="btn_registrar" layoutX="137.0" layoutY="304.0" mnemonicParsing="false" onAction="#registrarIngresoProducto" prefHeight="26.0" prefWidth="150.0" text="Registrar Ingreso" />
+      <TextArea fx:id="txa_observaciones" layoutX="167.0" layoutY="187.0" prefHeight="55.0" prefWidth="431.0" />
+      <Button fx:id="btn_registrar" layoutX="167.0" layoutY="304.0" mnemonicParsing="false" onAction="#registrarIngresoProducto" prefHeight="26.0" text="Registrar Ingreso" />
       <Button layoutX="370.0" layoutY="304.0" mnemonicParsing="false" onAction="#cancelarRegistro" text="Cancelar" />
-      <Label layoutX="273.0" layoutY="55.0" text="Stock" />
-      <TextField fx:id="txb_stock" layoutX="333.0" layoutY="51.0" prefHeight="25.0" prefWidth="106.0" />
+      <Label layoutX="363.0" layoutY="55.0" text="Stock" />
+      <TextField fx:id="txb_stock" layoutX="433.0" layoutY="51.0" prefHeight="25.0" prefWidth="106.0" />
    </children>
 </AnchorPane>

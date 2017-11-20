@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="641.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Movimientos.ListaLotesController">
+<AnchorPane prefHeight="400.0" prefWidth="641.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Movimientos.ListaLotesController">
    <children>
       <StackPane layoutX="16.0" layoutY="105.0" prefHeight="240.0" prefWidth="609.0">
          <children>
@@ -23,13 +23,13 @@
             </TableView>
          </children>
       </StackPane>
-      <Button layoutX="14.0" layoutY="65.0" mnemonicParsing="false" onAction="#verUbicacionLote" prefHeight="25.0" prefWidth="119.0" text="Ubicacion del Lote" />
+      <Button layoutX="14.0" layoutY="65.0" mnemonicParsing="false" onAction="#verUbicacionLote" prefHeight="25.0" text="Ubicacion del Lote" />
       <Button layoutX="258.0" layoutY="361.0" mnemonicParsing="false" onAction="#cancelarOperacion" prefHeight="25.0" prefWidth="130.0" text="Cancelar" />
       <Label layoutX="16.0" layoutY="23.0" text="Lista de Lotes">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="159.0" layoutY="65.0" mnemonicParsing="false" onAction="#cargaMasiva" prefHeight="25.0" prefWidth="108.0" text="Cargar Datos" />
+      <Button layoutX="159.0" layoutY="65.0" mnemonicParsing="false" onAction="#cargaMasiva" prefHeight="25.0" text="Cargar Datos" />
    </children>
 </AnchorPane>

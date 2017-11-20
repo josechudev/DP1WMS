@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="1323.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantProducto.ProductoController">
+<AnchorPane prefHeight="400.0" prefWidth="1323.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantProducto.ProductoController">
     <children>
         <Label layoutX="36.0" layoutY="53.0" text="Acciones">
             <font>
@@ -19,9 +19,9 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <Button fx:id="btn_agregar" layoutX="36.0" layoutY="93.0" mnemonicParsing="false" onAction="#btnClickAgregar" prefHeight="25.0" prefWidth="81.0" text="Agregar" />
-        <Button fx:id="btn_modificar" layoutX="144.0" layoutY="93.0" mnemonicParsing="false" onAction="#btnClickModificar" prefHeight="25.0" prefWidth="87.0" text="Modificar" />
-        <Button fx:id="btn_eliminar" layoutX="265.0" layoutY="93.0" mnemonicParsing="false" onAction="#btnClickEliminar" prefHeight="25.0" prefWidth="97.0" text="Eliminar" />
+        <Button fx:id="btn_agregar" layoutX="36.0" layoutY="93.0" mnemonicParsing="false" onAction="#btnClickAgregar" prefHeight="25.0" text="Agregar" />
+        <Button fx:id="btn_modificar" layoutX="144.0" layoutY="93.0" mnemonicParsing="false" onAction="#btnClickModificar" prefHeight="25.0" text="Modificar" />
+        <Button fx:id="btn_eliminar" layoutX="265.0" layoutY="93.0" mnemonicParsing="false" onAction="#btnClickEliminar" prefHeight="25.0" text="Eliminar" />
         <TableView fx:id="tableViewProductos" layoutX="27.0" layoutY="145.0" prefHeight="200.0" prefWidth="1285.0">
             <columns>
                 <TableColumn fx:id="c_indice" prefWidth="39.0" text="N°" />
@@ -41,6 +41,6 @@
 
             </columns>
         </TableView>
-      <Button layoutX="380.0" layoutY="93.0" mnemonicParsing="false" onAction="#cargaMasiva" prefHeight="25.0" prefWidth="132.0" text="Cargar Datos" />
+      <Button layoutX="380.0" layoutY="93.0" mnemonicParsing="false" onAction="#cargaMasiva" prefHeight="25.0" text="Cargar Datos" />
     </children>
 </AnchorPane>

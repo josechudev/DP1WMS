@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" prefHeight="643.0" prefWidth="866.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantVenta.VentaConsultarPedido">
+<AnchorPane maxHeight="-Infinity" prefHeight="643.0" prefWidth="866.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.MantVenta.VentaConsultarPedido">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
@@ -58,10 +58,10 @@
                               </Label>
                               <DatePicker fx:id="fechaHastaDP" />
                               <Button mnemonicParsing="false" onAction="#buscarPedidos" text="Buscar" />
-                              <Button mnemonicParsing="false" onAction="#cargarPedidoMasivo" prefHeight="25.0" prefWidth="156.0" text="Cargar Pedido Prueba" />
+                              <Button mnemonicParsing="false" onAction="#cargarPedidoMasivo" prefHeight="25.0" text="Cargar Pedido Prueba" />
                            </children>
                         </HBox>
-                        <TableView fx:id="pedidosTable" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="pedidosTable" prefHeight="319.0" prefWidth="824.0" VBox.vgrow="ALWAYS">
                           <columns>
                               <TableColumn fx:id="codigoCol" prefWidth="75.0" text="Codigo" />
                               <TableColumn fx:id="clienteRUCCol" prefWidth="75.0" text="N° Doc. / Ruc" />
