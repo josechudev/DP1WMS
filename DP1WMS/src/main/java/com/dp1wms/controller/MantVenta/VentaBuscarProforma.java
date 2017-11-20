@@ -103,8 +103,8 @@ public class VentaBuscarProforma implements FxmlController {
             boolean decision = true;
             for(DetalleProforma detalle: detalles){
                 if(detalle.getCantidad() > detalle.getProducto().getStock()){
-                    decision = this.stageManager.mostrarConfirmationDialog("La Proforma seleccionada tiene productos con" +
-                            " que no pueden ser atendidos por el stock. ¿Desea continuar eliminando dichos productos?");
+                    decision = this.stageManager.mostrarConfirmationDialog("La Proforma seleccionada tiene productos" +
+                            " que superan el stock. ¿Desea continuar sin dichos productos?");
                     break;
                 }
             }

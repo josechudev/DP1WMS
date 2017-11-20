@@ -19,10 +19,10 @@
         <Font size="18.0" />
       </font>
     </Label>
-    <Button fx:id="btn_CrearUsuario" layoutX="27.0" layoutY="94.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="92.0" text="Agregar" />
-    <Button fx:id="btn_ModificarUsuario" layoutX="141.0" layoutY="94.0" mnemonicParsing="false" prefHeight="1.0" prefWidth="92.0" text="Modificar" />
-    <Button fx:id="btn_eliminarUsuario" layoutX="253.0" layoutY="94.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="92.0" text="Desactivar" />
-    <Button fx:id="btn_activarrUsuario" layoutX="371.0" layoutY="94.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="92.0" text="Activar" />
+    <Button fx:id="btn_CrearUsuario" layoutX="27.0" layoutY="94.0" mnemonicParsing="false" prefHeight="0.0" text="Agregar" />
+    <Button fx:id="btn_ModificarUsuario" layoutX="141.0" layoutY="94.0" mnemonicParsing="false" prefHeight="1.0" text="Modificar" />
+    <Button fx:id="btn_eliminarUsuario" layoutX="253.0" layoutY="94.0" mnemonicParsing="false" prefHeight="14.0" text="Desactivar" />
+    <Button fx:id="btn_activarrUsuario" layoutX="371.0" layoutY="94.0" mnemonicParsing="false" prefHeight="14.0" text="Activar" />
     <TableView fx:id="e_table" layoutX="27.0" layoutY="132.0" prefHeight="201.0" prefWidth="875.0">
       <columns>
         <TableColumn fx:id="e_id" prefWidth="48.0" text="Id" />
