@@ -641,19 +641,11 @@ BEGIN
 -- No almacen 
 -- No area 
 -- No cajon
--- No categoriaproducto
--- No cliente
--- No empleado
 -- No estado pedido
--- No producto
 -- No Rack
--- No Ruta
 -- No Seccion
 -- No Tipo Comprobante
--- No Tipo Empleado
--- No Tipo Empleado x seccion
 -- No Tipo Movimiento
--- No Usuario
 ------------------------------------------------
 
 
@@ -742,6 +734,10 @@ ALTER SEQUENCE cliente_idcliente_seq RESTART;
 DELETE FROM warehouse.public.cliente; 
 UPDATE public.cliente  SET idcliente = DEFAULT;
 
+ALTER SEQUENCE ruta_idruta_seq RESTART;
+DELETE FROM warehouse.public.ruta; 
+UPDATE public.ruta  SET idruta = DEFAULT;
+
 DELETE FROM warehouse.public.tipoempleadoxseccion;
 
 ALTER SEQUENCE empleado_idempleado_seq RESTART;
@@ -758,31 +754,32 @@ DELETE FROM warehouse.public.tipoempleado;
 UPDATE public.tipoempleado  SET idtipoempleado = DEFAULT;
 
 INSERT INTO warehouse.public.tipoempleado(descripcion, activo) VALUES ('Master', 't');
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 1, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 2, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 3, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 4, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 5, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 6, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 7, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 8, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 9, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 10, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 11, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 12, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 13, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 14, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 15, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 16, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 17, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 18, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 19, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 20, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 21, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 22, 1);
-INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion, idempleadoauditado) VALUES (1, 23, 1);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 1);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 2);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 3);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 4);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 5);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 6);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 7);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 8);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 9);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 10);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 11);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 12);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 13);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 14);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 15);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 16);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 17);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 18);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 19);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 20);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 21);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 22);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 23);
+INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 24);
 INSERT INTO warehouse.public.usuario(nombreusuario, password, fechacreacion) VALUES ('master', '$1$KrwEX8Qp$ZYrMdh0xwBwAPxyT5i4tM1', '2017-10-25 11:12:43.589861');
-INSERT INTO warehouse.public.empleado(idempleado, idusuario, numdoc, nombre, apellidos, email, idtipoempleado, fechacreacion, activo, idempleadoauditado) VALUES (1, 1, '11111111', 'Master', '', '', 1, '2017-10-25 11:58:00.308845', 't', 1);
+INSERT INTO warehouse.public.empleado(idusuario, numdoc, nombre, apellidos, email, idtipoempleado, fechacreacion, activo, idempleadoauditado) VALUES (1, '11111111', 'Master', '', '', 1, '2017-10-25 11:58:00.308845', 't', 1);
 
 END;
 $$ LANGUAGE plpgsql;
