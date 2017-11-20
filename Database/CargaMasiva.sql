@@ -779,7 +779,7 @@ INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VAL
 INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 23);
 INSERT INTO warehouse.public.tipoempleadoxseccion(idtipoempleado, idseccion) VALUES (1, 24);
 INSERT INTO warehouse.public.usuario(nombreusuario, password, fechacreacion) VALUES ('master', '$1$KrwEX8Qp$ZYrMdh0xwBwAPxyT5i4tM1', '2017-10-25 11:12:43.589861');
-INSERT INTO warehouse.public.empleado(idempleado, idusuario, numdoc, nombre, apellidos, email, idtipoempleado, fechacreacion, activo, idempleadoauditado) VALUES (1, 1, '11111111', 'Master', '', '', 1, '2017-10-25 11:58:00.308845', 't', 1);
+INSERT INTO warehouse.public.empleado(idusuario, numdoc, nombre, apellidos, email, idtipoempleado, fechacreacion, activo, idempleadoauditado) VALUES (1, '11111111', 'Master', '', '', 1, '2017-10-25 11:58:00.308845', 't', 1);
 
 END;
 $$ LANGUAGE plpgsql;
