@@ -5,6 +5,6 @@ import com.dp1wms.model.ReporteAlmacen;
 import java.util.List;
 
 public interface RepositoryReporteAlmacen {
-    List<ReporteAlmacen> selectAllKardexFila(String fecInicio, String fecFin);
+    List<ReporteAlmacen> selectAllKardexFila(String fecInicio, String fecFin,String producto);
     List<ReporteAlmacen> selectAllKardexFila();
 }

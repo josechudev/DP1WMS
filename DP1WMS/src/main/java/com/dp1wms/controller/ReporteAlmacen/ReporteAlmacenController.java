@@ -55,7 +55,7 @@ public class ReporteAlmacenController implements FxmlController {
     @FXML
     private DatePicker dp_fecFin;
     @FXML
-    private TextField filterField;
+    private TextField txt_Producto;
 
     private ObservableList<ReporteAlmacen> masterData = FXCollections.observableArrayList();
 
@@ -85,14 +85,14 @@ public class ReporteAlmacenController implements FxmlController {
         }
     }
 
-    private void llenarGrilla(String fecInicio, String fecFin) {
+    private void llenarGrilla(String fecInicio, String fecFin, String producto) {
         for ( int i = 0; i<tableViewReporteAlmacen.getItems().size(); i++) {
             tableViewReporteAlmacen.getItems().clear();
         }
         if(!masterData.isEmpty()){
             masterData.removeAll();
         }
-        List<ReporteAlmacen> reporteAlmacenList = repositoryReporteAlmacen.selectAllKardexFila(fecInicio, fecFin);
+        List<ReporteAlmacen> reporteAlmacenList = repositoryReporteAlmacen.selectAllKardexFila(fecInicio, fecFin,'%'+producto+'%');
         for (ReporteAlmacen r : reporteAlmacenList) {
             tableViewReporteAlmacen.getItems().add(r);
             masterData.add(r);
@@ -110,7 +110,7 @@ public class ReporteAlmacenController implements FxmlController {
             this.stageManager.mostrarErrorDialog("Error Buscar Proforma", null,
                     "Debe seleccionar un rango de fecha adecuado");
         } else {
-            llenarGrilla(dp_fecInicio.getValue().toString(), dp_fecFin.getValue().toString());
+            llenarGrilla(dp_fecInicio.getValue().toString(), dp_fecFin.getValue().toString(),txt_Producto.getText());
 
         }
     }
