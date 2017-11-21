@@ -93,10 +93,10 @@ public class IngresoProductoController implements FxmlController {
         if( tipoMovimiento != null){
             //obtener id motivo
             int idMotivoMovimiento;
-            if((this.loteEscogido != null)){
-                System.out.println("idTipoMoviviento"+ cb_motivo.getValue().getIdTipoMovimiento());
+            if((this.loteEscogido != null)) {
+                System.out.println("idTipoMoviviento" + cb_motivo.getValue().getIdTipoMovimiento());
 
-                if(txb_nombreProd.getText().equalsIgnoreCase("")){
+                if (txb_nombreProd.getText().equalsIgnoreCase("")) {
                     this.stageManager.mostrarErrorDialog("Error Ingreso/Salida Producto", null,
                             "Debe ingresar un producto. Seleccione el boton buscar");
                     return;
@@ -106,7 +106,7 @@ public class IngresoProductoController implements FxmlController {
                 int totalProductos = 1;
                 //repositoryMantMov.registrarMovimiento(totalProductos,this.txa_observaciones.toString(),this.dp_fecha.toString(),tipoMovimiento.getIdTipoMovimiento(),loteEscogido.getIdProducto(),loteEscogido.getIdLote(),Integer.parseInt(this.txb_cantidad.toString()));
 
-                if(this.dp_fecha.getValue() == null){
+                if (this.dp_fecha.getValue() == null) {
                     this.stageManager.mostrarErrorDialog("Error Ingreso/Salida Producto", null,
                             "Debe ingresar una fecha para el ingreso/salida de producto");
                     return;
@@ -123,21 +123,37 @@ public class IngresoProductoController implements FxmlController {
                     return;
                 }
 
-                if(this.txb_cantidad.getText().equalsIgnoreCase("")){
+                if (this.txb_cantidad.getText().equalsIgnoreCase("")) {
                     this.stageManager.mostrarErrorDialog("Error Ingreso/Salida Producto", null,
                             "Debe ingresar una cantidad de ingreso/salida producto");
                     return;
                 }
 
                 int cantidad;
-                try{
+                try {
                     cantidad = Integer.parseInt(this.txb_cantidad.getText());
-                }catch(Exception e){
+                } catch (Exception e) {
                     //System.out.println("Error al ingresar la cantidad descrita");
                     this.stageManager.mostrarErrorDialog("Error Ingreso/Salida Producto", null,
                             "Debe ingresar una cantidad valida");
                     return;
                 }
+
+                int idMovimientoEscogido = tipoMovimiento.getIdTipoMovimiento();
+                int idMovmientoDespacho = 2;
+                int idMovimientoRobo = 5;
+                int idMovimientoPerdida = 6;
+                int idMovimientoSalida = 8;
+
+                if((idMovimientoEscogido == idMovmientoDespacho) || (idMovimientoEscogido == idMovimientoRobo) || (idMovimientoEscogido == idMovimientoPerdida) || (idMovimientoEscogido == idMovimientoSalida)){
+                    System.out.println("Stock Parcial: "+this.loteEscogido.getStockParcial() + " Cantidad Movimiento: "+cantidad);
+                    if(cantidad > this.loteEscogido.getStockParcial()){
+                        this.stageManager.mostrarErrorDialog("Error Ingreso/Salida Producto", null,
+                                "No puede retirar mas del stock que posee ese lote");
+                        return;
+                    }
+                }
+
                 Long idEmpleadoAuditado = mainController.getEmpleado().getIdempleado();
                 repositoryMantMov.registrarMovimiento(totalProductos,this.txa_observaciones.getText(),fecha,tipoMovimiento.getIdTipoMovimiento(),loteEscogido.getIdProducto(),loteEscogido.getIdLote(),cantidad,idEmpleadoAuditado,-1);
                 this.stageManager.cerrarVentana(event);
@@ -197,7 +213,14 @@ public class IngresoProductoController implements FxmlController {
         this.configurarComboBox();
 
         for(TipoMovimiento tipoMovimiento : this.listaTiposMovimientos){
-            cb_motivo.getItems().add(tipoMovimiento);
+            int idMovimientoUbicacion = 3;
+            int idMovimientoReubicacion = 4;
+            int idMovimientoDevolucon = 10;
+            if((tipoMovimiento.getIdTipoMovimiento() == idMovimientoUbicacion) || (tipoMovimiento.getIdTipoMovimiento() == idMovimientoReubicacion) || (tipoMovimiento.getIdTipoMovimiento() == idMovimientoDevolucon)){
+                System.out.println("Movimiento no es de ingreso o salida, no se considera en el combo box");
+            }else{
+                cb_motivo.getItems().add(tipoMovimiento);
+            }
         }
     }
 }
