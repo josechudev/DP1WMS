@@ -9,7 +9,7 @@ import java.util.*;
 public class BFSAlgorithm {
 
     public static String BREATH_ALG = "Breath-First Search";
-    public static String BEST_ALG = "Best-First Search";
+    public static String BEST_ALG = "Greedy Best-First Search";
 
     private GestorDistancias gestorDistancias;
     private Almacen almacen;

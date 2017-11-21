@@ -335,8 +335,8 @@ public class AlmacenRutaController implements FxmlController {
         this.listaTabuTamanho.setText("7");
         this.numIteracionesSinMejora.setText("10000");
         this.complementoCB.getItems().clear();
-        this.complementoCB.getItems().add(BFSAlgorithm.BREATH_ALG);
         this.complementoCB.getItems().add(BFSAlgorithm.BEST_ALG);
+        this.complementoCB.getItems().add(BFSAlgorithm.BREATH_ALG);
         this.complementoCB.getSelectionModel().select(0);
     }
 
