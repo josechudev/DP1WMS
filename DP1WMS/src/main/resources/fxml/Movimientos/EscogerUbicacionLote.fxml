@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="231.0" prefWidth="526.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Movimientos.EscogerUbicacionLoteController">
+   <children>
+      <Label fx:id="labelTitulo" layoutX="25.0" layoutY="24.0" text="Modificar Ubicación del Lote">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="25.0" layoutY="74.0" text="Almacén" />
+      <ComboBox fx:id="cb_almacen" layoutX="131.0" layoutY="70.0" onAction="#actualizarListasPorAlmacen" prefHeight="25.0" prefWidth="132.0" />
+      <Label layoutX="293.0" layoutY="74.0" text="Área" />
+      <ComboBox fx:id="cb_area" layoutX="347.0" layoutY="70.0" onAction="#actualizarListasPorArea" prefHeight="25.0" prefWidth="132.0" />
+      <Label layoutX="25.0" layoutY="114.0" text="Rack" />
+      <ComboBox fx:id="cb_rack" layoutX="131.0" layoutY="110.0" onAction="#actualizarListasPorRack" prefHeight="25.0" prefWidth="132.0" />
+      <ComboBox fx:id="cb_cajon" layoutX="347.0" layoutY="110.0" prefHeight="25.0" prefWidth="132.0" />
+      <Label layoutX="292.0" layoutY="114.0" text="Cajón" />
+      <Button layoutX="189.0" layoutY="194.0" mnemonicParsing="false" onAction="#guardarUbicacionLote" prefHeight="25.0" prefWidth="73.0" text="Guardar" />
+      <Button layoutX="291.0" layoutY="193.0" mnemonicParsing="false" onAction="#cancelarOperacion" prefHeight="25.0" text="Cancelar" />
+      <Label fx:id="labelCantidad" layoutX="24.0" layoutY="158.0" prefHeight="17.0" text="Cantidad (Max): " />
+      <TextField fx:id="txb_cantidad" layoutX="188.0" layoutY="152.0" prefHeight="25.0" prefWidth="73.0" />
+   </children>
+</AnchorPane>

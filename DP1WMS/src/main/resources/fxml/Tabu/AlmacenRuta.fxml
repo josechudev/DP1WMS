@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="634.0" prefWidth="917.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Tabu.AlmacenRutaController">
+   <children>
+      <VBox layoutY="40.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="Parámetros de Configuración">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <VBox spacing="20.0">
+               <children>
+                  <GridPane hgap="30.0" prefHeight="131.0" prefWidth="822.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="464.0" minWidth="10.0" />
+                      <ColumnConstraints hgrow="ALWAYS" maxWidth="363.0" minWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.halignment="LEFT">
+                           <children>
+                              <Label text="Num Iteraciones" />
+                              <TextField fx:id="numeroIteraciones" prefHeight="25.0" prefWidth="160.0" HBox.hgrow="ALWAYS" />
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="233.0" spacing="10.0" GridPane.columnIndex="1">
+                           <children>
+                              <Label prefHeight="13.0" text="Máx. Iteraciones sin Mejora" HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="numIteracionesSinMejora" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="160.0" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.rowIndex="1">
+                           <children>
+                              <Label text="Tamaño Lista Tabu" />
+                              <TextField fx:id="listaTabuTamanho" prefHeight="26.0" prefWidth="160.0" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Label text="Tiempo Maximo (seg)" />
+                              <TextField fx:id="tiempoMaximoTF" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="160.0" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.rowIndex="2">
+                           <children>
+                              <Label text="Complemento" />
+                              <ComboBox fx:id="complementoCB" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </GridPane>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
+            <HBox spacing="30.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#seleccionarEnvio" text="Seleccionar Envio" />
+                  <Button fx:id="generar_ruta" mnemonicParsing="false" onAction="#generarRuta" text="Generar Ruta" />
+                  <Button mnemonicParsing="false" onAction="#guardarRuta" text="Guardar Ruta" />
+                  <Button mnemonicParsing="false" onAction="#limpiarGrilla" text="Limpiar" />
+                  <Button mnemonicParsing="false" onAction="#verHistorialModal" text="Ver historial" />
+               </children>
+            </HBox>
+            <HBox spacing="20.0">
+               <children>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Ruta">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="305.0" prefWidth="442.0" VBox.vgrow="ALWAYS">
+                           <content>
+                              <AnchorPane prefHeight="303.0" prefWidth="579.0">
+                                 <children>
+                                    <GridPane fx:id="almacen_layout" gridLinesVisible="true" layoutX="0.5" layoutY="0.5">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="20" prefWidth="20.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="20" prefHeight="20.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <StackPane prefHeight="340.0" prefWidth="360.0">
+                           <children>
+                              <TableView fx:id="tabla_productos" prefHeight="200.0" prefWidth="200.0">
+                                <columns>
+                                  <TableColumn fx:id="c_nombreProducto" prefWidth="135.0" text="Nombre  Producto" />
+                                    <TableColumn fx:id="c_rack" prefWidth="87.0" text="Rack" />
+                                  <TableColumn fx:id="c_cajon" minWidth="0.0" prefWidth="91.0" text="Cajon" />
+                                    <TableColumn fx:id="c_cantidad" prefWidth="121.0" text="Cantidad" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</AnchorPane>

@@ -19,20 +19,66 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Usuario">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
+                    <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" style="-fx-padding: 0 10;" text="Cerrar Sesión" />
                   </items>
                 </Menu>
-                  <Menu mnemonicParsing="false" text="Menu 2">
+                  <Menu mnemonicParsing="false" text="Administracion">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoMovimientos" text="Mantenimiento Movimiento" />
-                        <MenuItem mnemonicParsing="false" onAction="#cargarMantenimientoUsuario" text="Mantenimiento Usuario" />
+                        <MenuItem fx:id="rolesMI" mnemonicParsing="false" onAction="#cargarMantenimientoRol" style="-fx-padding: 0 10;" text="Roles" />
+                        <MenuItem fx:id="usuariosMI" mnemonicParsing="false" onAction="#cargarMantenimientoUsuario" style="-fx-padding: 0 10;" text="Usuarios" />
+                        <MenuItem fx:id="clientesMI" mnemonicParsing="false" onAction="#cargarMantenimientoCliente" style="-fx-padding: 0 10;" text="Clientes" />
+                        <MenuItem fx:id="categoriasMI" mnemonicParsing="false" onAction="#cargarMantenimientoCategoria" style="-fx-padding: 0 10;" text="Categorias" />
+                        <MenuItem fx:id="productosMI" mnemonicParsing="false" onAction="#cargarMantenimientoProducto" style="-fx-padding: 0 10;" text="Productos" />
+                        <MenuItem fx:id="ubicacionesMI" mnemonicParsing="false" onAction="#cargarUbicaciones" style="-fx-padding: 0 10;" text="Ubicaciones" />
+                        <MenuItem fx:id="configuracionMI" mnemonicParsing="false" onAction="#cargarConfiguracion" style="-fx-padding: 0 10;" text="Configuracion" />
                      </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Almacenes">
+                    <items>
+                        <MenuItem fx:id="almacenesCMMI" mnemonicParsing="false" onAction="#cargarMantenimientoAlmacenes" style="-fx-padding: 0 10;" text="Crear y Modificar" visible="false" />
+                        <Menu mnemonicParsing="false" style="-fx-padding: 0 10;" text="Movimientos">
+                          <items>
+                              <MenuItem fx:id="almacenesTransMI" mnemonicParsing="false" onAction="#cargarListaLotes" style="-fx-padding: 0 10;" text="Transferencias Internas" />
+                              <MenuItem fx:id="almacenesISProdMI" mnemonicParsing="false" onAction="#cargarIngresoProducto" style="-fx-padding: 0 10;" text="Ingreso/Salida Producto" />
+                            <MenuItem fx:id="almacenLoteMI" mnemonicParsing="false" onAction="#cargarCrearLote" style="-fx-padding: 0 10;" text="Crear Lote" />
+                          </items>
+                        </Menu>
+                        <MenuItem fx:id="almacenDespachoMI" mnemonicParsing="false" onAction="#cargarListaEnviosPendientes" style="-fx-padding: 0 10;" text="Despacho de Envios" />
+                        <MenuItem fx:id="almacenRutaMI" mnemonicParsing="false" onAction="#cargarGenerarRuta" style="-fx-padding: 0 10;" text="Generar Ruta" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Ventas">
+                    <items>
+                        <MenuItem fx:id="ventaCondComMI" mnemonicParsing="false" onAction="#cargarMantenimientoDescuentos" style="-fx-padding: 0 10;" text="Condiciones Comerciales" />
+                      <MenuItem fx:id="ventaProformaMI" mnemonicParsing="false" onAction="#cargarGenerarProforma" style="-fx-padding: 0 10;" text="Proforma" />
+                        <Menu mnemonicParsing="false" style="-fx-padding: 0 10;" text="Pedido">
+                          <items>
+                              <MenuItem fx:id="ventaConsPedMI" mnemonicParsing="false" onAction="#cargarConsultarPedido" style="-fx-padding: 0 10;" text="Consultar Pedido" />
+                              <MenuItem fx:id="ventaGenPedMI" mnemonicParsing="false" onAction="#cargarGenerarPedido" style="-fx-padding: 0 10;" text="Generar Pedido" />
+                          </items>
+                        </Menu>
+                        <MenuItem fx:id="ventaGuiaMI" mnemonicParsing="false" onAction="#cargarListaGuias" style="-fx-padding: 0 10;" text="Guias de remision" />
+                        <MenuItem fx:id="ventaCompPagoMI" mnemonicParsing="false" onAction="#cargarMantenimientoComprobantePago" style="-fx-padding: 0 10;" text="Comprobante de Pago" />
+                        <Menu mnemonicParsing="false" style="-fx-padding: 0 10;" text="Devoluciones">
+                          <items>
+                            <MenuItem fx:id="ventaPedDevMI" mnemonicParsing="false" onAction="#cargarPedidoDevolucion" style="-fx-padding: 0 10;" text="Pedido Devolucion" />
+                              <MenuItem fx:id="ventaNotaCreditoMI" mnemonicParsing="false" onAction="#cargarListaNotaCredito" style="-fx-padding: 0 10;" text="Nota de Credito" />
+                          </items>
+                        </Menu>
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Reportes">
+                    <items>
+                        <MenuItem fx:id="reportKardexMI" mnemonicParsing="false" onAction="#cargarKardex" style="-fx-padding: 0 10;" text="Reporte Kardex" />
+                        <MenuItem fx:id="reporteAlmacenMI" mnemonicParsing="false" onAction="#cargarReporteAlmacen" style="-fx-padding: 0 10;" text="Reporte Almacen" />
+                        <MenuItem fx:id="reporteAuditoriaMI" mnemonicParsing="false" onAction="#menuAuditoriaClick" style="-fx-padding: 0 10;" text="Reporte Auditoría" />
+                    </items>
                   </Menu>
               </menus>
             </MenuBar>
             <AnchorPane prefHeight="381.0" prefWidth="600.0" style="-fx-background-color: #95999C;" VBox.vgrow="ALWAYS">
                <children>
-                  <BorderPane layoutX="249.0" layoutY="193.0" prefHeight="517.0" prefWidth="822.0" style="-fx-background-color: rgba(0,0,0,0);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <BorderPane layoutX="63.0" layoutY="193.0" prefHeight="609.0" prefWidth="1038.0" style="-fx-background-color: rgba(0,0,0,0);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <center>
                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="736.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
                            <children>

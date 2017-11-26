@@ -6,6 +6,7 @@
 .idea/tasks.xml
 .idea/dictionaries
 DP1WMS/.idea/workspace.xml
+DP1WMS/.idea/*.xml
 DP1WMS/.idea/*
 DP1WMS/*.iml
 
@@ -97,6 +98,8 @@ hs_err_pid*
 
 #error?
 
-.idea/
+DP1WMS/.idea/
 *.iml
 *.iws
+DP1WMS/*.iml
+DP1WMS/*.iws

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane fx:id="mantenimientoAlmacenes" prefHeight="422.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.almacenes.MantenimientoAlmacenesController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="128.0" minHeight="0.0" prefHeight="30.0" />
+    <RowConstraints maxHeight="341.0" minHeight="10.0" prefHeight="319.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <GridPane prefHeight="20.0" prefWidth="600.0" GridPane.rowIndex="2">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="313.0" minWidth="10.0" percentWidth="50.0" prefWidth="298.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.0" minWidth="10.0" percentWidth="50.0" prefWidth="302.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="btnAlmacen" mnemonicParsing="false" onAction="#btnClickNuevoAlmacen" text="Nuevo Almacen" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM" />
+            <Button fx:id="btnAceptar" onAction="#btnAceptarClick" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Aceptar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM" />
+         </children>
+      </GridPane>
+      <Label text="Almacenes" GridPane.valignment="TOP">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+         <content>
+            <VBox fx:id="vbAlmacenes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="315.0" prefWidth="568.0" style="-fx-background-color: #FFFFFF;" />
+         </content></ScrollPane>
+   </children>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
+</GridPane>

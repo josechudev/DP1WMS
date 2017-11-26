@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="424.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dp1wms.controller.Envios.RetiroEnvioController">
+   <children>
+      <TableView fx:id="tablaDetalleEnvio" layoutX="18.0" layoutY="154.0" prefHeight="200.0" prefWidth="521.0">
+        <columns>
+          <TableColumn fx:id="c_indice" prefWidth="75.0" text="N°" />
+          <TableColumn fx:id="c_codigoProducto" prefWidth="121.0" text="Codigo Producto" />
+            <TableColumn fx:id="c_nombreProducto" prefWidth="144.0" text="Nombre Producto" />
+            <TableColumn fx:id="c_cantidad" prefWidth="75.0" text="Cantidad" />
+            <TableColumn fx:id="c_loteAsignado" prefWidth="105.0" text="Lote Asignado" />
+        </columns>
+      </TableView>
+      <Button layoutX="18.0" layoutY="121.0" mnemonicParsing="false" onAction="#asignarLoteProducto" prefHeight="25.0" prefWidth="159.0" text="Asignar Lote a Producto" />
+      <Label layoutX="18.0" layoutY="60.0" text="Observaciones" />
+      <TextField fx:id="txb_Observaciones" layoutX="110.0" layoutY="56.0" prefHeight="43.0" prefWidth="359.0" />
+      <Label layoutX="18.0" layoutY="14.0" text="Retiro de Envio">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="185.0" layoutY="375.0" mnemonicParsing="false" onAction="#aceptarRetiroEnvio" prefHeight="25.0" prefWidth="108.0" text="Aceptar Retiro " />
+      <Button layoutX="370.0" layoutY="375.0" mnemonicParsing="false" onAction="#cancelarRetiroEnvio" prefHeight="25.0" prefWidth="90.0" text="Cancelar" />
+   </children>
+</AnchorPane>

@@ -16,6 +16,8 @@ public class Lote {
 
     private int indiceTableView;
 
+    private String codigoProducto;
+
     public int getIdLote() {
         return idLote;
     }
@@ -73,5 +75,14 @@ public class Lote {
 
     public void setIndiceTableView(int indiceTableView) {
         this.indiceTableView = indiceTableView;
+    }
+
+
+    public String getCodigoProducto() {
+        return codigoProducto;
+    }
+
+    public void setCodigoProducto(String codigoProducto) {
+        this.codigoProducto = codigoProducto;
     }
 }
